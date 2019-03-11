@@ -1,52 +1,124 @@
-.PHONY: all, $(NAME), clean, fclean, re
+# ---------- #
+# Debug mode #
+# ---------- #
+
+DEBUG = no
+
+# --------- #
+# Directory #
+# --------- #
+
+LIBDIR = libft/
+PATHLIBDIR = libft/libs/
+SRCDIR = srcs/
+OBJDIR = objs/
+INCDIR = includes/
+INCLIBDIR = libft/includes/
+
+VPATH = objs:srcs:srcs/lexer:srcs/lexer/dll_lex:srcs/lexer/token
+# ------------------ #
+# Compiler and flags #
+# ------------------ #
+
+CC = gcc
+ifeq ($(DEBUG), yes)
+	CFLAGS = -Wall -Wextra -Werror -g3 -fsanitize=address
+else
+	CFLAGS = -Wall -Wextra
+endif
+CPPFLAGS = -I $(INCDIR) -I $(INCLIBDIR)
+LDLIBS = -lft
+LDFLAGS = -L $(PATHLIBDIR)
+
+LFLAGS = -ltermcap
+
+# --------------- #
+# Different names #
+# --------------- #
 
 NAME = 21sh
 
-NOC=\033[0m
-OKC=\033[32m
-ERC=\033[31m
-WAC=\033[33m
+SRCS_NAMES = main.c \
+			 lexer.c \
+			 types.c \
+			 dll_new.c \
+			 dll_ins.c \
+			 dll_iter.c \
+			 dll_del.c \
+			 ampersand.c \
+			 brace.c \
+			 bracket.c \
+			 colon.c \
+			 great.c \
+			 less.c \
+			 par.c \
+			 pipe.c \
+			 quote.c \
+			 sign.c \
+			 slash.c \
+			 space.c
+OBJS_NAMES = $(SRCS_NAMES:.c=.o)
+HEADERS_NAMES = sh21.h lexer.h
+LIBS_NAMES = libft.a
 
-cc = gcc
-C_FLAGS = -g -Wall -Werror -Wextra
-FRAM = 
+OBJ = $(addprefix $(OBJDIR), $(OBJS_NAMES))
+HEADERS = $(addprefix $(INCDIR), $(HEADERS_NAMES))
+LIBS = $(addprefix $(PATHLIBDIR), $(LIBS_NAMES))
 
-OBJ_PATH = ./obj/
-LFT_PATH = ./libft/
-INC_PATH = ./include/
-SRC_PATH = ./srcs/
+# ----------------- #
+# Command variables #
+# ----------------- #
 
-OBJ_NAME = $(SRC_NAME:.c=.o)
-INC_NAME = ft_ls.h
-SRC_NAME = cursortools.c dlist.c editiontools.c editline.c history.c keyhook.c \
-		   morekeyhook.c othertools.c stalkcursor.c terminit.c textselection.c \
-		   main.c
+CREATE = mkdir -p
+DEL = /bin/rm -rf
+PRINT = echo
+PHONY = all clean cleans fclean re libs cleanlibs fcleanlibs help
 
-SRC = $(addprefix $(SRC_PATH),$(SRC_NAME))
-OBJ = $(addprefix $(OBJ_PATH),$(OBJ_NAME))
-INC = $(addprefix -I,$(INC_PATH))
+# ----- #
+# Rules #
+# ----- #
 
-all: $(NAME)
+all : libs $(NAME)
 
-$(NAME): $(OBJ)
-		@echo
-		@make -C $(LFT_PATH)
-		@$(CC) -o $(NAME) -L $(LFT_PATH) -lft -lncurses $^ -o $@
-		@echo "\033[32m21sh ready.\033[0m"
+ifeq ($(DEBUG), yes)
+	@$(PRINT) "Debug mode : on\n"
+else
+	@$(PRINT) "Debug mode : off\n"
+endif
 
-$(OBJ_PATH)%.o: $(SRC_PATH)%.c
-		@mkdir -p $(OBJ_PATH) 2> /dev/null || true
-		@$(CC) $(C_FLAGS) $(INC) -o $@ -c $<
-		@echo -n =
+$(NAME) : $(OBJS_NAMES) $(LIBS)
+	@$(CC) -o $@ $(OBJ) $(LDFLAGS) $(LDLIBS) $(LFLAGS) $(CFLAGS) $(CPPFLAGS)
+	@$(PRINT) "Executable built"
 
-clean:
-		@make -C $(LFT_PATH) clean
-		@rm -rf $(OBJ_PATH)
-		@echo "\033[32mDeleting [./obj] directory.\033[0m"
+libs :
+	@$(MAKE) -C $(LIBDIR)
 
-fclean: clean
-		@make -C $(LFT_PATH) fclean
-		@rm -f $(NAME)
-		@echo "\x1b[31mSUCESSFULLY CLEANED 21sh\x1b[31m"
+%.o : %.c $(HEADER)
+	@$(CREATE) $(OBJDIR)
+	@$(CC) -o $(OBJDIR)$@ -c $< $(CFLAGS) $(CPPFLAGS)
+	@$(PRINT) ".o created"
 
-re: fclean all 
+clean : cleanlibs
+	@$(DEL) $(OBJDIR)
+	@$(PRINT) ".o file deleted"
+
+cleans : 
+	@$(DEL) $(OBJDIR)
+	@$(PRINT) ".o file deleted"
+
+fclean : cleans fcleanlibs
+	@$(DEL) $(NAME)
+	@$(PRINT) "Executable destroyed"
+
+cleanlibs :
+	@$(MAKE) -C $(LIBDIR) clean
+
+fcleanlibs :
+	@$(MAKE) -C $(LIBDIR) fclean
+
+re : fclean all
+
+help :
+	@$(PRINT) "Rules available : all, clean, cleans, fclean, re, libs, cleanlibs, fcleanlibs and help"
+
+.PHONY : $(PHONY)
