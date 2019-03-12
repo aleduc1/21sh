@@ -3,19 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   othertools.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aleduc <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: mbellaic <mbellaic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/12 17:19:04 by aleduc            #+#    #+#             */
-/*   Updated: 2019/03/12 17:19:10 by aleduc           ###   ########.fr       */
+/*   Updated: 2019/03/12 18:41:37 by mbellaic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh21.h"
 
-void welcome()
+void welcome(void)
 {
     ft_putstr("\033[1;32m\n");                                                                   
-    
     ft_putstr("██████╗  ██╗███████╗██╗  ██╗\n");
     usleep(150000);
     ft_putstr("╚════██╗███║██╔════╝██║  ██║\n");

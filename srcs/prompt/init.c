@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aleduc <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: mbellaic <mbellaic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/12 17:13:21 by aleduc            #+#    #+#             */
-/*   Updated: 2019/03/12 17:46:10 by aleduc           ###   ########.fr       */
+/*   Updated: 2019/03/12 18:44:13 by mbellaic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ t_node	*read_input(t_node **input, t_pos *pos)
     lstcursor = *input;
     ft_bzero(buffer, 6);
     ft_putstr(tgetstr("im", NULL));
-    while(read(STDIN_FILENO, &buffer, 6) > 0 && !NEWLINE)
+    while(read(STDIN_FILENO, &buffer, 6) > 0 && !NL)
     {
         lstcursor = editline(pos, lstcursor, input, buffer);
         stalk_cursor(pos);

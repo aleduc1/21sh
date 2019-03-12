@@ -29,7 +29,7 @@
 # define PG_UP (buffer[0] == 27 && buffer[1] == 91 && buffer[2] == 53)// && buffer[3] == 126)
 # define PG_DOWN (buffer[0] == 27 && buffer[1] == 91 && buffer[2] == 54)// && buffer[3] == 126)
 
-# define NEWLINE (buffer[0] == 10 && buffer[1] == 0)
+# define NL (buffer[0] == 10 && buffer[1] == 0)
 
 # define ARROW_UP   (buffer[0] == 27 && buffer[2] == 'A')
 # define ARROW_DOWN   (buffer[0] == 27 && buffer[2] == 'B')
@@ -42,7 +42,7 @@
 # define SHIFT_RIGHT (buffer[0] == 27 && buffer[1] == 91 && buffer[2] ==  '1' && buffer[5] == 'C')
 # define SHIFT_LEFT (buffer[0] == 27 && buffer[1] == 91 && buffer[2] ==  '1' && buffer[5] == 'D')
 
-# define TAB (buffer[0] == 9 && buffer[1] == 0)
+//# define TAB (buffer[0] == 9 && buffer[1] == 0)
 
 
 char **g_env;
@@ -83,7 +83,7 @@ typedef struct      s_pos
     int             whichside;
 }                   t_pos;
 
-void                welcome();		/* Norme ? */
+void                welcome(void);
 void	            default_term_mode(void);
 void	            raw_term_mode(void);
 
