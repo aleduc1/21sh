@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   textselection.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aleduc <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: mbellaic <mbellaic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/12 17:19:37 by aleduc            #+#    #+#             */
-/*   Updated: 2019/03/12 17:19:48 by aleduc           ###   ########.fr       */
+/*   Updated: 2019/03/12 21:23:20 by mbellaic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,34 +14,18 @@
 
 t_node      *selectmode(char buffer[], t_pos *pos)
 {
-    if(SHIFT_DOWN)
+    if(SHIFT_LEFT || SHIFT_RIGHT)
     {
         if (pos->selection == 0)
-        {
-            pos->whichside = 0;
             pos->selection = 1;
-        }
-        else
-        {
-            pos->selection = 0;
-        }
-    }
-    if(SHIFT_UP)
-    {
-        if(pos->clipboard)
-        {
-            ddellist(pos->clipboard);
-            dpush(&pos->clipboard, ' ');
-        }
     }
     return (0);
 }
 
 t_node      *shift_left(t_node *lstcursor, char buffer[], t_pos *pos)
 {
-    if (SHIFT_LEFT && (pos->whichside == 0 || pos->whichside == 1))
+    if (SHIFT_LEFT)
     {
-        pos->whichside = 1;
         if(lstcursor->next)
         {
             ft_putstr(tgetstr("ei", NULL));
@@ -70,9 +54,8 @@ t_node      *shift_left(t_node *lstcursor, char buffer[], t_pos *pos)
 
 t_node      *shift_right(t_node *lstcursor, char buffer[], t_pos *pos)
 {
-    if (SHIFT_RIGHT && (pos->whichside == 0 || pos->whichside == 2))
+    if (SHIFT_RIGHT)
     {
-        pos->whichside = 2;
         if(lstcursor->prev)
         {
             ft_putstr(tgetstr("ei", NULL));

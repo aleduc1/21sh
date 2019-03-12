@@ -6,7 +6,7 @@
 /*   By: mbellaic <mbellaic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/12 17:13:21 by aleduc            #+#    #+#             */
-/*   Updated: 2019/03/12 18:44:13 by mbellaic         ###   ########.fr       */
+/*   Updated: 2019/03/12 21:22:59 by mbellaic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	init_prompt(t_pos *pos)
     pos->nblines = 0;
     pos->currentline = 0;
     pos->selection = 0;
-    pos->whichside = 0;
+    pos->selectcount = 0;
 }
 
 t_node	*read_input(t_node **input, t_pos *pos)

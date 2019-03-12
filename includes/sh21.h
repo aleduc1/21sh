@@ -80,7 +80,7 @@ typedef struct      s_pos
 
     t_node          *clipboard;
     int             selection;
-    int             whichside;
+    int             selectcount;
 }                   t_pos;
 
 void                welcome(void);
