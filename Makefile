@@ -15,7 +15,7 @@ OBJDIR = objs/
 INCDIR = includes/
 INCLIBDIR = libft/includes/
 
-VPATH = objs:srcs:srcs/lexer:srcs/lexer/dll_lex:srcs/lexer/token
+VPATH = objs:srcs:srcs/lexer:srcs/lexer/dll_lex:srcs/lexer/token:srcs/prompt
 # ------------------ #
 # Compiler and flags #
 # ------------------ #
@@ -56,7 +56,19 @@ SRCS_NAMES = main.c \
 			 quote.c \
 			 sign.c \
 			 slash.c \
-			 space.c
+			 space.c \
+			 cursortools.c \
+			 dlist.c \
+			 editiontools.c \
+			 editline.c \
+			 history.c \
+			 init.c \
+			 keyhook.c \
+			 morekeyhook.c \
+			 othertools.c \
+			 stalkcursor.c \
+			 terminit.c \
+			 textselection.c
 OBJS_NAMES = $(SRCS_NAMES:.c=.o)
 HEADERS_NAMES = sh21.h lexer.h
 LIBS_NAMES = libft.a
@@ -102,7 +114,7 @@ clean : cleanlibs
 	@$(DEL) $(OBJDIR)
 	@$(PRINT) ".o file deleted"
 
-cleans : 
+cleans :
 	@$(DEL) $(OBJDIR)
 	@$(PRINT) ".o file deleted"
 
