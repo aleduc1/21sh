@@ -26,8 +26,8 @@
 
 # define HOME (buffer[0] == 27 && buffer[1] == 91 && buffer[2] == 72)
 # define END (buffer[0] == 27 && buffer[1] == 91 && buffer[2] == 70)
-# define PG_UP (buffer[0] == 27 && buffer[1] == 91 && buffer[2] == 53)// && buffer[3] == 126)
-# define PG_DOWN (buffer[0] == 27 && buffer[1] == 91 && buffer[2] == 54)// && buffer[3] == 126)
+# define PG_UP (buffer[0] == 27 && buffer[1] == 91 && buffer[2] == 53)
+# define PG_DOWN (buffer[0] == 27 && buffer[1] == 91 && buffer[2] == 54)
 
 # define NL (buffer[0] == 10 && buffer[1] == 0)
 
@@ -118,7 +118,7 @@ void                insert(t_node *prev_node, char key);
 void                ddel(t_node **head, t_node *del);
 void                ddellist(t_node *head);
 
-void                print_prompt();
+void                print_prompt(void);
 char                *reverse_str(char *inputstr);
 char                *lst_to_str(t_node **input, char *inputstr);
 int                 ft_outc(int c);
@@ -137,7 +137,8 @@ t_node              *selectmode( char buffer[], t_pos *pos);
 t_node              *shift_left(t_node *lstcursor, char buffer[], t_pos *pos);
 t_node              *shift_right(t_node *lstcursor, char buffer[], t_pos *pos);
 
-void	init_prompt(t_pos *pos);
-t_node	*read_input(t_node **input, t_pos *pos);
-char	*prompt(t_node *input, t_pos *pos);
+void	            init_prompt(t_pos *pos);
+t_node	            *read_input(t_node **input, t_pos *pos);
+char	            *prompt(t_node *input, t_pos *pos);
+
 #endif

@@ -105,8 +105,8 @@ t_token	*hashtag(void);
 t_token	*slash(void);
 t_token	*backslash(void);
 t_token	*space(void);
-t_token	*tab(void);
-t_token	*newline(void);
+t_token	*tab_key(void);
+t_token	*new_line(void);
 
 /* DLL functions */
 

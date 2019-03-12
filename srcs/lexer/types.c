@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   types.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aleduc <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: mbellaic <mbellaic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/12 17:21:37 by aleduc            #+#    #+#             */
-/*   Updated: 2019/03/12 17:21:39 by aleduc           ###   ########.fr       */
+/*   Updated: 2019/03/12 19:46:31 by mbellaic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,9 +76,9 @@ void	set_tab_types(t_ptrf **fptr)
 	(*fptr)[29].str = "\\";
 	(*fptr)[29].f = &backslash;
 	(*fptr)[30].str = "\n";
-	(*fptr)[30].f = &newline;
+	(*fptr)[30].f = &new_line;
 	(*fptr)[31].str = "\t";
-	(*fptr)[31].f = &tab;
+	(*fptr)[31].f = &tab_key;
 	(*fptr)[32].str = " ";
 	(*fptr)[32].f = &space;
 	(*fptr)[33].str = "\0";

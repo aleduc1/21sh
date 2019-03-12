@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   space.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aleduc <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: mbellaic <mbellaic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/12 17:23:00 by aleduc            #+#    #+#             */
-/*   Updated: 2019/03/12 17:23:01 by aleduc           ###   ########.fr       */
+/*   Updated: 2019/03/12 19:45:25 by mbellaic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ t_token		*space(void)
 	return (token);
 }
 
-t_token		*tab(void)
+t_token		*tab_key(void)
 {
 	t_token	*token;
 
@@ -50,7 +50,7 @@ t_token		*tab(void)
 	return (token);
 }
 
-t_token		*newline(void)
+t_token		*new_line(void)
 {
 	t_token	*token;
 
