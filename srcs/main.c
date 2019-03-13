@@ -6,7 +6,7 @@
 /*   By: mbellaic <mbellaic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/12 17:01:09 by aleduc            #+#    #+#             */
-/*   Updated: 2019/03/12 18:43:46 by mbellaic         ###   ########.fr       */
+/*   Updated: 2019/03/12 23:54:33 by mbellaic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@ int		main(int ac, char **av, char **environ)
   {
 		if (ac && av && environ)
 		{
-			inputstr = prompt(input, &pos);
-			ft_putendl(inputstr);/* Debugging */
+			inputstr = prompt(input, &pos); // Don't forget to free inputstr once you are done with it.
+			// ft_putendl(inputstr);/* Debugging */
 			if (inputstr[0])
 			lex = lexer(inputstr);
 			ft_putendl(inputstr);/* Debugging */

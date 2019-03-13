@@ -6,7 +6,7 @@
 /*   By: mbellaic <mbellaic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/12 17:18:01 by aleduc            #+#    #+#             */
-/*   Updated: 2019/03/12 21:22:23 by mbellaic         ###   ########.fr       */
+/*   Updated: 2019/03/13 03:28:50 by mbellaic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ t_node      *check_input(t_node *lstcursor, t_node **input, char buffer[], t_pos
     lstcursor = backwardjump(lstcursor, buffer, pos);
     lstcursor = forwardjump(lstcursor, buffer, pos);
     lstcursor = home_end(lstcursor, buffer, pos);
-    lstcursor = shift_right(lstcursor, buffer, pos);
-    lstcursor = shift_left(lstcursor, buffer, pos);
+    lstcursor = selectmode(lstcursor, buffer, pos);
+    //lstcursor = shift_left(lstcursor, buffer, pos);
     return (lstcursor);
 }
 
@@ -89,7 +89,7 @@ t_node      *editline(t_pos *pos, t_node *lstcursor, t_node **input, char buffer
 {
     if(!PRINTABLE)
         lstcursor = check_input(lstcursor, input, buffer, pos);
-    if(PRINTABLE && pos->selection == 0)
+    if(PRINTABLE) //&& pos->selection == 0)
     {
         insert(lstcursor, buffer[0]);
         actualize(pos, lstcursor, input, buffer);

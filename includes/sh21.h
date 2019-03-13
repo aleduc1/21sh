@@ -133,7 +133,7 @@ t_node              *clean_for_history(t_node *lstcursor, t_node **input, t_pos 
 t_node              *history_to_lst(t_node *lstcursor, char *historyline, t_node **input, t_pos *pos);
 t_node              *history_downcase(t_node *lstcursor, t_node **input, t_pos *pos);
 
-t_node              *selectmode( char buffer[], t_pos *pos);
+t_node              *selectmode(t_node *lstcursor, char buffer[], t_pos *pos);
 t_node              *shift_left(t_node *lstcursor, char buffer[], t_pos *pos);
 t_node              *shift_right(t_node *lstcursor, char buffer[], t_pos *pos);
 
