@@ -17,6 +17,10 @@
 #include "libft.h"
 #include "get_next_line.h"
 
+#define ALT_X (buffer[0] == -30 && buffer[1] == -119 && buffer[2] == -120)
+#define ALT_C (buffer[0] == -61 && buffer[1] == -89)
+#define ALT_V (buffer[0] == -30 && buffer[1] == -120 && buffer[2] == -102)
+
 # define PRINTABLE (buffer[0] >= 32 && buffer[0] < 127)
 # define CTRL_D (buffer[0] == 4 && buffer[1] == 0)
 # define CTRL_C (buffer[0] == 3 && buffer[1] == 0)
@@ -78,7 +82,7 @@ typedef struct      s_pos
     int             historycount;
     int             historysum;
 
-    t_node          *clipboard;
+    char            *clipboard;
     int             selection;
     int             selectcount;
 }                   t_pos;
@@ -133,9 +137,13 @@ t_node              *clean_for_history(t_node *lstcursor, t_node **input, t_pos 
 t_node              *history_to_lst(t_node *lstcursor, char *historyline, t_node **input, t_pos *pos);
 t_node              *history_downcase(t_node *lstcursor, t_node **input, t_pos *pos);
 
-t_node              *selectmode(t_node *lstcursor, char buffer[], t_pos *pos);
+t_node              *selectmode(t_node **input, t_node *lstcursor, char buffer[], t_pos *pos);
 t_node              *shift_left(t_node *lstcursor, char buffer[], t_pos *pos);
 t_node              *shift_right(t_node *lstcursor, char buffer[], t_pos *pos);
+t_node              *anchor_selection(t_node *lstcursor, t_pos *pos, int direction);
+t_node              *delete_selection(t_node **input, t_node *lstcursor, t_pos *pos);
+t_node              *undo_selection(t_node *lstcursor, t_pos *pos);
+t_node              *find_tail(t_node *lstcursor, t_pos *pos);
 
 void	            init_prompt(t_pos *pos);
 t_node	            *read_input(t_node **input, t_pos *pos);
