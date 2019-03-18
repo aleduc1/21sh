@@ -70,8 +70,8 @@ void	set_tab_types(t_ptrf **fptr);
 
 /* Lexing */
 t_lex	*lexer(char *input);
-void	reading_input(char *input);
-void	check_type(char *input, int start, int end);
+void	reading_input(char *input, t_lex **lex);
+t_token	*check_type(char *input, int start, int end);
 
 /* Creating token */
 t_token	*lpar(void);

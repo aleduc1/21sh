@@ -6,7 +6,7 @@
 /*   By: mbellaic <mbellaic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/12 17:01:09 by aleduc            #+#    #+#             */
-/*   Updated: 2019/03/12 23:54:33 by mbellaic         ###   ########.fr       */
+/*   Updated: 2019/03/18 16:01:09 by aleduc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,19 +22,19 @@ int		main(int ac, char **av, char **environ)
 
 	lex = NULL;
 	inputstr = NULL;
-  input = NULL;
-  init_prompt(&pos);
-  welcome();
-  while (21)
-  {
+	input = NULL;
+	init_prompt(&pos);
+	welcome();
+	while (21)
+	{
 		if (ac && av && environ)
 		{
 			inputstr = prompt(input, &pos); // Don't forget to free inputstr once you are done with it.
 			// ft_putendl(inputstr);/* Debugging */
 			if (inputstr[0])
-			lex = lexer(inputstr);
+				lex = lexer(inputstr);
 			ft_putendl(inputstr);/* Debugging */
 		}
-  }
+	}
 	return (0);
 }
