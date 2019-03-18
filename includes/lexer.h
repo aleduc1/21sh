@@ -67,11 +67,13 @@ struct s_ptrf
 
 /* Array of function pointer */
 void	set_tab_types(t_ptrf **fptr);
+void	compare_types(t_ptrf **fptr, t_token **token, char *word);
 
 /* Lexing */
 t_lex	*lexer(char *input);
 void	reading_input(char *input, t_lex **lex);
 t_token	*check_type(char *input, int start, int end);
+int		ft_isnumbers(char *str);
 
 /* Creating token */
 t_token	*lpar(void);
@@ -107,6 +109,9 @@ t_token	*backslash(void);
 t_token	*space(void);
 t_token	*tab_key(void);
 t_token	*new_line(void);
+t_token	*number(char *numbers);
+t_token	*word(char *words);
+t_token	*word_or_number(char *data);
 
 /* DLL functions */
 

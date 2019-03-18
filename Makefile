@@ -2,7 +2,7 @@
 # Debug mode #
 # ---------- #
 
-DEBUG = yes
+DEBUG = no
 
 # --------- #
 # Directory #
@@ -57,6 +57,8 @@ SRCS_NAMES = main.c \
 			 sign.c \
 			 slash.c \
 			 space.c \
+			 number.c \
+			 word.c \
 			 cursortools.c \
 			 dlist.c \
 			 editiontools.c \

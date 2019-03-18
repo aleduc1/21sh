@@ -6,12 +6,54 @@
 /*   By: aleduc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/12 17:21:29 by aleduc            #+#    #+#             */
-/*   Updated: 2019/03/18 16:23:00 by aleduc           ###   ########.fr       */
+/*   Updated: 2019/03/18 19:05:19 by aleduc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
 #include "libft.h"
+
+int		ft_isnumbers(char *str) /* Put this in libft */
+{
+	int		i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (!(ft_isdigit(str[i])))
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
+t_token	*word_or_number(char *data)
+{
+	t_token	*token;
+
+	token = NULL;
+	if (ft_isnumbers(data))
+		token = number(data);
+	else
+		token = word(data);
+	return (token);
+}
+
+void	compare_types(t_ptrf **fptr, t_token **token, char *word)
+{
+	int		i;
+
+	i = 0;
+	while ((*fptr)[i].f)
+	{
+		if (!(ft_strcmp(word, (*fptr)[i].str)))
+			*token = (*fptr)[i].f();
+		i++;
+	}
+	if (!(*token))
+		*token = word_or_number(word);
+	free(*fptr);
+}
 
 t_token	*check_type(char *input, int start, int end)
 {
@@ -19,11 +61,12 @@ t_token	*check_type(char *input, int start, int end)
 	char	*word;
 	t_token	*token;
 
+	token = NULL;
 	word = ft_strsub(input, start, end - start);
 	ft_putstr("This is the word copied : ");
 	ft_putendl(word);
 	set_tab_types(&fptr);
-	token = compare_types(fptr, word);	/* Si correspondant : function -> creer un token; sinon creer un token mot ou number */
+	compare_types(&fptr, &token, word);
 	ft_memdel((void **)&word);
 /* Free tout les pointeurs : token apres l'avoir return pour reading input
 	** Et creer le tableau dans une fonction plus haute dans la stack pour pouvoir le free a la fin du lexing
@@ -31,7 +74,7 @@ t_token	*check_type(char *input, int start, int end)
 	return (token);
 }
 
-int		skip_whitespace(char *str, int i) /* Mettre cette fonction dans la libft */
+int		skip_whitespace(char *str, int i) /* Put this in libft */
 {
 	int		cpy;
 
@@ -64,7 +107,11 @@ void	reading_input(char *input, t_lex **lex)
 		if (to_check)
 		{
 			tok = check_type(input, j, i);
-			add_token(lex, tok);
+			ft_putstr("I have a token containing : ");	/*			DEBUGGING			*/
+			ft_putendl(tok->data);						/*								*/
+//			add_token(lex, tok);
+			ft_memdel((void **)&tok);
+			ft_putendl("token freed");
 			to_check = 0;
 		}
 	}
