@@ -6,7 +6,7 @@
 /*   By: aleduc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/12 17:21:29 by aleduc            #+#    #+#             */
-/*   Updated: 2019/03/18 19:05:19 by aleduc           ###   ########.fr       */
+/*   Updated: 2019/03/21 19:38:55 by aleduc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,9 @@ t_token	*check_type(char *input, int start, int end)
 	char	*word;
 	t_token	*token;
 
+	ft_putendl("Je suis dans check_type");
 	token = NULL;
-	word = ft_strsub(input, start, end - start);
+	word = ft_strsub(input, start, end - start); // should first contain abc
 	ft_putstr("This is the word copied : ");
 	ft_putendl(word);
 	set_tab_types(&fptr);
@@ -84,7 +85,7 @@ int		skip_whitespace(char *str, int i) /* Put this in libft */
 	return (cpy);
 }
 
-void	reading_input(char *input, t_lex **lex)
+void	reading_input(char *input, t_lex **lex) // Input abc 123
 {
 	int		i;
 	int		j;
@@ -99,7 +100,7 @@ void	reading_input(char *input, t_lex **lex)
 	{
 		i = skip_whitespace(input, i);
 		j = i;
-		while (input[i] && ft_isalpha(input[i]))
+		while (input[i] && !(ft_isspace(input[i])))
 		{
 			i++;
 			to_check = 1;
@@ -122,7 +123,7 @@ t_lex	*lexer(char *input)
 	t_lex	*lex;
 
 	lex = NULL;
-	if (ft_strcmp(input, "exit") == 0)
+	if (ft_strcmp(input, "exit") == 0) //Just in case
 		exit(0);
 	reading_input(input, &lex);
 	return (lex);
