@@ -6,7 +6,7 @@
 /*   By: aleduc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/12 17:21:29 by aleduc            #+#    #+#             */
-/*   Updated: 2019/03/21 19:38:55 by aleduc           ###   ########.fr       */
+/*   Updated: 2019/03/21 21:27:48 by aleduc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ t_token	*check_type(char *input, int start, int end)
 
 	ft_putendl("Je suis dans check_type");
 	token = NULL;
-	word = ft_strsub(input, start, end - start); // should first contain abc
+	word = ft_strsub(input, start, end - start);
 	ft_putstr("This is the word copied : ");
 	ft_putendl(word);
 	set_tab_types(&fptr);
@@ -85,7 +85,7 @@ int		skip_whitespace(char *str, int i) /* Put this in libft */
 	return (cpy);
 }
 
-void	reading_input(char *input, t_lex **lex) // Input abc 123
+void	reading_input(char *input, t_lex **lex)
 {
 	int		i;
 	int		j;
@@ -123,7 +123,7 @@ t_lex	*lexer(char *input)
 	t_lex	*lex;
 
 	lex = NULL;
-	if (ft_strcmp(input, "exit") == 0) //Just in case
+	if (ft_strcmp(input, "exit") == 0)
 		exit(0);
 	reading_input(input, &lex);
 	return (lex);
