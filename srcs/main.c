@@ -30,10 +30,10 @@ int		main(int ac, char **av, char **environ)
 		if (ac && av && environ)
 		{
 			inputstr = prompt(input, &pos); // Don't forget to free inputstr once you are done with it.
-			// ft_putendl(inputstr);/* Debugging */
 			if (inputstr[0])
 				lex = lexer(inputstr);
 			ft_putendl(inputstr);/* Debugging */
+			dllprinthead(&lex);
 		}
 	}
 	return (0);

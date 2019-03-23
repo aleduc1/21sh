@@ -13,6 +13,23 @@
 #include "lexer.h"
 #include "libft.h"
 
+void	add_token(t_lex **lexer, t_token **token)
+{
+	t_lex	*tail;
+	t_lex	*node;
+
+	node = new_node(token);
+	tail = *lexer;
+	if (!(*lexer))
+		*lexer = node;
+	else
+	{
+		while (tail->next)
+			tail = tail->next;
+		dllinsback(&tail, &node);
+	}
+}
+
 int		ft_isnumbers(char *str) /* Put this in libft */
 {
 	int		i;
@@ -69,8 +86,8 @@ t_token	*check_type(char *input, int start, int end)
 	set_tab_types(&fptr);
 	compare_types(&fptr, &token, word);
 	ft_memdel((void **)&word);
-/* Free tout les pointeurs : token apres l'avoir return pour reading input
-	** Et creer le tableau dans une fonction plus haute dans la stack pour pouvoir le free a la fin du lexing
+	/* Free tout les pointeurs : token apres l'avoir return pour reading input
+	 ** Et creer le tableau dans une fonction plus haute dans la stack pour pouvoir le free a la fin du lexing
 	 */
 	return (token);
 }
@@ -110,7 +127,7 @@ void	reading_input(char *input, t_lex **lex)
 			tok = check_type(input, j, i);
 			ft_putstr("I have a token containing : ");	/*			DEBUGGING			*/
 			ft_putendl(tok->data);						/*								*/
-//			add_token(lex, tok);
+			add_token(lex, &tok);
 			ft_memdel((void **)&tok);
 			ft_putendl("token freed");
 			to_check = 0;
