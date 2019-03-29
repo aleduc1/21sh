@@ -44,6 +44,7 @@ enum	e_token_type
 	SPACE,
 	NUMBER,
 	WORD,
+	DELIM,
 };
 
 struct s_token
@@ -109,9 +110,11 @@ t_token	*backslash(void);
 t_token	*space(void);
 t_token	*tab_key(void);
 t_token	*new_line(void);
+t_token	*delim(void);
 t_token	*number(char *numbers);
 t_token	*word(char *words);
 t_token	*word_or_number(char *data);
+t_lex	*add_delim(t_lex **lex);
 
 /* DLL functions */
 

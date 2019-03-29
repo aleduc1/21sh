@@ -59,6 +59,7 @@ SRCS_NAMES = main.c \
 			 space.c \
 			 number.c \
 			 word.c \
+			 delim.c \
 			 cursortools.c \
 			 dlist.c \
 			 editiontools.c \

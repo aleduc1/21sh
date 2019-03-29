@@ -13,6 +13,26 @@
 #include "lexer.h"
 #include "libft.h"
 
+t_lex	*add_delim(t_lex	**lex)
+{
+	t_lex	*head;
+	t_lex	*tail;
+	t_lex	*node;
+	t_lex	*nd_node;
+	t_token	*token;
+
+	token = delim();
+	node = new_node(&token);
+	nd_node = new_node(&token);
+	head = *lex;
+	tail = *lex;
+	while (tail->next)
+		tail = tail->next;
+	dllinsfront(&head, &nd_node);
+	dllinsback(&tail, &node);
+	return (head);
+}
+
 void	add_token(t_lex **lexer, t_token **token)
 {
 	t_lex	*tail;
@@ -135,6 +155,8 @@ void	reading_input(char *input, t_lex **lex)
 	}
 }
 
+
+
 t_lex	*lexer(char *input)
 {
 	t_lex	*lex;
@@ -143,5 +165,6 @@ t_lex	*lexer(char *input)
 	if (ft_strcmp(input, "exit") == 0)
 		exit(0);
 	reading_input(input, &lex);
+	lex = add_delim(&lex);
 	return (lex);
 }
