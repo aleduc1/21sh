@@ -6,7 +6,7 @@
 /*   By: mbellaic <mbellaic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/12 17:18:01 by aleduc            #+#    #+#             */
-/*   Updated: 2019/03/16 03:32:50 by mbellaic         ###   ########.fr       */
+/*   Updated: 2019/04/01 15:33:03 by mbellaic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void    redraw(t_pos *pos, t_node *lstcursor)
     }
 }
 
-void actualize(t_pos *pos, t_node *lstcursor, t_node **input, char buffer[])
+void        actualize(t_pos *pos, t_node *lstcursor, t_node **input, char buffer[])
 {
     stalk_cursor(pos);
     if (pos->column == pos->termsize.ws_col)
@@ -88,7 +88,7 @@ t_node      *editline(t_pos *pos, t_node *lstcursor, t_node **input, char buffer
 {
     if(!PRINTABLE)
         lstcursor = check_input(lstcursor, input, buffer, pos);
-    if(PRINTABLE) //&& pos->selection == 0)
+    if(PRINTABLE)
     {
         if (pos->selection == 1)
             lstcursor = delete_selection(input, lstcursor, pos);
