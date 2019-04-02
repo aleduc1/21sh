@@ -73,7 +73,7 @@ void	compare_types(t_ptrf **fptr, t_token **token, char *word);
 /* Lexing */
 t_lex	*lexer(char *input);
 void	reading_input(char *input, t_lex **lex);
-t_token	*check_type(char *input, int start, int end);
+t_token	*check_type(t_ptrf **fptr, char *input, int start, int end);
 int		ft_isnumbers(char *str);
 
 /* Creating token */
