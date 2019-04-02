@@ -6,7 +6,7 @@
 /*   By: mbellaic <mbellaic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/12 17:01:09 by aleduc            #+#    #+#             */
-/*   Updated: 2019/03/31 09:50:56 by mbellaic         ###   ########.fr       */
+/*   Updated: 2019/04/02 16:11:49 by aleduc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,8 @@ int		main(int ac, char **av, char **environ)
 			if (inputstr[0])
 				lex = lexer(inputstr);
 			ft_putendl(inputstr);/* Debugging */
-			//dllprinthead(&lex);
-			ast = parser(lex);
+			dllprinthead(&lex);
+			//ast = parser(lex);
 		}
 	}
 	return (0);
