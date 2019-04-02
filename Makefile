@@ -2,7 +2,7 @@
 # Debug mode #
 # ---------- #
 
-DEBUG = no
+DEBUG = no 
 
 # --------- #
 # Directory #
@@ -24,7 +24,7 @@ CC = gcc
 ifeq ($(DEBUG), yes)
 	CFLAGS = -Wall -Wextra -g3 -fsanitize=address
 else
-	CFLAGS = -Wall -Wextra -Werror
+	CFLAGS = -g3 -Wall -Wextra -Werror
 endif
 CPPFLAGS = -I $(INCDIR) -I $(INCLIBDIR)
 LDLIBS = -lft
@@ -133,6 +133,9 @@ cleanlibs :
 
 fcleanlibs :
 	@$(MAKE) -C $(LIBDIR) fclean
+
+lldb :
+	@lldb ./$(NAME)
 
 re : fclean all
 
