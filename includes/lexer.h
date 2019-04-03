@@ -44,6 +44,7 @@ enum	e_token_type
 	SPACE,
 	NUMBER,
 	WORD,
+	CMD,
 	DELIM,
 };
 
