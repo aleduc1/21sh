@@ -6,7 +6,7 @@
 /*   By: mbellaic <mbellaic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/12 17:23:00 by aleduc            #+#    #+#             */
-/*   Updated: 2019/03/12 19:45:25 by mbellaic         ###   ########.fr       */
+/*   Updated: 2019/04/03 17:33:42 by aleduc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ t_token		*space(void)
 	token = NULL;
 	if (!(token = (t_token *)ft_memalloc(sizeof(token))))
 		return (NULL);
+	token->cmd = NULL;
 	token->data = ft_strdup(" ");
 	if (!token->data)
 	{
@@ -38,6 +39,7 @@ t_token		*tab_key(void)
 	token = NULL;
 	if (!(token = (t_token *)ft_memalloc(sizeof(token))))
 		return (NULL);
+	token->cmd = NULL;
 	token->data = ft_strdup("\t");
 	if (!token->data)
 	{
@@ -57,6 +59,7 @@ t_token		*new_line(void)
 	token = NULL;
 	if (!(token = (t_token *)ft_memalloc(sizeof(token))))
 		return (NULL);
+	token->cmd = NULL;
 	token->data = ft_strdup("\n");
 	if (!token->data)
 	{

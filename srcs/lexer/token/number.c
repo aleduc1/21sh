@@ -6,7 +6,7 @@
 /*   By: aleduc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/18 18:27:21 by aleduc            #+#    #+#             */
-/*   Updated: 2019/03/18 18:36:45 by aleduc           ###   ########.fr       */
+/*   Updated: 2019/04/03 17:33:42 by aleduc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ t_token		*number(char *numbers)
 	token = NULL;
 	if (!(token = (t_token *)ft_memalloc(sizeof(token))))
 		return (NULL);
+	token->cmd = NULL;
 	token->data = ft_strdup(numbers);
 	if (!token->data)
 	{

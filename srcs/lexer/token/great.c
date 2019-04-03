@@ -6,7 +6,7 @@
 /*   By: aleduc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/12 17:22:08 by aleduc            #+#    #+#             */
-/*   Updated: 2019/03/12 17:22:09 by aleduc           ###   ########.fr       */
+/*   Updated: 2019/04/03 17:33:42 by aleduc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ t_token		*great(void)
 	token = NULL;
 	if (!(token = (t_token *)ft_memalloc(sizeof(token))))
 		return (NULL);
+	token->cmd = NULL;
 	token->data = ft_strdup(">");
 	if (!token->data)
 	{
@@ -38,6 +39,7 @@ t_token		*dgreat(void)
 	token = NULL;
 	if (!(token = (t_token *)ft_memalloc(sizeof(token))))
 		return (NULL);
+	token->cmd = NULL;
 	token->data = ft_strdup(">>");
 	if (!token->data)
 	{
@@ -57,6 +59,7 @@ t_token		*greatpipe(void)
 	token = NULL;
 	if (!(token = (t_token *)ft_memalloc(sizeof(token))))
 		return (NULL);
+	token->cmd = NULL;
 	token->data = ft_strdup(">|");
 	if (!token->data)
 	{
@@ -76,6 +79,7 @@ t_token		*greatamp(void)
 	token = NULL;
 	if (!(token = (t_token *)ft_memalloc(sizeof(token))))
 		return (NULL);
+	token->cmd = NULL;
 	token->data = ft_strdup(">&");
 	if (!token->data)
 	{
@@ -95,6 +99,7 @@ t_token		*lessgreat(void)
 	token = NULL;
 	if (!(token = (t_token *)ft_memalloc(sizeof(token))))
 		return (NULL);
+	token->cmd = NULL;
 	token->data = ft_strdup("<>");
 	if (!token->data)
 	{

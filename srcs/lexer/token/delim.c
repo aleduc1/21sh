@@ -7,6 +7,7 @@ t_token		*delim(void)
 	token = NULL;
 	if (!(token = (t_token *)ft_memalloc(sizeof(token))))
 		return (NULL);
+	token->cmd = NULL;
 	token->data = ft_strdup("delim");
 	if (!token->data)
 	{
