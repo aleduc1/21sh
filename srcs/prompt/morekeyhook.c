@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   morekeyhook.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aleduc <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: mbellaic <mbellaic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/12 17:18:42 by aleduc            #+#    #+#             */
-/*   Updated: 2019/03/12 17:18:49 by aleduc           ###   ########.fr       */
+/*   Updated: 2019/04/05 12:21:39 by mbellaic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,19 +17,19 @@ t_node      *backwardmod(t_node *lstcursor, t_pos *pos)
     if(lstcursor->next && lstcursor->key != ' ' && lstcursor->next->key == ' ')
     {
         stalk_cursor(pos);
-        if(pos->column == 1)
+        if (pos->column == 1)
             go_upright(pos);
         else
             ft_putstr(tgetstr("le", NULL));
             
         lstcursor = lstcursor->next;   
     }
-    if(lstcursor->next && lstcursor->key == ' ')
+    if (lstcursor->next && lstcursor->key == ' ')
     {
-        while(lstcursor->next && lstcursor->key == ' ')
+        while (lstcursor->next && lstcursor->key == ' ')
         {
             stalk_cursor(pos);
-            if(pos->column == 1)
+            if (pos->column == 1)
                 go_upright(pos);
             else
                 ft_putstr(tgetstr("le", NULL));
@@ -44,10 +44,10 @@ t_node      *backwardjump(t_node *lstcursor, char buffer[], t_pos *pos)
     if (PG_DOWN)
     {
         lstcursor = backwardmod(lstcursor, pos);
-        while(lstcursor->next && lstcursor->next->key != ' ')
+        while (lstcursor->next && lstcursor->next->key != ' ')
         {
             stalk_cursor(pos);
-            if(pos->column == 1)
+            if (pos->column == 1)
                 go_upright(pos);
             else
                 ft_putstr(tgetstr("le", NULL));
@@ -61,16 +61,16 @@ t_node      *forwardjump(t_node *lstcursor, char buffer[], t_pos *pos)
 {
     if(PG_UP)
     {
-        while(lstcursor->prev && lstcursor->key != ' ')
+        while (lstcursor->prev && lstcursor->key != ' ')
         {
             lstcursor = lstcursor->prev;
             stalk_cursor(pos);
-            if(pos->column == pos->termsize.ws_col)
+            if (pos->column == pos->termsize.ws_col)
                 go_downleft(pos);
             else
                 ft_putstr(tgetstr("nd", NULL));
         }
-        while(lstcursor->prev && lstcursor->key == ' ')
+        while (lstcursor->prev && lstcursor->key == ' ')
         {
             lstcursor = lstcursor->prev;
             if(pos->column == pos->termsize.ws_col)
