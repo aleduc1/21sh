@@ -50,6 +50,7 @@ enum	e_token_type
 struct s_token
 {
 	char	*data;
+	char	**cmd;
 	t_type	type;
 };
 

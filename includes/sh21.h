@@ -46,10 +46,18 @@
 # define SHIFT_RIGHT (buffer[0] == 27 && buffer[1] == 91 && buffer[2] ==  '1' && buffer[5] == 'C')
 # define SHIFT_LEFT (buffer[0] == 27 && buffer[1] == 91 && buffer[2] ==  '1' && buffer[5] == 'D')
 
+# define ENTER (buffer[0] == 10 && buffer[1] == 0 && buffer[2] ==  0)
 //# define TAB (buffer[0] == 9 && buffer[1] == 0)
 
 
 char **g_env;
+
+typedef struct      s_multi
+{
+    t_node          *lst;
+    struct s_multi  *prev;
+    struct s_multi  *next;
+}                   t_multi;
 
 typedef struct      s_node
 {

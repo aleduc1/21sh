@@ -6,7 +6,7 @@
 /*   By: mbellaic <mbellaic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/12 17:18:30 by aleduc            #+#    #+#             */
-/*   Updated: 2019/04/05 12:20:48 by mbellaic         ###   ########.fr       */
+/*   Updated: 2019/04/05 13:52:34 by mbellaic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,7 +146,8 @@ t_node      *ctrl_n_friends(t_node *lstcursor, char buffer[])
     {
         ft_putstr(tgetstr("ei", NULL));
         default_term_mode();
-            exit(1);
+        //NEED TO HOOK ALL THE THING WE NEED TO FREE THERE
+        exit(0);
     }
     return (lstcursor);
 }

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init.c                                             :+:      :+:    :+:   */
+/*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mbellaic <mbellaic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/12 17:13:21 by aleduc            #+#    #+#             */
-/*   Updated: 2019/03/30 01:47:27 by mbellaic         ###   ########.fr       */
+/*   Updated: 2019/04/05 15:10:37 by mbellaic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,13 @@ void	init_prompt(t_pos *pos)
     pos->currentline = 0;
     pos->selection = 0;
     pos->selectcount = 0;
+    pos->inputlen = 0;
+    pos->savecolumn = 0;
+    pos->saverow = 0;
+    pos->startrow = 0;
+    pos->startcolumn = 0;
+    pos->tailcolumn = 0;
+    pos->tailrow = 0;
 }
 
 t_node	*read_input(t_node **input, t_pos *pos)
@@ -33,7 +40,7 @@ t_node	*read_input(t_node **input, t_pos *pos)
     lstcursor = *input;
     ft_bzero(buffer, 6);
     ft_putstr(tgetstr("im", NULL));
-    while(read(STDIN_FILENO, &buffer, 6) > 0 && !NL)
+    while(read(STDIN_FILENO, &buffer, 6) > 0 && !ENTER)
     {
         lstcursor = editline(pos, lstcursor, input, buffer);
         //printf("%c('%d') | %c('%d') | %c('%d') | %c('%d')\n", buffer[0], buffer[0],buffer[1],buffer[1],buffer[2],buffer[2],buffer[3], buffer[3]);
