@@ -6,44 +6,36 @@
 /*   By: aleduc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/03 17:49:15 by aleduc            #+#    #+#             */
-/*   Updated: 2019/04/03 18:43:39 by aleduc           ###   ########.fr       */
+/*   Updated: 2019/04/05 19:40:12 by aleduc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
 
 /*
-** Goal : 
-** Link every token word into only one
-** Erase other token
-** Set token's type to be CMD
-** Set token's data to "cmd"
-** set token's cmd field as the char ** containing the command and it arguments
+** Goal :
+** Regroup tokens into simple commands
+** Create a token command for simple commands
+** In it we will put every token between operator, so a LL
 ** 
 ** Coding :
-** Go through LL.
-** When operator is met : do the link if needed
-** It is needed if : before the operator there is mutliple token word next to each other
-**
-** One way of doing it :
-** Increase an int everytime we meet a word token
-** Reset it to 0 otherwise
-** When we meet a operator token
-** If the int is > 1 do the link
-**
-** Another way of doing it :
-** When we meet an operator token, if the two token before are word
-** Do the link, just sending the linked list and the operator node to the link function
+** From the last cut point to the new one, we need to split this part of the LL
+** And put it into a simple command token
+** Once part of the LL is detached , connect it to a simple command token's node
 ** 
-** Advantage of option 1 is that i already know the start and end node position
-** Advantage of option 2 is that it's probably faster and more straight-forward
+** Steps :
+** 1- Identifying start and end of the part of the LL to detach
+** 		Can be broken down into 2 step
+** 2- Detach it
+** 3- Create a command token with the LL in it
+** 4- Attach it to the LL
+** 5- Move pointer for whats after the cmd token's node and repeat if its not finished
 **
-** Use option 2 and add a function to find the first word in the streak before before sending it to link
-**
-** Link will require the first word token encountered and the last before the operator
-** To link I could :
-** Create a new token and place it on the LL (opt1)
-** Modify the first token and remove the other (opt2)
-** Option 2 is easier and faster so I'll use it.
-** 
+** Breakdown :
+** 1:
+** - if token delim go on step after
+** - if LL is still existant
+** - set start as where i am
 */
+
+
