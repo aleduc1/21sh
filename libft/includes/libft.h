@@ -6,7 +6,7 @@
 /*   By: aleduc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/13 16:33:26 by aleduc            #+#    #+#             */
-/*   Updated: 2019/03/12 16:41:09 by aleduc           ###   ########.fr       */
+/*   Updated: 2019/04/08 10:44:09 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <sys/types.h>
 # include <sys/stat.h>
 # include <fcntl.h>
+# include "minilib.h"
 
 typedef struct		s_list
 {
@@ -139,4 +140,6 @@ void				ft_dlstprinttail(t_dlist **tail);
 int					ft_dlstiter(t_dlist **head);
 int					ft_madeby(void);
 int					ft_debug(void);
+
+int get_next_line(int fd, char **line);
 #endif

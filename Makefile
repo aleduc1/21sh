@@ -15,7 +15,7 @@ OBJDIR = objs/
 INCDIR = includes/
 INCLIBDIR = libft/includes/
 
-VPATH = objs:srcs:srcs/lexer:srcs/lexer/dll_lex:srcs/lexer/token:srcs/prompt:srcs/parser
+VPATH = objs:srcs:srcs/lexer:srcs/lexer/dll_lex:srcs/lexer/token:srcs/prompt:srcs/parser:srcs/env
 # ------------------ #
 # Compiler and flags #
 # ------------------ #
@@ -73,10 +73,19 @@ SRCS_NAMES = main.c \
 			 terminit.c \
 			 textselection.c \
 			 tree_utils.c \
-			 parser.c
+			 parser.c \
+			 other_tools.c \
+			 parser_env.c \
+			 manage_env.c \
+			 tools_env.c \
+			 builtin_env.c \
+			 manage_file.c \
+			 list_env.c \
+			 list_arg.c \
+			 execute_command.c
 
 OBJS_NAMES = $(SRCS_NAMES:.c=.o)
-HEADERS_NAMES = sh21.h lexer.h parser.h
+HEADERS_NAMES = sh21.h lexer.h parser.h env.h
 LIBS_NAMES = libft.a
 
 OBJ = $(addprefix $(OBJDIR), $(OBJS_NAMES))

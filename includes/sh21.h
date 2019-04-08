@@ -52,13 +52,6 @@
 
 char **g_env;
 
-typedef struct      s_multi
-{
-    t_node          *lst;
-    struct s_multi  *prev;
-    struct s_multi  *next;
-}                   t_multi;
-
 typedef struct      s_node
 {
     char            key;
@@ -66,6 +59,13 @@ typedef struct      s_node
     struct s_node   *prev;
     struct s_node   *next;  
 }                   t_node;
+
+typedef struct      s_multi
+{
+    t_node          *lst;
+    struct s_multi  *prev;
+    struct s_multi  *next;
+}                   t_multi;
 
 typedef struct      s_pos
 {

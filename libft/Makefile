@@ -20,7 +20,9 @@ endif
 # --------- #
 
 SRCDIR = srcs/
+SRCDIRPRINTF = srcs/ft_printf/
 OBJDIR = objs/
+OBJDIRPRINTF = objs/
 INCDIR = includes/
 LIBDIR = libs/
 
@@ -47,20 +49,32 @@ NAME = $(LIBDIR)libft.a
 SRCS_NAMES = ft_atoi.c ft_bzero.c ft_fill_str.c ft_isalnum.c ft_isalpha.c ft_isascii.c ft_isdigit.c ft_isprint.c \
 			 ft_isspace.c ft_itoa.c ft_lstadd.c ft_lstdel.c ft_lstdelone.c ft_lst_element_at.c ft_lstextend.c \
 			 ft_lstflip.c ft_lstiter.c ft_lstmap.c ft_lstnew.c ft_lstsize.c ft_lsttail.c ft_memalloc.c ft_memccpy.c \
-			 ft_memchr.c ft_memcmp.c ft_memcpy.c ft_memdel.c ft_memmove.c ft_memset.c ft_mergesort.c ft_parser.c \
-			 ft_printf.c ft_print_word_table.c ft_putchar.c ft_putchar_fd.c ft_putendl.c ft_putendl_fd.c ft_putnbr.c \
+			 ft_memchr.c ft_memcmp.c ft_memcpy.c ft_memdel.c ft_memmove.c ft_memset.c ft_mergesort.c \
+			 ft_print_word_table.c ft_putchar.c ft_putchar_fd.c ft_putendl.c ft_putendl_fd.c ft_putnbr.c \
 			 ft_putnbr_fd.c ft_putnbrln.c ft_putstr.c ft_putstr_fd.c ft_sort_integer_table.c ft_split_whitespaces.c \
 			 ft_strbeginswith.c ft_strcat.c ft_strchr.c ft_strclr.c ft_strcmp.c ft_strcpy.c ft_strdel.c ft_strdup.c \
 			 ft_strendswith.c ft_strequ.c ft_striter.c ft_striteri.c ft_strjoin.c ft_strjoinfree.c ft_strlcat.c \
 			 ft_strlen.c ft_strmap.c ft_strmapi.c ft_strncat.c ft_strnchr.c ft_strncmp.c ft_strncpy.c ft_strnequ.c \
 			 ft_strnew.c ft_strnstr.c ft_strrchr.c ft_strrev.c ft_strsplit.c ft_strstr.c ft_strsub.c ft_strsubfree.c \
 			 ft_strtrim.c ft_swap.c ft_tolower.c ft_toupper.c get_next_line.c split_once.c ft_dlstnew.c ft_dlstinserts.c \
-			 ft_dlstdel.c ft_dlstprint.c ft_madeby.c ft_debug.c
+			 ft_dlstdel.c ft_dlstprint.c ft_madeby.c ft_debug.c \
+			 ft_arraydel.c ft_arraydelline.c ft_arraydisplay.c ft_arraydup.c ft_arrayjoin.c ft_arraylen.c ft_arraysub.c ft_strsub_tab_fix.c \
+			 ft_chr_index.c ft_chrn_index.c ft_deplace.c ft_numlen.c ft_pow_array_fix.c ft_reverse_tablo.c ft_strchr_exist.c get_end_line.c
+
+PRINTF = ft_printf.c parser.c gest_flag.c arg_s.c arg_n.c arg_convert.c arg_float.c apply_arg.c display.c tools.c tools_bis.c tools_float_bis.c \
+		 ft_itoa_other.c ft_itoa_other_u_s.c ft_convert_base.c binary.c manage_float.c apply_arg_float.c tools_float.c \
+		 multiplication_float.c add_float.c apply_arg_s.c apply_arg_n.c apply_arg_convert.c prepare.c
+
 OBJS_NAMES = $(SRCS_NAMES:.c=.o)
-HEADERS_NAMES = libft.h ft_printf.h get_next_line.h
+
+OBJS_PRINTF = $(PRINTF:.c=.o)
+
+HEADERS_NAMES = libft.h ft_printf.h get_next_line.h minilib.h ft_printf.h
 
 SRC = $(addprefix $(SRCDIR), $(SRCS_NAMES))
+SRCPRINTF = $(addprefix $(SRCDIRPRINTF), $(PRINTF))
 OBJ = $(addprefix $(OBJDIR), $(OBJS_NAMES))
+OBJPRINTF = $(addprefix $(OBJDIRPRINTF), $(OBJS_PRINTF))
 HEADERS = $(addprefix $(INCDIR), $(HEADERS_NAMES))
 
 # ----------------- #
@@ -87,13 +101,18 @@ else
 	@$(PRINT) "\n"
 endif
 
-$(NAME) : $(OBJ)
+$(NAME) : $(OBJ) $(OBJPRINTF)
 	@$(CREATE) $(LIBDIR)
-	@$(AR) $(ARFLAGS) $(NAME) $(OBJ)
+	@$(AR) $(ARFLAGS) $(NAME) $(OBJ) $(OBJPRINTF)
 	@$(SORT) $(NAME)
 	@$(PRINT) "Libft.a built"
 
 $(OBJDIR)%.o : $(SRCDIR)%.c $(HEADERS)
+	@$(CREATE) $(OBJDIR)
+	@$(CC) -o $@ -c $< $(CFLAGS) $(CPPFLAGS)
+	@$(PRINT) ".o file for lib created"
+
+$(OBJDIRPRINTF)%.o : $(SRCDIRPRINTF)%.c $(HEADERS)
 	@$(CREATE) $(OBJDIR)
 	@$(CC) -o $@ -c $< $(CFLAGS) $(CPPFLAGS)
 	@$(PRINT) ".o file for lib created"
