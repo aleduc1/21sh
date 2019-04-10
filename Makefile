@@ -18,16 +18,17 @@ INCLIBDIR = libft/includes/
 VPATH = objs:srcs:srcs/lexer:srcs/lexer/dll_lex:srcs/lexer/token:\
 		srcs/prompt:srcs/prompt/edition:srcs/prompt/history:srcs/prompt/multiline:\
 		srcs/prompt/others:srcs/prompt/selection:\
-		srcs/parser
+		srcs/parser:\
+		srcs/AST
 # ------------------ #
 # Compiler and flags #
 # ------------------ #
 
 CC = gcc
 ifeq ($(DEBUG), yes)
-	CFLAGS = -Wall -Wextra -g -fsanitize=address
-else
 	CFLAGS = -Wall -Wextra -Werror -g3 -fsanitize=address
+else
+	CFLAGS = -Wall -Wextra
 endif
 CPPFLAGS = -I $(INCDIR) -I $(INCLIBDIR)
 LDLIBS = -lft
@@ -47,21 +48,7 @@ SRCS_NAMES = main.c \
 			 dll_ins.c \
 			 dll_iter.c \
 			 dll_del.c \
-			 ampersand.c \
-			 brace.c \
-			 bracket.c \
-			 colon.c \
-			 great.c \
-			 less.c \
-			 par.c \
-			 pipe.c \
-			 quote.c \
-			 sign.c \
-			 slash.c \
-			 space.c \
-			 number.c \
-			 word.c \
-			 delim.c \
+			 token.c \
 			 cursortools.c \
 			 dlist.c \
 			 editiontools.c \

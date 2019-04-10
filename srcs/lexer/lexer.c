@@ -21,7 +21,7 @@ t_lex	*add_delim(t_lex **lex)
 	t_lex	*nd_node;
 	t_token	*token;
 
-	token = delim();
+	token = create_token("delim", DELIM);
 	node = new_node(&token);
 	nd_node = new_node(&token);
 	head = *lex;
@@ -70,49 +70,49 @@ t_token	*word_or_number(char *data)
 
 	token = NULL;
 	if (ft_isnumbers(data))
-		token = number(data);
+		token = create_token(data, NUMBER);
 	else
-		token = word(data);
+		token = create_token(data, WORD);
 	return (token);
 }
 
-void	compare_types(t_ptrf **fptr, t_token **token, char *word)
+void	compare_types(t_tab_type **tab_of_type, t_token **token, char *word)
 {
 	int		i;
 
 	i = 0;
-	while ((*fptr)[i].f)
+	while ((*tab_of_type)[i].type != NUL)
 	{
-		if (!(ft_strcmp(word, (*fptr)[i].str)))
-			*token = (*fptr)[i].f();
+		if (!(ft_strcmp(word, (*tab_of_type)[i].str)))
+			*token = create_token((*tab_of_type)[i].str, (*tab_of_type)[i].type);
 		i++;
 	}
 	if (!(*token))
 		*token = word_or_number(word);
 }
 
-int		is_in_tab(t_ptrf **fptr, char c)
+int		is_in_tab(t_tab_type **tab_of_type, char c)
 {
 	int		i;
 
 	i = 0;
-	while ((*fptr)[i].f)
+	while ((*tab_of_type)[i].type != NUL)
 	{
-		if ((*fptr)[i].str[0] == c)
+		if ((*tab_of_type)[i].str[0] == c)
 			return (1);
 		i++;
 	}
 	return (0);
 }
 
-t_token	*check_type(t_ptrf **fptr, char *input, int start, int end)
+t_token	*check_type(t_tab_type **tab_of_type, char *input, int start, int end)
 {
 	char	*word;
 	t_token	*token;
 
 	token = NULL;
 	word = ft_strsub(input, start, end - start);
-	compare_types(fptr, &token, word);
+	compare_types(tab_of_type, &token, word);
 	ft_memdel((void **)&word);
 	return (token);
 }
@@ -140,13 +140,13 @@ void	reading_input(char *input, t_lex **lex)
 	int		last_t;
 	int		to_check;
 	t_token	*tok;
-	t_ptrf	*fptr;
+	t_tab_type	*tab_of_type;
 
 	tok = NULL;
 	to_check = 0;
 	i = 0;
 	last_t = 0;
-	set_tab_types(&fptr);
+	set_tab_types(&tab_of_type);
 	while (input[i])
 	{
 		i = skip_whitespace(input, i);
@@ -158,7 +158,7 @@ void	reading_input(char *input, t_lex **lex)
 				if (i != last_t)
 					to_check = 1;
 			}
-			else if (is_in_tab(&fptr, input[i]))
+			else if (is_in_tab(&tab_of_type, input[i]))
 			{
 				if (i == last_t)
 				{
@@ -178,7 +178,7 @@ void	reading_input(char *input, t_lex **lex)
 		}
 		if (to_check)
 		{
-			tok = check_type(&fptr, input, last_t, i);
+			tok = check_type(&tab_of_type, input, last_t, i);
 			add_token(lex, &tok);
 			ft_memdel((void **)&tok);
 			to_check = 0;
