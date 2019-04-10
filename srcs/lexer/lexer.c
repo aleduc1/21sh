@@ -26,7 +26,7 @@ t_lex	*add_delim(t_lex **lex)
 	nd_node = new_node(&token);
 	head = *lex;
 	tail = *lex;
-	while (tail->next)
+	while (tail && tail->next)
 		tail = tail->next;
 	dllinsfront(&head, &nd_node);
 	dllinsback(&tail, &node);
@@ -144,7 +144,7 @@ t_token	*handle_string(char *input, int *i, int *last_t)
 	(*last_t) = ++(*i);
 	while (input[(*i)] != '\"')
 		(*i)++;
-	word = ft_strsub(input, (*i), (*last_t));
+	word = ft_strsub(input, *last_t, *i - *last_t);
 	tok = create_token(word, WORD);
 	ft_memdel((void **)&word);
 	(*i)++;
@@ -177,7 +177,7 @@ void	reading_input(char *input, t_lex **lex)
 			}
 			else if (input[i] == '\"')
 			{
-				if (i != last_t)
+				if (i == last_t)
 					tok = handle_string(input, &i, &last_t);
 				to_check = 1;
 			}
@@ -205,7 +205,8 @@ void	reading_input(char *input, t_lex **lex)
 		{
 			if (!tok)
 				tok = check_type(&tab_of_type, input, last_t, i);
-			add_token(lex, &tok);
+			if (tok->data[0])
+				add_token(lex, &tok);
 			ft_memdel((void **)&tok);
 			to_check = 0;
 		}

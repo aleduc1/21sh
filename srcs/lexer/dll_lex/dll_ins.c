@@ -4,7 +4,8 @@ void	dllinsfront(t_lex **head, t_lex **node)
 {
 	(*node)->next = (*head);
 	(*node)->prev = NULL;
-	(*head)->prev = (*node);
+	if (*head)
+		(*head)->prev = (*node);
 	(*head) = (*node);
 }
 
@@ -12,7 +13,8 @@ void	dllinsback(t_lex **tail, t_lex **node)
 {
 	(*node)->next = NULL;
 	(*node)->prev = (*tail);
-	(*tail)->next = (*node);
+	if (*tail)
+		(*tail)->next = (*node);
 	(*tail) = (*node);
 }
 
