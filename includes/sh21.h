@@ -33,8 +33,6 @@
 # define PG_UP (buffer[0] == 27 && buffer[1] == 91 && buffer[2] == 53)
 # define PG_DOWN (buffer[0] == 27 && buffer[1] == 91 && buffer[2] == 54)
 
-# define NL (buffer[0] == 10 && buffer[1] == 0)
-
 # define ARROW_UP   (buffer[0] == 27 && buffer[2] == 'A')
 # define ARROW_DOWN   (buffer[0] == 27 && buffer[2] == 'B')
 # define ARROW_RIGHT (buffer[0] == 27 && buffer[2] == 'C')
@@ -46,18 +44,11 @@
 # define SHIFT_RIGHT (buffer[0] == 27 && buffer[1] == 91 && buffer[2] ==  '1' && buffer[5] == 'C')
 # define SHIFT_LEFT (buffer[0] == 27 && buffer[1] == 91 && buffer[2] ==  '1' && buffer[5] == 'D')
 
-# define ENTER (buffer[0] == 10 && buffer[1] == 0 && buffer[2] ==  0)
+# define ENTER (buffer[0] == 10 && buffer[1] == 0)
 //# define TAB (buffer[0] == 9 && buffer[1] == 0)
 
 
 char **g_env;
-
-typedef struct      s_multi
-{
-    t_node          *lst;
-    struct s_multi  *prev;
-    struct s_multi  *next;
-}                   t_multi;
 
 typedef struct      s_node
 {
@@ -66,6 +57,19 @@ typedef struct      s_node
     struct s_node   *prev;
     struct s_node   *next;  
 }                   t_node;
+
+typedef struct      s_multi
+{
+    t_node          *input;
+    struct s_multi  *prev;
+    struct s_multi  *next;
+}                   t_multi;
+
+typedef struct      s_integerity
+{
+    int             quote;
+    int             dquote;
+}                   t_integrity;
 
 typedef struct      s_pos
 {
@@ -128,17 +132,18 @@ void                dpush(t_node **head, char key);
 void                dprintlist(t_node *node, int direction);
 void                insert(t_node *prev_node, char key);
 void                ddel(t_node **head, t_node *del);
-void                ddellist(t_node *head);
+void                ddelmul(t_multi  **head, t_multi *del);
+void                ddellist(t_multi *head);
+void                multi_push(t_multi **head);
 
 void                print_prompt(void);
 char                *reverse_str(char *inputstr);
-char                *lst_to_str(t_node **input, char *inputstr);
+char                *lst_to_str(t_multi **input, char *inputstr);
 int                 ft_outc(int c);
 void                get_inputlen(t_pos *pos, t_node *input);
 void                get_startingpos(t_pos *pos);
 void                get_tail(t_pos *pos);
 t_node              *travel_to_last(t_node *lstcursor, t_pos *pos);
-char                *lst_to_str(t_node **input, char *inputstr);
 
 void                inserthistory(t_node *prev_node, char *line, t_pos *pos);
 t_node              *clean_for_history(t_node *lstcursor, t_node **input, t_pos *pos);
@@ -155,6 +160,6 @@ t_node              *find_tail(t_node *lstcursor, t_pos *pos);
 
 void	            init_prompt(t_pos *pos);
 t_node	            *read_input(t_node **input, t_pos *pos);
-char	            *prompt(t_node *input, t_pos *pos);
+char	            *prompt(t_multi *input, t_pos *pos);
 
 #endif

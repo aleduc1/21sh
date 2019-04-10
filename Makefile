@@ -22,15 +22,15 @@ VPATH = objs:srcs:srcs/lexer:srcs/lexer/dll_lex:srcs/lexer/token:srcs/prompt:src
 
 CC = gcc
 ifeq ($(DEBUG), yes)
-	CFLAGS = -Wall -Wextra -g3 -fsanitize=address
+	CFLAGS = -Wall -Wextra -g -fsanitize=address
 else
-	CFLAGS = -g3 -Wall -Wextra -Werror
+	CFLAGS = -Wall -Wextra -Werror -g3 -fsanitize=address
 endif
 CPPFLAGS = -I $(INCDIR) -I $(INCLIBDIR)
 LDLIBS = -lft
 LDFLAGS = -L $(PATHLIBDIR)
 
-LFLAGS = -ltermcap
+LFLAGS = -lncurses
 
 # --------------- #
 # Different names #
