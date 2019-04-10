@@ -134,6 +134,23 @@ int		dub_possible(char c)
 	return (0);
 }
 
+t_token	*handle_string(char *input, int *i, int *last_t)
+{
+	char	*word;
+	t_token	*tok;
+
+	word = NULL;
+	tok = NULL;
+	(*last_t) = ++(*i);
+	while (input[(*i)] != '\"')
+		(*i)++;
+	word = ft_strsub(input, (*i), (*last_t));
+	tok = create_token(word, WORD);
+	ft_memdel((void **)&word);
+	(*i)++;
+	return (tok);
+}
+
 void	reading_input(char *input, t_lex **lex)
 {
 	int		i;
@@ -158,6 +175,12 @@ void	reading_input(char *input, t_lex **lex)
 				if (i != last_t)
 					to_check = 1;
 			}
+			else if (input[i] == '\"')
+			{
+				if (i != last_t)
+					tok = handle_string(input, &i, &last_t);
+				to_check = 1;
+			}
 			else if (is_in_tab(&tab_of_type, input[i]))
 			{
 				if (i == last_t)
@@ -169,16 +192,19 @@ void	reading_input(char *input, t_lex **lex)
 				to_check = 1;
 			}
 			else
-				i++;
-			if (input[i] == '\0')
 			{
-				if (i != last_t)
-					to_check = 1;
+				i++;
+				if (input[i] == '\0')
+				{
+					if (i != last_t)
+						to_check = 1;
+				}
 			}
 		}
 		if (to_check)
 		{
-			tok = check_type(&tab_of_type, input, last_t, i);
+			if (!tok)
+				tok = check_type(&tab_of_type, input, last_t, i);
 			add_token(lex, &tok);
 			ft_memdel((void **)&tok);
 			to_check = 0;
