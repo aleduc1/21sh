@@ -15,7 +15,10 @@ OBJDIR = objs/
 INCDIR = includes/
 INCLIBDIR = libft/includes/
 
-VPATH = objs:srcs:srcs/lexer:srcs/lexer/dll_lex:srcs/lexer/token:srcs/prompt:srcs/parser
+VPATH = objs:srcs:srcs/lexer:srcs/lexer/dll_lex:srcs/lexer/token:\
+		srcs/prompt:srcs/prompt/edition:srcs/prompt/history:srcs/prompt/multiline:\
+		srcs/prompt/others:srcs/prompt/selection:\
+		srcs/parser
 # ------------------ #
 # Compiler and flags #
 # ------------------ #
@@ -71,6 +74,7 @@ SRCS_NAMES = main.c \
 			 othertools.c \
 			 stalkcursor.c \
 			 terminit.c \
+			 multiline.c \
 			 textselection.c \
 			 tree_utils.c \
 			 parser.c

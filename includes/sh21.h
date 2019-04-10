@@ -158,6 +158,9 @@ t_node              *delete_selection(t_node **input, t_node *lstcursor, t_pos *
 t_node              *undo_selection(t_node *lstcursor, t_pos *pos);
 t_node              *find_tail(t_node *lstcursor, t_pos *pos);
 
+void                reset_multi(t_pos *pos);
+int                 check_integrity(t_node *input, t_multi **multi, t_pos *pos, t_integrity *count);
+
 void	            init_prompt(t_pos *pos);
 t_node	            *read_input(t_node **input, t_pos *pos);
 char	            *prompt(t_multi *input, t_pos *pos);
