@@ -6,7 +6,7 @@
 /*   By: mbellaic <mbellaic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/12 17:13:21 by aleduc            #+#    #+#             */
-/*   Updated: 2019/04/10 14:31:37 by mbellaic         ###   ########.fr       */
+/*   Updated: 2019/04/10 14:49:00 by mbellaic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,8 @@ char	*prompt(t_multi *multi, t_pos *pos)
         inputstr = lst_to_str(&multi, inputstr);
         inserthistory(pos->history, inputstr, pos);
     }
+    ft_putstr("Input : ");
+    ft_putendl(inputstr);
     ft_putstr("Clipboard : ");
     ft_putendl(pos->clipboard);
     ddellist(multi);

@@ -6,7 +6,7 @@
 /*   By: mbellaic <mbellaic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/12 17:19:04 by aleduc            #+#    #+#             */
-/*   Updated: 2019/04/08 16:22:59 by mbellaic         ###   ########.fr       */
+/*   Updated: 2019/04/10 14:48:23 by mbellaic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,8 +95,5 @@ char *lst_to_str(t_multi **multi, char *inputstr)
     char *finalstr = strdup(inputstr);
     inputstr--;
     free(inputstr);
-    ft_putstr("\nINPUTSTR :");
-    ft_putstr(finalstr);
-    ft_putstr("\n");
     return(finalstr);
 }

@@ -6,7 +6,7 @@
 /*   By: mbellaic <mbellaic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/12 17:01:09 by aleduc            #+#    #+#             */
-/*   Updated: 2019/04/09 17:14:57 by mbellaic         ###   ########.fr       */
+/*   Updated: 2019/04/10 14:47:41 by mbellaic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,9 @@ int		main(int ac, char **av, char **environ)
 		if (ac && av && environ)
 		{
 			inputstr = prompt(input, &pos); // Don't forget to free inputstr once you are done with it.
-			// if (inputstr[0])
-			// 	lex = lexer(inputstr);
-			// ft_putendl(inputstr);/* Debugging */
-			//dllprinthead(&lex);
-			//ast = parser(lex);
+			if (inputstr[0])
+				lex = lexer(inputstr);
+			ast = parser(lex);
 		}
 	}
 	return (0);

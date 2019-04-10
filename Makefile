@@ -32,7 +32,6 @@ endif
 CPPFLAGS = -I $(INCDIR) -I $(INCLIBDIR)
 LDLIBS = -lft
 LDFLAGS = -L $(PATHLIBDIR)
-
 LFLAGS = -lncurses
 
 # --------------- #
@@ -118,7 +117,7 @@ libs :
 %.o : %.c $(HEADER)
 	@$(CREATE) $(OBJDIR)
 	@$(CC) -o $(OBJDIR)$@ -c $< $(CFLAGS) $(CPPFLAGS)
-	@$(PRINT) ".o created"
+	@$(PRINT) ".o file created"
 
 clean : cleanlibs
 	@$(DEL) $(OBJDIR)
@@ -143,7 +142,9 @@ lldb :
 
 re : fclean all
 
+refast : cleans all
+
 help :
-	@$(PRINT) "Rules available : all, clean, cleans, fclean, re, libs, cleanlibs, fcleanlibs and help"
+	@$(PRINT) "Rules available : all, clean, cleans, fclean, re, refast ,libs, cleanlibs, fcleanlibs and help"
 
 .PHONY : $(PHONY)
