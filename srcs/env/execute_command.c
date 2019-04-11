@@ -6,7 +6,7 @@
 /*   By: sbelondr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/02 08:43:53 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/04/08 11:11:36 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/04/09 13:48:15 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,7 @@ int		exec_command(t_arg *lst_arg, t_env **my_env)
 	int		verif;
 	char	**env;
 	char	**command;
+
 
 	env = create_list_env(*my_env, 0);
 	command = transfer_arg(lst_arg);

@@ -6,7 +6,7 @@
 /*   By: sbelondr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/22 17:57:48 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/04/08 11:09:45 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/04/11 14:31:54 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,6 @@ int		is_builtin(t_arg *arg, t_env **my_env)
 
 	final = init_arg();
 	command = ft_strdup(arg->value);
-	arg = arg->next;
 	final->key = ft_strdup(arg->value);
 	final->value = ft_strdup(arg->next ? arg->next->value : "");
 	if (ft_strequ(command, "env"))
