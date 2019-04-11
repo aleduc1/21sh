@@ -6,11 +6,12 @@
 /*   By: sbelondr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/02 08:43:53 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/04/09 13:48:15 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/04/11 18:41:40 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "env.h"
+//#include "env.h"
+#include "../../includes/env.h"
 
 /*
 ** fd_stock[0] -> in
@@ -18,11 +19,15 @@
 ** fd_stock[2] -> error
 */
 
-int		add_process(char **command, int fd_stock[3], char **env,
+int		add_process(char **command, int fd_stock[3], t_env *my_env,
 		int *returns_code)
 {
+	char	**env;
 	int		pid;
 
+	if (is_in_path(&command, my_env) != 1)
+		return (-1);
+	env = create_list_env(my_env, 0);
 	pid = fork();
 	waitpid(pid, &(*returns_code), 0);
 	if (pid == 0)
@@ -37,10 +42,11 @@ int		add_process(char **command, int fd_stock[3], char **env,
 		ft_dprintf(2, "21sh: %s: No such file or directory\n", command[0]);
 		exit(pid);
 	}
+	ft_arraydel(&env);
 	return (pid);
 }
 
-int		exec_fork(char **command, t_env **my_env, char **env)
+int		exec_fork(char **command, t_env **my_env)
 {
 	int	return_code;
 	int	pid;
@@ -50,13 +56,14 @@ int		exec_fork(char **command, t_env **my_env, char **env)
 	fd_stock[1] = dest_output(&(*my_env));
 	fd_stock[2] = dest_error_output(&(*my_env));
 	signal(SIGINT, NULL);
-	pid = add_process(command, fd_stock, env, &return_code);
+	pid = add_process(command, fd_stock, *my_env, &return_code);
 	close_file(&(*my_env));
 	close_error_file(&(*my_env));
-	kill(pid, SIGINT);
+	if (pid != -1)
+		kill(pid, SIGINT);
 	return (return_code);
 }
-
+/*
 int		exec_pipe_fork(char **command, char **command_bis, char **env,
 		t_env **my_env)
 {
@@ -105,7 +112,6 @@ int		exec_command(t_arg *lst_arg, t_env **my_env)
 	char	**env;
 	char	**command;
 
-
 	env = create_list_env(*my_env, 0);
 	command = transfer_arg(lst_arg);
 	verif = is_builtin(lst_arg, &(*my_env));
@@ -125,4 +131,4 @@ int		exec_command(t_arg *lst_arg, t_env **my_env)
 	ft_arraydel(&env);
 	gest_return(verif, &(*my_env));
 	return (verif);
-}
+}*/

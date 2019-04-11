@@ -6,13 +6,13 @@
 /*   By: sbelondr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/22 14:54:24 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/04/08 11:12:21 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/04/11 18:53:29 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "env.h"
+#include "../../includes/env.h"
 
-int		count_env(t_env *my_env, int env)
+static int	count_env(t_env *my_env, int env)
 {
 	int	len;
 
@@ -54,7 +54,7 @@ char	**create_list_env(t_env *my_env, int env)
 	return (dst);
 }
 
-int		edit_export(t_env **my_env, char *key)
+int		edit_export(char *key, t_env **my_env)
 {
 	int		verif;
 	t_env	*head;
@@ -75,7 +75,7 @@ int		edit_export(t_env **my_env, char *key)
 	return (verif);
 }
 
-int		edit_set(t_env **my_env, t_arg *arg)
+int		edit_set(t_arg *arg, t_env **my_env)
 {
 	t_env	*head;
 	int		verif;
@@ -99,14 +99,15 @@ int		edit_set(t_env **my_env, t_arg *arg)
 	return (verif);
 }
 
-int		edit_setenv(t_env **my_env, t_arg *arg)
+int		edit_setenv(t_arg *arg, t_env **my_env)
 {
-	edit_set(&(*my_env), arg);
-	edit_export(&(*my_env), arg->key);
+	edit_set(arg, &(*my_env));
+	if (arg->key)
+		edit_export(arg->key, &(*my_env));
 	return (0);
 }
 
-int		ft_unsetenv(t_env **my_env, char *key)
+int		ft_unsetenv(char *key, t_env **my_env)
 {
 	int		verif;
 	t_env	*head;
@@ -127,7 +128,7 @@ int		ft_unsetenv(t_env **my_env, char *key)
 	return (verif);
 }
 
-int		ft_unset(t_env **my_env, char *key)
+int		ft_unset(char *key, t_env **my_env)
 {
 	int	verif;
 

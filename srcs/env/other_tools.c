@@ -6,11 +6,12 @@
 /*   By: sbelondr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/22 17:57:48 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/04/11 14:31:54 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/04/11 18:56:09 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "env.h"
+//#include "env.h"
+#include "../../includes/env.h"
 
 char	**transfer_arg(t_arg *lst_arg)
 {
@@ -48,9 +49,7 @@ int		is_in_path(char ***command, t_env *my_env)
 
 	if (access((*command)[0], F_OK) >= 0 && access((*command)[0], X_OK) >= 0)
 		return (1);
-	str = value_line_path(my_env, "PATH", 1);
-	if (!str)
-		str = value_line_path(my_env, "PATH", 0);
+	str = value_line_path(my_env, "PATH", 0);
 	if (!str)
 		return (-1);
 	split = ft_strsplit(str, ':');
@@ -76,44 +75,35 @@ int		is_in_path(char ***command, t_env *my_env)
 	return (-1);
 }
 
-int		is_builtin(t_arg *arg, t_env **my_env)
+int		is_builtin(char **command, t_env **my_env, int fd_stock[3])
 {
-	t_arg	*final;
-	char	*command;
+	t_arg	*arg;
+	int		verif;
 
-	final = init_arg();
-	command = ft_strdup(arg->value);
-	final->key = ft_strdup(arg->value);
-	final->value = ft_strdup(arg->next ? arg->next->value : "");
-	if (ft_strequ(command, "env"))
-		builtin_env(&(*my_env));
-	else if (ft_strequ(command, "set"))
-		builtin_set(&(*my_env));
-	else if (ft_strequ(command, "setenv"))
-		edit_setenv(&(*my_env), final);
-	else if (ft_strequ(command, "unsetenv"))
-		ft_unsetenv(&(*my_env), final->key);
-	else if (ft_strequ(command, "export"))
-		edit_export(&(*my_env), final->key);
-	else if (ft_strequ(command, "unset"))
-		ft_unset(&(*my_env), final->key);
-	else if (ft_strequ(command, "editset"))
-		edit_set(&(*my_env), final);
-	else if (ft_strequ(command, "exit"))
-	{
-		ft_strdel(&command);
-		free_arg(&final);
-		return (2);
-	}
+	if (command[1] && command[2])
+		arg = create_arg(command[1], command[2]);
 	else
-	{
-		ft_strdel(&command);
-		free_arg(&final);
-		return (0);
-	}
-	ft_strdel(&command);
-	free_arg(&final);
-	return (1);
+		arg = NULL;
+	if (ft_strequ(command[0], "env"))
+		verif = builtin_env(&(*my_env), fd_stock);
+	else if (ft_strequ(command[0], "set"))
+		verif = builtin_set(&(*my_env), fd_stock);
+	else if (ft_strequ(command[0], "setenv"))
+		verif = edit_setenv(arg, &(*my_env));
+	else if (ft_strequ(command[0], "unsetenv"))
+		verif = ft_unsetenv(command[1], &(*my_env));
+	else if (ft_strequ(command[0], "export"))
+		verif = edit_export(command[1], &(*my_env));
+	else if (ft_strequ(command[0], "unset"))
+		verif = ft_unset(command[1], &(*my_env));
+	else if (ft_strequ(command[0], "editset"))
+		verif = edit_set(arg, &(*my_env));
+	else if (ft_strequ(command[0], "exit"))
+		verif = 2;
+	else
+		verif = -1;
+	free_arg(&arg);
+	return (verif);
 }
 
 int		gest_return(int verif, t_env **my_env)
@@ -124,7 +114,7 @@ int		gest_return(int verif, t_env **my_env)
 	value = ft_itoa(verif);
 	arg = create_arg("?", value);
 	ft_strdel(&value);
-	verif = edit_set(&(*my_env), arg);
+	verif = edit_set(arg, &(*my_env));
 	free_arg(&arg);
 	return (verif);
 }

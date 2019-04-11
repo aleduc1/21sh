@@ -6,11 +6,11 @@
 /*   By: sbelondr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/07 10:31:02 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/04/08 11:12:45 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/04/11 18:39:09 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "env.h"
+#include "../../includes/env.h"
 
 static void	copy_value(char *src, char **dst, int start, int end)
 {
@@ -94,27 +94,27 @@ static char	*search_var(char *src, t_env *my_env)
 	return (dst);
 }
 
-t_arg		*parser_var(char **value, t_env *my_env)
+void		parser_var(char ***value, t_env *my_env)
 {
-	t_arg	*current;
-	t_arg	*head;
+//	t_arg	*current;
+//	t_arg	*head;
 	char	*tmp;
 	int		i;
 
 	i = -1;
-	current = NULL;
-	current = init_arg();
-	head = current;
-	while (value[++i])
+//	current = NULL;
+//	current = init_arg();
+//	head = current;
+	while ((*value)[++i])
 	{
-		tmp = search_var(value[i], my_env);
-		current->key = ft_strdup(value[i]);
-		current->value = ft_strdup(tmp);
-		ft_strdel(&(value[i]));
-		value[i] = ft_strdup(tmp);
+		tmp = search_var((*value)[i], my_env);
+//		current->key = ft_strdup(value[i]);
+//		current->value = ft_strdup(tmp);
+		ft_strdel(&((*value)[i]));
+		(*value)[i] = ft_strdup(tmp);
 		ft_strdel(&tmp);
-		current->next = init_arg();
-		current = current->next;
+//		current->next = init_arg();
+//		current = current->next;
 	}
-	return (head);
+//	return (value);
 }

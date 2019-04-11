@@ -6,11 +6,11 @@
 /*   By: sbelondr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/26 16:44:29 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/04/08 11:12:33 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/04/11 18:30:58 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "env.h"
+#include "../../includes/env.h"
 
 static int	check_is_fd(char *name)
 {
@@ -57,7 +57,7 @@ int			open_file(t_env **my_env, char *name, char *fd_out)
 	}
 	fd_str = ft_itoa(fd);
 	arg = create_arg(fd_out, fd_str);
-	edit_set(&(*my_env), arg);
+	edit_set(arg, &(*my_env));
 	free_arg(&arg);
 	ft_strdel(&fd_str);
 	return (fd);
@@ -71,7 +71,7 @@ void		close_file(t_env **my_env)
 	if (search_line_env(*my_env, "FD_FILE_OUTPUT", 0))
 	{
 		arg = create_arg("FD_OUTPUT", "1");
-		edit_set(&(*my_env), arg);
+		edit_set(arg, &(*my_env));
 		free_maillon_env(&(*my_env), "FD_FILE_OUTPUT", 0);
 		free_arg(&arg);
 	}
@@ -116,7 +116,7 @@ void		close_error_file(t_env **my_env)
 	if (search_line_env(*my_env, "FD_FILE_ERROR_OUTPUT", 0))
 	{
 		arg = create_arg("FD_ERROR_OUTPUT", "2");
-		edit_set(&(*my_env), arg);
+		edit_set(arg, &(*my_env));
 		free_maillon_env(&(*my_env), "FD_FILE_ERROR_OUTPUT", 0);
 		free_arg(&arg);
 	}

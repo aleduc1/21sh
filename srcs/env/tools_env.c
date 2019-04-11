@@ -6,11 +6,11 @@
 /*   By: sbelondr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/22 17:29:22 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/04/08 11:12:59 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/04/11 18:24:37 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "env.h"
+#include "../../includes/env.h"
 
 int			create_new_path(t_env *my_env, t_arg *arg, int env)
 {

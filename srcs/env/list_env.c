@@ -6,11 +6,11 @@
 /*   By: sbelondr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/22 17:48:23 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/04/08 11:12:09 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/04/11 18:59:50 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "env.h"
+#include "../../includes/env.h"
 
 t_env		*init_maillon_env(void)
 {
@@ -30,13 +30,13 @@ static void	init_variable(t_env **my_env)
 	t_arg		*arg;
 
 	arg = create_arg("?", "0");
-	edit_set(&(*my_env), arg);
+	edit_set(arg, &(*my_env));
 	free_arg(&arg);
 	arg = create_arg("FD_OUTPUT", "1");
-	edit_set(&(*my_env), arg);
+	edit_set(arg, &(*my_env));
 	free_arg(&arg);
 	arg = create_arg("FD_ERROR_OUTPUT", "2");
-	edit_set(&(*my_env), arg);
+	edit_set(arg, &(*my_env));
 	free_arg(&arg);
 }
 
@@ -51,11 +51,13 @@ t_env		*init_env(void)
 	i = -1;
 	current = init_maillon_env();
 	head = current;
+	if (!environ)
+		return (NULL);
 	while (environ[++i])
 	{
 		split = ft_strsplit(environ[i], '=');
 		current->key = ft_strdup(split[0]);
-		current->value = ft_strdup(split[1]);
+		current->value = ft_strdup(split[1] ? split[1] : "");
 		current->see_env = 1;
 		ft_arraydel(&split);
 		current->next = init_maillon_env();
