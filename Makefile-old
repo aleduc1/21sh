@@ -15,24 +15,22 @@ OBJDIR = objs/
 INCDIR = includes/
 INCLIBDIR = libft/includes/
 
-VPATH = objs:srcs:srcs/lexer:srcs/lexer/dll_lex:srcs/lexer/token:\
-		srcs/prompt:srcs/prompt/edition:srcs/prompt/history:srcs/prompt/multiline:\
-		srcs/prompt/others:srcs/prompt/selection:\
-		srcs/parser:srcs/parser/ast\
+VPATH = objs:srcs:srcs/lexer:srcs/lexer/dll_lex:srcs/lexer/token:srcs/prompt:srcs/parser:srcs/env
 # ------------------ #
 # Compiler and flags #
 # ------------------ #
 
 CC = gcc
 ifeq ($(DEBUG), yes)
-	CFLAGS = -Wall -Wextra -Werror -g3 -fsanitize=address
+	CFLAGS = -Wall -Wextra -g3 -fsanitize=address
 else
-	CFLAGS = -Wall -Wextra -g3
+	CFLAGS = -g3 -Wall -Wextra -Werror
 endif
 CPPFLAGS = -I $(INCDIR) -I $(INCLIBDIR)
 LDLIBS = -lft
 LDFLAGS = -L $(PATHLIBDIR)
-LFLAGS = -lncurses
+
+LFLAGS = -ltermcap
 
 # --------------- #
 # Different names #
@@ -47,7 +45,21 @@ SRCS_NAMES = main.c \
 			 dll_ins.c \
 			 dll_iter.c \
 			 dll_del.c \
-			 token.c \
+			 ampersand.c \
+			 brace.c \
+			 bracket.c \
+			 colon.c \
+			 great.c \
+			 less.c \
+			 par.c \
+			 pipe.c \
+			 quote.c \
+			 sign.c \
+			 slash.c \
+			 space.c \
+			 number.c \
+			 word.c \
+			 delim.c \
 			 cursortools.c \
 			 dlist.c \
 			 editiontools.c \
@@ -59,13 +71,21 @@ SRCS_NAMES = main.c \
 			 othertools.c \
 			 stalkcursor.c \
 			 terminit.c \
-			 multiline.c \
 			 textselection.c \
 			 tree_utils.c \
-			 parser.c
+			 parser.c \
+			 other_tools.c \
+			 parser_env.c \
+			 manage_env.c \
+			 tools_env.c \
+			 builtin_env.c \
+			 manage_file.c \
+			 list_env.c \
+			 list_arg.c \
+			 execute_command.c
 
 OBJS_NAMES = $(SRCS_NAMES:.c=.o)
-HEADERS_NAMES = sh21.h lexer.h parser.h
+HEADERS_NAMES = sh21.h lexer.h parser.h env.h
 LIBS_NAMES = libft.a
 
 OBJ = $(addprefix $(OBJDIR), $(OBJS_NAMES))
@@ -103,7 +123,7 @@ libs :
 %.o : %.c $(HEADER)
 	@$(CREATE) $(OBJDIR)
 	@$(CC) -o $(OBJDIR)$@ -c $< $(CFLAGS) $(CPPFLAGS)
-	@$(PRINT) ".o file created"
+	@$(PRINT) ".o created"
 
 clean : cleanlibs
 	@$(DEL) $(OBJDIR)
@@ -128,9 +148,7 @@ lldb :
 
 re : fclean all
 
-refast : cleans all
-
 help :
-	@$(PRINT) "Rules available : all, clean, cleans, fclean, re, refast ,libs, cleanlibs, fcleanlibs and help"
+	@$(PRINT) "Rules available : all, clean, cleans, fclean, re, libs, cleanlibs, fcleanlibs and help"
 
 .PHONY : $(PHONY)

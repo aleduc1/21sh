@@ -6,7 +6,7 @@
 /*   By: mbellaic <mbellaic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/12 17:19:37 by aleduc            #+#    #+#             */
-/*   Updated: 2019/03/16 04:05:46 by mbellaic         ###   ########.fr       */
+/*   Updated: 2019/04/07 21:49:00 by mbellaic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -231,7 +231,7 @@ t_node      *selectmode(t_node **input, t_node *lstcursor, char buffer[], t_pos 
         lstcursor = delete_selection(input, lstcursor, pos);
         redraw(pos, lstcursor);
     }
-    if(ALT_V)
+    if(ALT_V && pos->clipboard != NULL)
         lstcursor = paste_clipboard(input, lstcursor, pos);
     if(!SHIFT_LEFT && !SHIFT_RIGHT  && !ALT_C && !ALT_X  && !ALT_V && pos->selection == 1) // && COPY && CUT)
         lstcursor = undo_selection(lstcursor, pos);

@@ -6,7 +6,7 @@
 /*   By: mbellaic <mbellaic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/12 17:19:17 by aleduc            #+#    #+#             */
-/*   Updated: 2019/04/02 19:06:44 by aleduc           ###   ########.fr       */
+/*   Updated: 2019/04/07 21:57:35 by mbellaic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ void       stalk_cursor(t_pos *pos)
     int i = 1;
     int j = 0;
 
+    ft_bzero(answer, 16);
     ioctl(STDOUT_FILENO, TIOCGWINSZ, &pos->termsize);
     write(0, "\x1B[6n", 5); 
     answerlen = 0;

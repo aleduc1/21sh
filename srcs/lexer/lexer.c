@@ -6,7 +6,7 @@
 /*   By: aleduc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/12 17:21:29 by aleduc            #+#    #+#             */
-/*   Updated: 2019/04/02 19:18:52 by aleduc           ###   ########.fr       */
+/*   Updated: 2019/04/05 19:01:13 by aleduc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,12 @@ t_lex	*add_delim(t_lex **lex)
 	t_lex	*nd_node;
 	t_token	*token;
 
-	token = delim();
+	token = create_token("delim", DELIM);
 	node = new_node(&token);
 	nd_node = new_node(&token);
 	head = *lex;
 	tail = *lex;
-	while (tail->next)
+	while (tail && tail->next)
 		tail = tail->next;
 	dllinsfront(&head, &nd_node);
 	dllinsback(&tail, &node);
@@ -70,49 +70,49 @@ t_token	*word_or_number(char *data)
 
 	token = NULL;
 	if (ft_isnumbers(data))
-		token = number(data);
+		token = create_token(data, NUMBER);
 	else
-		token = word(data);
+		token = create_token(data, WORD);
 	return (token);
 }
 
-void	compare_types(t_ptrf **fptr, t_token **token, char *word)
+void	compare_types(t_tab_type **tab_of_type, t_token **token, char *word)
 {
 	int		i;
 
 	i = 0;
-	while ((*fptr)[i].f)
+	while ((*tab_of_type)[i].type != NUL)
 	{
-		if (!(ft_strcmp(word, (*fptr)[i].str)))
-			*token = (*fptr)[i].f();
+		if (!(ft_strcmp(word, (*tab_of_type)[i].str)))
+			*token = create_token((*tab_of_type)[i].str, (*tab_of_type)[i].type);
 		i++;
 	}
 	if (!(*token))
 		*token = word_or_number(word);
 }
 
-int		is_in_tab(t_ptrf **fptr, char c)
+int		is_in_tab(t_tab_type **tab_of_type, char c)
 {
 	int		i;
 
 	i = 0;
-	while ((*fptr)[i].f)
+	while ((*tab_of_type)[i].type != NUL)
 	{
-		if ((*fptr)[i].str[0] == c)
+		if ((*tab_of_type)[i].str[0] == c)
 			return (1);
 		i++;
 	}
 	return (0);
 }
 
-t_token	*check_type(t_ptrf **fptr, char *input, int start, int end)
+t_token	*check_type(t_tab_type **tab_of_type, char *input, int start, int end)
 {
 	char	*word;
 	t_token	*token;
 
 	token = NULL;
 	word = ft_strsub(input, start, end - start);
-	compare_types(fptr, &token, word);
+	compare_types(tab_of_type, &token, word);
 	ft_memdel((void **)&word);
 	return (token);
 }
@@ -134,19 +134,36 @@ int		dub_possible(char c)
 	return (0);
 }
 
+t_token	*handle_string(char *input, int *i, int *last_t)
+{
+	char	*word;
+	t_token	*tok;
+
+	word = NULL;
+	tok = NULL;
+	(*last_t) = ++(*i);
+	while (input[(*i)] != '\"')
+		(*i)++;
+	word = ft_strsub(input, *last_t, *i - *last_t);
+	tok = create_token(word, WORD);
+	ft_memdel((void **)&word);
+	(*i)++;
+	return (tok);
+}
+
 void	reading_input(char *input, t_lex **lex)
 {
 	int		i;
 	int		last_t;
 	int		to_check;
 	t_token	*tok;
-	t_ptrf	*fptr;
+	t_tab_type	*tab_of_type;
 
 	tok = NULL;
 	to_check = 0;
 	i = 0;
 	last_t = 0;
-	set_tab_types(&fptr);
+	set_tab_types(&tab_of_type);
 	while (input[i])
 	{
 		i = skip_whitespace(input, i);
@@ -158,7 +175,13 @@ void	reading_input(char *input, t_lex **lex)
 				if (i != last_t)
 					to_check = 1;
 			}
-			else if (is_in_tab(&fptr, input[i]))
+			else if (input[i] == '\"')
+			{
+				if (i == last_t)
+					tok = handle_string(input, &i, &last_t);
+				to_check = 1;
+			}
+			else if (is_in_tab(&tab_of_type, input[i]))
 			{
 				if (i == last_t)
 				{
@@ -169,17 +192,21 @@ void	reading_input(char *input, t_lex **lex)
 				to_check = 1;
 			}
 			else
-				i++;
-			if (input[i] == '\0')
 			{
-				if (i != last_t)
-					to_check = 1;
+				i++;
+				if (input[i] == '\0')
+				{
+					if (i != last_t)
+						to_check = 1;
+				}
 			}
 		}
 		if (to_check)
 		{
-			tok = check_type(&fptr, input, last_t, i);
-			add_token(lex, &tok);
+			if (!tok)
+				tok = check_type(&tab_of_type, input, last_t, i);
+			if (tok->data[0])
+				add_token(lex, &tok);
 			ft_memdel((void **)&tok);
 			to_check = 0;
 		}
