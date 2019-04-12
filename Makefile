@@ -49,6 +49,7 @@ SRCS_NAMES = main.c \
 			 dll_iter.c \
 			 dll_del.c \
 			 token.c \
+			 pre_parsing.c \
 			 cursortools.c \
 			 dlist.c \
 			 editiontools.c \

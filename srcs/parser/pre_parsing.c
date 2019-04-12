@@ -13,44 +13,98 @@
 #include "lexer.h"
 
 /*
-** Goal :
-** Regroup tokens into simple commands
-** Create a token command for simple commands
-** In it we will put every token between operator, so a LL
-** 
-** Coding :
-** From the last cut point to the new one, we need to split this part of the LL
-** And put it into a simple command token
-** Once part of the LL is detached , connect it to a simple command token's node
-** 
-** Steps :
 ** 1- Identifying start and end of the part of the LL to detach
-** 		Can be broken down into 2 step
 ** 2- Detach it
 ** 3- Create a command token with the LL in it
 ** 4- Attach it to the LL
 ** 5- Move pointer for whats after the cmd token's node and repeat if its not finished
-**
-** Breakdown :
-** 1:
-** - Set start at first node after delim or operators if node exist
-** - Set end the node before an operator or delim (iterate from start)
-** 2:
-** - Save pointer of node before start
-** - Save pointer of node after end
-** - Set first_ptr->next to NULL
-** - Set second_ptr->previous to NULL
-** - Set start->previous to NULL
-** - Set end->next to NULL
-** 3:
-** - Create a token command
-** - Put &start in token->data (maybe make data in token type void* to be able to cast it t_type or LL) (Or create a token type LL, create another token struct to add a LL, and do with that)
-** 4:
-** - Create a node of a LL with the token in it
-** - Link next and prev the the two ptr saved at step 2
-** 5:
-** - Start step 1 again with the second_ptr as param
 */
 
+/*
+** Made a separate function to be able to use it for start and end
+*/ 
 
+int		IsOperator(t_type type)
+{
+	if (type == SPIPE || type == DPIPE || type == AMPERSAND || type == DAMPERSAND || type == SCOLON || type == DSCOLON)
+		return (1);
+	return (0);
+}
 
+/*
+** We want to end on the node of one of those type
+*/
+
+int		TypeToEndOn(t_type type)
+{
+	if (IsOperator(type) || type == DELIM)
+		return (0);
+	return (1);
+}
+
+/*
+** We want to start on the node after those type
+*/
+
+int		TypeToIgnore(t_type	type)
+{
+	if (IsOperator(type) || type == DELIM/*|| type == COMMAND*/)
+		return (1);
+	return (0);
+}
+
+void	set_end(t_lex **end)
+{
+	while (*end && TypeToEndOn((*end)->token->type))
+		*end = (*end)->next;
+}
+
+void	set_start(t_lex **start)
+{
+	while (*start && TypeToIgnore((*start)->token->type))
+		*start = (*start)->next;
+}
+
+void	IdentifyDelim(t_lex **start, t_lex **end)
+{
+	set_start(start);
+	*end = *start;
+	set_end(end);
+}
+
+void	SetDelim(t_lex **head, t_lex **start, t_lex **end)
+{
+	*start = *head;
+	*end = *head;
+}
+
+void	pre_parsing(t_lex **head)
+{
+	t_lex	*start;
+	t_lex	*end;
+	t_token	*command;
+
+	while () // Unsure about this part yet
+	{
+		// Assign start and end pointer at head
+		SetDelim(head, &start, &end); // Done
+
+		// Set start on the first node we want, and end after the last node we want
+		IdentifyDelim(&start, &end); // Done and tested
+
+		// Detach the DLL to make it unrelated to the whole lexer, ending with a NULL ptr
+		Detach(&start, &end); // Thats what i need to do
+
+		// Create a command token with the standalone DLL inside (maybe make token->data to be a void* to be able to cast char* or LL)
+		command = CreateCommandToken(*head, delim); // Not done yet
+
+		// Create the node and link it to the Lexer DLL
+		LinkCommandToLexer(*head, &command, delim); // Not done yet
+
+		// Unsure about this part yet
+		loop = SetPtrPos(head); // Condition of the loop/Moving ptr after Operator if needed/not Empty
+
+		// Reseting command token pointer, wich mean it must be duplicated when creating a node with token command inside, not assigned
+		ft_memdel((void **)&command); 
+	}
+}

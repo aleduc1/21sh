@@ -72,19 +72,25 @@ struct s_tab_type
 void	set_tab_types(t_tab_type **tab_of_types);
 void	compare_types(t_tab_type **tab_of_types, t_token **token, char *word);
 
+
 /* Lexing */
 t_lex	*lexer(char *input);
 void	reading_input(char *input, t_lex **lex);
 t_token	*check_type(t_tab_type **tab_of_types, char *input, int start, int end);
 int		ft_isnumbers(char *str);
 
+
+/* Parsing */
+void	pre_parsing(t_lex **head);
+
+
 /* Creating token */
 t_token	*create_token(char *str, t_type types);
 t_token	*word_or_number(char *data);
 t_lex	*add_delim(t_lex **lex);
 
-/* DLL functions */
 
+/* DLL functions */
 /* Creation */
 t_lex	*new_node(t_token **tok);
 
