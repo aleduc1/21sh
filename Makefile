@@ -18,8 +18,7 @@ INCLIBDIR = libft/includes/
 VPATH = objs:srcs:srcs/lexer:srcs/lexer/dll_lex:srcs/lexer/token:\
 		srcs/prompt:srcs/prompt/edition:srcs/prompt/history:srcs/prompt/multiline:\
 		srcs/prompt/others:srcs/prompt/selection:\
-		srcs/parser:\
-		srcs/AST
+		srcs/parser:srcs/parser/ast\
 # ------------------ #
 # Compiler and flags #
 # ------------------ #
@@ -28,7 +27,7 @@ CC = gcc
 ifeq ($(DEBUG), yes)
 	CFLAGS = -Wall -Wextra -Werror -g3 -fsanitize=address
 else
-	CFLAGS = -Wall -Wextra
+	CFLAGS = -Wall -Wextra -g3
 endif
 CPPFLAGS = -I $(INCDIR) -I $(INCLIBDIR)
 LDLIBS = -lft
