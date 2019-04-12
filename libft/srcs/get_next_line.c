@@ -3,102 +3,91 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skuppers <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: sbelondr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/11/21 10:02:21 by skuppers          #+#    #+#             */
-/*   Updated: 2018/11/09 19:31:13 by aleduc           ###   ########.fr       */
+/*   Created: 2019/03/26 09:34:18 by sbelondr          #+#    #+#             */
+/*   Updated: 2019/04/12 08:33:47 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "libft.h"
 
-static t_list		*create_fd_buffer(int fd)
+int		ft_endline(char *str)
 {
-	t_list			*new;
+	int	i;
 
-	if (!(new = (t_list *)malloc(sizeof(t_list))))
-		return (NULL);
-	new->content_size = fd;
-	if (!(new->content = ft_strnew(1)))
-	{
-		free(new);
-		return (NULL);
-	}
-	new->next = NULL;
-	return (new);
-}
-
-static t_list		*get_block(t_list *liste, int fd)
-{
-	t_list			*tmp;
-
-	tmp = liste;
-	while (tmp != NULL)
-	{
-		if ((int)tmp->content_size == fd)
+	i = -1;
+	if (!str)
+		return (-1);
+	while (str[++i])
+		if (str[i] == '\n')
 			break ;
-		tmp = tmp->next;
-	}
-	if (tmp == NULL)
+	return (i);
+}
+
+int		ft_read(const int fd, char **str)
+{
+	char	buf[BUF_S];
+	char	*tmp;
+	int		verif;
+
+	ft_bzero(buf, BUF_S);
+	while ((verif = read(fd, buf, (BUF_S - 1))) > 0)
 	{
-		if ((tmp = create_fd_buffer(fd)) == NULL)
-			return (NULL);
-		else
-			ft_lstextend(liste, tmp);
+		buf[verif] = '\0';
+		tmp = (*str) ? ft_strjoin((*str), buf) : ft_strdup(buf);
+		ft_strdel(&(*str));
+		(*str) = ft_strdup(tmp);
+		ft_strdel(&tmp);
+		if (ft_strchr_exist(*str, '\n'))
+			break ;
 	}
-	return (tmp);
+	if (verif == -1)
+		ft_strdel(&(*str));
+	return (verif);
 }
 
-static int			cut(t_list *blk, char **line, char *tmp, char **buffer)
+int		ft_verif(int fd, char **str)
 {
-	int				index;
-
-	if (blk == NULL || tmp == NULL)
-		return (0);
-	ft_strdel(buffer);
-	index = ft_strnchr(tmp, '\n');
-	*line = ft_strsub(tmp, 0, index);
-	ft_strdel((char**)&(blk)->content);
-	blk->content = ft_strsub(tmp, index + 1,
-			ft_strlen(tmp) - (index + 1));
-	ft_strdel(&tmp);
-	return (1);
-}
-
-static int			init(int fd, char **line, char **buffer)
-{
-	if (fd < 0 || line == NULL)
+	if (fd < 0)
 		return (-1);
-	if (!(*buffer = ft_strnew(BUFF_SIZE)))
-		return (-1);
-	return (1);
-}
-
-int					get_next_line(int fd, char **line)
-{
-	int				rd;
-	char			*buffer;
-	static t_list	*t_buff;
-	char			*tmp;
-
-	if (!init(fd, line, &buffer))
-		return (-1);
-	if (!t_buff)
-		if (!(t_buff = create_fd_buffer(fd)))
-			return (-1);
-	if ((get_block(t_buff, fd)->content) == NULL)
-		return (0);
-	rd = 1;
-	tmp = ft_strdup(get_block(t_buff, fd)->content);
-	while (rd > 0 && !(ft_strchr(tmp, '\n')))
+	if (!(*str))
 	{
-		if ((rd = read(fd, buffer, BUFF_SIZE)) < 0)
+		if (!((*str) = ft_strnew(BUF_S)))
 			return (-1);
-		tmp = ft_strjoinfree(tmp, buffer, 1);
-		ft_bzero(buffer, BUFF_SIZE);
 	}
-	if (!(cut(get_block(t_buff, fd), line, tmp, &buffer)))
+	return (0);
+}
+
+int		get_next_line(const int fd, char **line)
+{
+	static char	*str;
+	char		*tmp;
+	int			verif;
+
+	if (ft_verif(fd, &str) == -1)
 		return (-1);
-	return (ft_strlen(*line) != 0 ||
-			get_block(t_buff, fd)->content != NULL) ? 1 : 0;
+	verif = ft_read(fd, &str);
+	if (verif == -1)
+	{
+		ft_strdel(&str);
+		return (-1);
+	}
+	verif = ft_endline(str);
+	if (str[0])
+	{
+		(*line) = ft_strsub(str, 0, verif);
+		tmp = ft_strsub(str, verif + 1, ft_strlen(str));
+		ft_strdel(&str);
+		str = ft_strdup(tmp);
+		ft_strdel(&tmp);
+		return (1);
+	}
+	else
+	{
+		ft_strdel(&str);
+		return (-1);
+	}
+	ft_strdel(&str);
+	return (0);
 }

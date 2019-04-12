@@ -6,7 +6,7 @@
 /*   By: aleduc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/12 17:21:29 by aleduc            #+#    #+#             */
-/*   Updated: 2019/04/05 19:01:13 by aleduc           ###   ########.fr       */
+/*   Updated: 2019/04/11 15:44:23 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -216,7 +216,7 @@ void	reading_input(char *input, t_lex **lex)
 t_lex	*lexer(char *input)
 {
 	t_lex	*lex;
-
+ft_printf("je suis la\n");
 	lex = NULL;
 	if (ft_strcmp(input, "exit") == 0)
 		exit(0);

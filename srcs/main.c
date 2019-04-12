@@ -6,7 +6,7 @@
 /*   By: mbellaic <mbellaic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/12 17:01:09 by aleduc            #+#    #+#             */
-/*   Updated: 2019/04/10 14:47:41 by mbellaic         ###   ########.fr       */
+/*   Updated: 2019/04/11 15:46:11 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,12 @@ int		main(int ac, char **av, char **environ)
 			inputstr = prompt(input, &pos); // Don't forget to free inputstr once you are done with it.
 			if (inputstr[0])
 				lex = lexer(inputstr);
+			ft_printf("verif lex\n");
+			while(lex->next)
+			{
+				ft_printf("token = %s\n", lex->token->data);
+				lex = lex->next;
+			}
 			//ast = parser(lex);
 		}
 	}

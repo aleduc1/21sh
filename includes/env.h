@@ -6,7 +6,7 @@
 /*   By: sbelondr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/22 13:33:53 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/04/08 09:24:18 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/04/11 18:23:52 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ typedef struct		s_arg
 */
 
 int					gest_return(int verif, t_env **my_env);
-int					is_builtin(t_arg *arg, t_env **my_env);
+int					is_builtin(char **command, t_env **my_env, int fd_stock[3]);
 int					is_in_path(char ***command, t_env *my_env);
 char				**transfer_arg(t_arg *lst_arg);
 
@@ -62,18 +62,18 @@ t_arg				*manage_arg_env(char **arg, t_env *my_env);
 ** parser.c
 */
 
-t_arg				*parser_var(char **value, t_env *my_env);
+void				parser_var(char ***value, t_env *my_env);
 void				debug_arg(t_arg *arg);
 
 /*
 ** manage_env.c
 */
 
-int					edit_set(t_env **my_env, t_arg *arg);
-int					edit_setenv(t_env **my_env, t_arg *arg);
-int					edit_export(t_env **my_env, char *key);
-int					ft_unsetenv(t_env **my_env, char *key);
-int					ft_unset(t_env **my_env, char *key);
+int					edit_set(t_arg *arg, t_env **my_env);
+int					edit_setenv(t_arg *arg, t_env **my_env);
+int					edit_export(char *key, t_env **my_env);
+int					ft_unsetenv(char *key, t_env **my_env);
+int					ft_unset(char *key, t_env **my_env);
 char				**create_list_env(t_env *my_env, int env);
 
 /*
@@ -88,8 +88,8 @@ char				*value_line_path(t_env *my_env, char *key, int env);
 ** builtin_env.c
 */
 
-void				builtin_env(t_env **my_env);
-void				builtin_set(t_env **my_env);
+int     builtin_set(t_env **my_env, int fd_stock[3]);
+int     builtin_env(t_env **my_env, int fd_stock[3]);
 
 /*
 ** list_env.c
@@ -116,7 +116,14 @@ void				close_error_file(t_env **my_env);
 ** execute_command.c
 */
 
-int					exec_fork(char **command, t_env **my_env, char **env);
+int     add_process(char **command, int fd_stock[3], t_env *my_env,
+		int *returns_code);
+int					exec_fork(char **command, t_env **my_env);
 int					exec_command(t_arg *lst_arg, t_env **my_env);
+
+
+
+int     ft_simple_command(char **command, t_env **my_env);
+
 
 #	endif
