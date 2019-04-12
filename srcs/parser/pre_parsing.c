@@ -50,7 +50,6 @@
 ** - Link next and prev the the two ptr saved at step 2
 ** 5:
 ** - Start step 1 again with the second_ptr as param
-** - 
 */
 
 
