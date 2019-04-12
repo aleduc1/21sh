@@ -6,7 +6,7 @@
 /*   By: sbelondr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/22 13:33:53 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/04/12 11:41:05 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/04/12 15:39:59 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,13 @@ typedef struct		s_arg
 	char			*value;
 	struct s_arg	*next;
 }					t_arg;
+
+typedef struct	s_commands
+{
+	char				**command;
+	int					fd_stock[3];
+	struct s_commands	*next;
+}				t_commands;
 
 /*
 ** main.c

@@ -6,7 +6,7 @@
 /*   By: sbelondr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/09 10:50:50 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/04/12 12:00:41 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/04/12 17:10:47 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,30 +43,6 @@ int		ft_ampersand_double(char **f_command, char **s_command, t_env **my_env)
 ** |
 */
 
-int		ft_pipe(char **f_command, char **s_command, t_env **my_env)
-{
-	int		return_code;
-	int		pids[2];
-	int		pipes[2];
-	int		fd_stock[3];
-
-	pipe(pipes);
-	fd_stock[0] = 0;
-	fd_stock[1] = pipes[1];
-	fd_stock[2] = dest_error_output(&(*my_env));
-	if ((pids[0] = is_builtin(f_command, &(*my_env), fd_stock)) == -1)
-		pids[0] = add_process(f_command, fd_stock, *my_env, &return_code);
-	close(pipes[1]);
-	fd_stock[0] = pipes[0];
-	fd_stock[1] = dest_output(&(*my_env));
-	if ((pids[1] = is_builtin(s_command, &(*my_env), fd_stock)) == -1)
-		pids[1] = add_process(s_command, fd_stock, *my_env, &return_code);
-	close(fd_stock[0]);
-	close_file(&(*my_env));
-	close_error_file(&(*my_env));
-	return (return_code);
-}
-
 int		ft_multiple_pipe(char ***commands, int nb, t_env **my_env)
 {
 	int	i;
@@ -96,6 +72,47 @@ int		ft_multiple_pipe(char ***commands, int nb, t_env **my_env)
 	close_error_file(&(*my_env));
 	return (return_code);
 }
+
+int		choice_fd(int fd_base, int fd, int origin)
+{
+	int	stock_fd;
+
+	if (origin == fd_base)
+		stock_fd = fd;
+	else
+		stock_fd = fd_base;
+	return (stock_fd);
+}
+
+int		ft_multiple_pipe_ts(t_commands *cmds, int nb, t_env **my_env)
+{
+	int	i;
+	int	return_code;
+	int	pids[nb];
+	int	pipes[2];
+	int	fd_stock[3];
+
+	i = -1;
+	fd_stock[0] = 0;
+	fd_stock[2] = cmds->fd_stock[2];
+	while (++i < (nb - 1))
+	{
+		pipe(pipes);
+		fd_stock[1] = choice_fd(cmds->fd_stock[1], pipes[1], 1);
+		if ((pids[i] = is_builtin(cmds->command, &(*my_env), fd_stock)) == -1)
+			pids[i] = add_process(cmds->command, fd_stock, *my_env, &return_code);
+		close(pipes[1]);
+//		close(fd_stock[1]);
+		cmds = cmds->next;
+		fd_stock[0] = pipes[0];
+	}
+	ft_printf("cmds->command = %s|\n", cmds->command);
+	fd_stock[1] = dest_output(&(*my_env));
+	if ((pids[i] = is_builtin(cmds->command, &(*my_env), fd_stock)) == -1)
+		pids[i] = add_process(cmds->command, fd_stock, *my_env, &return_code);
+	return (return_code);
+}
+
 
 /*
 ** ||
@@ -159,10 +176,40 @@ void	ft_arrays_dim_del(char ****lst)
 	int	i;
 
 	i = -1;
+	if ((!lst) || (!(*lst)))
+		return ;
 	while ((*lst)[++i])
 		ft_arraydel(&((*lst)[i]));
 	free(*lst);
 	(*lst) = NULL;
+}
+
+t_commands	*init_commands(char **commands, int fd_stock[3])
+{
+	t_commands	*cmds;
+
+	if (!(cmds = (t_commands*)malloc(sizeof(t_commands) * 1)))
+		return (NULL);
+	cmds->command = ft_arraydup(commands);
+	cmds->fd_stock[0] = fd_stock[0];
+	cmds->fd_stock[1] = fd_stock[1];
+	cmds->fd_stock[2] = fd_stock[2];
+	cmds->next = NULL;
+	return (cmds);
+}
+
+void	delete_commands(t_commands **cmds)
+{
+	t_commands	*tmp;
+
+	while (*cmds)
+	{
+		tmp = *cmds;
+		*cmds = (*cmds)->next;
+		ft_arraydel(&(tmp->command));
+		free(tmp);
+		tmp = NULL;
+	}
 }
 
 int		main(int ac, char **av)
@@ -176,19 +223,34 @@ int		main(int ac, char **av)
 	t_env	*env;
 	int		i;
 
+	int		fd_stock[3];
+
+	fd_stock[0] = 0;
+	fd_stock[1] = 1;
+	fd_stock[2] = 2;
+
 	if (ac == -1)
 		return (0);
 	env = init_env();
 	test = ft_arraydup(testa);
 	test_b = ft_arraydup(testb);
 	command = ft_arraydup(av + 1);
+
+	t_commands	*cmds;
+	t_commands	*tmp;
+	
+	cmds = init_commands(command, fd_stock);
+	cmds->fd_stock[1] = dest_output(&env);
+//	cmds->next = init_commands(test, fd_stock);
+	tmp = init_commands(test_b, fd_stock);
+	cmds->next = tmp;
+	i = ft_multiple_pipe_ts(cmds, 3, &env);
+	delete_commands(&cmds);
+
 //	i = ft_simple_command(command, &env);
 //	ft_printf("i = %d\n", i);
-//	i = ft_pipe(command, test, &env);
-//	ft_printf("i = %d\n", i);
-//	char	***multiple_commands = create_arrays_commands(command, test, test_b);
 	mlt_commands = ft_arrays_dim(2, command, test_b);
-	i = ft_multiple_pipe(mlt_commands, 2, &env);
+//	i = ft_multiple_pipe(mlt_commands, 2, &env);
 //	ft_printf("i = %d\n", i);
 //	i = ft_pipe_double(command, test, &env);
 //	ft_printf("i = %d\n", i);

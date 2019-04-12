@@ -1,16 +1,19 @@
-a.out
-a.out.dSYM
-builtin_env.c
-coucou
-execute_command.c
-formats_parameter.c
-libft.a
-list_arg.c
-list_env.c
-manage_env.c
-manage_file.c
-manage_list.c
-other_tools.c
-parser_env.c
-tools_env.c
-wc
+total 1160
+drwxr-xr-x  18 sbelondr  2018_paris     612 Apr 12 17:10 .
+drwxr-xr-x   7 sbelondr  2018_paris     238 Apr 12 12:10 ..
+-rw-r--r--   1 sbelondr  2018_paris   28672 Apr 12 17:10 .manage_list.c.swp
+-rwxr-xr-x   1 sbelondr  2018_paris   85168 Apr 12 17:10 a.out
+drwxr-xr-x   3 sbelondr  2018_paris     102 Apr 12 11:10 a.out.dSYM
+-rw-r--r--   1 sbelondr  2018_paris    2042 Apr 12 11:18 builtin_env.c
+-rw-r--r--   1 sbelondr  2018_paris       0 Apr 12 17:10 coucou
+-rw-r--r--   1 sbelondr  2018_paris    3653 Apr 12 11:39 execute_command.c
+-rw-r--r--   1 sbelondr  2018_paris    2580 Apr  8 11:11 formats_parameter.c
+-rw-r--r--   1 sbelondr  2018_paris  429392 Apr 12 08:34 libft.a
+-rw-r--r--   1 sbelondr  2018_paris    1571 Apr 11 18:23 list_arg.c
+-rw-r--r--   1 sbelondr  2018_paris    2683 Apr 11 18:59 list_env.c
+-rw-r--r--   1 sbelondr  2018_paris    2985 Apr 11 18:53 manage_env.c
+-rw-r--r--   1 sbelondr  2018_paris    3288 Apr 12 08:37 manage_file.c
+-rw-r--r--   1 sbelondr  2018_paris    6088 Apr 12 17:10 manage_list.c
+-rw-r--r--   1 sbelondr  2018_paris    3182 Apr 11 18:56 other_tools.c
+-rw-r--r--   1 sbelondr  2018_paris    2895 Apr 11 18:39 parser_env.c
+-rw-r--r--   1 sbelondr  2018_paris    1805 Apr 11 18:24 tools_env.c
