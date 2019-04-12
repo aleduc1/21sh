@@ -6,7 +6,7 @@
 /*   By: sbelondr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/02 08:43:53 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/04/11 18:41:40 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/04/12 11:39:26 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,19 +46,19 @@ int		add_process(char **command, int fd_stock[3], t_env *my_env,
 	return (pid);
 }
 
-int		exec_fork(char **command, t_env **my_env)
+int		exec_fork(char **command, t_env **my_env, int fd_stock[3])
 {
 	int	return_code;
 	int	pid;
-	int	fd_stock[3];
+//	int	fd_stock[3];
 
-	fd_stock[0] = 0;
-	fd_stock[1] = dest_output(&(*my_env));
-	fd_stock[2] = dest_error_output(&(*my_env));
+//	fd_stock[0] = 0;
+//	fd_stock[1] = dest_output(&(*my_env));
+//	fd_stock[2] = dest_error_output(&(*my_env));
 	signal(SIGINT, NULL);
 	pid = add_process(command, fd_stock, *my_env, &return_code);
-	close_file(&(*my_env));
-	close_error_file(&(*my_env));
+//	close_file(&(*my_env));
+//	close_error_file(&(*my_env));
 	if (pid != -1)
 		kill(pid, SIGINT);
 	return (return_code);

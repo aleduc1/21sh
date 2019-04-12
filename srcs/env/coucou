@@ -1,0 +1,16 @@
+a.out
+a.out.dSYM
+builtin_env.c
+coucou
+execute_command.c
+formats_parameter.c
+libft.a
+list_arg.c
+list_env.c
+manage_env.c
+manage_file.c
+manage_list.c
+other_tools.c
+parser_env.c
+tools_env.c
+wc
