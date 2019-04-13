@@ -6,7 +6,7 @@
 /*   By: sbelondr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/07 10:31:02 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/04/11 18:39:09 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/04/13 17:48:43 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,17 @@ static char	*manage_var(char *str, t_env *my_env)
 	if (!final)
 		final = NULL;
 	return (final);
+}
+
+static int	manage_home(char **dst, int index, t_env *my_env)
+{
+	char	*data;
+
+	index += 1;
+	data = manage_var("HOME", my_env);
+	ft_strdel(&(*dst));
+	(*dst) = ft_strdup(data);
+	return (index);
 }
 
 static int	apply_rules(char *src, char **dst, int index, t_env *my_env)
@@ -81,11 +92,14 @@ static char	*search_var(char *src, t_env *my_env)
 	dst = ft_strdup("");
 	while (++i < len)
 	{
-		if (src[i] == '$')
+		if (src[i] == '$' || (i == 0 && src[i] == '~'))
 		{
 			if (i != last)
 				copy_value(src, &dst, last, i);
-			i = apply_rules(src, &dst, i, my_env);
+			if (src[i] == '~')
+				i = manage_home(&dst, i, my_env);
+			else
+				i = apply_rules(src, &dst, i, my_env);
 			last = i + 1;
 		}
 	}

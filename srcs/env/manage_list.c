@@ -6,7 +6,7 @@
 /*   By: sbelondr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/09 10:50:50 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/04/13 16:55:24 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/04/13 18:03:39 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,7 +137,6 @@ int		ft_simple_command(char **command, t_env **my_env)
 	fd_stock[0] = 0;
 	fd_stock[1] = dest_output(&(*my_env));
 	fd_stock[2] = dest_error_output(&(*my_env));
-	parser_var(&command, *my_env);
 	if (is_builtin(command, &(*my_env), fd_stock) != -1)
 		verif = 0;
 	else
@@ -208,14 +207,18 @@ int		main(int ac, char **av)
 	t_commands	*cmds;
 	
 	cmds = init_commands(command, fd_stock);
+	parser_var(&(cmds->command), env);
 	cmds->fd_stock[1] = dest_output(&env);
 	cmds->fd_stock[2] = dest_error_output(&env);
 	cmds->next = init_commands(test, fd_stock);
+	parser_var(&(cmds->next->command), env);
 	cmds->next->next = init_commands(test_b, fd_stock);
-	i = ft_multiple_pipe_ts(cmds, 3, &env);
+	parser_var(&(cmds->next->next->command), env);
+//	i = ft_multiple_pipe_ts(cmds, 3, &env);
 	delete_commands(&cmds);
 
-//	i = ft_simple_command(command, &env);
+	parser_var(&command, env);
+	i = ft_simple_command(command, &env);
 //	ft_printf("i = %d\n", i);
 	mlt_commands = ft_arrays_dim(2, command, test_b);
 //	i = ft_multiple_pipe(mlt_commands, 2, &env);
