@@ -5,10 +5,8 @@
 #include "lexer.h"
 
 # define OPERATORS (t->type == SCOLON || \
-                    t->type == SPIPE || \
-                    t->type == GREAT || t->type == LESS || \
-                    t->type == DGREAT || t->type == DLESS || \
-                    t->type == DPIPE || t->type == DAMPERSAND)
+                    t->type == SPIPE || t->type == DPIPE || \
+                    t->type == DAMPERSAND || t->type == DELIM)
 
 typedef struct     s_ast
 {
