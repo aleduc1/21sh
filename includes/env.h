@@ -6,7 +6,7 @@
 /*   By: sbelondr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/22 13:33:53 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/04/12 15:39:59 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/04/13 16:46:17 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,13 +123,23 @@ void				close_error_file(t_env **my_env);
 ** execute_command.c
 */
 
-int     add_process(char **command, int fd_stock[3], t_env *my_env,
+int     			add_process(char **command, int fd_stock[3], t_env *my_env,
 		int *returns_code);
 int					exec_fork(char **command, t_env **my_env,
 		int fd_stock[3]);
 int					exec_command(t_arg *lst_arg, t_env **my_env);
 
-int     ft_simple_command(char **command, t_env **my_env);
+/*
+** manage_list.c
+*/
 
+int					ft_simple_command(char **command, t_env **my_env);
+
+/*
+** list_commands.c
+*/
+
+t_commands			*init_commands(char **commands, int fd_stock[3]);
+void				delete_commands(t_commands **cmds);
 
 #	endif
