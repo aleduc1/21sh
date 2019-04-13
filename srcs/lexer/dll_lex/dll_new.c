@@ -19,6 +19,7 @@ t_lex	*new_node(t_token **tok)
 	else
 	{
 		node->token->data = ft_strdup((*tok)->data);
+		node->token->command = (*tok)->command;
 		node->token->type = (*tok)->type;
 	}
 	node->next = NULL;

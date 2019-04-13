@@ -35,7 +35,7 @@ int		main(int ac, char **av, char **environ)
 			inputstr = prompt(input, &pos); // Don't forget to free inputstr once you are done with it.
 			if (inputstr[0])
 				lex = lexer(inputstr);
-			pre_parsing(&lex);
+			SimpleCommand(&lex);
 			//ast = parser(lex);
 		}
 	}

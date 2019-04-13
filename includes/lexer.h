@@ -52,6 +52,7 @@ enum	e_token_type
 struct s_token
 {
 	char	*data;
+	t_lex	*command;
 	t_type	type;
 };
 
@@ -80,14 +81,29 @@ t_token	*check_type(t_tab_type **tab_of_types, char *input, int start, int end);
 int		ft_isnumbers(char *str);
 
 
-/* Parsing */
-void	pre_parsing(t_lex **head);
-
-
 /* Creating token */
 t_token	*create_token(char *str, t_type types);
+t_token	*CreateCommandToken(t_lex **command, t_type types);
 t_token	*word_or_number(char *data);
 t_lex	*add_delim(t_lex **lex);
+
+
+
+/* Parsing */
+/* Implementing SimpleCommandToken */
+void	SimpleCommand(t_lex **head);
+
+/* Delim */
+void	SetDelim(t_lex **head, t_lex **start, t_lex **end);
+t_lex	*IdentifyDelim(t_lex **start, t_lex **end);
+
+/* TypeCheck */
+int		TypeToIgnore(t_type type);
+int		TypeToEndOn(t_type type);
+
+/* Attach */
+void	Detach(t_lex **start, t_lex **end);
+void	Attach(t_lex **head, t_lex **node, t_lex **end);
 
 
 /* DLL functions */
@@ -103,6 +119,7 @@ void	dllinsbefore(t_lex **next_node, t_lex **node);
 /* Iteration */
 void	dllprinthead(t_lex **head);
 void	dllprinttail(t_lex **tail);
+t_lex	*dlllastnode(t_lex **head);
 int		dlliter(t_lex **head);
 
 /* Deletion */
