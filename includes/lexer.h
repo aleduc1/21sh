@@ -83,7 +83,7 @@ int		ft_isnumbers(char *str);
 
 /* Creating token */
 t_token	*create_token(char *str, t_type types);
-t_token	*CreateCommandToken(t_lex **command, t_type types);
+t_token	*create_command_token(t_lex **command, t_type types);
 t_token	*word_or_number(char *data);
 t_lex	*add_delim(t_lex **lex);
 
@@ -91,19 +91,19 @@ t_lex	*add_delim(t_lex **lex);
 
 /* Parsing */
 /* Implementing SimpleCommandToken */
-void	SimpleCommand(t_lex **head);
+void	simple_command(t_lex **head);
 
 /* Delim */
-void	SetDelim(t_lex **head, t_lex **start, t_lex **end);
-t_lex	*IdentifyDelim(t_lex **start, t_lex **end);
+void	set_delim(t_lex **head, t_lex **start, t_lex **end);
+t_lex	*identify_delim(t_lex **start, t_lex **end);
 
 /* TypeCheck */
-int		TypeToIgnore(t_type type);
-int		TypeToEndOn(t_type type);
+int		type_to_ignore(t_type type);
+int		type_to_end_on(t_type type);
 
 /* Attach */
-void	Detach(t_lex **start, t_lex **end);
-void	Attach(t_lex **head, t_lex **node, t_lex **end);
+void	detach(t_lex **start, t_lex **end);
+void	attach(t_lex **head, t_lex **node, t_lex **end);
 
 
 /* DLL functions */

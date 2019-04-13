@@ -20,8 +20,7 @@ VPATH = objs:\
 		srcs/lexer:srcs/lexer/dll_lex:srcs/lexer/token:\
 		srcs/prompt:srcs/prompt/edition:srcs/prompt/history:srcs/prompt/multiline:\
 		srcs/prompt/others:srcs/prompt/selection:\
-		srcs/parser:\
-		srcs/AST\
+		srcs/parser:srcs/parser/ast\
 # ------------------ #
 # Compiler and flags #
 # ------------------ #
@@ -51,10 +50,10 @@ SRCS_NAMES = main.c \
 			 dll_iter.c \
 			 dll_del.c \
 			 token.c \
-			 SimpleCommand.c \
-			 Delim.c \
-			 TypeCheck.c \
-			 Attach.c \
+			 simple_command.c \
+			 delim.c \
+			 type_check.c \
+			 attach.c \
 			 cursortools.c \
 			 dlist.c \
 			 editiontools.c \
@@ -86,7 +85,7 @@ LIBS = $(addprefix $(PATHLIBDIR), $(LIBS_NAMES))
 CREATE = mkdir -p
 DEL = /bin/rm -rf
 PRINT = echo
-PHONY = all clean cleans fclean re libs cleanlibs fcleanlibs help
+PHONY = all clean cleans fclean re refast libs cleanlibs fcleanlibs help
 
 # ----- #
 # Rules #

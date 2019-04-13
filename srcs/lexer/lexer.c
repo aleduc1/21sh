@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aleduc <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: mbellaic <mbellaic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/12 17:21:29 by aleduc            #+#    #+#             */
-/*   Updated: 2019/04/05 19:01:13 by aleduc           ###   ########.fr       */
+/*   Updated: 2019/04/13 07:25:51 by mbellaic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -222,5 +222,6 @@ t_lex	*lexer(char *input)
 		exit(0);
 	reading_input(input, &lex);
 	lex = add_delim(&lex);
+	simple_command(&lex);
 	return (lex);
 }

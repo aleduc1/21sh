@@ -1,27 +1,27 @@
 #include "lexer.h"
 
-void	SetDelim(t_lex **head, t_lex **start, t_lex **end)
+void	set_delim(t_lex **head, t_lex **start, t_lex **end)
 {
 	*start = *head;
 	*end = *head;
 }
 
-void	SetEnd(t_lex **end)
+void	set_end(t_lex **end)
 {
-	while (*end && TypeToEndOn((*end)->token->type))
+	while (*end && type_to_end_on((*end)->token->type))
 		*end = (*end)->next;
 }
 
-void	SetStart(t_lex **start)
+void	set_start(t_lex **start)
 {
-	while (*start && TypeToIgnore((*start)->token->type))
+	while (*start && type_to_ignore((*start)->token->type))
 		*start = (*start)->next;
 }
 
-t_lex	*IdentifyDelim(t_lex **start, t_lex **end)
+t_lex	*identify_delim(t_lex **start, t_lex **end)
 {
-	SetStart(start);
+	set_start(start);
 	*end = *start;
-	SetEnd(end);
+	set_end(end);
 	return (*start);
 }

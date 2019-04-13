@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   terminit.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aleduc <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: mbellaic <mbellaic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/12 17:19:28 by aleduc            #+#    #+#             */
-/*   Updated: 2019/03/12 17:19:32 by aleduc           ###   ########.fr       */
+/*   Updated: 2019/04/12 16:05:13 by mbellaic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void	default_term_mode(void)
 	tcgetattr(STDIN_FILENO, &term);
 	term.c_lflag |= (ECHO | ICANON | ISIG);
 	tcsetattr(STDIN_FILENO, TCSADRAIN, &term);
+	ft_putstr(tgetstr("ei", NULL));
 }
 
 void	raw_term_mode(void)

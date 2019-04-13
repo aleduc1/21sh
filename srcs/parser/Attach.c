@@ -4,7 +4,7 @@
 ** Detach the part of the DLL that will go into the token command
 */
 
-void	Detach(t_lex **start, t_lex **end)
+void	detach(t_lex **start, t_lex **end)
 {
 	t_lex *BeforeStart;
 	t_lex *BeforeEnd;
@@ -21,7 +21,7 @@ void	Detach(t_lex **start, t_lex **end)
 ** Link the node's command token to the lexer
 */
 
-void	Attach(t_lex **head, t_lex **node, t_lex **end)
+void	attach(t_lex **head, t_lex **node, t_lex **end)
 {
 	t_lex	*ptr;
 

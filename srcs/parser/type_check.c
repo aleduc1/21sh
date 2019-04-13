@@ -4,7 +4,7 @@
 ** Made a separate function to be able to use it for start and end
 */ 
 
-int		IsOperator(t_type type)
+int		is_operator(t_type type)
 {
 	if (type == SPIPE || type == DPIPE || type == AMPERSAND || type == DAMPERSAND || type == SCOLON || type == DSCOLON)
 		return (1);
@@ -15,9 +15,9 @@ int		IsOperator(t_type type)
 ** We want to end on the node of one of those type
 */
 
-int		TypeToEndOn(t_type type)
+int		type_to_end_on(t_type type)
 {
-	if (IsOperator(type) || type == DELIM)
+	if (is_operator(type) || type == DELIM)
 		return (0);
 	return (1);
 }
@@ -26,9 +26,9 @@ int		TypeToEndOn(t_type type)
 ** We want to start on the node after those type
 */
 
-int		TypeToIgnore(t_type	type)
+int		type_to_ignore(t_type	type)
 {
-	if (IsOperator(type) || type == DELIM || type == CMD)
+	if (is_operator(type) || type == DELIM || type == CMD)
 		return (1);
 	return (0);
 }

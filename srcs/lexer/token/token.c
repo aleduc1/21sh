@@ -17,7 +17,7 @@ t_token		*create_token(char *str, t_type types)
 	return (token);
 }
 
-t_token		*CreateCommandToken(t_lex **command, t_type types)
+t_token		*create_command_token(t_lex **command, t_type types)
 {
 	t_token	*token;
 
