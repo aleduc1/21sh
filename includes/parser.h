@@ -15,11 +15,22 @@ typedef struct     s_ast
     struct s_ast   *r;    
 }                  t_ast;
 
-t_ast              *node_ast(t_token *token, t_ast *l, t_ast *r);
-void               pretty_print(t_ast *tree);
-void               ast_print(t_ast *root, int space);
+typedef struct      s_cmd
+{
+    int             std_in;
+    int             std_out;
+    int             std_err;
 
-t_ast               *expr(int rbp, t_ast *left);
-t_ast               *parser(t_lex *tokens);
+    char            **cmd;
+}                   t_cmd;
+
+t_ast               *node_ast(t_token *token, t_ast *l, t_ast *r);
+void                pretty_print(t_ast *tree);
+void                ast_print(t_ast *root, int space);
+
+t_ast               *expr(int rbp);
+t_ast               *ast_parser(t_lex *tokens);
+
+t_cmd               *cmd_parser(t_lex *cmd);
 
 #endif

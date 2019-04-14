@@ -6,7 +6,7 @@
 /*   By: mbellaic <mbellaic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/12 17:01:09 by aleduc            #+#    #+#             */
-/*   Updated: 2019/04/13 07:25:07 by mbellaic         ###   ########.fr       */
+/*   Updated: 2019/04/14 14:26:24 by mbellaic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int		main(int argc, char **argv, char **environ)
 			inputstr = prompt(input, &pos); // Don't forget to free inputstr once you are done with it.
 			if (inputstr)
 				lex = lexer(inputstr);
-			ast = parser(lex);
+			ast = ast_parser(lex);
 		}
 	}
 	return (0);

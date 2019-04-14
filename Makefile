@@ -2,7 +2,7 @@
 # Debug mode #
 # ---------- #
 
-DEBUG = no 
+DEBUG = yes 
 
 # --------- #
 # Directory #
@@ -20,16 +20,18 @@ VPATH = objs:\
 		srcs/lexer:srcs/lexer/dll_lex:srcs/lexer/token:\
 		srcs/prompt:srcs/prompt/edition:srcs/prompt/history:srcs/prompt/multiline:\
 		srcs/prompt/others:srcs/prompt/selection:\
-		srcs/parser:srcs/parser/pre-parser:srcs/parser/ast\
+		srcs/parser:srcs/parser/pre-parser:srcs/parser/ast:\
+		srcs/parser/command\
+
 # ------------------ #
 # Compiler and flags #
 # ------------------ #
 
 CC = gcc
 ifeq ($(DEBUG), yes)
-	CFLAGS = -Wall -Wextra -Werror
+	CFLAGS = -Wall -Wextra -Werror -g3 -fsanitize=address
 else
-	CFLAGS = -Wall -Wextra -g3 -fsanitize=address
+	CFLAGS = -Wall -Wextra
 endif
 CPPFLAGS = -I $(INCDIR) -I $(INCLIBDIR)
 LDLIBS = -lft
@@ -68,7 +70,8 @@ SRCS_NAMES = main.c \
 			 multiline.c \
 			 textselection.c \
 			 tree_utils.c \
-			 parser.c
+			 parser.c \
+			 cmd_parser.c
 
 OBJS_NAMES = $(SRCS_NAMES:.c=.o)
 HEADERS_NAMES = sh21.h lexer.h parser.h
