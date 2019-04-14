@@ -6,7 +6,7 @@
 /*   By: mbellaic <mbellaic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/12 17:01:09 by aleduc            #+#    #+#             */
-/*   Updated: 2019/04/14 14:26:24 by mbellaic         ###   ########.fr       */
+/*   Updated: 2019/04/14 22:36:27 by mbellaic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,12 @@ int		main(int argc, char **argv, char **environ)
 	t_pos	pos;
 	char	*inputstr;
 	t_lex	*lex;
-	t_ast 	*ast;
+//	t_ast 	*ast;
 
 	lex = NULL;
 	inputstr = NULL;
 	input = NULL;
-	ast = NULL;
+//	ast = NULL;
 	welcome();
 	init_prompt(&pos);
 	while (21)

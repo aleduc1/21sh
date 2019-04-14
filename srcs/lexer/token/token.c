@@ -14,6 +14,8 @@ t_token		*create_token(char *str, t_type types)
 		return (NULL);
 	}
 	token->type = types;
+	ft_putnbr(token->type);
+	ft_putendl(token->data);
 	return (token);
 }
 
@@ -32,5 +34,7 @@ t_token		*create_command_token(t_lex **command, t_type types)
 		return (NULL);
 	}
 	token->type = types;
+	ft_putnbr(token->type);
+	ft_putendl(token->data);
 	return (token);
 }

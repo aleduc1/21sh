@@ -2,7 +2,11 @@
 # Debug mode #
 # ---------- #
 
+<<<<<<< HEAD
 DEBUG = yes 
+=======
+DEBUG = no
+>>>>>>> 9dd36dd2cfb856f78e940d99f61f37101ed1f0f1
 
 # --------- #
 # Directory #

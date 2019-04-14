@@ -14,7 +14,7 @@
 
 void	set_tab_types(t_tab_type **tab_of_types)
 {
-	(*tab_of_types) = (t_tab_type *)ft_memalloc(sizeof(t_tab_type) * 34);
+	(*tab_of_types) = (t_tab_type *)ft_memalloc(sizeof(t_tab_type) * 38);
 	(*tab_of_types)[0].str = "(";
 	(*tab_of_types)[0].type = LPAR;
 	(*tab_of_types)[1].str = ")";
@@ -81,6 +81,18 @@ void	set_tab_types(t_tab_type **tab_of_types)
 	(*tab_of_types)[31].type = TAB;
 	(*tab_of_types)[32].str = " ";
 	(*tab_of_types)[32].type = SPACE;
-	(*tab_of_types)[33].str = NULL;
-	(*tab_of_types)[33].type = NUL;
+	(*tab_of_types)[33].str = "&>";
+	(*tab_of_types)[33].type = AMPGREAT;
+	(*tab_of_types)[34].str = "&<";
+	(*tab_of_types)[34].type = AMPLESS;
+	(*tab_of_types)[35].str = "&>-";
+	(*tab_of_types)[35].type = AMPGREATHYPH;
+	(*tab_of_types)[36].str = "&<-";
+	(*tab_of_types)[36].type = AMPLESSHYPH;
+	(*tab_of_types)[37].str = "<&-";
+	(*tab_of_types)[37].type = LESSAMPHYPH;
+	(*tab_of_types)[38].str = ">&-";
+	(*tab_of_types)[38].type = GREATAMPHYPH;
+	(*tab_of_types)[39].str = NULL;
+	(*tab_of_types)[39].type = NUL;
 }
