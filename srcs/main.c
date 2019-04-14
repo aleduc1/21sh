@@ -20,12 +20,12 @@ int		main(int argc, char **argv, char **environ)
 	t_pos	pos;
 	char	*inputstr;
 	t_lex	*lex;
-	t_ast 	*ast;
+//	t_ast 	*ast;
 
 	lex = NULL;
 	inputstr = NULL;
 	input = NULL;
-	ast = NULL;
+//	ast = NULL;
 	welcome();
 	init_prompt(&pos);
 	while (21)
@@ -35,7 +35,8 @@ int		main(int argc, char **argv, char **environ)
 			inputstr = prompt(input, &pos); // Don't forget to free inputstr once you are done with it.
 			if (inputstr)
 				lex = lexer(inputstr);
-			ast = parser(lex);
+			dllprinthead(&lex);
+//			ast = parser(lex);
 		}
 	}
 	return (0);

@@ -2,7 +2,7 @@
 # Debug mode #
 # ---------- #
 
-DEBUG = no 
+DEBUG = no
 
 # --------- #
 # Directory #

@@ -151,12 +151,60 @@ t_token	*handle_string(char *input, int *i, int *last_t)
 	return (tok);
 }
 
+int		is_amper(char c)
+{
+	if (c == '&')
+		return (1);
+	return (0);
+}
+
+int		is_lesser_greater(char c)
+{
+	if (c == '>' || c == '<')
+		return (1);
+	return (0);
+}
+
+int		is_hyph(char c)
+{
+	if (c == '-')
+		return (1);
+	return (0);
+}
+
+void	check_double(char *input, int *i)
+{
+	if (input[(*i) + 1])
+	{
+		if (input[(*i)] == input[(*i) + 1])
+			(*i)++;
+		else if (is_amper(input[(*i)]))
+		{
+			if (is_lesser_greater(input[(*i) + 1]))
+			{
+				if ((input[(*i) + 2]) && (is_hyph(input[(*i) + 2])))
+					(*i)++;
+				(*i)++;
+			}
+		}
+		else if (is_lesser_greater(input[(*i)]))
+		{
+			if (is_amper(input[(*i) + 1]))
+			{
+				if ((input[(*i) + 2]) && (is_hyph(input[(*i) + 2])))
+					(*i)++;
+				(*i)++;
+			}
+		}
+	}
+}
+
 void	reading_input(char *input, t_lex **lex)
 {
-	int		i;
-	int		last_t;
-	int		to_check;
-	t_token	*tok;
+	int			i;
+	int			last_t;
+	int			to_check;
+	t_token		*tok;
 	t_tab_type	*tab_of_type;
 
 	tok = NULL;
@@ -185,8 +233,8 @@ void	reading_input(char *input, t_lex **lex)
 			{
 				if (i == last_t)
 				{
-					if (dub_possible(input[i]) && (input[i + 1]) && (input[i + 1] == input[i]))
-						i++;
+					if (dub_possible(input[i]))
+						check_double(input, &i);
 					i++;
 				}
 				to_check = 1;
