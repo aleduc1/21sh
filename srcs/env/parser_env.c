@@ -6,7 +6,7 @@
 /*   By: sbelondr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/07 10:31:02 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/04/15 11:29:35 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/04/15 12:11:40 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,12 +46,28 @@ static int	manage_home(char **dst, int index, t_env *my_env)
 	return (index);
 }
 
+static int	modify_dst(char *tmp, t_env *my_env, char **dst)
+{
+	char	*stock;
+	char	*final;
+
+	stock = manage_var(tmp, my_env);
+	ft_strdel(&tmp);
+	final = ft_strjoin(*dst, stock);
+	ft_strdel(&(*dst));
+	if (final)
+		(*dst) = ft_strdup(final);
+	else
+		(*dst) = NULL;
+	ft_strdel(&stock);
+	ft_strdel(&final);
+	return (0);
+}
+
 static int	apply_rules(char *src, char **dst, int index, t_env *my_env)
 {
 	int		i;
 	char	*tmp;
-	char	*stock;
-	char	*final;
 
 	if (src[index + 1] == '{')
 	{
@@ -69,14 +85,10 @@ static int	apply_rules(char *src, char **dst, int index, t_env *my_env)
 		else
 			tmp = ft_strsub(src, index + 1, ft_strlen(src));
 	}
-	stock = manage_var(tmp, my_env);
-	ft_strdel(&tmp);
-	final = ft_strjoin(*dst, stock);
-	ft_strdel(&(*dst));
-	(*dst) = final ? ft_strdup(final) : NULL;
-	ft_strdel(&stock);
-	ft_strdel(&final);
-	return (i > -1 ? i : ft_strlen(src));
+	modify_dst(tmp, my_env, &(*dst));
+	if (i < 0)
+		i = ft_strlen(src);
+	return (i);
 }
 
 static char	*search_var(char *src, t_env *my_env)

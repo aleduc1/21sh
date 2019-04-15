@@ -6,7 +6,7 @@
 /*   By: sbelondr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/22 17:57:48 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/04/15 11:34:00 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/04/15 11:57:58 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 ** creer la commande depuis la struct t_arg pour pouvoir execve
 */
 
-char	**transfer_arg(t_arg *lst_arg)
+char		**transfer_arg(t_arg *lst_arg)
 {
 	int		i;
 	t_arg	*head;
@@ -44,11 +44,35 @@ char	**transfer_arg(t_arg *lst_arg)
 	return (split);
 }
 
-int		is_in_path(char ***command, t_env *my_env)
+static int	path_of_commands(char ***command, char **split)
 {
 	int		i;
 	char	*str;
 	char	*dst;
+
+	i = -1;
+	while (split[++i])
+	{
+		dst = ft_strjoin(split[i], "/");
+		str = ft_strjoin(dst, (*command)[0]);
+		if (access(str, F_OK) >= 0 && access(str, X_OK) >= 0)
+		{
+			ft_strdel(&((*command)[0]));
+			(*command)[0] = ft_strdup(str);
+			ft_strdel(&str);
+			ft_strdel(&dst);
+			return (1);
+		}
+		ft_strdel(&str);
+		ft_strdel(&dst);
+	}
+	return (-1);
+}
+
+int			is_in_path(char ***command, t_env *my_env)
+{
+	int		result;
+	char	*str;
 	char	**split;
 
 	if ((!(*command)) || (!(*command)[0]))
@@ -59,29 +83,13 @@ int		is_in_path(char ***command, t_env *my_env)
 	if (!str)
 		return (-1);
 	split = ft_strsplit(str, ':');
-	i = -1;
-	while (split[++i])
-	{
-		dst = ft_strjoin(split[i], "/");
-		ft_strdel(&str);
-		str = ft_strjoin(dst, (*command)[0]);
-		if (access(str, F_OK) >= 0 && access(str, X_OK) >= 0)
-		{
-			ft_strdel(&((*command)[0]));
-			(*command)[0] = ft_strdup(str);
-			ft_strdel(&str);
-			ft_strdel(&dst);
-			ft_arraydel(&split);
-			return (1);
-		}
-		ft_strdel(&dst);
-	}
+	result = path_of_commands(&(*command), split);
 	ft_strdel(&str);
 	ft_arraydel(&split);
-	return (-1);
+	return (result);
 }
 
-int		is_builtin(char **command, t_env **my_env, int fd_stock[3])
+int			is_builtin(char **command, t_env **my_env, int fd_stock[3])
 {
 	t_arg	*arg;
 	int		verif;
@@ -112,7 +120,7 @@ int		is_builtin(char **command, t_env **my_env, int fd_stock[3])
 	return (verif);
 }
 
-int		gest_return(int verif, t_env **my_env)
+int			gest_return(int verif, t_env **my_env)
 {
 	t_arg	*arg;
 	char	*value;

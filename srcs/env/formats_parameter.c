@@ -6,7 +6,7 @@
 /*   By: sbelondr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/29 11:12:26 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/04/08 11:11:47 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/04/15 12:00:50 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,4 +107,7 @@ char	*parameter_hash_end(char *parameter, char *word)
 ** je sais pas
 */
 
-char	*parameter_percents();
+char	*parameter_percents(void)
+{
+	return (NULL);
+}

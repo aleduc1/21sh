@@ -6,7 +6,7 @@
 /*   By: sbelondr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/13 16:43:54 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/04/13 16:44:28 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/04/15 11:59:45 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ t_commands	*init_commands(char **commands, int fd_stock[3])
 	return (cmds);
 }
 
-void	delete_commands(t_commands **cmds)
+void		delete_commands(t_commands **cmds)
 {
 	t_commands	*tmp;
 
