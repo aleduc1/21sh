@@ -6,12 +6,16 @@
 /*   By: sbelondr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/22 17:57:48 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/04/11 18:56:09 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/04/15 11:34:00 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 //#include "env.h"
 #include "../../includes/env.h"
+
+/*
+** creer la commande depuis la struct t_arg pour pouvoir execve
+*/
 
 char	**transfer_arg(t_arg *lst_arg)
 {
@@ -47,6 +51,8 @@ int		is_in_path(char ***command, t_env *my_env)
 	char	*dst;
 	char	**split;
 
+	if ((!(*command)) || (!(*command)[0]))
+		return (-1);
 	if (access((*command)[0], F_OK) >= 0 && access((*command)[0], X_OK) >= 0)
 		return (1);
 	str = value_line_path(my_env, "PATH", 0);

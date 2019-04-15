@@ -6,7 +6,7 @@
 /*   By: sbelondr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/02 08:43:53 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/04/12 11:39:26 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/04/15 11:37:52 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,53 @@
 ** fd_stock[2] -> error
 */
 
+void	open_redirection(int fd_stock[3])
+{
+	if (fd_stock[0] != 0)
+		dup2(fd_stock[0], STDIN_FILENO);
+	if (fd_stock[1] != 1)
+		dup2(fd_stock[1], STDOUT_FILENO);
+	if (fd_stock[2] != 2)
+		dup2(fd_stock[2], STDERR_FILENO);
+}
+
+void	close_redirection(t_env *my_env, int old_fd[3])
+{
+	char	*tmp;
+	int		fd_stock[3];
+
+	fd_stock[0] = 0;
+	tmp = value_line_path(my_env, "FD_OUTPUT", 0);
+	fd_stock[1] = ft_atoi(tmp);
+	ft_strdel(&tmp);
+	tmp = value_line_path(my_env, "FD_ERROR_OUTPUT", 0);
+	fd_stock[2] = ft_atoi(tmp);
+	ft_strdel(&tmp);
+	(void)old_fd;
+//	close(fd[0]);
+	close(fd_stock[1]);
+	close(STDOUT_FILENO);
+	dup2(STDOUT_FILENO, 1);
+	ft_printf("ici\n");
+//	dup2(fd_stock[1], 1);
+//	close(fd_stock[2]);
+//	close(old_fd[0]);
+//	close(old_fd[1]);
+//	close(old_fd[2]);
+//	dup2(0, STDIN_FILENO);
+//	dup2(1, STDOUT_FILENO);
+//	dup2(2, STDERR_FILENO);
+	/*
+	dup2(old_fd[0], fd_stock[0]);
+	dup2(old_fd[1], fd_stock[1]);
+	dup2(old_fd[2], fd_stock[2]);
+	dup2(STDIN_FILENO, fd_stock[0]);
+	dup2(STDOUT_FILENO, fd_stock[1]);
+	dup2(STDERR_FILENO, fd_stock[2]);
+	*/
+	
+}
+
 int		add_process(char **command, int fd_stock[3], t_env *my_env,
 		int *returns_code)
 {
@@ -26,18 +73,16 @@ int		add_process(char **command, int fd_stock[3], t_env *my_env,
 	int		pid;
 
 	if (is_in_path(&command, my_env) != 1)
+	{
+		*returns_code = -1;
 		return (-1);
+	}
 	env = create_list_env(my_env, 0);
 	pid = fork();
 	waitpid(pid, &(*returns_code), 0);
 	if (pid == 0)
 	{
-		if (fd_stock[0] != 0)
-			dup2(fd_stock[0], 0);
-		if (fd_stock[1] != 1)
-			dup2(fd_stock[1], 1);
-		if (fd_stock[2] != 2)
-			dup2(fd_stock[2], 2);
+		open_redirection(fd_stock);
 		execve(command[0], command, env);
 		ft_dprintf(2, "21sh: %s: No such file or directory\n", command[0]);
 		exit(pid);
@@ -50,85 +95,10 @@ int		exec_fork(char **command, t_env **my_env, int fd_stock[3])
 {
 	int	return_code;
 	int	pid;
-//	int	fd_stock[3];
 
-//	fd_stock[0] = 0;
-//	fd_stock[1] = dest_output(&(*my_env));
-//	fd_stock[2] = dest_error_output(&(*my_env));
 	signal(SIGINT, NULL);
 	pid = add_process(command, fd_stock, *my_env, &return_code);
-//	close_file(&(*my_env));
-//	close_error_file(&(*my_env));
 	if (pid != -1)
 		kill(pid, SIGINT);
 	return (return_code);
 }
-/*
-int		exec_pipe_fork(char **command, char **command_bis, char **env,
-		t_env **my_env)
-{
-	int	return_code;
-	int	pids[2];
-	int	pipes[2];
-	int	fd_stock[3];
-
-	pipe(pipes);
-	fd_stock[0] = 0;
-	fd_stock[1] = pipes[1];
-	fd_stock[2] = dest_error_output(&(*my_env));
-	pids[0] = add_process(command, fd_stock, env, &return_code);
-	close(pipes[1]);
-	fd_stock[0] = pipes[0];
-	fd_stock[1] = dest_output(&(*my_env));
-	pids[1] = add_process(command_bis, fd_stock, env, &return_code);
-	close(fd_stock[0]);
-	close_file(&(*my_env));
-	close_error_file(&(*my_env));
-	return (return_code);
-}
-
-int		exec_pipe(char **command, t_env **my_env, char **env)
-{
-	char	**part_array;
-	char	**tmp;
-	int		i;
-
-	i = 0;
-	while (ft_strequ(command[i], "|") == 0)
-		i++;
-	part_array = ft_arraysub(command, 0, i);
-	tmp = ft_arraysub(command, i + 1, ft_arraylen(command));
-	is_in_path(&tmp, *my_env);
-	i = exec_pipe_fork(part_array, tmp, env, &(*my_env));
-	ft_arraydel(&tmp);
-	ft_arraydel(&part_array);
-	free_maillon_env(&(*my_env), "PIPE", 0);
-	return (i);
-}
-
-int		exec_command(t_arg *lst_arg, t_env **my_env)
-{
-	int		verif;
-	char	**env;
-	char	**command;
-
-	env = create_list_env(*my_env, 0);
-	command = transfer_arg(lst_arg);
-	verif = is_builtin(lst_arg, &(*my_env));
-	if (verif == 0)
-	{
-		if (command[0] && is_in_path(&command, *my_env) == 1)
-		{
-			if (search_line_env(*my_env, "PIPE", 0) == 1)
-				verif = exec_pipe(command, &(*my_env), env);
-			else
-				verif = exec_fork(command, &(*my_env), env);
-		}
-		else
-			ft_dprintf(2, "21sh: Command not found\n");
-	}
-	ft_arraydel(&command);
-	ft_arraydel(&env);
-	gest_return(verif, &(*my_env));
-	return (verif);
-}*/

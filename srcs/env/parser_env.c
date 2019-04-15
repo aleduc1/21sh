@@ -6,7 +6,7 @@
 /*   By: sbelondr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/07 10:31:02 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/04/13 17:48:43 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/04/15 11:29:35 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ static int	apply_rules(char *src, char **dst, int index, t_env *my_env)
 	ft_strdel(&tmp);
 	final = ft_strjoin(*dst, stock);
 	ft_strdel(&(*dst));
-	(*dst) = ft_strdup(final);
+	(*dst) = final ? ft_strdup(final) : NULL;
 	ft_strdel(&stock);
 	ft_strdel(&final);
 	return (i > -1 ? i : ft_strlen(src));
@@ -110,25 +110,15 @@ static char	*search_var(char *src, t_env *my_env)
 
 void		parser_var(char ***value, t_env *my_env)
 {
-//	t_arg	*current;
-//	t_arg	*head;
 	char	*tmp;
 	int		i;
 
 	i = -1;
-//	current = NULL;
-//	current = init_arg();
-//	head = current;
 	while ((*value)[++i])
 	{
 		tmp = search_var((*value)[i], my_env);
-//		current->key = ft_strdup(value[i]);
-//		current->value = ft_strdup(tmp);
 		ft_strdel(&((*value)[i]));
-		(*value)[i] = ft_strdup(tmp);
+		(*value)[i] = tmp ? ft_strdup(tmp) : NULL;
 		ft_strdel(&tmp);
-//		current->next = init_arg();
-//		current = current->next;
 	}
-//	return (value);
 }
