@@ -6,7 +6,7 @@
 /*   By: sbelondr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/09 10:50:50 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/04/15 11:36:07 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/04/15 12:41:35 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,27 @@
 ** &
 */
 
-int		ft_ampersand(char **f_command, char **s_command, t_env **my_env)
+int		ft_ampersand(t_commands *cmds, int nb, t_env **my_env)
 {
-	(void)f_command;
-	(void)s_command;
-	(void)my_env;
+	int	father;
+	int	returns_code;
+	int	i;
+	int	result;
+
+	i = -1;
+	while (++i < (nb - 1))
+	{
+		ft_printf("je suis la\n");
+		father = fork();
+		waitpid(father, &returns_code, 0);
+		signal(SIGINT, NULL);
+		result = is_builtin(cmds->command, &(*my_env), cmds->fd_stock);
+		if (result == -1)
+			exec_fork(cmds->command, &(*my_env), cmds->fd_stock);
+//		if (father != -1)
+//			kill(father, SIGINT);
+		cmds = cmds->next;
+	}
 	return (0);
 }
 
@@ -185,9 +201,9 @@ int		main(int ac, char **av)
 	char	***mlt_commands;
 	char	**command;
 	char	**test;
-	char	*testa[3] = {"cat", "-e", NULL};
+	char	*testa[2] = {"pwd", NULL};
 	char	**test_b;
-	char	*testb[2] = {"wc", NULL};
+	char	*testb[3] = {"echo", "toi", NULL};
 	t_env	*env;
 	int		i;
 
@@ -215,12 +231,13 @@ int		main(int ac, char **av)
 	parser_var(&(cmds->next->command), env);
 	cmds->next->next = init_commands(test_b, fd_stock);
 	parser_var(&(cmds->next->next->command), env);
-	i = ft_multiple_pipe_ts(cmds, 3, &env);
+//	i = ft_multiple_pipe_ts(cmds, 3, &env);
+	i = ft_ampersand(cmds, 3, &env);
 	close_file(&env);
 	delete_commands(&cmds);
 
-	parser_var(&command, env);
-	i = ft_simple_command(command, &env);
+//	parser_var(&command, env);
+//	i = ft_simple_command(command, &env);
 //	ft_printf("i = %d\n", i);
 	mlt_commands = ft_arrays_dim(2, command, test_b);
 //	close_redirection(env);

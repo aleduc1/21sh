@@ -6,7 +6,7 @@
 /*   By: sbelondr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/22 17:36:44 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/04/15 11:23:44 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/04/15 12:45:36 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ int		builtin_env(t_env **my_env, int fd_stock[3])
 	while (lst_env[++i])
 		ft_dprintf(fd_stock[1], "%s\n", lst_env[i]);
 	ft_arraydel(&lst_env);
-//	close_file(&(*my_env));
 	return (0);
 }
 
@@ -37,6 +36,5 @@ int		builtin_set(t_env **my_env, int fd_stock[3])
 	while (lst_env[++i])
 		ft_dprintf(fd_stock[1], "%s\n", lst_env[i]);
 	ft_arraydel(&lst_env);
-//	close_file(&(*my_env));
 	return (0);
 }

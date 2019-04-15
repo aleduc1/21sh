@@ -6,7 +6,7 @@
 /*   By: sbelondr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/26 16:44:29 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/04/12 08:37:50 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/04/15 12:44:51 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,6 @@ void		close_file(t_env **my_env)
 {
 	t_arg	*arg;
 
-	//dup2(1, STDOUT_FILENO);
 	if (search_line_env(*my_env, "FD_FILE_OUTPUT", 0))
 	{
 		arg = create_arg("FD_OUTPUT", "1");
@@ -112,7 +111,6 @@ void		close_error_file(t_env **my_env)
 {
 	t_arg	*arg;
 
-	//dup2(1, STDERR_FILENO);
 	if (search_line_env(*my_env, "FD_FILE_ERROR_OUTPUT", 0))
 	{
 		arg = create_arg("FD_ERROR_OUTPUT", "2");
