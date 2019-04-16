@@ -6,7 +6,7 @@
 /*   By: sbelondr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/09 10:50:50 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/04/15 18:26:09 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/04/16 17:02:58 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,47 +16,52 @@
 /*
  ** &
  */
+int		ft_ampersand(t_commands *cmds, int nb, t_env **my_env);
+
+int		background_process(t_commands *cmds, t_env *my_env, int nb)
+{
+	int	result;
+	int	pid;
+
+	pid = fork();
+	if (pid > 0)
+	{
+		ft_printf("[%d] %d\n", nb, pid);
+		ft_ampersand(cmds->next, ++nb, &(my_env));
+	}
+	waitpid(pid, &result, 0);
+	if (pid == 0)
+	{
+		result = is_builtin(cmds->command, &my_env, cmds->fd_stock);
+		if (result == -1)
+			add_process(cmds->command, cmds->fd_stock, my_env, &result);
+		exit(pid);
+	}
+	return (pid);
+}
 
 int		ft_ampersand(t_commands *cmds, int nb, t_env **my_env)
 {
-//	t_commands	*bck;
-	int	father;
-	int	returns_code;
-	int	i;
 	int	result;
 
-	i = -1;
-	while (cmds->next)
+	result = 0;
+	if (cmds->next)
 	{
-		father = fork();
-		signal(SIGHUP, NULL);
-		if (father != 0)
-			ft_printf("[%d] %d\n", nb, father);
-		waitpid(father, &returns_code, 0);
-//		ft_ampersand(bck, ++nb, &(*my_env));
-		if (father == 0)
+		signal(SIGTTOU, NULL);
+		result = background_process(cmds, *my_env, nb);
+		if (result != -1)
 		{
-			signal(SIGTTIN, NULL);
-			result = is_builtin(cmds->command, &(*my_env), cmds->fd_stock);
-			if (result == -1)
-				exec_fork(cmds->command, &(*my_env), cmds->fd_stock);
-			kill(father, SIGTTIN);
-			exit(father);
+			ft_printf("[%d] Done\t%s\n", nb, cmds->command[0]);
+			kill(result, SIGTTOU);
 		}
-		else
-		{
-			ft_printf("[%d] + %d done\t%s\n", nb, father, cmds->command[0]);
-		}
-		cmds = cmds->next;
-//		kill(father, SIGTTIN);
 	}
-//	else
-//	{
-//		result = is_builtin(cmds->command, &(*my_env), cmds->fd_stock);
-//		if (result == -1)
-//			exec_fork(cmds->command, &(*my_env), cmds->fd_stock);
-//	}
-	return (0);
+	else
+	{
+		result = is_builtin(cmds->command, &(*my_env), cmds->fd_stock);
+		if (result == -1)
+			add_process(cmds->command, cmds->fd_stock, *my_env, &result);
+	}
+	return (result);
 }
 
 /*
@@ -250,10 +255,9 @@ int		main(int ac, char **av)
 	cmds->next->next = init_commands(test_b, fd_stock);
 	parser_var(&(cmds->next->next->command), env);
 	//	i = ft_multiple_pipe_ts(cmds, 3, &env);
-	i = ft_ampersand(cmds, 0, &env);
+	i = ft_ampersand(cmds, 1, &env);
 	close_file(&env);
 	delete_commands(&cmds);
-
 	//	parser_var(&command, env);
 	//	i = ft_simple_command(command, &env);
 	//	ft_printf("i = %d\n", i);
