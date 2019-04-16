@@ -4,6 +4,12 @@
 
 DEBUG = no
 
+# PROGRESS BAR | Original author Cpirlot
+T = $(words $(OBJ))
+N = 0
+C = $(words $N)$(eval N := x $N)
+ECHO = "[`expr $C  '*' 100 / $T`%]"
+
 # ----- #
 # Shell #
 # ----- #
@@ -72,7 +78,7 @@ ARFLAGS = rc
 SORT = ranlib
 CREATE = mkdir -p
 DEL = /bin/rm -rf
-PRINT = echo
+PRINT = printf
 PHONY = all clean fclean re help
 
 # ----- #
@@ -91,24 +97,24 @@ $(NAME) : $(OBJ)
 	@$(CREATE) $(LIBDIR)
 	@$(AR) $(ARFLAGS) $(NAME) $(OBJ)
 	@$(SORT) $(NAME)
-	@$(PRINT) "Libft.a built"
+	@$(PRINT) "\r\033[K""\r\033[K""Libft.a built\n"
 
 $(OBJDIR)%.o : $(SRCDIR)%.c $(HEADERS)
 	@$(CREATE) $(OBJDIR)
 	@$(CC) -o $@ -c $< $(CFLAGS) $(CPPFLAGS)
-	@$(PRINT) ".o file for lib created"
+	@$(PRINT) "%-60b\r" "\033[32m$(ECHO)\033[0m $@"
 
 clean :
 	@$(DEL) $(OBJDIR)
-	@$(PRINT) ".o file for lib deleted"
+	@$(PRINT) ".o file for lib deleted\n"
 
 fclean : clean
 	@$(DEL) $(LIBDIR)
-	@$(PRINT) "Libft.a destroyed"
+	@$(PRINT) "Libft.a destroyed\n"
 
 re : fclean all
 
 help :
-	@$(PRINT) "Rules available : all, clean, fclean, re and help"
+	@$(PRINT) "Rules available : all, clean, fclean, re and help\n"
 
 .PHONY : $(PHONY)

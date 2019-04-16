@@ -84,7 +84,7 @@ LIBS = $(addprefix $(PATHLIBDIR), $(LIBS_NAMES))
 
 CREATE = mkdir -p
 DEL = /bin/rm -rf
-PRINT = echo
+PRINT = printf
 PHONY = all clean cleans fclean re refast libs cleanlibs fcleanlibs help
 
 # ----- #
@@ -101,27 +101,27 @@ endif
 
 $(NAME) : $(OBJS_NAMES) $(LIBS)
 	@$(CC) -o $@ $(OBJ) $(LDFLAGS) $(LDLIBS) $(LFLAGS) $(CFLAGS) $(CPPFLAGS)
-	@$(PRINT) "Executable built"
+	@$(PRINT) "\r\033[K""Executable built\n"
 
 libs :
-	@$(MAKE) -C $(LIBDIR)
+	@$(MAKE) -j3 -C $(LIBDIR)
 
 %.o : %.c $(HEADER)
 	@$(CREATE) $(OBJDIR)
 	@$(CC) -o $(OBJDIR)$@ -c $< $(CFLAGS) $(CPPFLAGS)
-	@$(PRINT) ".o file created"
+	@$(PRINT) "\033[42m \033[0m"
 
 clean : cleanlibs
 	@$(DEL) $(OBJDIR)
-	@$(PRINT) ".o file deleted"
+	@$(PRINT) ".o file deleted\n"
 
 cleans :
 	@$(DEL) $(OBJDIR)
-	@$(PRINT) ".o file deleted"
+	@$(PRINT) ".o file deleted\n"
 
 fclean : cleans fcleanlibs
 	@$(DEL) $(NAME)
-	@$(PRINT) "Executable destroyed"
+	@$(PRINT) "Executable destroyed\n"
 
 cleanlibs :
 	@$(MAKE) -C $(LIBDIR) clean
@@ -137,6 +137,6 @@ re : fclean all
 refast : cleans all
 
 help :
-	@$(PRINT) "Rules available : all, clean, cleans, fclean, re, refast ,libs, cleanlibs, fcleanlibs and help"
+	@$(PRINT) "Rules available : all, clean, cleans, fclean, re, refast ,libs, cleanlibs, fcleanlibs and help\n"
 
 .PHONY : $(PHONY)
