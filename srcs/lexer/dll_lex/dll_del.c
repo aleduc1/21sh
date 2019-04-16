@@ -41,9 +41,9 @@ t_lex 	*dlldelone(t_lex **head, char *data)
 	return (todel);
 }
 
-void	del_node(t_lex **node)
+void	dll_del_node(t_lex **node)
 {
-	ft_memdel((void **)&(*node)->token->data);
-	ft_memdel((void **)&(*node)->token);
+	(*node)->prev = NULL;
+	(*node)->next = NULL;
 	ft_memdel((void **)node);
 }

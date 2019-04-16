@@ -22,7 +22,8 @@ VPATH = objs:\
 		srcs/prompt/others:srcs/prompt/selection:\
 		srcs/parser:srcs/parser/pre-parser:srcs/parser/ast:\
 		srcs/parser/command\
-
+		srcs/cleaning
+		
 # ------------------ #
 # Compiler and flags #
 # ------------------ #
@@ -71,7 +72,8 @@ SRCS_NAMES = main.c \
 			 textselection.c \
 			 tree_utils.c \
 			 parser.c \
-			 cmd_parser.c
+			 cmd_parser.c \
+			 clean_lex.c
 
 OBJS_NAMES = $(SRCS_NAMES:.c=.o)
 HEADERS_NAMES = sh21.h lexer.h parser.h
@@ -87,8 +89,16 @@ LIBS = $(addprefix $(PATHLIBDIR), $(LIBS_NAMES))
 
 CREATE = mkdir -p
 DEL = /bin/rm -rf
-PRINT = echo
-PHONY = all clean cleans fclean re refast libs cleanlibs fcleanlibs help
+PRINT = printf
+PHONY = all clean cleans fclean re libs cleanlibs fcleanlibs lldb norm help
+REMOVE = "\r\033[K"
+FUNC = "%-60b\r"
+
+# PROGRESS BAR | Original author Cpirlot
+T = $(words $(OBJ))
+N = 0
+C = $(words $N)$(eval N := x $N)
+ECHO = "[`expr $C  '*' 100 / $T`%]"
 
 # ----- #
 # Rules #
@@ -102,29 +112,28 @@ else
 	@$(PRINT) "Debug mode : off\n"
 endif
 
-$(NAME) : $(OBJS_NAMES) $(LIBS)
+$(NAME) : $(LIBS) $(OBJS_NAMES)
 	@$(CC) -o $@ $(OBJ) $(LDFLAGS) $(LDLIBS) $(LFLAGS) $(CFLAGS) $(CPPFLAGS)
-	@$(PRINT) "Executable built"
+	@$(PRINT) $(REMOVE)"Executable built\n"
 
 libs :
-	@$(MAKE) -C $(LIBDIR)
+	@$(MAKE) -j3 -C $(LIBDIR)
 
 %.o : %.c $(HEADER)
 	@$(CREATE) $(OBJDIR)
 	@$(CC) -o $(OBJDIR)$@ -c $< $(CFLAGS) $(CPPFLAGS)
-	@$(PRINT) ".o file created"
 
 clean : cleanlibs
 	@$(DEL) $(OBJDIR)
-	@$(PRINT) ".o file deleted"
+	@$(PRINT) ".o file deleted\n"
 
 cleans :
 	@$(DEL) $(OBJDIR)
-	@$(PRINT) ".o file deleted"
+	@$(PRINT) ".o file deleted\n"
 
 fclean : cleans fcleanlibs
 	@$(DEL) $(NAME)
-	@$(PRINT) "Executable destroyed"
+	@$(PRINT) "Executable destroyed\n"
 
 cleanlibs :
 	@$(MAKE) -C $(LIBDIR) clean
@@ -135,11 +144,12 @@ fcleanlibs :
 lldb :
 	@lldb ./$(NAME)
 
+norm :
+	@norminette ./$(NAME)
+
 re : fclean all
 
-refast : cleans all
-
 help :
-	@$(PRINT) "Rules available : all, clean, cleans, fclean, re, refast ,libs, cleanlibs, fcleanlibs and help"
+	@$(PRINT) "Rules available : all, clean, cleans, fclean, re, libs, cleanlibs, fcleanlibs, lldb, norm and help\n"
 
 .PHONY : $(PHONY)

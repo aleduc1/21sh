@@ -24,6 +24,9 @@ OBJDIR = objs/
 INCDIR = includes/
 LIBDIR = libs/
 
+VPATH = .:\
+		objs:\
+		srcs:\
 # ------------------ #
 # Compiler and flags #
 # ------------------ #
@@ -32,7 +35,7 @@ CC = gcc
 ifeq ($(DEBUG), yes)
 	CFLAGS = -Wall -Wextra -Werror -g3 -fsanitize=address
 else
-	CFLAGS = -g3 -Wall -Wextra
+	CFLAGS = -Wall -Wextra
 endif
 CPPFLAGS = -I $(INCDIR)
 
@@ -72,8 +75,16 @@ ARFLAGS = rc
 SORT = ranlib
 CREATE = mkdir -p
 DEL = /bin/rm -rf
-PRINT = echo
+PRINT = printf
 PHONY = all clean fclean re help
+REMOVE = "\r\033[K"
+FUNC = "%-60b\r"
+
+# PROGRESS BAR | Original author Cpirlot
+T = $(words $(OBJ))
+N = 0
+C = $(words $N)$(eval N := x $N)
+ECHO = "[`expr $C  '*' 100 / $T`%]"
 
 # ----- #
 # Rules #
@@ -87,28 +98,28 @@ else
 	@$(PRINT) "\n"
 endif
 
-$(NAME) : $(OBJ)
+$(NAME) : $(OBJS_NAMES)
 	@$(CREATE) $(LIBDIR)
 	@$(AR) $(ARFLAGS) $(NAME) $(OBJ)
 	@$(SORT) $(NAME)
-	@$(PRINT) "Libft.a built"
+	@$(PRINT) $(REMOVE)"Libft.a built\n"
 
-$(OBJDIR)%.o : $(SRCDIR)%.c $(HEADERS)
+%.o : %.c $(HEADERS)
 	@$(CREATE) $(OBJDIR)
-	@$(CC) -o $@ -c $< $(CFLAGS) $(CPPFLAGS)
-	@$(PRINT) ".o file for lib created"
+#	@$(PRINT) "%-60b\r" "\033[32m $(ECHO)\033[0m $@"
+	@$(CC) -o $(OBJDIR)$@ -c $< $(CFLAGS) $(CPPFLAGS)
 
 clean :
 	@$(DEL) $(OBJDIR)
-	@$(PRINT) ".o file for lib deleted"
+	@$(PRINT) ".o file for lib deleted\n"
 
 fclean : clean
 	@$(DEL) $(LIBDIR)
-	@$(PRINT) "Libft.a destroyed"
+	@$(PRINT) "Libft.a destroyed\n"
 
 re : fclean all
 
 help :
-	@$(PRINT) "Rules available : all, clean, fclean, re and help"
+	@$(PRINT) "Rules available : all, clean, fclean, re and help\n"
 
 .PHONY : $(PHONY)
