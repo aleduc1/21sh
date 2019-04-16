@@ -4,12 +4,6 @@
 
 DEBUG = no
 
-# PROGRESS BAR | Original author Cpirlot
-T = $(words $(OBJ))
-N = 0
-C = $(words $N)$(eval N := x $N)
-ECHO = "[`expr $C  '*' 100 / $T`%]"
-
 # ----- #
 # Shell #
 # ----- #
@@ -30,6 +24,9 @@ OBJDIR = objs/
 INCDIR = includes/
 LIBDIR = libs/
 
+VPATH = .:\
+		objs:\
+		srcs:\
 # ------------------ #
 # Compiler and flags #
 # ------------------ #
@@ -38,7 +35,7 @@ CC = gcc
 ifeq ($(DEBUG), yes)
 	CFLAGS = -Wall -Wextra -Werror -g3 -fsanitize=address
 else
-	CFLAGS = -g3 -Wall -Wextra
+	CFLAGS = -Wall -Wextra
 endif
 CPPFLAGS = -I $(INCDIR)
 
@@ -80,6 +77,15 @@ CREATE = mkdir -p
 DEL = /bin/rm -rf
 PRINT = printf
 PHONY = all clean fclean re help
+REMOVE = "\r\033[K"
+FUNC = "%-60b\r"
+
+# @$(PRINT) $(FUNC) "\033[32m$(ECHO)\033[0m $@"
+# PROGRESS BAR | Original author Cpirlot
+T = $(words $(OBJS_NAMES))
+N = 0
+C = $(words $N)$(eval N := x $N)
+ECHO = "[`expr $C  '*' 100 / $T`%]"
 
 # ----- #
 # Rules #
@@ -93,16 +99,15 @@ else
 	@$(PRINT) "\n"
 endif
 
-$(NAME) : $(OBJ)
+$(NAME) : $(OBJS_NAMES)
 	@$(CREATE) $(LIBDIR)
 	@$(AR) $(ARFLAGS) $(NAME) $(OBJ)
 	@$(SORT) $(NAME)
-	@$(PRINT) "\r\033[K""\r\033[K""Libft.a built\n"
+	@$(PRINT) $(REMOVE)"Libft.a built\n"
 
-$(OBJDIR)%.o : $(SRCDIR)%.c $(HEADERS)
+%.o : %.c $(HEADERS)
 	@$(CREATE) $(OBJDIR)
-	@$(CC) -o $@ -c $< $(CFLAGS) $(CPPFLAGS)
-	@$(PRINT) "%-60b\r" "\033[32m$(ECHO)\033[0m $@"
+	@$(CC) -o $(OBJDIR)$@ -c $< $(CFLAGS) $(CPPFLAGS)
 
 clean :
 	@$(DEL) $(OBJDIR)

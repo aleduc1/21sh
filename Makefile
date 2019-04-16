@@ -85,7 +85,15 @@ LIBS = $(addprefix $(PATHLIBDIR), $(LIBS_NAMES))
 CREATE = mkdir -p
 DEL = /bin/rm -rf
 PRINT = printf
-PHONY = all clean cleans fclean re refast libs cleanlibs fcleanlibs help
+PHONY = all clean cleans fclean re libs cleanlibs fcleanlibs lldb norm help
+REMOVE = "\r\033[K"
+FUNC = "%-60b\r"
+
+# PROGRESS BAR | Original author Cpirlot
+T = $(words $(OBJ))
+N = 0
+C = $(words $N)$(eval N := x $N)
+ECHO = "[`expr $C  '*' 100 / $T`%]"
 
 # ----- #
 # Rules #
@@ -99,9 +107,9 @@ else
 	@$(PRINT) "Debug mode : off\n"
 endif
 
-$(NAME) : $(OBJS_NAMES) $(LIBS)
+$(NAME) : $(LIBS) $(OBJS_NAMES)
 	@$(CC) -o $@ $(OBJ) $(LDFLAGS) $(LDLIBS) $(LFLAGS) $(CFLAGS) $(CPPFLAGS)
-	@$(PRINT) "\r\033[K""Executable built\n"
+	@$(PRINT) $(REMOVE)"Executable built\n"
 
 libs :
 	@$(MAKE) -j3 -C $(LIBDIR)
@@ -109,7 +117,6 @@ libs :
 %.o : %.c $(HEADER)
 	@$(CREATE) $(OBJDIR)
 	@$(CC) -o $(OBJDIR)$@ -c $< $(CFLAGS) $(CPPFLAGS)
-	@$(PRINT) "\033[42m \033[0m"
 
 clean : cleanlibs
 	@$(DEL) $(OBJDIR)
@@ -132,11 +139,12 @@ fcleanlibs :
 lldb :
 	@lldb ./$(NAME)
 
+norm :
+	@norminette ./$(NAME)
+
 re : fclean all
 
-refast : cleans all
-
 help :
-	@$(PRINT) "Rules available : all, clean, cleans, fclean, re, refast ,libs, cleanlibs, fcleanlibs and help\n"
+	@$(PRINT) "Rules available : all, clean, cleans, fclean, re, libs, cleanlibs, fcleanlibs, lldb, norm and help\n"
 
 .PHONY : $(PHONY)
