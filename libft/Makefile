@@ -80,9 +80,8 @@ PHONY = all clean fclean re help
 REMOVE = "\r\033[K"
 FUNC = "%-60b\r"
 
-# @$(PRINT) $(FUNC) "\033[32m$(ECHO)\033[0m $@"
 # PROGRESS BAR | Original author Cpirlot
-T = $(words $(OBJS_NAMES))
+T = $(words $(OBJ))
 N = 0
 C = $(words $N)$(eval N := x $N)
 ECHO = "[`expr $C  '*' 100 / $T`%]"
@@ -107,6 +106,7 @@ $(NAME) : $(OBJS_NAMES)
 
 %.o : %.c $(HEADERS)
 	@$(CREATE) $(OBJDIR)
+	@$(PRINT) "%-60b\r" "\033[32m $(ECHO)\033[0m $@"
 	@$(CC) -o $(OBJDIR)$@ -c $< $(CFLAGS) $(CPPFLAGS)
 
 clean :
