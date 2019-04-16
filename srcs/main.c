@@ -6,7 +6,7 @@
 /*   By: mbellaic <mbellaic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/12 17:01:09 by aleduc            #+#    #+#             */
-/*   Updated: 2019/04/13 07:25:07 by mbellaic         ###   ########.fr       */
+/*   Updated: 2019/04/16 16:26:11 by aleduc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ int		main(int argc, char **argv, char **environ)
 				lex = lexer(inputstr);
 			dllprinthead(&lex);
 //			ast = parser(lex);
+			clean_lex(&lex);
 		}
 	}
 	return (0);

@@ -165,4 +165,6 @@ void	            init_prompt(t_pos *pos);
 t_node	            *read_input(t_node **input, t_pos *pos);
 char	            *prompt(t_multi *input, t_pos *pos);
 
+
+
 #endif

@@ -20,7 +20,8 @@ VPATH = objs:\
 		srcs/lexer:srcs/lexer/dll_lex:srcs/lexer/token:\
 		srcs/prompt:srcs/prompt/edition:srcs/prompt/history:srcs/prompt/multiline:\
 		srcs/prompt/others:srcs/prompt/selection:\
-		srcs/parser:srcs/parser/pre-parser:srcs/parser/ast\
+		srcs/parser:srcs/parser/pre-parser:srcs/parser/ast:\
+		srcs/cleaning\
 # ------------------ #
 # Compiler and flags #
 # ------------------ #
@@ -68,7 +69,8 @@ SRCS_NAMES = main.c \
 			 multiline.c \
 			 textselection.c \
 			 tree_utils.c \
-			 parser.c
+			 parser.c \
+			 clean_lex.c
 
 OBJS_NAMES = $(SRCS_NAMES:.c=.o)
 HEADERS_NAMES = sh21.h lexer.h parser.h

@@ -94,7 +94,6 @@ t_token	*word_or_number(char *data);
 t_lex	*add_delim(t_lex **lex);
 
 
-
 /* Parsing */
 /* Implementing SimpleCommandToken */
 void	simple_command(t_lex **head);
@@ -132,6 +131,13 @@ int		dlliter(t_lex **head);
 t_lex	*dlldelfirst(t_lex **head);
 t_lex	*dlldellast(t_lex **tail);
 t_lex	*dlldelone(t_lex **head, char *data);
-void	del_node(t_lex **node);
+void	dll_del_node(t_lex **node);
+
+
+/*
+** Cleaning
+*/
+
+void	clean_lex(t_lex **lex);
 
 #endif

@@ -106,7 +106,7 @@ $(NAME) : $(OBJS_NAMES)
 
 %.o : %.c $(HEADERS)
 	@$(CREATE) $(OBJDIR)
-	@$(PRINT) "%-60b\r" "\033[32m $(ECHO)\033[0m $@"
+#	@$(PRINT) "%-60b\r" "\033[32m $(ECHO)\033[0m $@"
 	@$(CC) -o $(OBJDIR)$@ -c $< $(CFLAGS) $(CPPFLAGS)
 
 clean :
