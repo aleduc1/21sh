@@ -2,11 +2,7 @@
 # Debug mode #
 # ---------- #
 
-<<<<<<< HEAD
 DEBUG = yes 
-=======
-DEBUG = no
->>>>>>> 9dd36dd2cfb856f78e940d99f61f37101ed1f0f1
 
 # --------- #
 # Directory #
@@ -35,7 +31,7 @@ CC = gcc
 ifeq ($(DEBUG), yes)
 	CFLAGS = -Wall -Wextra -Werror -g3 -fsanitize=address
 else
-	CFLAGS = -Wall -Wextra
+	CFLAGS = -Wall -Wextra -Werror -g3 -fsanitize=address
 endif
 CPPFLAGS = -I $(INCDIR) -I $(INCLIBDIR)
 LDLIBS = -lft
