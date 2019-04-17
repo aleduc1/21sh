@@ -6,7 +6,7 @@
 /*   By: mbellaic <mbellaic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/12 17:18:30 by aleduc            #+#    #+#             */
-/*   Updated: 2019/04/12 16:03:48 by mbellaic         ###   ########.fr       */
+/*   Updated: 2019/04/17 15:20:43 by mbellaic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,7 +137,7 @@ t_node      *del_key(t_node *lstcursor, t_node **input, char buffer[], t_pos *po
         ddel(input, lstcursor->next);
         redraw(pos, lstcursor);
     }
-    return(lstcursor);
+    return (lstcursor);
 }
 
 // if (SHIFT_UP)

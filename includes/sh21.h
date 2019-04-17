@@ -151,8 +151,10 @@ t_node              *history_to_lst(t_node *lstcursor, char *historyline, t_node
 t_node              *history_downcase(t_node *lstcursor, t_node **input, t_pos *pos);
 
 t_node              *selectmode(t_node **input, t_node *lstcursor, char buffer[], t_pos *pos);
+t_node              *paste_clipboard(t_node **input, t_node *lstcursor, t_pos *pos);
 t_node              *shift_left(t_node *lstcursor, char buffer[], t_pos *pos);
 t_node              *shift_right(t_node *lstcursor, char buffer[], t_pos *pos);
+void                copy_selection(t_node *lstcursor, t_pos *pos);
 t_node              *anchor_selection(t_node *lstcursor, t_pos *pos, int direction);
 t_node              *delete_selection(t_node **input, t_node *lstcursor, t_pos *pos);
 t_node              *undo_selection(t_node *lstcursor, t_pos *pos);

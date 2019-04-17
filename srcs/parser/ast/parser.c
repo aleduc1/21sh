@@ -84,6 +84,8 @@ t_ast     *ast_parser(t_lex *tokens)
     ft_putstr("---------------AST---------------\n");
     pretty_print(ast);
     ft_putstr("---------------------------------\n");
-    cmd_parser(ast->token->command);
+    // t_cmd cmd;
+    // cmd = cmd_parser(ast->token->command);
+    // (void)cmd;
     return (ast);
 }

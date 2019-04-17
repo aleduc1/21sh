@@ -6,7 +6,7 @@
 /*   By: mbellaic <mbellaic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/12 17:13:21 by aleduc            #+#    #+#             */
-/*   Updated: 2019/04/10 14:49:00 by mbellaic         ###   ########.fr       */
+/*   Updated: 2019/04/17 15:20:00 by mbellaic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,13 +55,14 @@ t_node	*read_input(t_node **input, t_pos *pos)
     return (*input);
 }
 
-char	*prompt(t_multi *multi, t_pos *pos)
+char	*prompt(t_multi *multi, t_pos *pos) //NORME
 {
     char *inputstr;
+    t_integrity count;
     
-    print_prompt();
-    inputstr = NULL;
     multi = NULL;
+    inputstr = NULL;
+    print_prompt();
     multi_push(&multi);
     multi->input = NULL;
     dpush(&multi->input, ' ');
@@ -69,10 +70,9 @@ char	*prompt(t_multi *multi, t_pos *pos)
     t_multi *lstcursor = multi;
     if (multi->input)
     {
-        t_integrity count;
         count.dquote = 0;
         count.quote = 0;
-        while(check_integrity(lstcursor->input, &multi, pos, &count) < 0)
+        while (check_integrity(lstcursor->input, &multi, pos, &count) < 0)
             lstcursor = lstcursor->prev;
         lstcursor = multi;
         inputstr = lst_to_str(&multi, inputstr);
@@ -84,6 +84,5 @@ char	*prompt(t_multi *multi, t_pos *pos)
     ft_putendl(pos->clipboard);
     ddellist(multi);
     pos->historycount = 0;
-    //default_term_mode();
     return (inputstr);
 }

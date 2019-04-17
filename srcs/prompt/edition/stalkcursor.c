@@ -6,13 +6,13 @@
 /*   By: mbellaic <mbellaic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/12 17:19:17 by aleduc            #+#    #+#             */
-/*   Updated: 2019/04/07 21:57:35 by mbellaic         ###   ########.fr       */
+/*   Updated: 2019/04/17 15:24:00 by mbellaic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh21.h"
 
-void    get_cursor(int i, int j, char answer[], t_pos *pos) //extra 1 line.
+void    get_cursor(int i, int j, char answer[], t_pos *pos)
 {
     char xchar[5];
     char ychar[5];
@@ -21,8 +21,7 @@ void    get_cursor(int i, int j, char answer[], t_pos *pos) //extra 1 line.
     {
         if((answer[i] >= '0' && answer[i] <= '9'))
         {
-            xchar[j] = answer[i];
-            j++;
+            xchar[j++] = answer[i];
         }
     }
     xchar[j] = '\0';
@@ -31,8 +30,7 @@ void    get_cursor(int i, int j, char answer[], t_pos *pos) //extra 1 line.
     {
         if((answer[i] >= '0' && answer[i] <= '9'))
         {
-            ychar[j] = answer[i];
-            j++;
+            ychar[j++] = answer[i];
         }
     }
     ychar[j] = '\0';

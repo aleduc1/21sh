@@ -69,7 +69,10 @@ SRCS_NAMES = main.c \
 			 stalkcursor.c \
 			 terminit.c \
 			 multiline.c \
-			 textselection.c \
+			 text_selection.c \
+			 copy_paste.c \
+			 undo_selection.c \
+			 delete_selection.c \
 			 tree_utils.c \
 			 parser.c \
 			 cmd_parser.c \

@@ -6,7 +6,7 @@
 /*   By: mbellaic <mbellaic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/12 17:18:13 by aleduc            #+#    #+#             */
-/*   Updated: 2019/04/08 16:44:28 by mbellaic         ###   ########.fr       */
+/*   Updated: 2019/04/17 15:24:48 by mbellaic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,9 @@ char	*ft_strdup_history(const char *s1)
 
 void        inserthistory(t_node *prev_node, char *line, t_pos *pos)  
 {  
-    t_node* new_node;
-    int something;
     int i;
+    int something;
+    t_node* new_node;
     
     i = -1;
     something = 0;
@@ -57,8 +57,7 @@ void        inserthistory(t_node *prev_node, char *line, t_pos *pos)
     prev_node->next = new_node;
     new_node->prev = prev_node;
     if (new_node->next != NULL)  
-        new_node->next->prev = new_node;
-      
+        new_node->next->prev = new_node;    
 }
 
 t_node      *history_downcase(t_node *lstcursor, t_node **input, t_pos *pos) //keeping for later

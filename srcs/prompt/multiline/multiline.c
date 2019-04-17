@@ -50,35 +50,46 @@ void key_occurence(t_node *cursor, t_integrity *count)
     }
 }
 
+void dquote(t_multi *lstcursor, t_multi **multi, t_pos *pos)
+{
+    lstcursor = *multi;
+    multi_push(multi);
+    lstcursor = lstcursor->prev;
+    lstcursor->input = NULL;
+    dpush(&lstcursor->input, ' ');
+    ft_putstr("dquote>");
+    read_input(&lstcursor->input, pos);
+}
+
+void quote(t_multi *lstcursor, t_multi **multi, t_pos *pos)
+{
+    lstcursor = *multi;
+    multi_push(multi);
+    lstcursor = lstcursor->prev;
+    lstcursor->input = NULL;
+    dpush(&lstcursor->input, ' ');
+    ft_putstr("quote>");
+    read_input(&lstcursor->input, pos);
+}
+
 int check_integrity(t_node *input, t_multi **multi, t_pos *pos, t_integrity *count)
 {
-    t_multi *lstcursor;
     t_node *cursor;
+    t_multi *lstcursor;
 
     cursor = input;
+    lstcursor = NULL;
     while(cursor->next != NULL)
         cursor = cursor->next;
     key_occurence(cursor, count);
     if((count->dquote % 2) != 0)
     {
-        lstcursor = *multi;
-        multi_push(multi);
-        lstcursor = lstcursor->prev;
-        lstcursor->input = NULL;
-        dpush(&lstcursor->input, ' ');
-        ft_putstr("dquote>");
-        read_input(&lstcursor->input, pos);
+        dquote(lstcursor, multi, pos);
         return (-1);
     }
     if ((count->quote % 2) != 0)
     {
-        lstcursor = *multi;
-        multi_push(multi);
-        lstcursor = lstcursor->prev;
-        lstcursor->input = NULL;
-        dpush(&lstcursor->input, ' ');
-        ft_putstr("quote>");
-        read_input(&lstcursor->input, pos);
+        quote(lstcursor, multi, pos);
         return (-1);
     }
     return (1);

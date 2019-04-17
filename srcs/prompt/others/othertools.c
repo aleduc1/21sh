@@ -6,7 +6,7 @@
 /*   By: mbellaic <mbellaic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/12 17:19:04 by aleduc            #+#    #+#             */
-/*   Updated: 2019/04/11 02:03:57 by mbellaic         ###   ########.fr       */
+/*   Updated: 2019/04/17 16:52:04 by mbellaic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,31 @@ char *reverse_str(char *inputstr)
         end--;
     }
     return (inputstr);
+}
+
+t_node      *find_tail(t_node *lstcursor, t_pos *pos)
+{
+    int backup;
+
+    backup = 0;
+    savecursor(pos);
+    while(lstcursor->prev != NULL)
+    {
+        stalk_cursor(pos);
+        if(pos->column != pos->termsize.ws_col)
+            ft_putstr(tgetstr("nd", NULL));
+        else
+            go_downleft(pos);
+        backup++;
+        lstcursor = lstcursor->prev;
+    }
+    while(backup-- > 1)
+        lstcursor = lstcursor->next;
+    stalk_cursor(pos);
+    pos->tailcolumn = pos->column;
+    pos->tailrow = pos->row;
+    cursorback(pos);
+    return (lstcursor);
 }
 
 char *lst_to_str(t_multi **multi, char *inputstr)
