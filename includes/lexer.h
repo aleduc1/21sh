@@ -1,6 +1,6 @@
 #ifndef LEXER_H
 # define LEXER_H
-# include "libft.h"
+#include "../libft/includes/libft.h"
 
 typedef struct s_lex		t_lex;
 typedef struct s_token		t_token;

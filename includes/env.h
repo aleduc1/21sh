@@ -6,13 +6,14 @@
 /*   By: sbelondr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/22 13:33:53 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/04/13 18:45:09 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/04/25 18:46:04 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #	ifndef LIST_H
 #	define LIST_H
 
+#include "parser.h"
 #include "../libft/includes/libft.h"
 #include <curses.h>
 #include <term.h>
@@ -55,7 +56,7 @@ typedef struct	s_commands
 */
 
 int					gest_return(int verif, t_env **my_env);
-int					is_builtin(char **command, t_env **my_env, int fd_stock[3]);
+int					is_builtin(t_cmd *cmd, t_env **my_env);
 int					is_in_path(char ***command, t_env *my_env);
 char				**transfer_arg(t_arg *lst_arg);
 
@@ -95,8 +96,8 @@ char				*value_line_path(t_env *my_env, char *key, int env);
 ** builtin_env.c
 */
 
-int     builtin_set(t_env **my_env, int fd_stock[3]);
-int     builtin_env(t_env **my_env, int fd_stock[3]);
+int     builtin_set(t_env **my_env, t_cmd *cmd);
+int     builtin_env(t_env **my_env, t_cmd *cmd);
 
 /*
 ** list_env.c
@@ -123,18 +124,10 @@ void				close_error_file(t_env **my_env);
 ** execute_command.c
 */
 
-int     			add_process(char **command, int fd_stock[3], t_env *my_env,
-		int *returns_code);
-int					exec_fork(char **command, t_env **my_env,
-		int fd_stock[3]);
-void				open_redirection(int fd_stock[3]);
+int     			add_process(t_cmd *cmd, t_env *my_env, int *returns_code);
+int					exec_fork(t_cmd *cmd, t_env **my_env);
+void				open_redirection(t_cmd *cmd);
 void				close_redirection(t_env *my_env, int old_fd[3]);
-
-/*
-** manage_list.c
-*/
-
-int					ft_simple_command(char **command, t_env **my_env);
 
 /*
 ** list_commands.c
@@ -142,5 +135,15 @@ int					ft_simple_command(char **command, t_env **my_env);
 
 t_commands			*init_commands(char **commands, int fd_stock[3]);
 void				delete_commands(t_commands **cmds);
+
+/*
+** manage_list.c
+*/
+
+int		ft_simple_command(t_cmd *cmd, t_env **my_env);
+int		ft_pipe_double(t_cmd *f_cmd, t_cmd *s_cmd, t_env **my_env);
+int		ft_pipe(t_cmd *cmds, int nb, t_env **my_env);
+int		ft_ampersand_double(t_cmd *f_cmd, t_cmd *s_cmd, t_env **my_env);
+int		ft_ampersand(t_cmd *cmds, int nb, t_env **my_env);
 
 #	endif

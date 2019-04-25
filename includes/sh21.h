@@ -14,8 +14,8 @@
 #include <grp.h>
 #include <time.h>
 #include <sys/ioctl.h>
-#include "libft.h"
-#include "get_next_line.h"
+#include "../libft/includes/libft.h"
+//#include "get_next_line.h"
 
 #define ALT_X (buffer[0] == -30 && buffer[1] == -119 && buffer[2] == -120)
 #define ALT_C (buffer[0] == -61 && buffer[1] == -89)

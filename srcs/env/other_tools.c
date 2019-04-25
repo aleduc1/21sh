@@ -6,7 +6,7 @@
 /*   By: sbelondr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/22 17:57:48 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/04/15 11:57:58 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/04/25 17:51:08 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,30 +89,30 @@ int			is_in_path(char ***command, t_env *my_env)
 	return (result);
 }
 
-int			is_builtin(char **command, t_env **my_env, int fd_stock[3])
+int			is_builtin(t_cmd *cmd, t_env **my_env)
 {
 	t_arg	*arg;
 	int		verif;
 
-	if (command[1] && command[2])
-		arg = create_arg(command[1], command[2]);
+	if (cmd->argv[1] && cmd->argv[2])
+		arg = create_arg(cmd->argv[1], cmd->argv[2]);
 	else
 		arg = NULL;
-	if (ft_strequ(command[0], "env"))
-		verif = builtin_env(&(*my_env), fd_stock);
-	else if (ft_strequ(command[0], "set"))
-		verif = builtin_set(&(*my_env), fd_stock);
-	else if (ft_strequ(command[0], "setenv"))
+	if (ft_strequ(cmd->argv[0], "env"))
+		verif = builtin_env(&(*my_env), cmd);
+	else if (ft_strequ(cmd->argv[0], "set"))
+		verif = builtin_set(&(*my_env), cmd);
+	else if (ft_strequ(cmd->argv[0], "setenv"))
 		verif = edit_setenv(arg, &(*my_env));
-	else if (ft_strequ(command[0], "unsetenv"))
-		verif = ft_unsetenv(command[1], &(*my_env));
-	else if (ft_strequ(command[0], "export"))
-		verif = edit_export(command[1], &(*my_env));
-	else if (ft_strequ(command[0], "unset"))
-		verif = ft_unset(command[1], &(*my_env));
-	else if (ft_strequ(command[0], "editset"))
+	else if (ft_strequ(cmd->argv[0], "unsetenv"))
+		verif = ft_unsetenv(cmd->argv[1], &(*my_env));
+	else if (ft_strequ(cmd->argv[0], "export"))
+		verif = edit_export(cmd->argv[1], &(*my_env));
+	else if (ft_strequ(cmd->argv[0], "unset"))
+		verif = ft_unset(cmd->argv[1], &(*my_env));
+	else if (ft_strequ(cmd->argv[0], "editset"))
 		verif = edit_set(arg, &(*my_env));
-	else if (ft_strequ(command[0], "exit"))
+	else if (ft_strequ(cmd->argv[0], "exit"))
 		verif = 2;
 	else
 		verif = -1;
