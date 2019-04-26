@@ -6,7 +6,7 @@
 /*   By: sbelondr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/22 13:33:53 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/04/25 18:46:04 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/04/26 10:51:47 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,7 +143,7 @@ void				delete_commands(t_commands **cmds);
 int		ft_simple_command(t_cmd *cmd, t_env **my_env);
 int		ft_pipe_double(t_cmd *f_cmd, t_cmd *s_cmd, t_env **my_env);
 int		ft_pipe(t_cmd *cmds, int nb, t_env **my_env);
+int		ft_ampersand(t_cmd *cmds, int num_process, t_env **my_env);
 int		ft_ampersand_double(t_cmd *f_cmd, t_cmd *s_cmd, t_env **my_env);
-int		ft_ampersand(t_cmd *cmds, int nb, t_env **my_env);
 
 #	endif
