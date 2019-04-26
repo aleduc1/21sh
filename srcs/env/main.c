@@ -6,7 +6,7 @@
 /*   By: sbelondr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/25 12:49:50 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/04/25 18:56:35 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/04/26 11:04:00 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,8 @@ void	free_cmd(t_cmd **cmd)
 int		main(int ac, char **av)
 {
 	t_cmd	*cmd;
-	char	*testa[2] = {"wc", NULL};
-	char	*testb[3] = {"cat", "-e", NULL};
+	char	*testa[2] = {"pwd", NULL};
+	char	*testb[3] = {"echo", "-e", NULL};
 	t_env	*env;
 	int		i;
 
@@ -56,16 +56,16 @@ int		main(int ac, char **av)
 
 	cmd->next = init_cmd();
 	cmd->next->argv = ft_arraydup(testb);
-	parser_var(&(cmd->argv), env);
+	parser_var(&(cmd->next->argv), env);
 	
 	cmd->next->next = init_cmd();
 	cmd->next->next->argv = ft_arraydup(testa);
-	parser_var(&(cmd->argv), env);
+	parser_var(&(cmd->next->next->argv), env);
 	
 //	i = ft_simple_command(cmd, &env);
-	i = ft_pipe(cmd, 3, &env);
+//	i = ft_pipe(cmd, 3, &env);
 //	i = ft_pipe_double(cmd, cmd->next, &env);
-//	i = ft_ampersand(cmd, 2, &env);
+	i = ft_ampersand(cmd, 1, &env);
 //	i = ft_ampersand_double(cmd, cmd->next, &env);
 
 	free_cmd(&cmd);

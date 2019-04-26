@@ -6,17 +6,19 @@
 /*   By: sbelondr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/09 10:50:50 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/04/25 18:45:38 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/04/26 11:23:57 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-//#include "env.h"
 #include "../../includes/env.h"
 
 /*
 ** &
+** num_process: processus en cours (le mettre a un 1 quand on appel
+** ft_ampersand)
 */
-int		background_process(t_cmd *cmds, t_env *my_env, int nb)
+
+int		background_process(t_cmd *cmds, t_env *my_env, int num_process)
 {
 	int	result;
 	int	pid;
@@ -24,8 +26,8 @@ int		background_process(t_cmd *cmds, t_env *my_env, int nb)
 	pid = fork();
 	if (pid > 0)
 	{
-		ft_printf("[%d] %d\n", nb, pid);
-		ft_ampersand(cmds->next, ++nb, &(my_env));
+		ft_printf("[%d] %d\n", num_process, pid);
+		ft_ampersand(cmds->next, ++num_process, &(my_env));
 	}
 	waitpid(pid, &result, 0);
 	if (pid == 0)
@@ -33,12 +35,13 @@ int		background_process(t_cmd *cmds, t_env *my_env, int nb)
 		result = is_builtin(cmds, &my_env);
 		if (result == -1)
 			add_process(cmds, my_env, &result);
+		execve("/bin/test", NULL, NULL);
 		exit(pid);
 	}
 	return (pid);
 }
 
-int		ft_ampersand(t_cmd *cmds, int nb, t_env **my_env)
+int		ft_ampersand(t_cmd *cmds, int num_process, t_env **my_env)
 {
 	int	result;
 
@@ -46,10 +49,10 @@ int		ft_ampersand(t_cmd *cmds, int nb, t_env **my_env)
 	if (cmds->next)
 	{
 		signal(SIGTTOU, NULL);
-		result = background_process(cmds, *my_env, nb);
+		result = background_process(cmds, *my_env, num_process);
 		if (result != -1)
 		{
-			ft_printf("[%d] Done\t%s\n", nb, cmds->argv[0]);
+			ft_printf("[%d] Done\t%s\n", num_process, cmds->argv[0]);
 			kill(result, SIGTTOU);
 		}
 	}
@@ -115,10 +118,9 @@ int		ft_pipe(t_cmd *cmds, int nb, t_env **my_env)
 	return (return_code);
 }
 
-
 /*
- ** ||
- */
+** ||
+*/
 
 int		ft_pipe_double(t_cmd *cmd, t_cmd *cmd_bis, t_env **my_env)
 {
@@ -131,8 +133,8 @@ int		ft_pipe_double(t_cmd *cmd, t_cmd *cmd_bis, t_env **my_env)
 }
 
 /*
- ** simple
- */
+** simple command
+*/
 
 int		ft_simple_command(t_cmd *cmd, t_env **my_env)
 {
