@@ -15,4 +15,5 @@
 |`Tab`                           |**Autocompletion(TODO/BONUS)**|
 |`Ctrl+R`                        |**Search in the history(TODO/BONUS)**|
 |`Ctrl+L`                        |**Clear(TODO)**|
+|`Ctrl+C`                        |**Discard the current input and prompt on a new line**|
 |`Ctrl+D`                        |**Exit**|
