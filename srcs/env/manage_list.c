@@ -6,7 +6,7 @@
 /*   By: sbelondr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/09 10:50:50 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/04/26 11:23:57 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/04/26 11:39:09 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,13 +69,16 @@ int		ft_ampersand(t_cmd *cmds, int num_process, t_env **my_env)
 ** &&
 */
 
-int		ft_ampersand_double(t_cmd *f_cmd, t_cmd *s_cmd, t_env **my_env)
+int		ft_ampersand_double(t_cmd *cmds, t_env **my_env)
 {
 	int	check;
 
-	check = ft_simple_command(f_cmd, &(*my_env));
-	if (check != -1 && check != 256)
-		check = ft_simple_command(s_cmd, &(*my_env));
+	check = 0;
+	while (cmds && check != -1 && check != 256)
+	{
+		check = ft_simple_command(cmds, &(*my_env));
+		cmds = cmds->next;
+	}
 	return (check);
 }
 
@@ -122,13 +125,16 @@ int		ft_pipe(t_cmd *cmds, int nb, t_env **my_env)
 ** ||
 */
 
-int		ft_pipe_double(t_cmd *cmd, t_cmd *cmd_bis, t_env **my_env)
+int		ft_pipe_double(t_cmd *cmds, t_env **my_env)
 {
 	int	check;
 
-	check = ft_simple_command(cmd, &(*my_env));
-	if (check == -1 || check == 256)
-		check = ft_simple_command(cmd_bis, &(*my_env));
+	check = -1;
+	while (cmds && (check == -1 || check == 256))
+	{
+		check = ft_simple_command(cmds, &(*my_env));
+		cmds = cmds->next;
+	}
 	return (check);
 }
 

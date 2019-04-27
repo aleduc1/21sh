@@ -6,7 +6,7 @@
 /*   By: sbelondr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/02 08:43:53 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/04/25 17:34:40 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/04/27 11:48:01 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 #include "../../includes/env.h"
 
 /*
-** fd_stock[0] -> in
-** fd_stock[1] -> out
-** fd_stock[2] -> error
+** in -> STDIN_FILENO
+** out -> STDOUT_FILENO
+** error -> STDERR_FILLENO
 */
 
 void	open_redirection(t_cmd *cmd)

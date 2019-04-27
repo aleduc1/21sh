@@ -6,7 +6,7 @@
 /*   By: sbelondr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/25 12:49:50 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/04/26 11:04:00 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/04/27 11:39:44 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int		main(int ac, char **av)
 {
 	t_cmd	*cmd;
 	char	*testa[2] = {"pwd", NULL};
-	char	*testb[3] = {"echo", "-e", NULL};
+	char	*testb[3] = {"echo", "toi", NULL};
 	t_env	*env;
 	int		i;
 
@@ -49,7 +49,7 @@ int		main(int ac, char **av)
 		return (0);
 	i = 0;
 	env = init_env();
-	
+
 	cmd = init_cmd();
 	cmd->argv = ft_arraydup(av + 1);
 	parser_var(&(cmd->argv), env);
@@ -62,11 +62,11 @@ int		main(int ac, char **av)
 	cmd->next->next->argv = ft_arraydup(testa);
 	parser_var(&(cmd->next->next->argv), env);
 	
-//	i = ft_simple_command(cmd, &env);
+	i = ft_simple_command(cmd, &env);
 //	i = ft_pipe(cmd, 3, &env);
-//	i = ft_pipe_double(cmd, cmd->next, &env);
-	i = ft_ampersand(cmd, 1, &env);
-//	i = ft_ampersand_double(cmd, cmd->next, &env);
+//	i = ft_pipe_double(cmd, &env);
+//	i = ft_ampersand(cmd, 1, &env);
+//	i = ft_ampersand_double(cmd, &env);
 
 	free_cmd(&cmd);
 	gest_return(i, &env);
