@@ -6,7 +6,7 @@
 /*   By: mbellaic <mbellaic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/12 17:18:30 by aleduc            #+#    #+#             */
-/*   Updated: 2019/04/17 15:20:43 by mbellaic         ###   ########.fr       */
+/*   Updated: 2019/04/27 18:54:49 by mbellaic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,15 @@ t_node      *down(t_node *lstcursor, t_node **input, char buffer[], t_pos *pos)
     int i;
     
     cursorhis = pos->history;
-    if(ARROW_DOWN && pos->historycount > 1)
+    if(ARROW_DOWN && pos->historycount > 0)
     {
+        if(pos->historycount == 1)
+        {
+            lstcursor = history_downcase(lstcursor, input, pos);
+            return (lstcursor);
+        }
         i = -1;
-        clean_for_history(lstcursor, input, pos);
+        lstcursor = clean_for_history(lstcursor, input, pos);
         pos->historycount--;
         while(++i < pos->historycount)
         {

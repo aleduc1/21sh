@@ -6,7 +6,7 @@
 /*   By: mbellaic <mbellaic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/12 17:18:13 by aleduc            #+#    #+#             */
-/*   Updated: 2019/04/17 15:24:48 by mbellaic         ###   ########.fr       */
+/*   Updated: 2019/04/27 18:53:45 by mbellaic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,12 +62,24 @@ void        inserthistory(t_node *prev_node, char *line, t_pos *pos)
 
 t_node      *history_downcase(t_node *lstcursor, t_node **input, t_pos *pos) //keeping for later
 {
-    clean_for_history(lstcursor, input, pos);
-    while ((*input)->next != NULL)
+    while (lstcursor->next != NULL)
+    {
+        stalk_cursor(pos);
+        if (pos->column == 1)
+            go_upright(pos);
+        else
+            ft_putstr(tgetstr("le", NULL));
+        ft_putstr(tgetstr("cd", NULL));
+        lstcursor = lstcursor->next;
+        stalk_cursor(pos);
+    }
+    pos->tailrow = pos->row;
+    pos->tailcolumn = pos->column;
+    while ((*input) != NULL)
         ddel(input, *input);
     dpush(input, ' ');
     lstcursor = *input;
-    pos->historycount = 1;
+    pos->historycount = 0;
     return (lstcursor);
 }
 

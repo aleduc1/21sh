@@ -6,7 +6,7 @@
 /*   By: mbellaic <mbellaic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/12 17:13:21 by aleduc            #+#    #+#             */
-/*   Updated: 2019/04/17 15:20:00 by mbellaic         ###   ########.fr       */
+/*   Updated: 2019/04/27 19:54:27 by mbellaic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ void	init_prompt(t_pos *pos)
     pos->startcolumn = 0;
     pos->tailcolumn = 0;
     pos->tailrow = 0;
+    pos->stop = 0;
 }
 
 t_node	*read_input(t_node **input, t_pos *pos)
@@ -48,6 +49,8 @@ t_node	*read_input(t_node **input, t_pos *pos)
         //printf("%c('%d') | %c('%d') | %c('%d') | %c('%d')\n", buffer[0], buffer[0],buffer[1],buffer[1],buffer[2],buffer[2],buffer[3], buffer[3]);
         stalk_cursor(pos);
         ft_bzero(buffer, 1000);
+        if(pos->stop == 1)
+            return(pos->stop = 0, *input);
     }
     travel_to_last(lstcursor, pos);
     ft_putstr("\n");

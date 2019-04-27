@@ -6,7 +6,7 @@
 /*   By: mbellaic <mbellaic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/12 17:18:42 by aleduc            #+#    #+#             */
-/*   Updated: 2019/04/12 16:07:04 by mbellaic         ###   ########.fr       */
+/*   Updated: 2019/04/27 19:50:01 by mbellaic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,13 +106,19 @@ t_node      *home_end(t_node *lstcursor, char buffer[], t_pos * pos)
     return (lstcursor);
 }
 
-t_node      *ctrl_n_friends(t_node *lstcursor, char buffer[])
+t_node      *ctrl_n_friends(t_node *lstcursor, t_node **input, char buffer[], t_pos *pos)
 {
     if (CTRL_D)
     {
         default_term_mode();
         //NEED TO HOOK ALL THE THING WE NEED TO FREE THERE
         exit(0);
+    }
+    if (CTRL_C)
+    {
+        while (((*input)->next) != NULL)
+            ddel(input, *input);
+        pos->stop = 1;
     }
     
     return (lstcursor);

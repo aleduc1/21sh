@@ -6,7 +6,7 @@
 /*   By: mbellaic <mbellaic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/12 17:18:01 by aleduc            #+#    #+#             */
-/*   Updated: 2019/04/01 15:33:03 by mbellaic         ###   ########.fr       */
+/*   Updated: 2019/04/27 19:49:46 by mbellaic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ t_node      *check_input(t_node *lstcursor, t_node **input, char buffer[], t_pos
     lstcursor = down(lstcursor, input, buffer, pos);
     lstcursor = backspace(lstcursor, input, buffer, pos);
     lstcursor = del_key(lstcursor, input, buffer, pos);
-    lstcursor = ctrl_n_friends(lstcursor, buffer);
+    lstcursor = ctrl_n_friends(lstcursor, input, buffer, pos);
     lstcursor = backwardjump(lstcursor, buffer, pos);
     lstcursor = forwardjump(lstcursor, buffer, pos);
     lstcursor = home_end(lstcursor, buffer, pos);

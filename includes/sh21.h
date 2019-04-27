@@ -97,6 +97,8 @@ typedef struct      s_pos
     char            *clipboard;
     int             selection;
     int             selectcount;
+
+    int             stop;
 }                   t_pos;
 
 void                welcome(void);
@@ -126,7 +128,7 @@ t_node              *del_key(t_node *lstcursor, t_node **input, char buffer[], t
 t_node              *home_end(t_node *lstcursor, char buffer[], t_pos * pos);
 t_node              *backwardjump(t_node *lstcursor, char buffer[], t_pos *pos);
 t_node              *forwardjump(t_node *lstcursor, char buffer[], t_pos *pos);
-t_node              *ctrl_n_friends(t_node *lstcursor, char buffer[]);
+t_node              *ctrl_n_friends(t_node *lstcursor, t_node **input, char buffer[], t_pos *pos);
 
 void                dpush(t_node **head, char key);
 void                dprintlist(t_node *node, int direction);
