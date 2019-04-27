@@ -6,11 +6,10 @@
 /*   By: sbelondr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/22 17:57:48 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/04/25 17:51:08 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/04/27 16:02:09 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-//#include "env.h"
 #include "../../includes/env.h"
 
 /*
@@ -91,19 +90,14 @@ int			is_in_path(char ***command, t_env *my_env)
 
 int			is_builtin(t_cmd *cmd, t_env **my_env)
 {
-	t_arg	*arg;
 	int		verif;
 
-	if (cmd->argv[1] && cmd->argv[2])
-		arg = create_arg(cmd->argv[1], cmd->argv[2]);
-	else
-		arg = NULL;
 	if (ft_strequ(cmd->argv[0], "env"))
 		verif = builtin_env(&(*my_env), cmd);
 	else if (ft_strequ(cmd->argv[0], "set"))
 		verif = builtin_set(&(*my_env), cmd);
 	else if (ft_strequ(cmd->argv[0], "setenv"))
-		verif = edit_setenv(arg, &(*my_env));
+		verif = edit_setenv(cmd, &(*my_env));
 	else if (ft_strequ(cmd->argv[0], "unsetenv"))
 		verif = ft_unsetenv(cmd->argv[1], &(*my_env));
 	else if (ft_strequ(cmd->argv[0], "export"))
@@ -111,12 +105,15 @@ int			is_builtin(t_cmd *cmd, t_env **my_env)
 	else if (ft_strequ(cmd->argv[0], "unset"))
 		verif = ft_unset(cmd->argv[1], &(*my_env));
 	else if (ft_strequ(cmd->argv[0], "editset"))
-		verif = edit_set(arg, &(*my_env));
+		verif = edit_set_cmd(cmd, &(*my_env));
+	else if (ft_strequ(cmd->argv[0], "echo"))
+		verif = 1;
+	else if (ft_strequ(cmd->argv[0], "cd"))
+		verif = 1;
 	else if (ft_strequ(cmd->argv[0], "exit"))
 		verif = 2;
 	else
 		verif = -1;
-	free_arg(&arg);
 	return (verif);
 }
 

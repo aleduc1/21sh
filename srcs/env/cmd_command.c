@@ -6,15 +6,15 @@
 /*   By: mbellaic <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/25 12:42:19 by mbellaic          #+#    #+#             */
-/*   Updated: 2019/04/25 18:54:34 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/04/27 15:04:21 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/parser.h"
 
-void                dpush_args(t_args **head, char *arg)
+void	dpush_args(t_args **head, char *arg)
 {
-	t_args          *new_node;
+	t_args	*new_node;
 
 	new_node = (t_args*)malloc(sizeof(t_args));
 	new_node->arg = ft_strdup(arg);
@@ -25,7 +25,7 @@ void                dpush_args(t_args **head, char *arg)
 	(*head) = new_node;
 }
 
-t_std *init_std(int fd, char *filename, int append)
+t_std	*init_std(int fd, char *filename, int append)
 {
 	t_std	*std;
 

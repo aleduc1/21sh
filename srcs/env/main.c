@@ -6,7 +6,7 @@
 /*   By: sbelondr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/25 12:49:50 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/04/27 11:39:44 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/04/27 15:34:12 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int		main(int ac, char **av)
 {
 	t_cmd	*cmd;
 	char	*testa[2] = {"pwd", NULL};
-	char	*testb[3] = {"echo", "toi", NULL};
+	char	*testb[2] = {"set", NULL};
 	t_env	*env;
 	int		i;
 
@@ -53,6 +53,7 @@ int		main(int ac, char **av)
 	cmd = init_cmd();
 	cmd->argv = ft_arraydup(av + 1);
 	parser_var(&(cmd->argv), env);
+//	cmd->out->fd = open_file_not_env("test.txt", 0);
 
 	cmd->next = init_cmd();
 	cmd->next->argv = ft_arraydup(testb);
@@ -63,6 +64,8 @@ int		main(int ac, char **av)
 	parser_var(&(cmd->next->next->argv), env);
 	
 	i = ft_simple_command(cmd, &env);
+	gest_return(i, &env);
+	i = ft_simple_command(cmd->next, &env);
 //	i = ft_pipe(cmd, 3, &env);
 //	i = ft_pipe_double(cmd, &env);
 //	i = ft_ampersand(cmd, 1, &env);

@@ -6,7 +6,7 @@
 /*   By: sbelondr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/26 16:44:29 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/04/15 12:44:51 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/04/27 12:30:54 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,24 @@ int			open_file(t_env **my_env, char *name, char *fd_out)
 	edit_set(arg, &(*my_env));
 	free_arg(&arg);
 	ft_strdel(&fd_str);
+	return (fd);
+}
+
+int			open_file_not_env(char *name, int end_line)
+{
+	int		fd;
+	char	**split;
+
+	if ((fd = check_is_fd(name)) == -1)
+	{
+		split = ft_strsplit(name, ';');
+		file_exist(split[0]);
+		if (end_line == 1)
+			fd = get_end_line(split[0]);
+		else
+			fd = open(split[0], O_RDWR | O_TRUNC);
+		ft_arraydel(&split);
+	}
 	return (fd);
 }
 

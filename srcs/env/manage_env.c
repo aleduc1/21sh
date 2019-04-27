@@ -6,7 +6,7 @@
 /*   By: sbelondr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/22 14:54:24 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/04/15 12:03:43 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/04/27 15:31:47 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,12 +99,28 @@ int			edit_set(t_arg *arg, t_env **my_env)
 	return (verif);
 }
 
-int			edit_setenv(t_arg *arg, t_env **my_env)
+int			edit_set_cmd(t_cmd *cmd, t_env **my_env)
 {
-	edit_set(arg, &(*my_env));
+	int		verif;
+	t_arg	*arg;
+
+	arg = create_arg(cmd->argv[1], cmd->argv[2]);
+	verif = edit_set(arg, &(*my_env));
+	free_arg(&arg);
+	return (verif);
+}
+
+int			edit_setenv(t_cmd *cmd, t_env **my_env)
+{
+	int	verif;
+	t_arg	*arg;
+
+	arg = create_arg(cmd->argv[1], cmd->argv[2]);
+	verif = edit_set(arg, &(*my_env));
 	if (arg->key)
 		edit_export(arg->key, &(*my_env));
-	return (0);
+	free_arg(&arg);
+	return (verif);
 }
 
 int			ft_unsetenv(char *key, t_env **my_env)
