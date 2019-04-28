@@ -6,7 +6,7 @@
 /*   By: sbelondr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/22 13:33:53 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/04/26 10:51:47 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/04/27 15:31:18 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,8 @@ void				debug_arg(t_arg *arg);
 */
 
 int					edit_set(t_arg *arg, t_env **my_env);
-int					edit_setenv(t_arg *arg, t_env **my_env);
+int					edit_set_cmd(t_cmd *cmd, t_env **my_env);
+int					edit_setenv(t_cmd *cmd, t_env **my_env);
 int					edit_export(char *key, t_env **my_env);
 int					ft_unsetenv(char *key, t_env **my_env);
 int					ft_unset(char *key, t_env **my_env);
@@ -115,6 +116,7 @@ t_env				*init_maillon_env(void);
 ** manage_file.c
 */
 
+int					open_file_not_env(char *name, int end_line);
 int					dest_output(t_env **my_env);
 int					dest_error_output(t_env **my_env);
 void				close_file(t_env **my_env);
@@ -141,9 +143,9 @@ void				delete_commands(t_commands **cmds);
 */
 
 int		ft_simple_command(t_cmd *cmd, t_env **my_env);
-int		ft_pipe_double(t_cmd *f_cmd, t_cmd *s_cmd, t_env **my_env);
+int		ft_pipe_double(t_cmd *cmds, t_env **my_env);
 int		ft_pipe(t_cmd *cmds, int nb, t_env **my_env);
 int		ft_ampersand(t_cmd *cmds, int num_process, t_env **my_env);
-int		ft_ampersand_double(t_cmd *f_cmd, t_cmd *s_cmd, t_env **my_env);
+int		ft_ampersand_double(t_cmd *cmds, t_env **my_env);
 
 #	endif
