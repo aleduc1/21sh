@@ -6,7 +6,7 @@
 /*   By: sbelondr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/26 16:41:04 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/04/11 18:23:21 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/04/29 12:11:34 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,19 +36,12 @@ t_arg		*init_arg(void)
 
 void		free_arg(t_arg **lst_arg)
 {
-	t_arg	*tmp;
-
 	if ((!lst_arg) || (!(*lst_arg)))
 		return ;
-	while (*lst_arg)
-	{
-		tmp = *lst_arg;
-		(*lst_arg) = (*lst_arg)->next;
-		ft_strdel(&(tmp->key));
-		ft_strdel(&(tmp->value));
-		free(tmp);
-		tmp = NULL;
-	}
+	if ((*lst_arg)->next)
+		free_arg(&((*lst_arg)->next));
+	ft_strdel(&((*lst_arg)->key));
+	ft_strdel(&((*lst_arg)->value));
 	free(*lst_arg);
 	*lst_arg = NULL;
 }
