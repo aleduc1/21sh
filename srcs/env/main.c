@@ -6,7 +6,7 @@
 /*   By: sbelondr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/25 12:49:50 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/04/28 12:10:19 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/04/30 09:41:46 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,12 +64,15 @@ int		main(int ac, char **av)
 	parser_var(&(cmd->next->next->argv), env);
 	
 	i = ft_simple_command(cmd, &env);
-	gest_return(i, &env);
 //	i = ft_simple_command(cmd->next, &env);
 //	i = ft_pipe(cmd, 3, &env);
 //	i = ft_pipe_double(cmd, &env);
 //	i = ft_ampersand(cmd, 1, &env);
 //	i = ft_ampersand_double(cmd, &env);
+	
+	gest_return(i, &env);
+	if (i == -1)
+		ft_dprintf(2, "21sh: command not found: %s\n", cmd->argv[0]);
 
 	free_cmd(&cmd);
 	gest_return(i, &env);

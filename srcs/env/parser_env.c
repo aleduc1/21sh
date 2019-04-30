@@ -6,7 +6,7 @@
 /*   By: sbelondr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/07 10:31:02 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/04/15 12:11:40 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/04/30 09:36:06 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static void	copy_value(char *src, char **dst, int start, int end)
 	tmp = ft_strjoin(*dst, stock);
 	ft_strdel(&(*dst));
 	ft_strdel(&stock);
-	(*dst) = ft_strdup(tmp);
+	(*dst) = tmp ? ft_strdup(tmp) : NULL;
 	ft_strdel(&tmp);
 }
 
@@ -128,9 +128,13 @@ void		parser_var(char ***value, t_env *my_env)
 	i = -1;
 	while ((*value)[++i])
 	{
-		tmp = search_var((*value)[i], my_env);
-		ft_strdel(&((*value)[i]));
-		(*value)[i] = tmp ? ft_strdup(tmp) : NULL;
-		ft_strdel(&tmp);
+		if (ft_strchr_exist((*value)[i], '$') ||
+				ft_strchr_exist((*value)[i], '~'))
+		{
+			tmp = search_var((*value)[i], my_env);
+			ft_strdel(&((*value)[i]));
+			(*value)[i] = tmp ? ft_strdup(tmp) : NULL;
+			ft_strdel(&tmp);
+		}
 	}
 }

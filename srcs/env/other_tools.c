@@ -6,7 +6,7 @@
 /*   By: sbelondr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/22 17:57:48 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/04/28 11:48:48 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/04/30 09:42:21 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ int			is_builtin(t_cmd *cmd, t_env **my_env)
 	else if (ft_strequ(cmd->argv[0], "editset"))
 		verif = edit_set_cmd(cmd, &(*my_env));
 	else if (ft_strequ(cmd->argv[0], "echo"))
-		verif = 1;
+		verif = -1;
 	else if (ft_strequ(cmd->argv[0], "cd"))
 		verif = 1;
 	else if (ft_strequ(cmd->argv[0], "exit"))
