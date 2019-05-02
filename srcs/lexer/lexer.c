@@ -6,7 +6,7 @@
 /*   By: mbellaic <mbellaic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/12 17:21:29 by aleduc            #+#    #+#             */
-/*   Updated: 2019/04/30 16:08:12 by aleduc           ###   ########.fr       */
+/*   Updated: 2019/05/02 18:41:16 by aleduc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -199,6 +199,21 @@ void	check_double(char *input, int *i)
 	}
 }
 
+
+int		handle_whitespace(char *input, int i)
+{
+	int		cpy;
+
+	cpy = i;
+	i = skip_whitespace(input, i);
+	if (i != cpy)
+	{
+		create_space_token();
+		
+	}
+	return (i);
+}
+
 void	reading_input(char *input, t_lex **lex)
 {
 	int			i;
@@ -214,32 +229,30 @@ void	reading_input(char *input, t_lex **lex)
 	set_tab_types(&tab_of_type);
 	while (input[i])
 	{
-		i = skip_whitespace(input, i);
-		last_t = i;
-		while (input[i] && !(to_check))
+		i = skip_whitespace(input, i); // Skip the found whitespaces till we meet a word
+		//i = handle_whitespace() -> skip_whitespace with state of i, if i != create whitespace token
+		last_t = i;                    // save starting point in last_t
+		while (input[i] && !(to_check)) // If to_check == 1 we need to create a token
 		{
-			if (ft_isspace(input[i]))
-			{
-				if (i != last_t)
+			if (ft_isspace(input[i]) && (i != last_t)) // If we reached EOW send it to create a token
 					to_check = 1;
-			}
-			else if (input[i] == '\"')
+			else if (input[i] == '\"') // Create a string token of whats inside ""
 			{
 				if (i == last_t)
 					tok = handle_string(input, &i, &last_t);
 				to_check = 1;
 			}
-			else if (is_in_tab(&tab_of_type, input[i]))
+			else if (is_in_tab(&tab_of_type, input[i])) // If input[i] is | or ;
 			{
 				if (i == last_t)
 				{
-					if (dub_possible(input[i]))
+					if (dub_possible(input[i]))	// Checking if double char token needed
 						check_double(input, &i);
 					i++;
 				}
 				to_check = 1;
 			}
-			else
+			else  // if current char was part of a word, keep going till you reach space or \0
 			{
 				i++;
 				if (input[i] == '\0')
@@ -249,11 +262,11 @@ void	reading_input(char *input, t_lex **lex)
 				}
 			}
 		}
-		if (to_check)
+		if (to_check)  // we enter this when we know we can create a token safely
 		{
-			if (!tok)
+			if (!tok) // If the token doesnt already exist (via handle_string), create it
 				tok = check_type(&tab_of_type, input, last_t, i);
-			if (tok->data[0])
+			if (tok->data[0])		// When the token is created or was created in string fct, add it to the lex
 				add_token(lex, &tok);
 			ft_memdel((void **)&tok);
 			to_check = 0;
@@ -270,6 +283,7 @@ t_lex	*lexer(char *input)
 		exit(0);
 	reading_input(input, &lex);
 	lex = add_delim(&lex);
+//	handle_redir(&lex);
 //	simple_command(&lex);
 	return (lex);
 }
