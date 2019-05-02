@@ -84,6 +84,7 @@ void	compare_types(t_tab_type **tab_of_types, t_token **token, char *word);
 t_lex	*lexer(char *input);
 void	reading_input(char *input, t_lex **lex);
 t_token	*check_type(t_tab_type **tab_of_types, char *input, int start, int end);
+int		handle_whitespace(char *input, int i, t_lex **lex);
 int		ft_isnumbers(char *str);
 
 

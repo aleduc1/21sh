@@ -6,7 +6,7 @@
 /*   By: mbellaic <mbellaic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/12 17:21:29 by aleduc            #+#    #+#             */
-/*   Updated: 2019/05/02 18:41:16 by aleduc           ###   ########.fr       */
+/*   Updated: 2019/05/02 18:55:36 by aleduc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -200,16 +200,18 @@ void	check_double(char *input, int *i)
 }
 
 
-int		handle_whitespace(char *input, int i)
+int		handle_whitespace(char *input, int i, t_lex **lex)
 {
 	int		cpy;
+	t_token	*tok;
 
+	tok = NULL;
 	cpy = i;
 	i = skip_whitespace(input, i);
 	if (i != cpy)
 	{
-		create_space_token();
-		
+		tok = create_token(" ", SPACE);
+		add_token(lex, &tok);		
 	}
 	return (i);
 }
@@ -229,9 +231,8 @@ void	reading_input(char *input, t_lex **lex)
 	set_tab_types(&tab_of_type);
 	while (input[i])
 	{
-		i = skip_whitespace(input, i); // Skip the found whitespaces till we meet a word
-		//i = handle_whitespace() -> skip_whitespace with state of i, if i != create whitespace token
-		last_t = i;                    // save starting point in last_t
+		i = handle_whitespace(input, i, lex); // skip found whitespace till word, create space token if needed
+		last_t = i;                    // save starting point of the next word in last_t
 		while (input[i] && !(to_check)) // If to_check == 1 we need to create a token
 		{
 			if (ft_isspace(input[i]) && (i != last_t)) // If we reached EOW send it to create a token
