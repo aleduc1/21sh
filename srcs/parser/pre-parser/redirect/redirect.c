@@ -6,7 +6,7 @@
 /*   By: aleduc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/03 11:00:04 by aleduc            #+#    #+#             */
-/*   Updated: 2019/05/03 18:36:53 by aleduc           ###   ########.fr       */
+/*   Updated: 2019/05/03 19:15:30 by aleduc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,15 +42,13 @@ void	detaching(t_lex **start, t_lex **end)
 	(*end)->next = NULL;
 }
 
-void	defaults(t_redir **struct)
+void	ft_default(t_redir **redirr)
 {
 	t_redir	*ptr;
 
-	ptr = *struct;
+	ptr = *redirr;
 	if (ptr->type == GREAT)
 	{
-		if (!(ptr->src_fd = (char **)ft_memalloc(sizeof(char *) * 2)))
-			return (NULL);
 		ptr->src_fd[1] = NULL;
 		ptr->src_fd[0] = ft_strdup("1");
 	}
@@ -58,36 +56,52 @@ void	defaults(t_redir **struct)
 
 t_redir	*redir_struct_great(t_lex **start)
 {
-	t_redir	*struct;
+	t_redir	*redirr;
 	t_lex	*ptr;
 
 	ptr = *start;
-	if (!(struct = (t_redir *)ft_memalloc(sizeof(t_redir))))
+	if (!(redirr = (t_redir *)ft_memalloc(sizeof(t_redir))))
 		return (NULL);
-	struct->type = GREAT;
+	if (!(redirr->src_fd = (char **)ft_memalloc(sizeof(char *) * 2)))
+		return (NULL);
+	redirr->type = GREAT;
 	if (ptr->token->type == NUMBER)
-		struct->src_fd[1] = ptr->token->type;
+	{
+		redirr->src_fd[0] = ft_strdup(ptr->token->data);
+		redirr->src_fd[1] = NULL;
+	}
 	else
-		defaults(&struct);
+		ft_default(&redirr);
 	while (ptr->token->type != GREAT)
 		ptr = ptr->next;
 	ptr = ptr->next;
 	if (ptr->token->type == SPACE)
 		ptr = ptr->next;
-	else
-		struct->filename == ft_strdup(ptr->token->data);
-	return (struct);
+	redirr->filename = ft_strdup(ptr->token->data);
+	return (redirr);
 }
+
+/*
+ ** Testing fct
+ */
+
+/*void	print_struct(t_redir **redirr)
+ **{
+ **	t_redir	*ptr;
+ **
+ **	ptr = *redirr;
+ **	printf("src_fd : %s\ndest_fd : %s\n type : %d\nfilename : %s\nHeredoc : %s\nclose : %d\n", ptr->src_fd[0], ptr->dest_fd, ptr->type, ptr->filename, ptr->heredoc, ptr->close);
+ }*/
 
 void	handle_great(t_lex **command_node)
 {
 	t_lex	*start;
 	t_lex	*end;
-	t_redir	*struct;
+	t_redir	*redirr;
 
 	start = (*command_node)->token->command;
 	end = NULL;
-	struct = NULL;
+	redirr = NULL;
 	while (start && start->token->type != GREAT)
 		start = start->next;
 	if (start)
@@ -95,7 +109,8 @@ void	handle_great(t_lex **command_node)
 		start_grammar_great(&start);
 		end_grammar_great(&start, &end);
 		detaching(&start, &end);
-		struct = redir_struct_great(&start);
+		redirr = redir_struct_great(&start);
+		//		print_struct(&redirr);
 		//			clean_redir(&start);
 		//			attach_redir_node();
 	}
