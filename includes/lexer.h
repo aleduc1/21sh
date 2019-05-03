@@ -6,6 +6,7 @@ typedef struct s_lex		t_lex;
 typedef struct s_token		t_token;
 typedef enum e_token_type	t_type;
 typedef	struct s_tab_type	t_tab_type;
+typedef	struct s_redir		t_redir;
 
 enum	e_token_type
 {
@@ -73,6 +74,16 @@ struct s_tab_type
 {
 	char	*str;
 	t_type	type;
+};
+
+struct	s_redir
+{
+	char	**src_fd;
+	char	*dest_fd;
+	t_type	type;
+	char	*filename;
+	char	*heredoc;
+	int		close;
 };
 
 /* Array of function pointer */
