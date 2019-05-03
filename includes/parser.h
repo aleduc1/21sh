@@ -6,7 +6,7 @@
 /*   By: mbellaic <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/25 12:46:06 by mbellaic          #+#    #+#             */
-/*   Updated: 2019/04/25 17:46:56 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/03 18:10:39 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ typedef struct      s_cmd
 	t_std           *out;
 	t_std           *err;
 	char	        **argv;
-	char            *heredoc; // NULL or raw string.
+	int				end_pipe;
 	struct s_cmd	*next;
 }                   t_cmd;
 

@@ -6,7 +6,7 @@
 /*   By: sbelondr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/09 10:50:50 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/04/30 09:38:58 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/03 20:29:30 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,28 +97,60 @@ int		choice_fd(int fd_base, int fd, int origin)
 	return (stock_fd);
 }
 
-int		ft_pipe(t_cmd *cmds, int nb, t_env **my_env)
+int		ft_pipe_old(t_cmd *cmds, int nb, t_env **my_env)
 {
 	int	i;
 	int	return_code;
-	int	pids[nb];
+	int	pids;
 	int	pipes[2];
 
 	i = -1;
 	while (++i < (nb - 1))
 	{
+		open_file_command(cmds);
 		pipe(pipes);
 		cmds->out->fd = choice_fd(cmds->out->fd, pipes[1], 1);
-		if ((pids[i] = is_builtin(cmds, &(*my_env))) == -1)
-			pids[i] = add_process(cmds, *my_env, &return_code);
+		if ((pids = is_builtin(cmds, &(*my_env))) == -1)
+			pids = add_process(cmds, *my_env, &return_code);
 		close(pipes[1]);
+		close_file_command(cmds);
 		cmds = cmds->next;
 		cmds->in->fd = pipes[0];
 	}
+	open_file_command(cmds);
 	cmds->out->fd = choice_fd(cmds->out->fd, pipes[1], 1);
-	if ((pids[i] = is_builtin(cmds, &(*my_env))) == -1)
-		pids[i] = add_process(cmds, *my_env, &return_code);
+	if ((pids = is_builtin(cmds, &(*my_env))) == -1)
+		pids = add_process(cmds, *my_env, &return_code);
+	close_file_command(cmds);
 	return (return_code);
+}
+
+int		ft_pipe(t_cmd *cmd, t_env **my_env)
+{
+	int	return_code;
+	int	pids;
+	int	pipes[2];
+
+	if (cmd->end_pipe)
+	{
+		open_file_command(cmd);
+		if ((return_code = is_builtin(cmd, &(*my_env))) == -1)
+			pids = add_process(cmd, *my_env, &return_code);
+		close_file_command(cmd);
+		return (return_code);
+	}
+	else
+	{
+		open_file_command(cmd);
+		pipe(pipes);
+		cmd->out->fd = choice_fd(cmd->out->fd, pipes[1], 1);
+		if ((pids = is_builtin(cmd, &(*my_env))) == -1)
+			pids = add_process(cmd, *my_env, &return_code);
+		close(pipes[1]);
+		close_file_command(cmd);
+		return (pipes[0]);
+	}
+	return (0);
 }
 
 /*
@@ -146,11 +178,11 @@ int		ft_simple_command(t_cmd *cmd, t_env **my_env)
 {
 	int		verif;
 
+	open_file_command(cmd);
 	if (is_builtin(cmd, &(*my_env)) != -1)
 		verif = 0;
 	else
 		verif = exec_fork(cmd, &(*my_env));
-	close_file(&(*my_env));
-	close_error_file(&(*my_env));
+	close_file_command(cmd);
 	return (verif);
 }

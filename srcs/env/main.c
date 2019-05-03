@@ -6,7 +6,7 @@
 /*   By: sbelondr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/25 12:49:50 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/05/03 13:10:12 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/03 20:32:38 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,28 +32,15 @@ void	free_cmd(t_cmd **cmd)
 	free_std(&((*cmd)->out));
 	free_std(&((*cmd)->err));
 	ft_arraydel(&((*cmd)->argv));
-	ft_strdel(&((*cmd)->heredoc));
 	free(*cmd);
 	(*cmd) = NULL;
-}
-
-void	print_cmd(t_cmd *cmd)
-{
-	ft_printf("in->fd %d, in->filename = %s, in->append = %d\n", cmd->in->fd,
-			cmd->in->filename, cmd->in->append);
-	ft_printf("out->fd %d, out->filename = %s, out->append = %d\n", cmd->out->fd,
-			cmd->out->filename, cmd->out->append);
-	ft_printf("err->fd %d, err->filename = %s, err->append = %d\n", cmd->err->fd,
-			cmd->err->filename, cmd->err->append);
-	ft_printf("**argv:\n");
-	ft_arraydisplay(cmd->argv);
 }
 
 int		main(int ac, char **av)
 {
 	t_cmd	*cmd;
-	char	*testa[2] = {"pwd", NULL};
-	char	*testb[2] = {"set", NULL};
+	char	*testa[3] = {"cat", "-e", NULL};
+	char	*testb[2] = {"wc", NULL};
 	t_env	*env;
 	int		i;
 
@@ -62,29 +49,53 @@ int		main(int ac, char **av)
 	i = 0;
 	env = init_env();
 
+	int	test;
+
 	cmd = init_cmd();
 	cmd->argv = ft_arraydup(av + 1);
-	cmd->out->fd = -1;
-	cmd->out->append = 1;
-	ft_strdel(&((cmd->out->filename)));
-	cmd->out->filename = ft_strdup("coucou");
-	open_file_std(cmd->out);
-
 	parser_var(&(cmd->argv), env);
-//	cmd->out->fd = open_file_not_env("test.txt", 0);
+
+	cmd->end_pipe = 0;
+//	cmd->out->fd = -1;
+//	cmd->out->append = 0;
+//	ft_strdel(&((cmd->out->filename)));
+//	cmd->out->filename = ft_strdup("cc");
+
+	test = ft_pipe(cmd, &env);
+
+	//ft_printf("la\n");
 
 	cmd->next = init_cmd();
-	cmd->next->argv = ft_arraydup(testb);
+	cmd->next->argv = ft_arraydup(testa);
 	parser_var(&(cmd->next->argv), env);
-	
+
+	cmd->next->in->fd = test;
+
+//	cmd->next->out->fd = -1;
+//	cmd->next->out->append = 0;
+//	ft_strdel(&((cmd->next->out->filename)));
+//	cmd->next->out->filename = ft_strdup("cc");
+
+	cmd->next->end_pipe = 0;
+	test = ft_pipe(cmd->next, &env);
+
+	//ft_printf("laaaa\n");
+
 	cmd->next->next = init_cmd();
-	cmd->next->next->argv = ft_arraydup(testa);
+	cmd->next->next->argv = ft_arraydup(testb);
 	parser_var(&(cmd->next->next->argv), env);
+	cmd->next->next->end_pipe = 1;
+	cmd->next->next->in->fd = test;
+//	cmd->next->next->out->fd = -1;
+//	cmd->next->next->out->append = 0;
+//	ft_strdel(&((cmd->next->next->out->filename)));
+//	cmd->next->next->out->filename = ft_strdup("cc");
+	ft_pipe(cmd->next->next, &env);
 	
-	i = ft_simple_command(cmd, &env);
-	close_file_command(cmd);
-//	i = ft_simple_command(cmd->next, &env);
-//	i = ft_pipe(cmd, 3, &env);
+
+	//ft_printf("ci\n");
+//	i = ft_simple_command(cmd, &env);
+//	i = ft_pipe_old(cmd, 3, &env);
 //	i = ft_pipe_double(cmd, &env);
 //	i = ft_ampersand(cmd, 1, &env);
 //	i = ft_ampersand_double(cmd, &env);

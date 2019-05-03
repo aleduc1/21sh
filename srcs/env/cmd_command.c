@@ -6,7 +6,7 @@
 /*   By: mbellaic <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/25 12:42:19 by mbellaic          #+#    #+#             */
-/*   Updated: 2019/05/03 12:21:01 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/03 18:18:10 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ t_cmd	*init_cmd(void)
 	cmd->out = init_std(1, NULL, 0);
 	cmd->err = init_std(2, NULL, 0);
 	cmd->argv = NULL;
-	cmd->heredoc = NULL;
 	cmd->next = NULL;
 	return (cmd);
 }
