@@ -3,91 +3,65 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sbelondr <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: apruvost <apruvost@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/03/26 09:34:18 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/04/12 08:33:47 by sbelondr         ###   ########.fr       */
+/*   Created: 2017/12/18 16:18:29 by apruvost          #+#    #+#             */
+/*   Updated: 2019/05/03 15:33:06 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../includes/libft.h"
 
-int		ft_endline(char *str)
+int		ft_new_line(char **s, char **line, int fd, int ret)
 {
-	int	i;
-
-	i = -1;
-	if (!str)
-		return (-1);
-	while (str[++i])
-		if (str[i] == '\n')
-			break ;
-	return (i);
-}
-
-int		ft_read(const int fd, char **str)
-{
-	char	buf[BUF_S];
 	char	*tmp;
-	int		verif;
+	int		len;
 
-	ft_bzero(buf, BUF_S);
-	while ((verif = read(fd, buf, (BUF_S - 1))) > 0)
+	len = 0;
+	while (s[fd][len] != '\n' && s[fd][len] != '\0')
+		len++;
+	if (s[fd][len] == '\n')
 	{
-		buf[verif] = '\0';
-		tmp = (*str) ? ft_strjoin((*str), buf) : ft_strdup(buf);
-		ft_strdel(&(*str));
-		(*str) = ft_strdup(tmp);
-		ft_strdel(&tmp);
-		if (ft_strchr_exist(*str, '\n'))
-			break ;
+		*line = ft_strsub(s[fd], 0, len);
+		tmp = ft_strdup(s[fd] + len + 1);
+		free(s[fd]);
+		s[fd] = tmp;
+		if (s[fd][0] == '\0')
+			ft_strdel(&s[fd]);
 	}
-	if (verif == -1)
-		ft_strdel(&(*str));
-	return (verif);
-}
-
-int		ft_verif(int fd, char **str)
-{
-	if (fd < 0)
-		return (-1);
-	if (!(*str))
+	else if (s[fd][len] == '\0')
 	{
-		if (!((*str) = ft_strnew(BUF_S)))
-			return (-1);
+		if (ret == BUF_S)
+			return (get_next_line(fd, line));
+		*line = ft_strdup(s[fd]);
+		ft_strdel(&s[fd]);
 	}
-	return (0);
+	return (1);
 }
 
 int		get_next_line(const int fd, char **line)
 {
-	static char	*str;
+	static char	*s[255];
+	char		buf[BUF_S + 1];
 	char		*tmp;
-	int			verif;
+	int			ret;
 
-	if (ft_verif(fd, &str) == -1)
+	if (fd < 0 || line == NULL)
 		return (-1);
-	verif = ft_read(fd, &str);
-	if (verif == -1)
+	while ((ret = read(fd, buf, BUF_S)) > 0)
 	{
-		ft_strdel(&str);
+		buf[ret] = '\0';
+		if (s[fd] == NULL)
+			s[fd] = ft_strnew(1);
+		tmp = ft_strjoin(s[fd], buf);
+		free(s[fd]);
+		s[fd] = tmp;
+		if (ft_strchr(buf, '\n'))
+			break ;
+	}
+	if (ret < 0)
 		return (-1);
-	}
-	verif = ft_endline(str);
-	if (str[0])
-	{
-		(*line) = ft_strsub(str, 0, verif);
-		tmp = ft_strsub(str, verif + 1, ft_strlen(str));
-		ft_strdel(&str);
-		str = ft_strdup(tmp);
-		ft_strdel(&tmp);
-		return (1);
-	}
-	else
-	{
-		ft_strdel(&str);
-		return (-1);
-	}
-	ft_strdel(&str);
-	return (0);
+	else if (ret == 0 && (s[fd] == NULL || s[fd][0] == '\0'))
+		return (0);
+	return (ft_new_line(s, line, fd, ret));
 }

@@ -6,7 +6,7 @@
 /*   By: mbellaic <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/25 12:42:19 by mbellaic          #+#    #+#             */
-/*   Updated: 2019/04/27 15:04:21 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/03 12:21:01 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ t_std	*init_std(int fd, char *filename, int append)
 	if (!(std = (t_std*)malloc(sizeof(t_std) * 1)))
 		return (NULL);
 	std->fd = fd;
-	std->filename = filename;
+	std->filename = ft_strdup(filename ? filename : "");
 	std->append = append;
 	return (std);
 }

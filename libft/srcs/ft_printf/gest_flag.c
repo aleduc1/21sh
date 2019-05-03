@@ -6,7 +6,7 @@
 /*   By: sbelondr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/22 17:43:51 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/04/08 10:49:03 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/03 12:23:33 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ static void		(**init_array(void))(t_printf**)
 	while (++i <= 254)
 		conv[i] = 0;
 	conv['s'] = &ft_arg_s;
+	conv['S'] = &ft_arg_array_s;
 	conv['i'] = &ft_arg_d;
 	conv['d'] = &ft_arg_d;
 	conv['c'] = &ft_arg_c;

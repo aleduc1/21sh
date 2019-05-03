@@ -6,7 +6,7 @@
 /*   By: sbelondr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/26 16:44:29 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/04/27 12:30:54 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/03 13:12:24 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,10 @@ static int	check_is_fd(char *name)
 	return (fd);
 }
 
+/*
+** F_OK: file exist
+*/
+
 static int	file_exist(char *name)
 {
 	int	fd;
@@ -33,8 +37,10 @@ static int	file_exist(char *name)
 	if (fd != -1)
 	{
 		close(fd);
-		return (fd);
+		return (1);
 	}
+	else
+		ft_dprintf(2, "21sh: error create file: %s\n", name);
 	return (-1);
 }
 
@@ -61,6 +67,43 @@ int			open_file(t_env **my_env, char *name, char *fd_out)
 	free_arg(&arg);
 	ft_strdel(&fd_str);
 	return (fd);
+}
+
+int			open_file_std(t_std *std)
+{
+	if (std->fd == -1)
+		std->fd = file_exist(std->filename);
+	else
+		return (0);
+	if (std->fd == -2)
+		return (-1);
+	if (std->append == 1)
+		std->fd = get_end_line(std->filename);
+	else
+		std->fd = open(std->filename, O_RDWR | O_TRUNC);
+	return (1);
+}
+
+int			close_file_command(t_cmd *cmd)
+{
+	if (cmd->in->fd != 0)
+		close(cmd->in->fd);
+	if (cmd->out->fd != 1)
+		close(cmd->out->fd);
+	if (cmd->err->fd != 2)
+		close(cmd->err->fd);
+	return (0);
+}
+
+int			open_file_command(t_cmd *cmd)
+{
+	if (open_file_std(cmd->in) == -1)
+		return (-1);
+	if (open_file_std(cmd->out) == -1)
+		return (-1);
+	if (open_file_std(cmd->err) == -1)
+		return (-1);
+	return (0);
 }
 
 int			open_file_not_env(char *name, int end_line)

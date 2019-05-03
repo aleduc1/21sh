@@ -6,11 +6,21 @@
 /*   By: sbelondr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/23 07:11:11 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/04/08 10:47:51 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/03 12:26:07 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/ft_printf.h"
+
+void	ft_arg_array_s(t_printf **lst)
+{
+	char	**lst_str;
+
+	if (!(lst_str = ft_arraydup(va_arg((*lst)->ap, char**))))
+		lst_str = ft_arraydup(NULL);
+	ft_arraydisplay(lst_str);
+	ft_arraydel(&lst_str);
+}
 
 void	ft_arg_s(t_printf **lst)
 {

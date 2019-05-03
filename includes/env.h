@@ -6,7 +6,7 @@
 /*   By: sbelondr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/22 13:33:53 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/04/27 15:31:18 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/03 12:43:04 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,9 @@ t_env				*init_maillon_env(void);
 */
 
 int					open_file_not_env(char *name, int end_line);
+int					open_file_std(t_std *std);
+int					open_file_command(t_cmd *cmd);
+int					close_file_command(t_cmd *cmd);
 int					dest_output(t_env **my_env);
 int					dest_error_output(t_env **my_env);
 void				close_file(t_env **my_env);

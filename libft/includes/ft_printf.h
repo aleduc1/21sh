@@ -6,7 +6,7 @@
 /*   By: sbelondr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/06 19:42:20 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/04/08 11:04:29 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/03 12:27:04 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ void				ft_gest_flag(t_printf **lst);
 */
 
 void				ft_arg_s(t_printf **lst);
+void				ft_arg_array_s(t_printf **lst);
 void				ft_arg_c(t_printf **lst);
 void				ft_arg_percent(t_printf **lst);
 

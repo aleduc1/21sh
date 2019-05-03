@@ -6,7 +6,7 @@
 /*   By: sbelondr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/25 12:49:50 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/04/30 09:41:46 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/03 13:10:12 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,18 @@ void	free_cmd(t_cmd **cmd)
 	(*cmd) = NULL;
 }
 
+void	print_cmd(t_cmd *cmd)
+{
+	ft_printf("in->fd %d, in->filename = %s, in->append = %d\n", cmd->in->fd,
+			cmd->in->filename, cmd->in->append);
+	ft_printf("out->fd %d, out->filename = %s, out->append = %d\n", cmd->out->fd,
+			cmd->out->filename, cmd->out->append);
+	ft_printf("err->fd %d, err->filename = %s, err->append = %d\n", cmd->err->fd,
+			cmd->err->filename, cmd->err->append);
+	ft_printf("**argv:\n");
+	ft_arraydisplay(cmd->argv);
+}
+
 int		main(int ac, char **av)
 {
 	t_cmd	*cmd;
@@ -52,6 +64,12 @@ int		main(int ac, char **av)
 
 	cmd = init_cmd();
 	cmd->argv = ft_arraydup(av + 1);
+	cmd->out->fd = -1;
+	cmd->out->append = 1;
+	ft_strdel(&((cmd->out->filename)));
+	cmd->out->filename = ft_strdup("coucou");
+	open_file_std(cmd->out);
+
 	parser_var(&(cmd->argv), env);
 //	cmd->out->fd = open_file_not_env("test.txt", 0);
 
@@ -64,6 +82,7 @@ int		main(int ac, char **av)
 	parser_var(&(cmd->next->next->argv), env);
 	
 	i = ft_simple_command(cmd, &env);
+	close_file_command(cmd);
 //	i = ft_simple_command(cmd->next, &env);
 //	i = ft_pipe(cmd, 3, &env);
 //	i = ft_pipe_double(cmd, &env);
