@@ -111,6 +111,8 @@ int		type_to_end_on(t_type type);
 void	detach(t_lex **start, t_lex **end);
 void	attach(t_lex **head, t_lex **node, t_lex **end);
 
+/* Implementing Redirect struct */
+void	handle_redir(t_lex **lex);
 
 /* DLL functions */
 /* Creation */

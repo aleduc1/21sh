@@ -17,11 +17,21 @@ INCLIBDIR = libft/includes/
 
 VPATH = objs:\
 		srcs:\
-		srcs/lexer:srcs/lexer/dll_lex:srcs/lexer/token:\
-		srcs/prompt:srcs/prompt/edition:srcs/prompt/history:srcs/prompt/multiline:\
-		srcs/prompt/others:srcs/prompt/selection:\
-		srcs/parser:srcs/parser/pre-parser:srcs/parser/ast:\srcs/parser/pre-parser/simple_command.c\
-		srcs/parser/command\
+		srcs/lexer:\
+		srcs/lexer/dll_lex:\
+		srcs/lexer/token:\
+		srcs/prompt:\
+		srcs/prompt/edition:\
+		srcs/prompt/history:\
+		srcs/prompt/multiline:\
+		srcs/prompt/others:\
+		srcs/prompt/selection:\
+		srcs/parser:\
+		srcs/parser/ast:\
+		srcs/parser/command:\
+		srcs/parser/pre-parser:\
+		srcs/parser/pre-parser/simple_command:\
+		srcs/parser/pre-parser/redirect:\
 		srcs/cleaning
 		
 # ------------------ #
@@ -76,6 +86,7 @@ SRCS_NAMES = main.c \
 			 tree_utils.c \
 			 parser.c \
 			 cmd_parser.c \
+			 redirect.c \
 			 clean_lex.c
 
 OBJS_NAMES = $(SRCS_NAMES:.c=.o)
