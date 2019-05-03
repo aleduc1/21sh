@@ -8,6 +8,8 @@ t_token		*create_token(char *str, t_type types)
 	if (!(token = (t_token *)ft_memalloc(sizeof(token))))
 		return (NULL);
 	token->data = ft_strdup(str);
+	ft_putchar('-');
+	ft_putendl(str);
 	token->command = NULL;
 	if (!token->data)
 	{
@@ -28,6 +30,8 @@ t_token		*create_command_token(t_lex **command, t_type types)
 	if (!(token = (t_token *)ft_memalloc(sizeof(token))))
 		return (NULL);
 	token->data = ft_strdup("Command");
+	ft_putchar('-');
+	ft_putendl(token->data);
 	token->command = *command;
 	if (!token->data)
 	{

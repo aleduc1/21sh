@@ -6,7 +6,7 @@
 /*   By: mbellaic <mbellaic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/12 17:01:09 by aleduc            #+#    #+#             */
-/*   Updated: 2019/05/03 15:43:13 by aleduc           ###   ########.fr       */
+/*   Updated: 2019/05/03 21:59:43 by aleduc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,8 @@ int		main(int argc, char **argv, char **environ)
 		{
 			inputstr = prompt(input, &pos); // Don't forget to free inputstr once you are done with it.
 			lex = lexer(inputstr);
-			dllprinthead(&lex);
+//			ft_strdel(&inputstr);
+//			dllprinthead(&lex);
 //			ast = ast_parser(lex);
 			clean_lex(&lex);
 		}
