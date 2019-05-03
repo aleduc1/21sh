@@ -6,7 +6,7 @@
 /*   By: mbellaic <mbellaic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/12 17:21:29 by aleduc            #+#    #+#             */
-/*   Updated: 2019/05/02 18:55:36 by aleduc           ###   ########.fr       */
+/*   Updated: 2019/05/03 11:15:37 by aleduc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -285,6 +285,6 @@ t_lex	*lexer(char *input)
 	reading_input(input, &lex);
 	lex = add_delim(&lex);
 //	handle_redir(&lex);
-//	simple_command(&lex);
+	simple_command(&lex);
 	return (lex);
 }
