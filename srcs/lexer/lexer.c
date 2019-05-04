@@ -6,7 +6,7 @@
 /*   By: mbellaic <mbellaic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/12 17:21:29 by aleduc            #+#    #+#             */
-/*   Updated: 2019/05/04 11:31:55 by aleduc           ###   ########.fr       */
+/*   Updated: 2019/05/04 14:31:07 by aleduc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -292,5 +292,6 @@ t_lex	*lexer(char *input)
 	dllprinthead(&lex);
 	handle_redir(&lex);
 	ft_putendl("\n The state of the lexer after redir_struct implementation : \n");
+	dllprinthead(&lex);
 	return (lex);
 }

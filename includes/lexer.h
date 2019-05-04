@@ -67,6 +67,7 @@ struct s_token
 struct	s_lex
 {
 	t_token	*token;
+	t_redir	*redir;
 	t_lex	*next;
 	t_lex	*prev;
 };
@@ -129,6 +130,7 @@ void	handle_redir(t_lex **lex);
 /* DLL functions */
 /* Creation */
 t_lex	*new_node(t_token **tok);
+t_lex	*new_redir_node(t_token **tok, t_redir **redir_info);
 
 /* Insertion */
 void	dllinsfront(t_lex **head, t_lex **node);

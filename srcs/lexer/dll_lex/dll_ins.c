@@ -23,7 +23,8 @@ void	dllinsafter(t_lex **prev_node, t_lex **node)
 	(*node)->next = (*prev_node)->next;
 	(*node)->prev = (*prev_node);
 	(*prev_node)->next = (*node);
-	(*node)->next->prev = (*node);
+	if ((*node)->next)
+		(*node)->next->prev = (*node);
 }
 
 void	dllinsbefore(t_lex **next_node, t_lex **node)
