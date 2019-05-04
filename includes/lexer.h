@@ -53,6 +53,7 @@ enum	e_token_type
 	WORD,
 	CMD,
 	DELIM,
+	REDIR,
 	NUL,
 };
 

@@ -6,7 +6,7 @@
 /*   By: aleduc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/03 11:00:04 by aleduc            #+#    #+#             */
-/*   Updated: 2019/05/03 22:11:59 by aleduc           ###   ########.fr       */
+/*   Updated: 2019/05/04 12:04:12 by aleduc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,16 @@ t_redir	*redir_struct_great(t_lex **start)
  **	printf("src_fd : %s\ndest_fd : %s\n type : %d\nfilename : %s\nHeredoc : %s\nclose : %d\n", ptr->src_fd[0], ptr->dest_fd, ptr->type, ptr->filename, ptr->heredoc, ptr->close);
  }*/
 
+void	attach_redir_node(t_lex **command_node)
+{
+	t_token	*tok;
+	t_lex	*redir_node;
+
+	tok = create_token("redir", REDIR);
+	redir_node = create_redir_node(&tok);
+
+}
+
 void	handle_great(t_lex **command_node)
 {
 	t_lex	*start;
@@ -111,8 +121,9 @@ void	handle_great(t_lex **command_node)
 		end_grammar_great(&start, &end);
 		detaching(&start, &end);
 		redirr = redir_struct_great(&start);
+		dllprinthead(&start);
 		clean_lex(&start);
-		attach_redir_node(); //pause
+		attach_redir_node(command_node);
 	}
 }
 

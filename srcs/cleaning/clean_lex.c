@@ -6,11 +6,9 @@
 /*   By: mbellaic <mbellaic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/16 15:18:28 by aleduc            #+#    #+#             */
-/*   Updated: 2019/05/04 02:53:15 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/04 11:42:23 by aleduc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-#include <stdio.h>
 
 #include "lexer.h"
 
@@ -25,12 +23,10 @@ void	clean_inside_token(t_token **token)
 	}*/
 	t_token	*ptr;
 
-		ft_putchar('+');
-		ft_putendl(ptr->data);
 	ptr = *token;
 	ptr->type = 0;
 	ptr->command = NULL;
-//	if (ptr->data[0])
+	if (ptr->data[0])
 		ft_strdel(&ptr->data);
 }
 
