@@ -6,7 +6,7 @@
 /*   By: aleduc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/04 17:15:13 by aleduc            #+#    #+#             */
-/*   Updated: 2019/05/04 18:01:54 by aleduc           ###   ########.fr       */
+/*   Updated: 2019/05/04 23:03:44 by aleduc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,11 +145,21 @@ void	ft_default(t_redir **redir_info);
 void	handle_great(t_lex **command_node);
 void	handle_great_and(t_lex **command_node);
 void	handle_and_great(t_lex **command_node);
+void	handle_append(t_lex **command_node);
+void	handle_less(t_lex **command_node);
+void	handle_and_less(t_lex **command_node);
+void	handle_less_and(t_lex **command_node);
+void	handle_heredoc(t_lex **command_node);
 
 /* Struct filling */
 t_redir	*redir_struct_great(t_lex **start);
 t_redir	*redir_struct_great_and(t_lex **start);
 t_redir	*redir_struct_and_great(t_lex **start);
+t_redir	*redir_struct_append(t_lex **start);
+t_redir	*redir_struct_less(t_lex **start);
+t_redir	*redir_struct_less_and(t_lex **start);
+t_redir	*redir_struct_and_less(t_lex **start);
+t_redir	*redir_struct_heredoc(t_lex **start);
 
 /* Grammatical rules */
 void	start_grammar_great(t_lex **start);

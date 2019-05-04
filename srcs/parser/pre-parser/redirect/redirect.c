@@ -6,7 +6,7 @@
 /*   By: aleduc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/03 11:00:04 by aleduc            #+#    #+#             */
-/*   Updated: 2019/05/04 20:09:30 by aleduc           ###   ########.fr       */
+/*   Updated: 2019/05/04 22:51:55 by aleduc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@ void	ft_default(t_redir **redir_info)
 
 	ptr = *redir_info;
 	t = ptr->type;
-	if (t == GREAT || t == LESSAMP || t == AMPLESS || t == DGREAT)
+	if (t == GREAT || t == LESSAMP || t == DGREAT)
 		ptr->src_fd[0] = ft_strdup("1");
-	else if (t == GREATAMP || t == AMPGREAT)
+	else if (t == GREATAMP || t == AMPGREAT || t == AMPLESS)
 	{
 		ptr->src_fd[0] = ft_strdup("1");
 		ptr->src_fd[1] = ft_strdup("2");
