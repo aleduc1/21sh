@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   token.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aleduc <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/05/03 22:09:34 by aleduc            #+#    #+#             */
+/*   Updated: 2019/05/04 02:53:59 by sbelondr         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "lexer.h"
 
 t_token		*create_token(char *str, t_type types)
@@ -8,6 +20,8 @@ t_token		*create_token(char *str, t_type types)
 	if (!(token = (t_token *)ft_memalloc(sizeof(token))))
 		return (NULL);
 	token->data = ft_strdup(str);
+	ft_putchar('-');
+	ft_putendl(token->data);// = ft_strdup(str);
 	token->command = NULL;
 	if (!token->data)
 	{

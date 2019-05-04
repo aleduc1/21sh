@@ -6,7 +6,7 @@
 /*   By: mbellaic <mbellaic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/12 17:21:29 by aleduc            #+#    #+#             */
-/*   Updated: 2019/05/03 16:04:41 by aleduc           ###   ########.fr       */
+/*   Updated: 2019/05/04 02:52:41 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,8 @@ t_token	*check_type(t_tab_type **tab_of_type, char *input, int start, int end)
 	token = NULL;
 	word = ft_strsub(input, start, end - start);
 	compare_types(tab_of_type, &token, word);
-	ft_memdel((void **)&word);
+	ft_strdel(&word);
+	//ft_memdel((void **)&word);
 	return (token);
 }
 
@@ -273,6 +274,8 @@ void	reading_input(char *input, t_lex **lex)
 			to_check = 0;
 		}
 	}
+	free(tab_of_type);
+	tab_of_type = NULL;
 }
 
 t_lex	*lexer(char *input)
