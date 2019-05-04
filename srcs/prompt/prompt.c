@@ -6,7 +6,7 @@
 /*   By: mbellaic <mbellaic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/12 17:13:21 by aleduc            #+#    #+#             */
-/*   Updated: 2019/04/27 19:54:27 by mbellaic         ###   ########.fr       */
+/*   Updated: 2019/05/04 22:03:25 by mbellaic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,9 +86,9 @@ t_node			*read_input(t_node **input, t_pos *pos)
 
 char			*prompt(t_multi *multi, t_pos *pos) //NORME
 {
-	char		*inputstr;
 	t_integrity	count;
 	t_multi		*lstcursor;
+	char		*inputstr;
 
 	multi = NULL;
 	inputstr = NULL;

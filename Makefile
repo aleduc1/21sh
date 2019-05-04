@@ -43,7 +43,7 @@ CC = gcc
 ifeq ($(DEBUG), yes)
 	CFLAGS = -Wall -Wextra -Werror -g3 -fsanitize=address
 else
-	CFLAGS = -Wall -Wextra
+	CFLAGS = -Wall -Wextra -g3
 endif
 CPPFLAGS = -I $(INCDIR) -I $(INCLIBDIR)
 LDLIBS = -lft
@@ -82,6 +82,7 @@ SRCS_NAMES = main.c \
 			 stalkcursor.c \
 			 terminit.c \
 			 multiline.c \
+			 heredoc.c \
 			 text_selection.c \
 			 copy_paste.c \
 			 undo_selection.c \
