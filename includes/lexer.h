@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   lexer.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aleduc <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/05/04 17:15:13 by aleduc            #+#    #+#             */
+/*   Updated: 2019/05/04 17:29:32 by aleduc           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef LEXER_H
 # define LEXER_H
 # include "libft.h"
@@ -123,9 +135,23 @@ int		type_to_end_on(t_type type);
 /* Attach */
 void	detach(t_lex **start, t_lex **end);
 void	attach(t_lex **head, t_lex **node, t_lex **end);
+t_lex	*detaching(t_lex **start, t_lex **end);
+void	attach_redir_node(t_redir **redir_info, t_lex **before_start);
 
 /* Implementing Redirect struct */
 void	handle_redir(t_lex **lex);
+void	ft_default(t_redir **redir_info);
+
+void	handle_great(t_lex **command_node);
+void	handle_great_and(t_lex **command_node);
+
+/* Struct filling */
+t_redir	*redir_struct_great(t_lex **start);
+t_redir	*redir_struct_great_and(t_lex **start);
+
+/* Grammatical rules */
+void	start_grammar_great(t_lex **start);
+void	end_grammar_great(t_lex **start, t_lex **end, t_type type_check);
 
 /* DLL functions */
 /* Creation */
@@ -151,10 +177,8 @@ t_lex	*dlldelone(t_lex **head, char *data);
 void	dll_del_node(t_lex **node);
 
 
-/*
-** Cleaning
-*/
 
+/* Cleaning */
 void	clean_lex(t_lex **lex);
 
 #endif
