@@ -93,6 +93,7 @@ SRCS_NAMES = main.c \
 			 clean_lex.c \
 			 handle_great.c \
 			 handle_great_and.c \
+			 handle_and_great.c \
 			 rules_great.c
 
 OBJS_NAMES = $(SRCS_NAMES:.c=.o)

@@ -6,7 +6,7 @@
 /*   By: aleduc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/03 11:00:04 by aleduc            #+#    #+#             */
-/*   Updated: 2019/05/04 17:25:40 by aleduc           ###   ########.fr       */
+/*   Updated: 2019/05/04 17:39:26 by aleduc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	handle_redir(t_lex **lex)
 		{
 			handle_great(&ptr);
 			handle_great_and(&ptr);
-			//		handle_and_upper(&ptr);
+			handle_and_great(&ptr);
 		}
 		ptr = ptr->next;
 	}
