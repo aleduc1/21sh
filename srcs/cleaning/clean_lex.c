@@ -6,7 +6,7 @@
 /*   By: mbellaic <mbellaic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/16 15:18:28 by aleduc            #+#    #+#             */
-/*   Updated: 2019/05/03 22:07:41 by aleduc           ###   ########.fr       */
+/*   Updated: 2019/05/04 02:53:15 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,6 @@ void	clean_inside_token(t_token **token)
 {
 /*	if (token && (*token))
 	{
-		ft_putchar('+');
-		ft_putendl((*token)->data);
 		clean_lex(&((*token)->command));
 		ft_strdel(&((*token)->data));
 		free(*token);
@@ -27,10 +25,12 @@ void	clean_inside_token(t_token **token)
 	}*/
 	t_token	*ptr;
 
+		ft_putchar('+');
+		ft_putendl(ptr->data);
 	ptr = *token;
 	ptr->type = 0;
 	ptr->command = NULL;
-	if (ptr->data[0])
+//	if (ptr->data[0])
 		ft_strdel(&ptr->data);
 }
 
