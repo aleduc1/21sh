@@ -6,12 +6,13 @@
 /*   By: aleduc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/03 11:00:04 by aleduc            #+#    #+#             */
-/*   Updated: 2019/05/03 21:05:55 by aleduc           ###   ########.fr       */
+/*   Updated: 2019/05/03 22:11:59 by aleduc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
 #include <stdio.h>
+
 void	start_grammar_great(t_lex **start)
 {
 	if ((*start)->prev->token->type == NUMBER)
@@ -111,7 +112,7 @@ void	handle_great(t_lex **command_node)
 		detaching(&start, &end);
 		redirr = redir_struct_great(&start);
 		clean_lex(&start);
-		//			attach_redir_node();
+		attach_redir_node(); //pause
 	}
 }
 
