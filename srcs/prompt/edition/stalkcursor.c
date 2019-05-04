@@ -17,6 +17,9 @@ void			get_cursor(int i, int j, char answer[], t_pos *pos)
 	char		xchar[5];
 	char		ychar[5];
 
+	ft_bzero(xchar, 5);
+	ft_bzero(ychar, 5);
+
 	while (answer[++i] != ';')
 	{
 		if ((answer[i] >= '0' && answer[i] <= '9'))
