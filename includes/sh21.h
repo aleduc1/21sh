@@ -166,6 +166,7 @@ void                reset_multi(t_pos *pos);
 void		        key_occurence(t_node *cursor, t_integrity *count);
 void		        dquote(t_multi *lstcursor, t_multi **multi, t_pos *pos);
 void		        quote(t_multi *lstcursor, t_multi **multi, t_pos *pos);
+char			    *heredoc(char *heredoc, t_pos *pos);
 int                 check_integrity(t_node *input, t_multi **multi, t_pos *pos, t_integrity *count);
 
 void	            init_prompt(t_pos *pos);
