@@ -12,7 +12,7 @@
 
 #include "sh21.h"
 
-void	default_term_mode(void)
+void				default_term_mode(void)
 {
 	struct termios	term;
 
@@ -22,7 +22,7 @@ void	default_term_mode(void)
 	ft_putstr(tgetstr("ei", NULL));
 }
 
-void	raw_term_mode(void)
+void				raw_term_mode(void)
 {
 	struct termios	term;
 

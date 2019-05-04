@@ -33,7 +33,7 @@ VPATH = objs:\
 		srcs/parser/pre-parser/simple_command:\
 		srcs/parser/pre-parser/redirect:\
 		srcs/cleaning
-		
+
 # ------------------ #
 # Compiler and flags #
 # ------------------ #
@@ -69,12 +69,14 @@ SRCS_NAMES = main.c \
 			 attach.c \
 			 cursortools.c \
 			 dlist.c \
+			 dlist_plus.c \
 			 editiontools.c \
 			 editline.c \
 			 history.c \
 			 prompt.c \
 			 keyhook.c \
 			 morekeyhook.c \
+			 del_keyhook.c \
 			 othertools.c \
 			 stalkcursor.c \
 			 terminit.c \
