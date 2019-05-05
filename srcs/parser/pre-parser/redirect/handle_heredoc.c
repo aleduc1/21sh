@@ -6,7 +6,7 @@
 /*   By: aleduc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/04 22:55:39 by aleduc            #+#    #+#             */
-/*   Updated: 2019/05/05 13:01:28 by aleduc           ###   ########.fr       */
+/*   Updated: 2019/05/05 17:03:46 by aleduc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int		handle_heredoc(t_lex **command_node)
 	t_lex	*before_start;
 	t_redir	*redir_info;
 
-	start = (*command_node)->token->command;
+	start = *command_node;
 	end = NULL;
 	redir_info = NULL;
 	while (start && start->token->type != DLESS)
@@ -50,9 +50,6 @@ int		handle_heredoc(t_lex **command_node)
 			return (1);
 		before_start = detaching(&start, &end);
 		redir_info = redir_struct_heredoc(&start);
-		ft_putendl("\n The redirect little LL : \n");
-		dllprinthead(&start);
-		ft_putendl("\n\n");
 		clean_lex(&start);
 		attach_redir_node(&redir_info, &before_start);
 		handle_heredoc(command_node);

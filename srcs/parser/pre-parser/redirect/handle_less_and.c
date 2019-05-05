@@ -6,7 +6,7 @@
 /*   By: aleduc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/04 20:07:09 by aleduc            #+#    #+#             */
-/*   Updated: 2019/05/05 13:00:22 by aleduc           ###   ########.fr       */
+/*   Updated: 2019/05/05 17:03:24 by aleduc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int		handle_less_and(t_lex **command_node)
 	t_lex	*before_start;
 	t_redir	*redir_info;
 
-	start = (*command_node)->token->command;
+	start = *command_node;
 	end = NULL;
 	redir_info = NULL;
 	while (start && start->token->type != LESSAMP)
@@ -61,9 +61,6 @@ int		handle_less_and(t_lex **command_node)
 			return (1);
 		before_start = detaching(&start, &end);
 		redir_info = redir_struct_less_and(&start);
-		ft_putendl("\n The redirect little LL : \n");
-		dllprinthead(&start);
-		ft_putendl("\n\n");
 		clean_lex(&start);
 		attach_redir_node(&redir_info, &before_start);
 		handle_less_and(command_node);

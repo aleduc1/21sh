@@ -6,7 +6,7 @@
 /*   By: mbellaic <mbellaic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/12 17:21:29 by aleduc            #+#    #+#             */
-/*   Updated: 2019/05/05 13:11:24 by aleduc           ###   ########.fr       */
+/*   Updated: 2019/05/05 18:31:50 by aleduc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -182,11 +182,7 @@ void	check_double(char *input, int *i)
 		else if (is_amper(input[(*i)]))
 		{
 			if (is_lesser_greater(input[(*i) + 1]))
-			{
-				if ((input[(*i) + 2]) && (is_hyph(input[(*i) + 2])))
-					(*i)++;
 				(*i)++;
-			}
 		}
 		else if (is_lesser_greater(input[(*i)]))
 		{
@@ -286,6 +282,10 @@ t_lex	*lexer(char *input)
 	reading_input(input, &lex);
 	lex = add_delim(&lex);
 	simple_command(&lex);
-	handle_redir(&lex);
+	if (handle_redir(&lex))
+	{
+		ft_error(0);
+		return (NULL);
+	}
 	return (lex);
 }

@@ -95,7 +95,11 @@ SRCS_NAMES = main.c \
 			 handle_less_and.c \
 			 handle_and_less.c \
 			 handle_heredoc.c \
-			 rules_great.c
+			 handle_great_hyph.c \
+			 handle_less_hyph.c \
+			 rules_great.c \
+			 is_a_redirect.c \
+			 ft_error.c
 
 OBJS_NAMES = $(SRCS_NAMES:.c=.o)
 HEADERS_NAMES = sh21.h lexer.h parser.h
