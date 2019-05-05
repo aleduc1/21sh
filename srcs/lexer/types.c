@@ -6,7 +6,7 @@
 /*   By: mbellaic <mbellaic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/12 17:21:37 by aleduc            #+#    #+#             */
-/*   Updated: 2019/05/05 13:26:37 by aleduc           ###   ########.fr       */
+/*   Updated: 2019/05/05 18:30:05 by aleduc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	set_tab_types(t_tab_type **tab_of_types)
 {
-	(*tab_of_types) = (t_tab_type *)ft_memalloc(sizeof(t_tab_type) * 20);
+	(*tab_of_types) = (t_tab_type *)ft_memalloc(sizeof(t_tab_type) * 18);
 	(*tab_of_types)[0].str = "|";
 	(*tab_of_types)[0].type = SPIPE;
 	(*tab_of_types)[1].str = ";";
@@ -45,14 +45,10 @@ void	set_tab_types(t_tab_type **tab_of_types)
 	(*tab_of_types)[13].type = AMPGREAT;
 	(*tab_of_types)[14].str = "&<";
 	(*tab_of_types)[14].type = AMPLESS;
-	(*tab_of_types)[15].str = "&>-";
-	(*tab_of_types)[15].type = AMPGREATHYPH;
-	(*tab_of_types)[16].str = "&<-";
-	(*tab_of_types)[16].type = AMPLESSHYPH;
-	(*tab_of_types)[17].str = "<&-";
-	(*tab_of_types)[17].type = LESSAMPHYPH;
-	(*tab_of_types)[18].str = ">&-";
-	(*tab_of_types)[18].type = GREATAMPHYPH;
-	(*tab_of_types)[19].str = NULL;
-	(*tab_of_types)[19].type = NUL;
+	(*tab_of_types)[15].str = "<&-";
+	(*tab_of_types)[15].type = LESSAMPHYPH;
+	(*tab_of_types)[16].str = ">&-";
+	(*tab_of_types)[16].type = GREATAMPHYPH;
+	(*tab_of_types)[17].str = NULL;
+	(*tab_of_types)[17].type = NUL;
 }

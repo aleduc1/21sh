@@ -6,7 +6,7 @@
 /*   By: aleduc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/04 17:15:13 by aleduc            #+#    #+#             */
-/*   Updated: 2019/05/05 13:34:05 by aleduc           ###   ########.fr       */
+/*   Updated: 2019/05/05 18:29:06 by aleduc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,8 @@ enum	e_token_type
 	SPACE,
 	AMPGREAT,
 	AMPLESS,
-	AMPGREATHYPH,
-	AMPLESSHYPH,
+//	AMPGREATHYPH,
+//	AMPLESSHYPH,
 	LESSAMPHYPH,
 	GREATAMPHYPH,
 	NUMBER,
@@ -139,7 +139,9 @@ t_lex	*detaching(t_lex **start, t_lex **end);
 void	attach_redir_node(t_redir **redir_info, t_lex **before_start);
 
 /* Implementing Redirect struct */
-void	handle_redir(t_lex **lex);
+int		handle_redir(t_lex **lex);
+int		cycle_redirect(t_lex **command_node);
+int		handle_needed_redir(t_lex **command_node, t_lex **redir_node);
 void	ft_default(t_redir **redir_info);
 
 int		handle_great(t_lex **command_node);
@@ -150,6 +152,8 @@ int		handle_less(t_lex **command_node);
 int		handle_and_less(t_lex **command_node);
 int		handle_less_and(t_lex **command_node);
 int		handle_heredoc(t_lex **command_node);
+int		handle_great_hyph(t_lex **command_node);
+int		handle_less_hyph(t_lex **command_node);
 
 /* Struct filling */
 t_redir	*redir_struct_great(t_lex **start);
@@ -160,10 +164,13 @@ t_redir	*redir_struct_less(t_lex **start);
 t_redir	*redir_struct_less_and(t_lex **start);
 t_redir	*redir_struct_and_less(t_lex **start);
 t_redir	*redir_struct_heredoc(t_lex **start);
+t_redir	*redir_struct_great_hyph(t_lex **start);
+t_redir	*redir_struct_less_hyph(t_lex **start);
 
 /* Grammatical rules */
 void	start_grammar_great(t_lex **start);
 int		end_grammar_great(t_lex **start, t_lex **end, t_type type_check);
+int		is_a_redirect(t_type type);
 
 /* DLL functions */
 /* Creation */
@@ -189,6 +196,8 @@ t_lex	*dlldelone(t_lex **head, char *data);
 void	dll_del_node(t_lex **node);
 
 
+/* Error */
+void	ft_error(int code_error);
 
 /* Cleaning */
 void	clean_lex(t_lex **lex);
