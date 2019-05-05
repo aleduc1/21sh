@@ -27,8 +27,6 @@ VPATH = objs:\
 		srcs/prompt/others:\
 		srcs/prompt/selection:\
 		srcs/parser:\
-		srcs/parser/ast:\
-		srcs/parser/command:\
 		srcs/parser/pre-parser:\
 		srcs/parser/pre-parser/simple_command:\
 		srcs/parser/pre-parser/redirect:\
@@ -87,9 +85,6 @@ SRCS_NAMES = main.c \
 			 copy_paste.c \
 			 undo_selection.c \
 			 delete_selection.c \
-			 tree_utils.c \
-			 parser.c \
-			 cmd_parser.c \
 			 redirect.c \
 			 clean_lex.c \
 			 handle_great.c \

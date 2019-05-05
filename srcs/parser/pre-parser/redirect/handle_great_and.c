@@ -6,7 +6,7 @@
 /*   By: aleduc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/04 16:46:25 by aleduc            #+#    #+#             */
-/*   Updated: 2019/05/04 17:25:56 by aleduc           ###   ########.fr       */
+/*   Updated: 2019/05/05 12:58:16 by aleduc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ t_redir	*redir_struct_great_and(t_lex **start)
 	return (redir_info);
 }
 
-void	handle_great_and(t_lex **command_node)
+int		handle_great_and(t_lex **command_node)
 {
 	t_lex	*start;
 	t_lex	*end;
@@ -57,16 +57,16 @@ void	handle_great_and(t_lex **command_node)
 	if (start)
 	{
 		start_grammar_great(&start);
-		end_grammar_great(&start, &end, GREATAMP);
+		if (end_grammar_great(&start, &end, GREATAMP))
+			return (1);
 		before_start = detaching(&start, &end);
 		redir_info = redir_struct_great_and(&start);
-		ft_putendl("\n The redirect little LL : \n");
-		dllprinthead(&start);
-		ft_putendl("\n\n");
+//		ft_putendl("\n The redirect little LL : \n");
+//		dllprinthead(&start);
+//		ft_putendl("\n\n");
 		clean_lex(&start);
 		attach_redir_node(&redir_info, &before_start);
 		handle_great_and(command_node);
 	}
-	else
-		return ;
+	return (0);
 }

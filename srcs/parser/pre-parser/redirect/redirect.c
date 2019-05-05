@@ -6,7 +6,7 @@
 /*   By: aleduc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/03 11:00:04 by aleduc            #+#    #+#             */
-/*   Updated: 2019/05/04 22:51:55 by aleduc           ###   ########.fr       */
+/*   Updated: 2019/05/05 13:09:24 by aleduc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,14 +52,22 @@ void	handle_redir(t_lex **lex)
 	{
 		if (ptr->token->type == CMD)
 		{
-			handle_great(&ptr);
-			handle_great_and(&ptr);
-			handle_and_great(&ptr);
-			handle_append(&ptr);
-			handle_less(&ptr);
-			handle_less_and(&ptr);
-			handle_and_less(&ptr);
-			handle_heredoc(&ptr);
+			if (handle_great(&ptr) == 1)
+				ft_putendl("aaaaaaaaaaaaaaaooooMAYDAY MAYDAY ERROR ERROR ! ! ! ! ! ! !");
+			if (handle_great_and(&ptr))
+				ft_putendl("MAYDAY MAYDAY ERROR ERROR ! ! ! ! ! ! !");
+			if (handle_and_great(&ptr))
+				ft_putendl("MAYDAY MAYDAY ERROR ERROR ! ! ! ! ! ! !");
+			if (handle_append(&ptr))
+				ft_putendl("MAYDAY MAYDAY ERROR ERROR ! ! ! ! ! ! !");
+			if (handle_less(&ptr))
+				ft_putendl("MAYDAY MAYDAY ERROR ERROR ! ! ! ! ! ! !");
+			if (handle_less_and(&ptr))
+				ft_putendl("MAYDAY MAYDAY ERROR ERROR ! ! ! ! ! ! !");
+			if (handle_and_less(&ptr))
+				ft_putendl("MAYDAY MAYDAY ERROR ERROR ! ! ! ! ! ! !");
+			if (handle_heredoc(&ptr))
+				ft_putendl("MAYDAY MAYDAY ERROR ERROR ! ! ! ! ! ! !");
 		}
 		ptr = ptr->next;
 	}

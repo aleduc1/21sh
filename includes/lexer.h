@@ -6,7 +6,7 @@
 /*   By: aleduc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/04 17:15:13 by aleduc            #+#    #+#             */
-/*   Updated: 2019/05/04 23:03:44 by aleduc           ###   ########.fr       */
+/*   Updated: 2019/05/05 13:34:05 by aleduc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,22 +22,22 @@ typedef	struct s_redir		t_redir;
 
 enum	e_token_type
 {
-	LPAR,
-	RPAR,
-	LBRACKET,
-	RBRACKET,
-	LBRACE,
-	RBRACE,
-	AMPERSAND,
-	DAMPERSAND,
+//	LPAR,
+//	RPAR,
+//	LBRACKET,
+//	RBRACKET,
+//	LBRACE,
+//	RBRACE,
+//	AMPERSAND,
+//	DAMPERSAND,
 	SPIPE,
-	DPIPE,
+//	DPIPE,
 	SCOLON,
-	DSCOLON,
+//	DSCOLON,
 	LESS,
 	DLESS,
 	LESSAMP,
-	DLESSHYPH,
+//	DLESSHYPH,
 	GREAT,
 	DGREAT,
 	GREATPIPE,
@@ -45,15 +45,15 @@ enum	e_token_type
 	LESSGREAT,
 	SQUOTE,
 	DQUOTE,
-	TQUOTE,
+//	TQUOTE,
 	TILDE,
 	DOLLARS,
-	ASTERIX,
-	HASHTAG,
-	SLASH,
-	BACKSLASH,
-	NEWLINE,
-	TAB,
+//	ASTERIX,
+//	HASHTAG,
+//	SLASH,
+//	BACKSLASH,
+//	NEWLINE,
+//	TAB,
 	SPACE,
 	AMPGREAT,
 	AMPLESS,
@@ -142,14 +142,14 @@ void	attach_redir_node(t_redir **redir_info, t_lex **before_start);
 void	handle_redir(t_lex **lex);
 void	ft_default(t_redir **redir_info);
 
-void	handle_great(t_lex **command_node);
-void	handle_great_and(t_lex **command_node);
-void	handle_and_great(t_lex **command_node);
-void	handle_append(t_lex **command_node);
-void	handle_less(t_lex **command_node);
-void	handle_and_less(t_lex **command_node);
-void	handle_less_and(t_lex **command_node);
-void	handle_heredoc(t_lex **command_node);
+int		handle_great(t_lex **command_node);
+int		handle_great_and(t_lex **command_node);
+int		handle_and_great(t_lex **command_node);
+int		handle_append(t_lex **command_node);
+int		handle_less(t_lex **command_node);
+int		handle_and_less(t_lex **command_node);
+int		handle_less_and(t_lex **command_node);
+int		handle_heredoc(t_lex **command_node);
 
 /* Struct filling */
 t_redir	*redir_struct_great(t_lex **start);
@@ -163,7 +163,7 @@ t_redir	*redir_struct_heredoc(t_lex **start);
 
 /* Grammatical rules */
 void	start_grammar_great(t_lex **start);
-void	end_grammar_great(t_lex **start, t_lex **end, t_type type_check);
+int		end_grammar_great(t_lex **start, t_lex **end, t_type type_check);
 
 /* DLL functions */
 /* Creation */
