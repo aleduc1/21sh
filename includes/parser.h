@@ -44,6 +44,6 @@ t_ast               *expr(int rbp);
 t_ast               *ast_parser(t_lex *tokens);
 
 
-t_cmd               *cmd_parser(t_lex *cmd_list);
+t_cmd               *run(t_lex *cmd_list);
 
 #endif

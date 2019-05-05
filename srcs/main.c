@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbellaic <mbellaic@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/12 17:01:09 by aleduc            #+#    #+#             */
-/*   Updated: 2019/05/05 17:10:17 by aleduc           ###   ########.fr       */
+/*   Updated: 2019/05/06 00:25:58 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ int		main(int argc, char **argv, char **environ)
 					//ast = ast_parser(lex);
 					// clean_lex(&lex);
 				}
-				cmd_parser(lex);
 				// else
 					// clean_lex(&lex);
 			}
