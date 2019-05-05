@@ -106,13 +106,10 @@ char			*prompt(t_multi *multi, t_pos *pos) //NORME
 			lstcursor = lstcursor->prev;
 		lstcursor = multi;
 		inputstr = lst_to_str(&multi, inputstr);
-		inserthistory(pos->history, inputstr, pos);
+		if(inputstr)
+			inserthistory(pos->history, inputstr, pos);
 	}
-	ft_putstr("Input : ");
-	ft_putendl(inputstr);
-	ft_putstr("Clipboard : ");
-	ft_putendl(pos->clipboard);
 	ddellist(multi);
 	pos->historycount = 0;
-	return (inputstr);
+	return (inputstr) ? inputstr : NULL;
 }

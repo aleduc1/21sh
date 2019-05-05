@@ -16,15 +16,15 @@
 
 int		main(int argc, char **argv, char **environ)
 {
-  	t_multi	*input;
-	t_pos	pos;
-	char	*inputstr;
+  	t_multi	*multi_input;
+	char	*input;
 	t_lex	*lex;
 	t_ast 	*ast;
+	t_pos	pos;
 
 	lex = NULL;
-	inputstr = NULL;
 	input = NULL;
+	multi_input = NULL;
 	ast = NULL;
 	welcome();
 	init_prompt(&pos);
@@ -33,15 +33,18 @@ int		main(int argc, char **argv, char **environ)
 		if (argc && argv && environ)
 		{
 			// inputstr = heredoc("test", &pos);
-			// ft_putendl(inputstr);
-			// free(inputstr);
-			inputstr = prompt(input, &pos); // Don't forget to free inputstr once you are done with it.
-			lex = lexer(inputstr);
-//			ft_strdel(&inputstr);
-			ft_putendl("\n\nThe lexer after the whole lexing phase : \n\n");
-			dllprinthead(&lex);
-//			ast = ast_parser(lex);
-//			clean_lex(&lex);
+			// ft_putendl(input);
+			// free(input);
+			input = prompt(multi_input, &pos);
+			if (input)
+			{
+				lex = lexer(input);
+				ft_strdel(&input);
+				ft_putendl("\n\nThe lexer after the whole lexing phase : \n\n");
+				dllprinthead(&lex);
+				// ast = ast_parser(lex);
+				// clean_lex(&lex);
+			}
 		}
 	}
 	return (0);

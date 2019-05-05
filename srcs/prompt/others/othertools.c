@@ -6,28 +6,11 @@
 /*   By: mbellaic <mbellaic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/12 17:19:04 by aleduc            #+#    #+#             */
-/*   Updated: 2019/05/04 21:54:11 by mbellaic         ###   ########.fr       */
+/*   Updated: 2019/05/05 16:32:34 by mbellaic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh21.h"
-
-void		welcome(void)
-{
-	ft_putstr("\033[1;32m\n");
-	ft_putstr("██████╗  ██╗███████╗██╗  ██╗\n");
-	usleep(150000);
-	ft_putstr("╚════██╗███║██╔════╝██║  ██║\n");
-	usleep(150000);
-	ft_putstr(" █████╔╝╚██║███████╗███████║\n");
-	usleep(150000);
-	ft_putstr("██╔═══╝  ██║╚════██║██╔══██║\n");
-	usleep(150000);
-	ft_putstr("███████╗ ██║███████║██║  ██║\n");
-	usleep(150000);
-	ft_putstr("╚══════╝ ╚═╝╚══════╝╚═╝  ╚═╝\n\n");
-	ft_putstr("\033[0m");
-}
 
 char		*reverse_str(char *inputstr)
 {
@@ -74,55 +57,70 @@ t_node		*find_tail(t_node *lstcursor, t_pos *pos)
 	return (lstcursor);
 }
 
-char		*lst_to_str(t_multi **multi, char *inputstr)
+char		*lst_to_str_mod(t_multi *lstcursor, char *temp)
 {
-	t_multi	*lstcursor;
-	t_node	*cpycursor;
-	char	*finalstr;
+	int i;
+	int len;
+	t_node *cpycursor;
+
+	i = 0;
+	len = 0;
+	cpycursor = lstcursor->input->next;
+	while (cpycursor)
+	{
+		len++;
+		cpycursor = cpycursor->next;
+	}
+	cpycursor = lstcursor->input->next;
+	temp = malloc(sizeof(char) * len + 2);
+	while (cpycursor)
+	{
+		temp[i++] = cpycursor->key;
+		cpycursor = cpycursor->next;
+	}
+	temp[i++] = '\n';
+	temp[i] = '\0';
+	temp = reverse_str(temp);
+	return (temp);
+}
+
+char		*lst_to_str_loop(t_multi *lstcursor, char *inputstr)
+{
 	char	*temp;
 	char	*trash;
-	int		i;
-	int		len;
 
-	inputstr = ft_strdup("\0");
-	lstcursor = *multi;
-	while (lstcursor->next)
-		lstcursor = lstcursor->next;
+	temp = NULL;
 	while (lstcursor)
 	{
-		i = 0;
-		len = 0;
-		//
-		cpycursor = lstcursor->input->next;
-		while (cpycursor)
-		{
-			len++;
-			cpycursor = cpycursor->next;
-		}
-		cpycursor = lstcursor->input->next;
-		//
-		temp = malloc(sizeof(char) * len + 2);
-		///
-		while (cpycursor)
-		{
-			temp[i] = cpycursor->key;
-			cpycursor = cpycursor->next;
-			i++;
-		}
-		temp[i++] = '\n';
-		temp[i] = '\0';
-		temp = reverse_str(temp);
+		temp = lst_to_str_mod(lstcursor, temp);
 		trash = inputstr;
 		inputstr = ft_strjoin(inputstr, temp);
 		free(temp);
 		if (trash != NULL)
 			free(trash);
-		///
-		lstcursor = lstcursor->prev;
+		lstcursor =	lstcursor->prev;
 	}
+	return (inputstr);
+}
+
+char		*lst_to_str(t_multi **multi, char *inputstr)
+{
+	t_multi	*lstcursor;
+	char	*finalstr;
+
+	inputstr = ft_strdup("\0");
+	lstcursor = *multi;
+	while (lstcursor->next)
+		lstcursor = lstcursor->next;
+	inputstr = lst_to_str_loop(lstcursor, inputstr);
 	inputstr++;
 	finalstr = ft_strdup(inputstr);
 	inputstr--;
 	free(inputstr);
-	return (finalstr);
+	int i = 0;
+	while (finalstr[i])
+		if (finalstr[i++] != ' ' || finalstr[i] != '\t')
+			return (finalstr);
+	free (finalstr);
+	return (NULL);
 }

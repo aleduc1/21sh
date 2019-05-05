@@ -12,6 +12,23 @@
 
 #include "sh21.h"
 
+void		welcome(void)
+{
+	ft_putstr("\033[1;32m\n");
+	ft_putstr("██████╗  ██╗███████╗██╗  ██╗\n");
+	usleep(150000);
+	ft_putstr("╚════██╗███║██╔════╝██║  ██║\n");
+	usleep(150000);
+	ft_putstr(" █████╔╝╚██║███████╗███████║\n");
+	usleep(150000);
+	ft_putstr("██╔═══╝  ██║╚════██║██╔══██║\n");
+	usleep(150000);
+	ft_putstr("███████╗ ██║███████║██║  ██║\n");
+	usleep(150000);
+	ft_putstr("╚══════╝ ╚═╝╚══════╝╚═╝  ╚═╝\n\n");
+	ft_putstr("\033[0m");
+}
+
 void				default_term_mode(void)
 {
 	struct termios	term;
