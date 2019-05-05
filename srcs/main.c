@@ -42,9 +42,10 @@ int		main(int argc, char **argv, char **environ)
 					ft_putendl("=====TOKEN_STREAM=====");
 					dllprinthead(&lex);
 					ft_putendl("======================");
-					// ast = ast_parser(lex);
+					//ast = ast_parser(lex);
 					// clean_lex(&lex);
 				}
+				cmd_parser(lex);
 				// else
 					// clean_lex(&lex);
 			}

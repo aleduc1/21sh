@@ -1,33 +1,79 @@
 #include "parser.h"
 
-void                dpush_args(t_args **head, char *arg) 
-{ 
-    t_args          *new_node;
-
-    new_node = (t_args*)malloc(sizeof(t_args));  
-    new_node->arg = ft_strdup(arg);  
-    new_node->next = (*head);  
-    new_node->prev = NULL;  
-    if ((*head) != NULL)  
-        (*head)->prev = new_node;  
-    (*head) = new_node;
-}
-
-void init_std(t_std std, int fd, char *filename, int append)
+int				get_argc(t_lex *cursor)
 {
-    std.fd = fd;
-    std.filename = filename;
-    std.append = append;
+	int len;
+
+	len = 0;
+	while (cursor)
+	{
+		if(cursor->token->type == WORD || cursor->token->type == NUMBER)
+			len++;
+		ft_putstr(cursor->token->data);
+		ft_putstr(" ->");
+		cursor = cursor->next;
+	}
+	ft_putstr("\n");
+	return (len);
+}
+char			**get_argv(t_lex *cmd_list)
+{
+	char **argv;
+	t_lex *cursor;
+	int len;
+	int i;
+
+	i = 0;
+	cursor = cmd_list->next->token->command; // REMEMBER TO CHANGE IT SO IT MAKES SENSE IN THE INTERPRETER
+	len = get_argc(cursor);
+	if(!(argv = (char **)malloc(sizeof(char *) * len + 1)))
+		return (NULL);
+	while(cursor)
+	{
+		if(cursor->token->type == WORD || cursor->token->type == NUMBER)
+			argv[i++] = ft_strdup(cursor->token->data);
+		cursor = cursor->next;
+	}
+	return (argv);
 }
 
-void init_cmd(t_cmd *cmd)
+t_cmd			*cmd_parser(t_lex *cmd_list)
 {
-    init_std(cmd->in, 0, NULL, 0);
-    init_std(cmd->out, 1, NULL, 0);
-    init_std(cmd->err, 2, NULL, 0);
-    cmd->argv = NULL;
-    cmd->heredoc = NULL;
+	t_cmd *trash = NULL;
+	char **argv;
+	argv = get_argv(cmd_list);
+
+	return (trash);
 }
+
+// void                dpush_args(t_args **head, char *arg)
+// {
+//     t_args          *new_node;
+
+//     new_node = (t_args*)malloc(sizeof(t_args));
+//     new_node->arg = ft_strdup(arg);
+//     new_node->next = (*head);
+//     new_node->prev = NULL;
+//     if ((*head) != NULL)
+//         (*head)->prev = new_node;
+//     (*head) = new_node;
+// }
+
+// void init_std(t_std std, int fd, char *filename, int append)
+// {
+//     std.fd = fd;
+//     std.filename = filename;
+//     std.append = append;
+// }
+
+// void init_cmd(t_cmd *cmd)
+// {
+//     init_std(cmd->in, 0, NULL, 0);
+//     init_std(cmd->out, 1, NULL, 0);
+//     init_std(cmd->err, 2, NULL, 0);
+//     cmd->argv = NULL;
+//     cmd->heredoc = NULL;
+// }
 
 
 
@@ -56,11 +102,11 @@ void init_cmd(t_cmd *cmd)
 // {
 //     if(CURRENT_TYPE(NUMBER))
 //     {
-        
+
 //     }
 //     else if(CURRENT_TYPE(WORD))
 //     else ERROR;
-        
+
 // }
 
 // void           automata(t_cmd *cmd, t_lex **cursor, t_args **args_lst)
@@ -70,8 +116,8 @@ void init_cmd(t_cmd *cmd)
 //         if(PEEK_TYPE(GREAT))
 
 //     }
-    
-    
+
+
 //     // if(TYPE(NUMBER))
 //     // {
 

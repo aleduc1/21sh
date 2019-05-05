@@ -23,8 +23,6 @@ int bp(t_token *token)
         return (10);
     else if(token->type == SCOLON)
         return (20);
-    else if(token->type == DAMPERSAND || token->type == DPIPE) 
-        return (30);
     else if(token->type == SPIPE)
         return (40);
     else
@@ -49,8 +47,6 @@ t_ast *led(t_ast *left, t_token *t)
 {
     if (t->type == SCOLON)
         return (node_ast(t, left, expr(20)));
-    else if (t->type == DPIPE || t->type == DAMPERSAND)
-        return (node_ast(t, left, expr(30 - 1)));
     else if (t->type == SPIPE)
         return (node_ast(t, left, expr(40)));
     else if (t->type == CMD)
@@ -61,7 +57,7 @@ t_ast *led(t_ast *left, t_token *t)
     }
     else
         return (NULL);
-    
+
 }
 
 t_ast *expr(int rbp)

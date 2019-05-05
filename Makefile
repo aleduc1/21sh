@@ -31,6 +31,8 @@ VPATH = objs:\
 		srcs/parser/pre-parser/simple_command:\
 		srcs/parser/pre-parser/redirect:\
 		srcs/parser/pre-parser/redirect/grammar:\
+		srcs/parser/ast:\
+		srcs/parser/command:\
 		srcs/cleaning
 
 # ------------------ #
@@ -99,7 +101,10 @@ SRCS_NAMES = main.c \
 			 handle_less_hyph.c \
 			 rules_great.c \
 			 is_a_redirect.c \
-			 ft_error.c
+			 ft_error.c \
+			 ast_parser.c \
+			 tree_utils.c \
+			 cmd_parser.c
 
 OBJS_NAMES = $(SRCS_NAMES:.c=.o)
 HEADERS_NAMES = sh21.h lexer.h parser.h

@@ -27,7 +27,7 @@ void pretty_print(t_ast *tree)
         print_push('|');
         pretty_print( tree->r);
         depth[di -= 4] = 0;
- 
+
         ft_putstr(depth);
         ft_putstr(" └──");
         print_push(' ');
@@ -36,22 +36,10 @@ void pretty_print(t_ast *tree)
     }
 }
 
-void ast_print(t_ast *root, int space)
-{
-    if (root == NULL) 
-        return;
-    space += 4;
-    ast_print(root->r, space);
-    for (int i = 4; i < space; i++) 
-        printf(" ");
-    printf("[%s]\n", root->token->data);
-    ast_print(root->l, space); 
-}
-
 t_ast *node_ast(t_token *token, t_ast *l, t_ast *r)
 {
     t_ast *node;
-    
+
     node = (t_ast *)malloc(sizeof(t_ast));
     node->token = token;
     node->l = l;
