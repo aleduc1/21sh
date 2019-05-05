@@ -32,21 +32,22 @@ int		main(int argc, char **argv, char **environ)
 	{
 		if (argc && argv && environ)
 		{
-			// inputstr = heredoc("test", &pos);
-			// ft_putendl(input);
-			// free(input);
-			input = prompt(multi_input, &pos); // Don't forget to free inputstr once you are done with it.
-			lex = lexer(input);
-			if (lex)
+			input = prompt(multi_input, &pos);
+			if(input)
 			{
-//				ft_strdel(&inputstr);
-				ft_putendl("\n\nThe lexer after the whole lexing phase : \n\n");
-				dllprinthead(&lex);
-//				ast = ast_parser(lex);
-//				clean_lex(&lex);
+				lex = lexer(input);
+				if (lex)
+				{
+					// ft_strdel(&inputstr);
+					ft_putendl("=====TOKEN_STREAM=====");
+					dllprinthead(&lex);
+					ft_putendl("======================");
+					// ast = ast_parser(lex);
+					// clean_lex(&lex);
+				}
+				// else
+					// clean_lex(&lex);
 			}
-//			else
-//				clean_lex(&lex);
 		}
 	}
 	return (0);

@@ -8,11 +8,11 @@ void	dllprinthead(t_lex **head)
 	while (ptr)
 	{
 		ft_putendl(ptr->token->data);
-		if (ptr->token->type == CMD )
+		if (ptr->token->type == CMD)
 		{
-			ft_putendl("\nIn this Command token there is this DLL : ");
+			ft_putendl("----cmd----");
 			dllprinthead(&ptr->token->command);
-			ft_putendl("Back to the Lexer DLL, after the command token there is : \n");
+			ft_putendl("-----------");
 		}
 		ptr = ptr->next;
 	}

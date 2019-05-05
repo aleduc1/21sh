@@ -38,9 +38,9 @@ void	ft_default(t_redir **redir_info)
 void	print_struct(t_redir **redir_info)
 {
  	t_redir	*ptr;
- 
+
  	ptr = *redir_info;
- 	printf("src_fd : %s\ndest_fd : %s\n type : %d\nfilename : %s\nHeredoc : %s\nclose : %d\n", ptr->src_fd[0], ptr->dest_fd, ptr->type, ptr->filename, ptr->heredoc, ptr->close);
+ 	printf("src_fd : %s\ndest_fd : %s\ntype : %d\nfilename : %s\nHeredoc : %s\nclose : %d\n", ptr->src_fd[0], ptr->dest_fd, ptr->type, ptr->filename, ptr->heredoc, ptr->close);
 }
 
 int		handle_needed_redir(t_lex **command_node, t_lex **redir_node)

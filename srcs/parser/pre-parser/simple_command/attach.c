@@ -74,10 +74,11 @@ void	attach_redir_node(t_redir **redir_info, t_lex **before_start)
 
 	tok = create_token("redir", REDIR);
 	redir_node = new_redir_node(&tok, redir_info);
-	ft_putendl("Whats inside the redir node : ");		/* ************ */
-	ft_putstr("token == ");								/*				*/
+	ft_putendl("=======REDIR=======");					/* ************ */
+	ft_putstr("TOKEN = ");								/*				*/
 	ft_putendl(redir_node->token->data);				/*	Debugging	*/
-	ft_putendl("\nWhats inside the redir struct : \n");	/*				*/
+	ft_putendl("\nSTRUCT CONTENT:");					/*				*/
 	print_struct(&redir_node->redir);					/* ************ */
+	ft_putendl("==================\n");
 	dllinsafter(before_start, &redir_node);
 }
