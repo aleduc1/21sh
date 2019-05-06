@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "sh21.h"
+#include "env.h"
 
 t_node	*backwardmod(t_node *lstcursor, t_pos *pos)
 {
@@ -110,7 +111,7 @@ t_node	*ctrl_n_friends(t_node *lstcursor, t_node **input, char buffer[], \
 	if (CTRL_D)
 	{
 		default_term_mode();
-		//NEED TO HOOK ALL THE THING WE NEED TO FREE THERE
+		get_env(1);
 		exit(0);
 	}
 	if (CTRL_C)
