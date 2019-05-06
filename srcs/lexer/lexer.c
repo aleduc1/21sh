@@ -6,7 +6,7 @@
 /*   By: mbellaic <mbellaic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/12 17:21:29 by aleduc            #+#    #+#             */
-/*   Updated: 2019/05/06 18:22:51 by aleduc           ###   ########.fr       */
+/*   Updated: 2019/05/06 21:25:02 by aleduc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -266,6 +266,7 @@ void	reading_input(char *input, t_lex **lex)
 				tok = check_type(&tab_of_type, input, last_t, i);
 			if (tok->data[0])		// When the token is created or was created in string fct, add it to the lex
 				add_token(lex, &tok);
+			ft_strdel(&tok->data);
 			ft_memdel((void **)&tok);
 			to_check = 0;
 		}

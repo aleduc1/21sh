@@ -6,7 +6,7 @@
 /*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/12 17:01:09 by aleduc            #+#    #+#             */
-/*   Updated: 2019/05/06 17:07:49 by aleduc           ###   ########.fr       */
+/*   Updated: 2019/05/06 21:18:46 by aleduc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,8 @@ int		main(int argc, char **argv, char **environ)
 					ft_putendl("=====TOKEN_STREAM=====");
 					dllprinthead(&lex);
 					ft_putendl("======================");
-					ast = ast_parser(lex);
-					interpreter(ast, &pos);
+					if ((ast = ast_parser(lex)))
+						interpreter(ast, &pos);
 					//run(lex, &pos);
 					clean_lex(&lex);
 					clean_ast(ast);

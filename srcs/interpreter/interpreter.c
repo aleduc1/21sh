@@ -8,8 +8,6 @@ int		panic()
 
 t_ast	*interpreter(t_ast *node, t_pos *pos)
 {
-    if (!node)
-        panic();
     if(!node->l && !node->r)
        run(node->token, pos);
    

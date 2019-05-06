@@ -6,7 +6,7 @@
 /*   By: aleduc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/06 17:18:54 by aleduc            #+#    #+#             */
-/*   Updated: 2019/05/06 18:25:58 by aleduc           ###   ########.fr       */
+/*   Updated: 2019/05/06 21:10:57 by aleduc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,10 @@ void	remove_node(t_lex **node_cmd_space)
 	if (next)
 		next->prev = prev;
 	if (ptr->token->data[0])
-		ft_strdel(ptr->token->data);
+		ft_strdel(&ptr->token->data);
 	ptr->token->type = 0;
-	clean_lex(ptr->token->command);
-	ft_memdel(&ptr->token);
+	clean_lex(&ptr->token->command);
+	ft_memdel((void **)&ptr->token);
 	dll_del_node(&ptr);
 }
 
@@ -58,11 +58,10 @@ void	remove_space_token(t_lex **lexer)
 				ptr = ptr->next;
 				remove_node(&tmp);
 			}
-/*			else
-			{
-				remove_all_whitespace(&ptr);
+			else
 				ptr = ptr->next;
-			}*/
 		}
+		else
+			ptr = ptr->next;
 	}
 }

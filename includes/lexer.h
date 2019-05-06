@@ -6,7 +6,7 @@
 /*   By: aleduc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/04 17:15:13 by aleduc            #+#    #+#             */
-/*   Updated: 2019/05/06 18:22:27 by aleduc           ###   ########.fr       */
+/*   Updated: 2019/05/06 21:08:19 by aleduc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,6 +171,11 @@ t_redir	*redir_struct_less_hyph(t_lex **start);
 void	start_grammar_great(t_lex **start);
 int		end_grammar_great(t_lex **start, t_lex **end, t_type type_check);
 int		is_a_redirect(t_type type);
+
+/* Removing Useless Space from the dll */
+void	remove_space_token(t_lex **lexer);
+void	remove_node(t_lex **node_cmd_space);
+int		is_only_space(t_lex **node_cmd);
 
 /* DLL functions */
 /* Creation */
