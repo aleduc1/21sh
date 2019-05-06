@@ -3,21 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aleduc <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/13 16:33:26 by aleduc            #+#    #+#             */
-/*   Updated: 2019/03/12 16:41:09 by aleduc           ###   ########.fr       */
+/*   Updated: 2019/05/06 00:57:32 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
 # define LIBFT_H
+#define BUF_S 1024
 # include <string.h>
 # include <stdlib.h>
 # include <unistd.h>
 # include <sys/types.h>
 # include <sys/stat.h>
 # include <fcntl.h>
+#include "ft_printf.h"
 
 typedef struct		s_list
 {
@@ -139,4 +141,23 @@ void				ft_dlstprinttail(t_dlist **tail);
 int					ft_dlstiter(t_dlist **head);
 int					ft_madeby(void);
 int					ft_debug(void);
+int					get_next_line(const int fd, char **line);
+int					get_end_line(char *file);
+
+void				ft_arraydel(char ***line);
+void				ft_arraydelline(char ***src, int line);
+void				ft_arraydisplay(char **src);
+char				**ft_arraydup(char **line);
+char				**ft_arrayjoin(char **src, char *str);
+int					ft_arraylen(char **src);
+char				**ft_arraysub(char **src, int start, int len);
+int					ft_chr_index(char *s, char c);
+int					ft_strchr_exist(char *s, char c);
+
+int					ft_numlen(int n);
+void				ft_pow_array_fix(int i, char (*nb)[BUF_S]);
+void				ft_reverse_tablo(char (*lst)[BUF_S]);
+void				ft_strsub_tab_fix(char (*lst)[BUF_S], char src[BUF_S], int start,
+					int len);
+void				ft_deplace(char (*lst)[BUF_S]);
 #endif

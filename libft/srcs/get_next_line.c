@@ -3,102 +3,65 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skuppers <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: apruvost <apruvost@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/11/21 10:02:21 by skuppers          #+#    #+#             */
-/*   Updated: 2018/11/09 19:31:13 by aleduc           ###   ########.fr       */
+/*   Created: 2017/12/18 16:18:29 by apruvost          #+#    #+#             */
+/*   Updated: 2019/05/03 15:33:06 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "../includes/libft.h"
 
-static t_list		*create_fd_buffer(int fd)
+int		ft_new_line(char **s, char **line, int fd, int ret)
 {
-	t_list			*new;
+	char	*tmp;
+	int		len;
 
-	if (!(new = (t_list *)malloc(sizeof(t_list))))
-		return (NULL);
-	new->content_size = fd;
-	if (!(new->content = ft_strnew(1)))
+	len = 0;
+	while (s[fd][len] != '\n' && s[fd][len] != '\0')
+		len++;
+	if (s[fd][len] == '\n')
 	{
-		free(new);
-		return (NULL);
+		*line = ft_strsub(s[fd], 0, len);
+		tmp = ft_strdup(s[fd] + len + 1);
+		free(s[fd]);
+		s[fd] = tmp;
+		if (s[fd][0] == '\0')
+			ft_strdel(&s[fd]);
 	}
-	new->next = NULL;
-	return (new);
-}
-
-static t_list		*get_block(t_list *liste, int fd)
-{
-	t_list			*tmp;
-
-	tmp = liste;
-	while (tmp != NULL)
+	else if (s[fd][len] == '\0')
 	{
-		if ((int)tmp->content_size == fd)
-			break ;
-		tmp = tmp->next;
+		if (ret == BUF_S)
+			return (get_next_line(fd, line));
+		*line = ft_strdup(s[fd]);
+		ft_strdel(&s[fd]);
 	}
-	if (tmp == NULL)
-	{
-		if ((tmp = create_fd_buffer(fd)) == NULL)
-			return (NULL);
-		else
-			ft_lstextend(liste, tmp);
-	}
-	return (tmp);
-}
-
-static int			cut(t_list *blk, char **line, char *tmp, char **buffer)
-{
-	int				index;
-
-	if (blk == NULL || tmp == NULL)
-		return (0);
-	ft_strdel(buffer);
-	index = ft_strnchr(tmp, '\n');
-	*line = ft_strsub(tmp, 0, index);
-	ft_strdel((char**)&(blk)->content);
-	blk->content = ft_strsub(tmp, index + 1,
-			ft_strlen(tmp) - (index + 1));
-	ft_strdel(&tmp);
 	return (1);
 }
 
-static int			init(int fd, char **line, char **buffer)
+int		get_next_line(const int fd, char **line)
 {
+	static char	*s[255];
+	char		buf[BUF_S + 1];
+	char		*tmp;
+	int			ret;
+
 	if (fd < 0 || line == NULL)
 		return (-1);
-	if (!(*buffer = ft_strnew(BUFF_SIZE)))
-		return (-1);
-	return (1);
-}
-
-int					get_next_line(int fd, char **line)
-{
-	int				rd;
-	char			*buffer;
-	static t_list	*t_buff;
-	char			*tmp;
-
-	if (!init(fd, line, &buffer))
-		return (-1);
-	if (!t_buff)
-		if (!(t_buff = create_fd_buffer(fd)))
-			return (-1);
-	if ((get_block(t_buff, fd)->content) == NULL)
-		return (0);
-	rd = 1;
-	tmp = ft_strdup(get_block(t_buff, fd)->content);
-	while (rd > 0 && !(ft_strchr(tmp, '\n')))
+	while ((ret = read(fd, buf, BUF_S)) > 0)
 	{
-		if ((rd = read(fd, buffer, BUFF_SIZE)) < 0)
-			return (-1);
-		tmp = ft_strjoinfree(tmp, buffer, 1);
-		ft_bzero(buffer, BUFF_SIZE);
+		buf[ret] = '\0';
+		if (s[fd] == NULL)
+			s[fd] = ft_strnew(1);
+		tmp = ft_strjoin(s[fd], buf);
+		free(s[fd]);
+		s[fd] = tmp;
+		if (ft_strchr(buf, '\n'))
+			break ;
 	}
-	if (!(cut(get_block(t_buff, fd), line, tmp, &buffer)))
+	if (ret < 0)
 		return (-1);
-	return (ft_strlen(*line) != 0 ||
-			get_block(t_buff, fd)->content != NULL) ? 1 : 0;
+	else if (ret == 0 && (s[fd] == NULL || s[fd][0] == '\0'))
+		return (0);
+	return (ft_new_line(s, line, fd, ret));
 }
