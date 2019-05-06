@@ -26,6 +26,7 @@ void	simple_command(t_lex **head)
 		attach(head, &node, &end);
 
 		// The only thing to free, I didnt assign during new_node but duplicated so it works, no memory error after freeing the token
+		ft_strdel(&token->data);
 		ft_memdel((void **)&token);
 
 		// Reset start and end to do another iteration of the loop
