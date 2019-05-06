@@ -6,7 +6,7 @@
 /*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/22 13:33:53 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/05/06 06:32:36 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/06 23:48:50 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 #include "sh21.h"
 #include "parser.h"
-#include "../libft/includes/libft.h"
+#include "libft.h"
 #include <curses.h>
 #include <term.h>
 #include <signal.h>
@@ -29,6 +29,13 @@
 #include <fcntl.h>
 #include <unistd.h>
 #include <string.h>
+
+typedef struct		s_redirection
+{
+	int		in;
+	int		out;
+	int		error;
+}					t_redirection;
 
 typedef struct		s_env
 {
@@ -50,7 +57,15 @@ typedef struct	s_commands
 	char				**command;
 	int					fd_stock[3];
 	struct s_commands	*next;
-}				t_commands;
+}t_commands;
+
+/*
+** list_redirection.c
+*/
+
+t_redirection		*init_redirection(void);
+t_redirection		*fill_redirection(t_token *t);
+void				delete_redirection(t_redirection **r);
 
 /*
 ** main.c
@@ -125,9 +140,9 @@ int					close_file_command(t_lex *lex);
 ** execute_command.c
 */
 
-int     			add_process(char *(*cmd), t_token *lex, int *returns_code);
-int					exec_fork(char **cmd, t_token *lex);
-void				open_redirection(t_token *lex);
+int     			add_process(char *(*cmd), t_token *lex, int *returns_code, t_redirection *r);
+int					exec_fork(char **cmd, t_token *lex, t_redirection *r);
+void				open_redirection(t_redirection *r);
 void				close_redirection(t_env *my_env, int old_fd[3]);
 
 /*
@@ -148,5 +163,5 @@ int		ft_pipe(char **argv, t_token *lex, int end_pipe);
 //int		ft_ampersand_double(t_cmd *cmds, t_env **my_env);
 
 
-t_env		*get_env(void);
+t_env		*get_env(int is_end);
 #	endif

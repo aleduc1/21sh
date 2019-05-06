@@ -6,11 +6,11 @@
 /*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/09 10:50:50 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/05/06 22:17:27 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/06 23:49:33 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/env.h"
+#include "env.h"
 
 /*
 ** &
@@ -84,50 +84,36 @@ int		ft_ampersand_double(t_cmd *cmds, t_env **my_env)
 ** |
 */
 
-int		choice_fd(t_token *lex, int fd, int origin)
+int		choice_fd(int origin, int fd, int default_fd)
 {
-	t_lex	*head;
-
-	head = lex->command;
-	while (head)
-	{
-		if (head->token->type == REDIR && ft_atoi(head->redir->src_fd[0]) == origin)
-		{
-			if (ft_atoi(head->redir->dest_fd) == -1)
-			{
-				head->redir->dest_fd = ft_itoa(fd);
-				return (1);
-			}
-			return (0);
-		}
-		head = head->next;
-	}
-	return (-1);
+	if (origin == default_fd)
+		return (fd);
+	return (origin);
 }
 
 int		ft_pipe(char **argv, t_token *lex, int end_pipe)
 {
-	static int	in;
-	int			return_code;
-	int			pids;
-	int			pipes[2];
+	static int		in;
+	int				return_code;
+	int				pids;
+	int				pipes[2];
+	t_redirection	*r;
 
-	if (choice_fd(lex, in, STDIN_FILENO) == -1)
-		dprintf(2, "Error function choice_fd\n");
+	r = fill_redirection(lex);
+	r->in = choice_fd(r->in, in, STDIN_FILENO);
 	if (end_pipe)
 	{
 		if ((return_code = is_builtin(argv, lex->command)) == -1)
-			pids = add_process(argv, lex, &return_code);
+			pids = add_process(argv, lex, &return_code, r);
 		close_file_command(lex->command);
 		gest_return(return_code);
 	}
 	else
 	{
 		pipe(pipes);
-		if (choice_fd(lex, pipes[1], STDOUT_FILENO) == -1)
-			dprintf(2, "Error function choice_fd\n");
+		r->out = choice_fd(r->out, pipes[1], STDOUT_FILENO);
 		if ((pids = is_builtin(argv, lex->command)) == -1)
-			pids = add_process(argv, lex, &return_code);
+			pids = add_process(argv, lex, &return_code, r);
 		close(pipes[1]);
 		close_file_command(lex->command);
 		in = pipes[0];
@@ -158,10 +144,12 @@ int		ft_pipe_double(t_cmd *cmds, t_env **my_env)
 
 int		ft_simple_command(char **argv, t_token *lex)
 {
-	int		verif;
-
+	t_redirection	*r;
+	int				verif;
+	
+	r = fill_redirection(lex);
 	if ((verif = is_builtin(argv, lex->command)) == -1)
-		verif = exec_fork(argv, lex);
+		verif = exec_fork(argv, lex, r);
 	close_file_command(lex->command);
 	gest_return(verif);
 	return (verif);
