@@ -6,7 +6,7 @@
 /*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/22 13:33:53 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/05/06 23:48:50 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/07 00:18:14 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,7 +133,7 @@ t_env				*init_maillon_env(void);
 ** manage_file.c
 */
 
-int					open_file_command(t_redir *redir);
+int					open_file_command(t_redir *redir, t_pos *pos);
 int					close_file_command(t_lex *lex);
 
 /*

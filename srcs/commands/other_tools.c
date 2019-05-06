@@ -6,7 +6,7 @@
 /*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/22 17:57:48 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/05/06 22:46:50 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/07 00:13:59 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,14 +88,14 @@ int			is_in_path(char ***command)
 	return (result);
 }
 
-int			is_builtin(char **argv, t_lex *lex)
+int			is_builtin(char **argv, t_redirection *r)
 {
 	int		verif;
 
 	if (ft_strequ(argv[0], "env"))
-		verif = 1;//verif = builtin_env(&(*my_env), cmd);
+		verif = builtin_env(r);
 	else if (ft_strequ(argv[0], "set"))
-		verif = 1;//verif = builtin_set(&(*my_env), cmd);
+		verif = builtin_set(r);
 	else if (ft_strequ(argv[0], "setenv"))
 		verif = 1;//verif = edit_setenv(cmd, &(*my_env));
 	else if (ft_strequ(argv[0], "unsetenv"))
@@ -111,7 +111,11 @@ int			is_builtin(char **argv, t_lex *lex)
 	else if (ft_strequ(argv[0], "cd"))
 		verif = 1;
 	else if (ft_strequ(argv[0], "exit"))
-		verif = 2;
+	{
+		default_term_mode();
+		get_env(1);
+		exit(0);
+	}
 	else
 		verif = -1;
 	return (verif);
