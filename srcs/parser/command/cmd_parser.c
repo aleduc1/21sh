@@ -44,11 +44,11 @@ void			files_handler(t_token *cmd_list, t_pos *pos)
 {
 	t_lex *cursor;
 
-	cursor = cmd_list->command; // HERE TOO
+	cursor = cmd_list->command;
 	while(cursor)
 	{
 		if (cursor->token->type == REDIR)
-				open_file_command(cursor->redir);//, pos);
+				open_file_command(cursor->redir, pos);
 		cursor = cursor->next;
 	}
 }

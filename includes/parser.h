@@ -24,7 +24,8 @@ void				clean_ast(t_ast *node);
 t_ast				*expr(int rbp);
 t_ast				*ast_parser(t_lex *tokens);
 
-t_token				*interpreter(t_ast *node, t_pos *pos);
+int					solo_tree(t_ast *node, t_pos *pos);
+int					interpreter(t_ast *node, t_pos *pos);
 int					*run_cmd(t_token *cmd_list, t_pos *pos);
 int					*run_pipe(t_token *cmd_list, t_pos *pos, int end_pipe);
 

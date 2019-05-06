@@ -6,7 +6,7 @@ int		panic()
     return (-1);
 }
 
-int			*solo_tree(t_ast *node, t_pos *pos)
+int		solo_tree(t_ast *node, t_pos *pos)
 {
 	if(node->token->type == CMD)
 	{
@@ -15,9 +15,9 @@ int			*solo_tree(t_ast *node, t_pos *pos)
 	}
 	else
 		return (-1);
-
 }
-t_token 	*interpreter(t_ast *node, t_pos *pos)
+
+int		interpreter(t_ast *node, t_pos *pos)
 {
 	// run_pipe(node->l->token, pos, 0);
 	// run_pipe(node->r->token, pos, 1);
@@ -30,7 +30,7 @@ t_token 	*interpreter(t_ast *node, t_pos *pos)
 			run_pipe(node->r->token, pos, 1);
 		else
 			run_pipe(node->r->token, pos, 0);
-		return (NULL);
+		return (0);
 	}
 	interpreter(node->l, pos);
 	interpreter(node->r, pos);
