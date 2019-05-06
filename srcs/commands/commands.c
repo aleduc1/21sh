@@ -6,7 +6,7 @@
 /*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/09 10:50:50 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/05/06 06:12:18 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/06 22:17:27 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,9 +108,9 @@ int		choice_fd(t_token *lex, int fd, int origin)
 int		ft_pipe(char **argv, t_token *lex, int end_pipe)
 {
 	static int	in;
-	int	return_code;
-	int	pids;
-	int	pipes[2];
+	int			return_code;
+	int			pids;
+	int			pipes[2];
 
 	if (choice_fd(lex, in, STDIN_FILENO) == -1)
 		dprintf(2, "Error function choice_fd\n");
