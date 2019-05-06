@@ -6,7 +6,7 @@
 /*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/02 08:43:53 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/05/06 01:29:10 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/06 06:40:08 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,26 +19,30 @@
 ** error -> STDERR_FILLENO
 */
 
-void	open_redirection(t_lex *lex)
+void	open_redirection(t_token *lex)
 {
 	t_lex	*head;
 
-	head = lex;
-	while (lex)
+	head = lex->command; // tempo a changer + tard
+	while (head)
 	{
-		if (lex->token->type == REDIR && lex->redir)
-			dup2(lex->redir->dest_fd, lex->redir->src_fd);
-		lex = lex->next;
+		if (head->token->type == REDIR)// && lex->redir)
+			{
+				ft_putendl(head->redir->src_fd[0]);
+				ft_putendl(head->redir->dest_fd);
+dup2(ft_atoi(head->redir->dest_fd), ft_atoi(head->redir->src_fd[0]));
+			}
+			
+		head = head->next;
 	}
-	lex = head;
 }
 
-int		add_process(char **cmd, t_lex *lex, int *returns_code)
+int		add_process(char **cmd, t_token *lex, int *returns_code)
 {
 	char	**env;
 	int		pid;
 
-	if (is_in_path(cmd) != 1)
+	if (is_in_path(&cmd) != 1)
 	{
 		*returns_code = -1;
 		return (-1);
@@ -50,14 +54,14 @@ int		add_process(char **cmd, t_lex *lex, int *returns_code)
 	{
 		open_redirection(lex);
 		execve(cmd[0], cmd, env);
-		ft_dprintf(STDERR_FILENO, "21sh: %s: No such file or directory\n", cmd[0]);
+		dprintf(STDERR_FILENO, "21sh: %s: No such file or directory\n", cmd[0]);
 		exit(pid);
 	}
 	ft_arraydel(&env);
 	return (pid);
 }
 
-int		exec_fork(char **cmd, t_lex *lex)
+int		exec_fork(char **cmd, t_token *lex)
 {
 	int	return_code;
 	int	pid;

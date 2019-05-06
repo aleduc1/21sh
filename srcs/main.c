@@ -6,7 +6,7 @@
 /*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/12 17:01:09 by aleduc            #+#    #+#             */
-/*   Updated: 2019/05/06 00:25:59 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/06 05:39:55 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ int		main(int argc, char **argv, char **environ)
 					dllprinthead(&lex);
 					ft_putendl("======================");
 					ast = ast_parser(lex);
+					interpreter(ast, &pos);
+					//run(lex, &pos);
 					clean_lex(&lex);
 					clean_ast(ast);
 				}

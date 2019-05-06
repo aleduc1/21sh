@@ -6,7 +6,7 @@
 /*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/22 17:57:48 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/05/06 01:14:38 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/06 05:15:15 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,7 @@ int			gest_return(int verif)
 	value = ft_itoa(verif);
 	arg = create_arg("?", value);
 	ft_strdel(&value);
-	verif = edit_set(arg);
+	//verif = edit_set(arg);
 	free_arg(&arg);
 	return (verif);
 }

@@ -24,7 +24,7 @@ void				clean_ast(t_ast *node);
 t_ast				*expr(int rbp);
 t_ast				*ast_parser(t_lex *tokens);
 
-
-int					*run(t_lex *cmd_list, t_pos *pos);
+t_ast				*interpreter(t_ast *node, t_pos *pos);
+int					*run(t_token *cmd_list, t_pos *pos);
 
 #endif

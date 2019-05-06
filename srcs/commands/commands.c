@@ -6,7 +6,7 @@
 /*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/09 10:50:50 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/05/06 03:51:40 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/06 06:12:18 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,10 +65,8 @@ int		ft_ampersand(t_cmd *cmds, int num_process, t_env **my_env)
 	return (result);
 }
 
-/*
-** &&
-*/
-/*
+
+
 int		ft_ampersand_double(t_cmd *cmds, t_env **my_env)
 {
 	int	check;
@@ -86,31 +84,28 @@ int		ft_ampersand_double(t_cmd *cmds, t_env **my_env)
 ** |
 */
 
-int		choice_fd(t_lex *lex, int fd, int origin)
+int		choice_fd(t_token *lex, int fd, int origin)
 {
 	t_lex	*head;
 
-	head = lex;
-	while (lex)
+	head = lex->command;
+	while (head)
 	{
-		if (lex->token->type == REDIR && lex->redir->src_fd == origin)
+		if (head->token->type == REDIR && ft_atoi(head->redir->src_fd[0]) == origin)
 		{
-			if (lex->redir->dest_fd == -1)
+			if (ft_atoi(head->redir->dest_fd) == -1)
 			{
-				lex->redir->dest_fd = fd;
-				lex = head;
+				head->redir->dest_fd = ft_itoa(fd);
 				return (1);
 			}
-			lex = head;
 			return (0);
 		}
-		lex = lex->next;
+		head = head->next;
 	}
-	lex = head;
 	return (-1);
 }
 
-int		ft_pipe(char **argv, t_lex *lex, int end_pipe)
+int		ft_pipe(char **argv, t_token *lex, int end_pipe)
 {
 	static int	in;
 	int	return_code;
@@ -118,23 +113,23 @@ int		ft_pipe(char **argv, t_lex *lex, int end_pipe)
 	int	pipes[2];
 
 	if (choice_fd(lex, in, STDIN_FILENO) == -1)
-		fd_dprintf(2, "Error function choice_fd\n");
+		dprintf(2, "Error function choice_fd\n");
 	if (end_pipe)
 	{
-		if ((return_code = is_builtin(argv, lex)) == -1)
+		if ((return_code = is_builtin(argv, lex->command)) == -1)
 			pids = add_process(argv, lex, &return_code);
-		close_file_command(argv);
+		close_file_command(lex->command);
 		gest_return(return_code);
 	}
 	else
 	{
 		pipe(pipes);
 		if (choice_fd(lex, pipes[1], STDOUT_FILENO) == -1)
-			fd_dprintf(2, "Error function choice_fd\n");
-		if ((pids = is_builtin(argv, lex)) == -1)
+			dprintf(2, "Error function choice_fd\n");
+		if ((pids = is_builtin(argv, lex->command)) == -1)
 			pids = add_process(argv, lex, &return_code);
 		close(pipes[1]);
-		close_file_command(lex);
+		close_file_command(lex->command);
 		in = pipes[0];
 	}
 	return (0);
@@ -161,13 +156,13 @@ int		ft_pipe_double(t_cmd *cmds, t_env **my_env)
 ** simple command
 */
 
-int		ft_simple_command(char **argv, t_lex *lex)
+int		ft_simple_command(char **argv, t_token *lex)
 {
 	int		verif;
 
-	if ((verif = is_builtin(argv, lex)) != -1)
+	if ((verif = is_builtin(argv, lex->command)) == -1)
 		verif = exec_fork(argv, lex);
-	close_file_command(lex);
+	close_file_command(lex->command);
 	gest_return(verif);
 	return (verif);
 }

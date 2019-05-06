@@ -6,13 +6,14 @@
 /*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/22 13:33:53 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/05/06 04:16:13 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/06 06:32:36 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #	ifndef LIST_H
 #	define LIST_H
 
+#include "sh21.h"
 #include "parser.h"
 #include "../libft/includes/libft.h"
 #include <curses.h>
@@ -78,8 +79,8 @@ void				debug_arg(t_arg *arg);
 */
 
 int					edit_set(t_arg *arg, t_env **my_env);
-int					edit_set_cmd(t_cmd *cmd, t_env **my_env);
-int					edit_setenv(t_cmd *cmd, t_env **my_env);
+//int					edit_set_cmd(t_cmd *cmd, t_env **my_env);
+//int					edit_setenv(t_cmd *cmd, t_env **my_env);
 int					edit_export(char *key, t_env **my_env);
 int					ft_unsetenv(char *key, t_env **my_env);
 int					ft_unset(char *key, t_env **my_env);
@@ -124,9 +125,9 @@ int					close_file_command(t_lex *lex);
 ** execute_command.c
 */
 
-int     			add_process(char *(*cmd), t_lex *lex, int *returns_code);
-int					exec_fork(char **cmd, t_lex *lex);
-void				open_redirection(t_lex *lex);
+int     			add_process(char *(*cmd), t_token *lex, int *returns_code);
+int					exec_fork(char **cmd, t_token *lex);
+void				open_redirection(t_token *lex);
 void				close_redirection(t_env *my_env, int old_fd[3]);
 
 /*
@@ -140,11 +141,11 @@ void				delete_commands(t_commands **cmds);
 ** commands.c
 */
 
-int		ft_simple_command(char **argv, t_lex *lex);
-int		ft_pipe_double(t_cmd *cmds, t_env **my_env);
-int		ft_pipe(char **argv, t_lex *lex, int end_pipe);
-int		ft_ampersand(t_cmd *cmds, int num_process, t_env **my_env);
-int		ft_ampersand_double(t_cmd *cmds, t_env **my_env);
+int		ft_simple_command(char **argv, t_token *lex);
+//int		ft_pipe_double(t_cmd *cmds, t_env **my_env);
+int		ft_pipe(char **argv, t_token *lex, int end_pipe);
+//int		ft_ampersand(t_cmd *cmds, int num_process, t_env **my_env);
+//int		ft_ampersand_double(t_cmd *cmds, t_env **my_env);
 
 
 t_env		*get_env(void);

@@ -62,7 +62,7 @@ SRCS_NAMES = ft_atoi.c ft_bzero.c ft_fill_str.c ft_isalnum.c ft_isalpha.c ft_isa
 			 ft_arraylen.c ft_arraysub.c ft_chr_index.c ft_strchr_exist.c ft_numlen.c ft_pow_array_fix.c ft_reverse_tablo.c ft_strsub_tab_fix.c \
 			 ft_deplace.c
 OBJS_NAMES = $(SRCS_NAMES:.c=.o)
-HEADERS_NAMES = libft.h ft_printf.h get_next_line.h
+HEADERS_NAMES = libft.h ft_printf.h get_next_line.h ft_printf.h
 
 SRC = $(addprefix $(SRCDIR), $(SRCS_NAMES))
 OBJ = $(addprefix $(OBJDIR), $(OBJS_NAMES))

@@ -6,7 +6,7 @@
 /*   By: sbelondr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/26 10:48:31 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/05/03 15:30:17 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/06 05:04:56 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int		get_end_line(char *file)
 	int		verif;
 	char	*str;
 
-		ft_printf("verif = \n");
+		printf("verif = \n");
 	fd = open(file, O_RDWR);
 	verif = 0;
 	while ((verif = get_next_line(fd, &str)) > 0)

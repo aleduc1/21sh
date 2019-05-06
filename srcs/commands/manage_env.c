@@ -6,7 +6,7 @@
 /*   By: sbelondr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/22 14:54:24 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/04/28 11:48:28 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/06 04:57:00 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ int			edit_set(t_arg *arg, t_env **my_env)
 	(*my_env) = head;
 	return (verif);
 }
-
+/*
 int			edit_set_cmd(t_cmd *cmd, t_env **my_env)
 {
 	int		verif;
@@ -109,7 +109,7 @@ int			edit_set_cmd(t_cmd *cmd, t_env **my_env)
 	free_arg(&arg);
 	return (verif);
 }
-
+*//*
 int			edit_setenv(t_cmd *cmd, t_env **my_env)
 {
 	int	verif;
@@ -122,7 +122,7 @@ int			edit_setenv(t_cmd *cmd, t_env **my_env)
 	free_arg(&arg);
 	return (verif);
 }
-
+*/
 int			ft_unsetenv(char *key, t_env **my_env)
 {
 	int		verif;

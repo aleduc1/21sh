@@ -6,7 +6,7 @@
 /*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/26 16:44:29 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/05/06 02:52:28 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/06 06:37:19 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,22 +29,22 @@ static int	file_exist(char *name)
 		close(fd);
 		return (1);
 	}
-	ft_dprintf(2, "21sh: error create file: %s\n", name);
+	printf("21sh: error create file: %s\n", name);
 	return (-1);
 }
 
 int			open_file_great(t_redir *redir)
 {
 	if (redir->filename)
-		redir->dest_fd = file_exist(redir->filename);
+		redir->dest_fd = ft_itoa(file_exist(redir->filename));
 	else
 		return (0);
-	if (redir->dest_fd == -1)
+	if (ft_atoi(redir->dest_fd) == -1)
 		return (-1);
 	if (redir->type == DGREAT)
-		redir->dest_fd = get_end_line(redir->filename);
+		redir->dest_fd = ft_itoa(get_end_line(redir->filename));
 	else
-		redir->dest_fd = open(redir->filename, O_RDWR | O_TRUNC);
+		redir->dest_fd = ft_itoa(open(redir->filename, O_RDWR | O_TRUNC));
 	return (1);
 }
 
@@ -54,12 +54,12 @@ int			open_file_dless(t_redir *redir)
 	int		index;
 	char	*name;
 
-	if (!heredoc)
+	if (!(redir->heredoc))
 		return (-1);
 	name = ft_strdup("/tmp/.21sh0");
 	len = ft_strlen(name) - 1;
 	index = -1;
-	while ((redir->dest_fd = open(name, O_RDWR | O_TRUNC)) == -1)
+	while (!(redir->dest_fd = ft_itoa(open(name, O_RDWR | O_TRUNC))))
 	{
 		name[len] = name[len] + 1;
 		if (++index > 8)
@@ -69,7 +69,7 @@ int			open_file_dless(t_redir *redir)
 		}
 	}
 	redir->filename = name;
-	ft_dprintf(redir->dest_fd, "%s", redir->heredoc);
+	dprintf(ft_atoi(redir->dest_fd), "%s", redir->heredoc);
 	return (1);
 }
 
@@ -80,8 +80,8 @@ int			close_file_command(t_lex *lex)
 	head = lex;
 	while (lex)
 	{
-		if (lex->token->type == REDIR && lex->redir && lex->redir->dest_fd != -1)
-			close(lex->redir->dest_fd);
+		if (lex->token->type == REDIR && lex->redir && ft_atoi(lex->redir->dest_fd) != -1)
+			close(ft_atoi(lex->redir->dest_fd));
 		lex = lex->next;
 	}
 	lex = head;
@@ -91,7 +91,9 @@ int			close_file_command(t_lex *lex)
 int			open_file_command(t_redir *redir)
 {
 	if (redir->type == GREAT || redir->type == DGREAT || redir->type == LESS)
+	{
 		open_file_great(redir);
+	}
 	else if (redir->type == DLESS)
 		open_file_dless(redir);
 	return (0);

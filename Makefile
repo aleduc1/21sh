@@ -34,8 +34,8 @@ VPATH = objs:\
 		srcs/parser/ast:\
 		srcs/parser/command:\
 		srcs/commands:\
-		srcs/cleaning
-
+		srcs/cleaning :\
+		srcs/interpreter
 # ------------------ #
 # Compiler and flags #
 # ------------------ #
@@ -106,21 +106,21 @@ SRCS_NAMES = main.c \
 			 ast_parser.c \
 			 tree_utils.c \
 			 cmd_parser.c \
-			 #builtin_env.c\
+			 builtin_env.c\
 			 commands.c\
-			 execute_commands.c\
-			 formats_parameters.c\
-			 list_args.c\
+			 execute_command.c\
+			 list_arg.c\
 			 list_commands.c\
 			 list_env.c\
 			 manage_env.c\
 			 manage_file.c\
 			 other_tools.c\
 			 parser_env.c\
-			 tools_enc.c
+			 tools_env.c \
+			 interpreter.c
 
 OBJS_NAMES = $(SRCS_NAMES:.c=.o)
-HEADERS_NAMES = sh21.h lexer.h parser.h
+HEADERS_NAMES = sh21.h lexer.h parser.h env.h
 LIBS_NAMES = libft.a
 
 OBJ = $(addprefix $(OBJDIR), $(OBJS_NAMES))
