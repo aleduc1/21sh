@@ -103,12 +103,6 @@ int		ft_pipe(char **argv, t_token *lex, int end_pipe)
 	r->in = choice_fd(r->in, in, STDIN_FILENO);
 	if (end_pipe)
 	{
-		printf("-%s\n", argv[0]);
-		char buf[1000];
-		ft_bzero(buf, 1000);
-		read(r->in, buf, 1000);
-		ft_printf("%s\n", buf);
-		exit(0);
 		if ((return_code = is_builtin(argv, lex->command)) == -1)
 			pids = add_process(argv, lex, &return_code, r);
 		close_file_command(lex->command);
@@ -116,7 +110,6 @@ int		ft_pipe(char **argv, t_token *lex, int end_pipe)
 	}
 	else
 	{
-		printf("+%s\n", argv[0]);
 		pipe(pipes);
 		r->out = choice_fd(r->out, pipes[1], STDOUT_FILENO);
 		if ((pids = is_builtin(argv, lex->command)) == -1)
@@ -153,7 +146,7 @@ int		ft_simple_command(char **argv, t_token *lex)
 {
 	t_redirection	*r;
 	int				verif;
-	
+
 	r = fill_redirection(lex);
 	if ((verif = is_builtin(argv, lex->command)) == -1)
 		verif = exec_fork(argv, lex, r);
