@@ -6,7 +6,7 @@
 /*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/22 13:33:53 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/05/07 00:18:14 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/07 00:19:53 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ void				delete_redirection(t_redirection **r);
 */
 
 int					gest_return(int verif);
-int					is_builtin(char **cmd, t_lex *lex);
+int					is_builtin(char **argv, t_redirection *r);
 int					is_in_path(char ***command);
 char				**transfer_arg(t_arg *lst_arg);
 
@@ -114,8 +114,8 @@ char				*value_line_path(t_env *my_env, char *key, int env);
 */
 
 int		return_good_fd(t_lex *lex, int fd);
-int     builtin_set(t_lex *lex);
-int     builtin_env(t_lex *lex);
+int     builtin_set(t_redirection *r);
+int     builtin_env(t_redirection *r);
 
 /*
 ** list_env.c
