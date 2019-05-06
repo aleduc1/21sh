@@ -6,7 +6,7 @@
 /*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/26 16:44:29 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/05/06 06:37:19 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/07 00:53:23 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,28 +48,27 @@ int			open_file_great(t_redir *redir)
 	return (1);
 }
 
-int			open_file_dless(t_redir *redir)
+int			open_file_dless(t_redir *redir, t_pos *pos)
 {
-	int		len;
-	int		index;
+	int		fd;
 	char	*name;
+	char	*str;
 
 	if (!(redir->heredoc))
 		return (-1);
 	name = ft_strdup("/tmp/.21sh0");
-	len = ft_strlen(name) - 1;
-	index = -1;
-	while (!(redir->dest_fd = ft_itoa(open(name, O_RDWR | O_TRUNC))))
-	{
-		name[len] = name[len] + 1;
-		if (++index > 8)
-		{
-			ft_strdel(&name);
-			return (-1);
-		}
-	}
 	redir->filename = name;
-	dprintf(ft_atoi(redir->dest_fd), "%s", redir->heredoc);
+	str = heredoc(redir->heredoc, pos);
+	fd = file_exist(name);
+	if (fd > -1)
+		fd = open_file_great(redir);
+	else
+		return (-1);
+	ft_dprintf(ft_atoi(redir->dest_fd), "%s\n", str + 1);
+	close(ft_atoi(redir->dest_fd));
+	ft_strdel(&(redir->dest_fd));
+	redir->dest_fd = ft_itoa(open(redir->filename, O_RDWR));
+	ft_strdel(&str);
 	return (1);
 }
 
@@ -88,13 +87,11 @@ int			close_file_command(t_lex *lex)
 	return (0);
 }
 
-int			open_file_command(t_redir *redir)
+int			open_file_command(t_redir *redir, t_pos *pos)
 {
 	if (redir->type == GREAT || redir->type == DGREAT || redir->type == LESS)
-	{
 		open_file_great(redir);
-	}
 	else if (redir->type == DLESS)
-		open_file_dless(redir);
+		open_file_dless(redir, pos);
 	return (0);
 }
