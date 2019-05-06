@@ -25,7 +25,7 @@ void		pretty_print(t_ast *tree)
 		ft_putstr(depth);
 		ft_putstr(" ├──");
 		print_push('|');
-		pretty_print( tree->r);
+		pretty_print(tree->r);
 		depth[di -= 4] = 0;
 
 		ft_putstr(depth);

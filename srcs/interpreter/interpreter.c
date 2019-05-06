@@ -26,10 +26,8 @@ int		interpreter(t_ast *node, t_pos *pos)
 	if(node->token->type == SPIPE)
 	{
 		run_pipe(node->l->token, pos, 0);
-		if(node->r->token->type != SPIPE || node->r->token->type != SCOLON)
+		if(node->r->token->type != SPIPE)
 			run_pipe(node->r->token, pos, 1);
-		else
-			run_pipe(node->r->token, pos, 0);
 		return (0);
 	}
 	interpreter(node->l, pos);
