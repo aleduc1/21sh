@@ -33,7 +33,10 @@ char			**get_argv(t_token *cmd_list)
 	while(cursor)
 	{
 		if(cursor->token->type == WORD || cursor->token->type == NUMBER)
+		{
 			argv[i++] = ft_strdup(cursor->token->data);
+		printf("argv[%d] = %s|\n", i - 1, argv[i - 1]);
+		}
 		cursor = cursor->next;
 	}
 	argv[i] = NULL;

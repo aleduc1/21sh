@@ -6,7 +6,7 @@
 /*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/26 16:44:29 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/05/07 01:08:31 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/07 01:15:15 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,8 +97,10 @@ int			close_file_command(t_lex *lex)
 	head = lex;
 	while (lex)
 	{
-		if (lex->token->type == REDIR && lex->redir && ft_atoi(lex->redir->dest_fd) != -1)
-			close(ft_atoi(lex->redir->dest_fd));
+		if (lex->token->type == REDIR && lex->redir &&
+				ft_atoi(lex->redir->dest_fd) != -1)
+			if (lex->redir->filename || lex->redir->close == 1)
+				close(ft_atoi(lex->redir->dest_fd));
 		lex = lex->next;
 	}
 	lex = head;

@@ -6,7 +6,7 @@
 /*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/09 10:50:50 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/05/06 23:49:33 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/07 01:42:02 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,12 @@ int		ft_pipe(char **argv, t_token *lex, int end_pipe)
 	r->in = choice_fd(r->in, in, STDIN_FILENO);
 	if (end_pipe)
 	{
+		printf("-%s\n", argv[0]);
+		char buf[1000];
+		ft_bzero(buf, 1000);
+		read(r->in, buf, 1000);
+		ft_printf("%s\n", buf);
+		exit(0);
 		if ((return_code = is_builtin(argv, lex->command)) == -1)
 			pids = add_process(argv, lex, &return_code, r);
 		close_file_command(lex->command);
@@ -110,6 +116,7 @@ int		ft_pipe(char **argv, t_token *lex, int end_pipe)
 	}
 	else
 	{
+		printf("+%s\n", argv[0]);
 		pipe(pipes);
 		r->out = choice_fd(r->out, pipes[1], STDOUT_FILENO);
 		if ((pids = is_builtin(argv, lex->command)) == -1)
