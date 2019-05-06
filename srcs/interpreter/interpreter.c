@@ -6,14 +6,24 @@ int		panic()
     return (-1);
 }
 
-t_ast	*interpreter(t_ast *node, t_pos *pos)
+t_token 	*interpreter(t_ast *node, t_pos *pos)
 {
-    if(!node->l && !node->r)
-       run(node->token, pos);
-   
-   // t_ast *l = interpreter(node->l, pos);
-  // t_ast *r = interpreter(node->r, pos);
+	run_pipe(node->l->token, pos, 0);
+	run_pipe(node->r->token, pos, 1);
+	// if(!node->l && !node->r)
+	// 	return (NULL);
+   	// interpreter(node->l, pos);
+   	// interpreter(node->r, pos);
+    // if(node->token->type == SPIPE)
+	// {
+	// 	if(node->l->token->type != SPIPE)
+    //    		run_pipe(node->l->token, pos, 0);
+	// 	if(node->r->token->type != SPIPE || node->r->token->type != SCOLON)
+	// 		run_pipe(node->r->token, pos, 1);
+	// 	else
+	// 		run_pipe(node->r->token, pos, 0);
+	// 	return (NULL);
+	// }
 
-   
     return (0);
 }

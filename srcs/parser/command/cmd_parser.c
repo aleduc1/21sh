@@ -52,7 +52,16 @@ void			files_handler(t_token *cmd_list, t_pos *pos)
 	}
 }
 
-int			*run(t_token *cmd_list, t_pos *pos)
+int			*run_pipe(t_token *cmd_list, t_pos *pos, int end_pipe)
+{
+	char	**argv;
+
+	argv = get_argv(cmd_list);
+	files_handler(cmd_list, pos);
+	ft_pipe(argv, cmd_list, end_pipe);
+	return (0);
+}
+int			*run_cmd(t_token *cmd_list, t_pos *pos)
 {
 	char	**argv;
 
