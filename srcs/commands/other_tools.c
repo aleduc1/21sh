@@ -6,7 +6,7 @@
 /*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/22 17:57:48 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/05/06 05:15:15 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/06 22:46:50 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ int			is_in_path(char ***command)
 		return (-1);
 	if (access((*command)[0], F_OK) >= 0 && access((*command)[0], X_OK) >= 0)
 		return (1);
-	str = value_line_path(get_env(), "PATH", 0);
+	str = value_line_path(get_env(0), "PATH", 0);
 	if (!str)
 		return (-1);
 	split = ft_strsplit(str, ':');
@@ -130,11 +130,13 @@ int			gest_return(int verif)
 	return (verif);
 }
 
-t_env		*get_env(void)
+t_env		*get_env(int is_end)
 {
 	static t_env	*my_env;
 
 	if (my_env == NULL)
 		my_env = init_env();
+	if (is_end)
+		free_env(&my_env);
 	return (my_env);
 }
