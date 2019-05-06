@@ -103,7 +103,7 @@ endif
 $(NAME) : $(OBJS_NAMES)
 	@make -C srcs/ft_printf
 	@$(CREATE) $(LIBDIR)
-	@$(AR) $(ARFLAGS) $(NAME) $(OBJ)
+	@$(AR) $(ARFLAGS) $(NAME) objs/*.o #$(OBJ)
 	@$(SORT) $(NAME)
 	@$(PRINT) $(REMOVE)"Libft.a built\n"
 

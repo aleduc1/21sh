@@ -43,7 +43,7 @@ VPATH = objs:\
 
 CC = gcc
 ifeq ($(DEBUG), yes)
-	CFLAGS = -Wall -Wextra  -g3 -fsanitize=address
+	CFLAGS = -Wall -Wextra  -g3 
 else
 	CFLAGS = -Wall -Wextra
 endif
@@ -113,6 +113,7 @@ SRCS_NAMES = main.c \
 			 list_arg.c\
 			 list_commands.c\
 			 list_env.c\
+			 list_redirection.c\
 			 manage_env.c\
 			 manage_file.c\
 			 other_tools.c\
