@@ -43,11 +43,9 @@ int		main(int argc, char **argv, char **environ)
 					dllprinthead(&lex);
 					ft_putendl("======================");
 					ast = ast_parser(lex);
+					clean_lex(&lex);
 					clean_ast(ast);
-					clean_lex(&lex);
 				}
-				else
-					clean_lex(&lex);
 			}
 		}
 	}

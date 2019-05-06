@@ -54,6 +54,7 @@ void		clean_ast(t_ast *node)
 	clean_ast(node->l);
 	clean_ast(node->r);
 	free(node);
+	node = NULL;
 }
 
 t_ast		*ast_parser(t_lex *tokens)
@@ -63,6 +64,11 @@ t_ast		*ast_parser(t_lex *tokens)
 	get_out = 0;
 	stream = tokens;
 	ast = expr(0);
+	if(get_out == 1)
+	{
+		clean_ast(ast);
+		return (NULL);
+	}
 	ft_putstr("---------------AST---------------\n");
 	pretty_print(ast);
 	ft_putstr("---------------------------------\n");
