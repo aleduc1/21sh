@@ -6,7 +6,7 @@
 /*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/09 10:50:50 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/05/06 03:38:13 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/06 03:51:40 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,15 +95,19 @@ int		choice_fd(t_lex *lex, int fd, int origin)
 	{
 		if (lex->token->type == REDIR && lex->redir->src_fd == origin)
 		{
+			if (lex->redir->dest_fd == -1)
+			{
+				lex->redir->dest_fd = fd;
+				lex = head;
+				return (1);
+			}
 			lex = head;
 			return (0);
 		}
 		lex = lex->next;
 	}
 	lex = head;
-	/*
-	** creer redirection de origin vers fd
-	*/
+	return (-1);
 }
 
 int		ft_pipe(char **argv, t_lex *lex, int end_pipe)
@@ -113,7 +117,8 @@ int		ft_pipe(char **argv, t_lex *lex, int end_pipe)
 	int	pids;
 	int	pipes[2];
 
-	choice_fd(lex, in, STDIN_FILENO);
+	if (choice_fd(lex, in, STDIN_FILENO) == -1)
+		fd_dprintf(2, "Error function choice_fd\n");
 	if (end_pipe)
 	{
 		if ((return_code = is_builtin(argv, lex)) == -1)
@@ -124,7 +129,8 @@ int		ft_pipe(char **argv, t_lex *lex, int end_pipe)
 	else
 	{
 		pipe(pipes);
-		choice_fd(lex, pipes[1], STDOUT_FILENO);
+		if (choice_fd(lex, pipes[1], STDOUT_FILENO) == -1)
+			fd_dprintf(2, "Error function choice_fd\n");
 		if ((pids = is_builtin(argv, lex)) == -1)
 			pids = add_process(argv, lex, &return_code);
 		close(pipes[1]);

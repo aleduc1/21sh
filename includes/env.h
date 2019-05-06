@@ -6,7 +6,7 @@
 /*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/22 13:33:53 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/05/06 01:59:35 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/06 04:16:13 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,8 +97,9 @@ char				*value_line_path(t_env *my_env, char *key, int env);
 ** builtin_env.c
 */
 
-int     builtin_set(t_env **my_env, t_cmd *cmd);
-int     builtin_env(t_env **my_env, t_cmd *cmd);
+int		return_good_fd(t_lex *lex, int fd);
+int     builtin_set(t_lex *lex);
+int     builtin_env(t_lex *lex);
 
 /*
 ** list_env.c
@@ -141,7 +142,7 @@ void				delete_commands(t_commands **cmds);
 
 int		ft_simple_command(char **argv, t_lex *lex);
 int		ft_pipe_double(t_cmd *cmds, t_env **my_env);
-int		ft_pipe(t_cmd *cmds, t_env **my_env);
+int		ft_pipe(char **argv, t_lex *lex, int end_pipe);
 int		ft_ampersand(t_cmd *cmds, int num_process, t_env **my_env);
 int		ft_ampersand_double(t_cmd *cmds, t_env **my_env);
 
