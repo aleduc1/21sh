@@ -42,7 +42,7 @@ int		main(int argc, char **argv, char **environ)
 					ft_putendl("=====TOKEN_STREAM=====");
 					dllprinthead(&lex);
 					ft_putendl("======================");
-					if ((ast = ast_parser(lex)))
+					if ((ast = ast_parser(lex)) && (solo_tree(ast, &pos) < 0))
 						interpreter(ast, &pos);
 					//run(lex, &pos);
 					clean_lex(&lex);
