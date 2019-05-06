@@ -6,7 +6,7 @@
 /*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/22 17:36:44 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/05/06 05:02:34 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/06 22:46:14 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int		builtin_env(t_lex *lex)
 	char	**lst_env;
 
 	fd = return_good_fd(lex, STDOUT_FILENO);
-	lst_env = create_list_env(get_env(), 1);
+	lst_env = create_list_env(get_env(0), 1);
 	i = -1;
 	while (lst_env[++i])
 		dprintf(fd, "%s\n", lst_env[i]);
@@ -51,7 +51,7 @@ int		builtin_set(t_lex *lex)
 	char	**lst_env;
 
 	fd = return_good_fd(lex, STDOUT_FILENO);
-	lst_env = create_list_env(get_env(), 0);
+	lst_env = create_list_env(get_env(0), 0);
 	i = -1;
 	while (lst_env[++i])
 		dprintf(fd, "%s\n", lst_env[i]);
