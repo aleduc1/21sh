@@ -29,12 +29,13 @@ VPATH = objs:\
 		srcs/parser:\
 		srcs/parser/pre-parser:\
 		srcs/parser/pre-parser/simple_command:\
+		srcs/parser/pre-parser/remove_space:\
 		srcs/parser/pre-parser/redirect:\
 		srcs/parser/pre-parser/redirect/grammar:\
 		srcs/parser/ast:\
 		srcs/parser/command:\
 		srcs/commands:\
-		srcs/cleaning :\
+		srcs/cleaning:\
 		srcs/interpreter
 # ------------------ #
 # Compiler and flags #
@@ -44,7 +45,7 @@ CC = gcc
 ifeq ($(DEBUG), yes)
 	CFLAGS = -Wall -Wextra -Werror -g3 -fsanitize=address
 else
-	CFLAGS = -Wall -Wextra -g3
+	CFLAGS = -Wall -Wextra
 endif
 CPPFLAGS = -I $(INCDIR) -I $(INCLIBDIR)
 LDLIBS = -lft
@@ -117,6 +118,7 @@ SRCS_NAMES = main.c \
 			 other_tools.c\
 			 parser_env.c\
 			 tools_env.c \
+			 remove_space_token.c \
 			 interpreter.c
 
 OBJS_NAMES = $(SRCS_NAMES:.c=.o)

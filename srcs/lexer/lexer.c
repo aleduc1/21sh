@@ -6,7 +6,7 @@
 /*   By: mbellaic <mbellaic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/12 17:21:29 by aleduc            #+#    #+#             */
-/*   Updated: 2019/05/05 18:31:50 by aleduc           ###   ########.fr       */
+/*   Updated: 2019/05/06 18:22:51 by aleduc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -287,5 +287,6 @@ t_lex	*lexer(char *input)
 		ft_error(0);
 		return (NULL);
 	}
+	remove_space_token(&lex);
 	return (lex);
 }
