@@ -1,5 +1,6 @@
 #include "parser.h"
 #include "sh21.h"
+#include "env.h"
 
 int				get_argc(t_lex *cursor)
 {
@@ -47,7 +48,7 @@ void			files_handler(t_token *cmd_list, t_pos *pos)
 	while(cursor)
 	{
 		if (cursor->token->type == REDIR)
-				open_file_command(cursor->redir, pos);
+				open_file_command(cursor->redir);//, pos);
 		cursor = cursor->next;
 	}
 }

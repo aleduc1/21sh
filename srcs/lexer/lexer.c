@@ -6,7 +6,7 @@
 /*   By: mbellaic <mbellaic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/12 17:21:29 by aleduc            #+#    #+#             */
-/*   Updated: 2019/05/06 21:25:02 by aleduc           ###   ########.fr       */
+/*   Updated: 2019/05/06 22:34:29 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ t_lex	*add_delim(t_lex **lex)
 		tail = tail->next;
 	dllinsfront(&head, &nd_node);
 	dllinsback(&tail, &node);
+	clean_inside_token(&token);
 	return (head);
 }
 

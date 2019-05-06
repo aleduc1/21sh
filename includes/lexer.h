@@ -6,7 +6,7 @@
 /*   By: aleduc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/04 17:15:13 by aleduc            #+#    #+#             */
-/*   Updated: 2019/05/06 21:08:19 by aleduc           ###   ########.fr       */
+/*   Updated: 2019/05/06 22:35:26 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -206,5 +206,6 @@ void	ft_error(int code_error);
 
 /* Cleaning */
 void	clean_lex(t_lex **lex);
+void	clean_inside_token(t_token **token);
 
 #endif
