@@ -6,7 +6,7 @@
 /*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/12 17:01:09 by aleduc            #+#    #+#             */
-/*   Updated: 2019/05/06 00:25:58 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/06 00:25:59 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,15 +38,16 @@ int		main(int argc, char **argv, char **environ)
 				lex = lexer(input);
 				if (lex)
 				{
-					// ft_strdel(&inputstr);
+					ft_strdel(&input);
 					ft_putendl("=====TOKEN_STREAM=====");
 					dllprinthead(&lex);
 					ft_putendl("======================");
-					//ast = ast_parser(lex);
-					// clean_lex(&lex);
+					ast = ast_parser(lex);
+					clean_ast(ast);
+					clean_lex(&lex);
 				}
-				// else
-					// clean_lex(&lex);
+				else
+					clean_lex(&lex);
 			}
 		}
 	}

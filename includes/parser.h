@@ -4,7 +4,11 @@
 #include "sh21.h"
 #include "lexer.h"
 
-# define OPERATORS (t->type == SCOLON || t->type == SPIPE )
+t_lex			*stream;
+int				get_out;
+
+# define OPERATORS (t->type == SCOLON || t->type == SPIPE || t->type == DELIM)
+
 
 typedef struct     s_ast
 {
@@ -36,9 +40,9 @@ typedef struct      s_cmd
 	char            *heredoc; // NULL or raw string.
 }                   t_cmd;
 
-t_ast               *node_ast(t_token *token, t_ast *l, t_ast *r);
 void                pretty_print(t_ast *tree);
-void                ast_print(t_ast *root, int space);
+t_ast               *node_ast(t_token *token, t_ast *l, t_ast *r);
+void				clean_ast(t_ast *node);
 
 t_ast               *expr(int rbp);
 t_ast               *ast_parser(t_lex *tokens);

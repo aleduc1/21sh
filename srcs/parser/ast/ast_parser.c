@@ -2,86 +2,74 @@
 #include "sh21.h"
 #include "parser.h"
 
-static t_lex   *lstcursor;
-
-t_token *next()
+t_token			*next()
 {
-    lstcursor = lstcursor->next;
-    return(lstcursor->token);
+	stream =	(stream->next) ? stream->next : stream;
+	return (stream) ? (stream->token) : (NULL);
 }
 
-t_token *peek()
+t_token			*peek()
 {
-    return(lstcursor->next->token);
+	return (stream->next) ? (stream->next->token) : (NULL);
 }
 
-int bp(t_token *token)
+int				bp(t_token *token)
 {
-    if(token->type == DELIM)
-        return (-10);
-    else if(token->type == CMD)
-        return (10);
-    else if(token->type == SCOLON)
-        return (20);
-    else if(token->type == SPIPE)
-        return (40);
-    else
-        return (0);
+	if(token == NULL)
+		return (0);
+	else if(token->type == DELIM)
+		return (-10);
+	else if(token->type == CMD)
+		return (10);
+	else if(token->type == SCOLON)
+		return (20);
+	else if(token->type == SPIPE)
+		return (30);
+	else
+		return (0);
 }
 
-t_ast *nud(t_token *t)
+t_ast			*nud(t_token *t)
 {
-    if (t->type == CMD)
-        return (node_ast(t, NULL, NULL));
-    else if (OPERATORS)
-    {
-        ft_putstr("21sh: parse error near: ");
-        ft_putendl(t->data);
-        exit (1);
-    }
-    else
-        return (NULL);
+	if (t->type == CMD)
+		return (node_ast(t, NULL, NULL));
+	else if (OPERATORS)
+	{
+		ft_putstr("21sh: parse error near: ");
+		ft_putendl(t->data);
+		get_out = 1;
+		return (node_ast(t, NULL, NULL));
+	}
+	else
+		return (NULL);
 }
 
-t_ast *led(t_ast *left, t_token *t)
+t_ast			*led(t_ast *left, t_token *t)
 {
-    if (t->type == SCOLON)
-        return (node_ast(t, left, expr(20)));
-    else if (t->type == SPIPE)
-        return (node_ast(t, left, expr(40)));
-    else if (t->type == CMD)
-    {
-        ft_putstr("21sh: parse error near: ");
-        ft_putendl(t->data);
-        exit (1);
-    }
-    else
-        return (NULL);
-
+	if (t->type == SCOLON)
+		return (node_ast(t, left, expr(20)));
+	else if (t->type == SPIPE)
+		return (node_ast(t, left, expr(30)));
+	else if (t->type == CMD || t->type == DELIM)
+	{
+		ft_putstr("21sh: parse error near: ");
+		ft_putendl(t->data);
+		get_out = 1;
+		return (left);
+	}
+	else
+		return (NULL);
 }
 
-t_ast *expr(int rbp)
+t_ast			*expr(int rbp)
 {
-    t_ast *left;
-    left = nud(next());
-    while (rbp < bp(peek()))
-    {
-        left = led(left, next());
-    }
-    return (left);
-}
+	t_ast		*left;
 
-t_ast     *ast_parser(t_lex *tokens)
-{
-    t_ast *ast;
-    // t_lex *lstcursor;
-    lstcursor = tokens;
-    ast = expr(0);
-    ft_putstr("---------------AST---------------\n");
-    pretty_print(ast);
-    ft_putstr("---------------------------------\n");
-    // t_cmd cmd;
-    // cmd = cmd_parser(ast->token->command);
-    // (void)cmd;
-    return (ast);
+	left = NULL;
+	if(get_out == 1)
+		return (left);
+	left = nud(next());
+	while (rbp < bp(peek()))
+		left = led(left, next());
+	return (left);
 }
