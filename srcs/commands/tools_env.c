@@ -3,21 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   tools_env.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sbelondr <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/22 17:29:22 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/04/11 18:24:37 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/07 19:30:34 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/env.h"
 
-int			create_new_path(t_env *my_env, t_arg *arg, int env)
+int			create_new_path(t_env *my_env, char *key, char *value, int env)
 {
 	while (my_env->next)
 		my_env = my_env->next;
-	my_env->key = ft_strdup(arg->key);
-	my_env->value = ft_strdup(arg->value);
+	my_env->key = ft_strdup(key);
+	my_env->value = ft_strdup(value);
 	my_env->see_env = env;
 	my_env->next = init_maillon_env();
 	return (0);
@@ -41,10 +41,12 @@ int			search_line_env(t_env *my_env, char *key, int env)
 	return (0);
 }
 
-char		*value_line_path(t_env *my_env, char *key, int env)
+char		*value_line_path(char *key, int env)
 {
+	t_env	*my_env;
 	char	*dst;
 
+	my_env = get_env(0);
 	dst = NULL;
 	while (my_env)
 	{

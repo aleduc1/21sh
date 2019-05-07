@@ -46,7 +46,7 @@ CC = gcc
 ifeq ($(DEBUG), yes)
 	CFLAGS = -Wall -Wextra -Werror -g3 
 else
-	CFLAGS = -Wall -Wextra
+	CFLAGS = -Wall -Wextra -g3
 endif
 CPPFLAGS = -I $(INCDIR) -I $(INCLIBDIR)
 LDLIBS = -lft
@@ -110,7 +110,6 @@ SRCS_NAMES = main.c \
 			 builtin_env.c\
 			 commands.c\
 			 execute_command.c\
-			 list_arg.c\
 			 list_commands.c\
 			 list_env.c\
 			 list_redirection.c\

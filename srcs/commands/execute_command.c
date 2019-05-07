@@ -6,7 +6,7 @@
 /*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/02 08:43:53 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/05/06 23:48:07 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/07 20:05:42 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,15 +25,15 @@ void	open_redirection(t_redirection *r)
 	dup2(r->error, STDERR_FILENO);
 }
 
-int		add_process(char **cmd, t_token *lex, int *returns_code, t_redirection *r)
+int		add_process(char **cmd, int *returns_code, t_redirection *r)
 {
 	char	**env;
 	int		pid;
 
 	if (is_in_path(&cmd) != 1)
 	{
-		*returns_code = -1;
-		return (-1);
+		ft_dprintf(STDERR_FILENO, "21sh: command not found: %s\n", cmd[0]);
+		return (*returns_code);
 	}
 	env = create_list_env(get_env(0), 0);
 	pid = fork();
@@ -42,20 +42,19 @@ int		add_process(char **cmd, t_token *lex, int *returns_code, t_redirection *r)
 	{
 		open_redirection(r);
 		execve(cmd[0], cmd, env);
-		ft_dprintf(STDERR_FILENO, "21sh: command not found: %s\n", cmd[0]);
 		exit(pid);
 	}
 	ft_arraydel(&env);
 	return (pid);
 }
 
-int		exec_fork(char **cmd, t_token *lex, t_redirection *r)
+int		exec_fork(char **cmd, t_redirection *r)
 {
 	int	return_code;
 	int	pid;
 
 	signal(SIGINT, NULL);
-	pid = add_process(cmd, lex, &return_code, r);
+	pid = add_process(cmd, &return_code, r);
 	if (pid != -1)
 		kill(pid, SIGINT);
 	return (return_code);
