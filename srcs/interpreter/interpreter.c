@@ -1,11 +1,5 @@
 #include "parser.h"
 
-int		panic()
-{
-    printf("Fatal error: AST not found by interpreter.");
-    return (-1);
-}
-
 int		solo_tree(t_ast *node, t_pos *pos)
 {
 	if(node->token->type == CMD)
@@ -17,21 +11,43 @@ int		solo_tree(t_ast *node, t_pos *pos)
 		return (-1);
 }
 
-int		interpreter(t_ast *node, t_pos *pos)
+void scolon_case(t_ast *node, t_pos *pos)
 {
-	// run_pipe(node->l->token, pos, 0);
-	// run_pipe(node->r->token, pos, 1);
-	if (!node)
-		return (panic());
+	if(node->token->type == SCOLON)
+	{
+		if(node->l->token->type == CMD && node->r->token->type == CMD)
+		{
+			run_cmd(node->l->token, pos);
+			run_cmd(node->r->token, pos);
+		}
+		if(node->l->token->type == CMD && node->r->token->type != CMD)
+			run_cmd(node->l->token, pos);
+	}
+}
+
+void spipe_case(t_ast *node, t_pos *pos)
+{
 	if(node->token->type == SPIPE)
 	{
 		run_pipe(node->l->token, pos, 0);
-		if(node->r->token->type != SPIPE)
+		if(node->r->token->type == CMD)
 			run_pipe(node->r->token, pos, 1);
-		return (0);
 	}
+}
+void edge_case(t_ast *node, t_pos *pos)
+{
+	if(node->token->type == SCOLON)
+		if(node->r->token->type == CMD && node->l->token->type != CMD)
+			run_cmd(node->r->token, pos);
+}
+int		interpreter(t_ast *node, t_pos *pos)
+{
+	if(!node)
+		return (-1);
+	scolon_case(node, pos);
+	spipe_case(node, pos);
 	interpreter(node->l, pos);
 	interpreter(node->r, pos);
-
+	edge_case(node, pos);
 	return (0);
 }

@@ -49,7 +49,7 @@ t_ast			*led(t_ast *left, t_token *t)
 	if (t->type == SCOLON)
 		return (node_ast(t, left, expr(20)));
 	else if (t->type == SPIPE)
-		return (node_ast(t, left, expr(30)));
+		return (node_ast(t, left, expr(30 - 1)));
 	else if (t->type == CMD || t->type == DELIM)
 	{
 		ft_putstr("21sh: parse error near: ");
