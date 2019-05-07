@@ -3,14 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   execute_command.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: apruvost <apruvost@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/02 08:43:53 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/05/07 20:05:42 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/08 01:27:37 by apruvost         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "env.h"
+
+static int sighandler(int signum)
+{
+	(void)signum;
+	ft_putchar('\n');
+}
 
 /*
 ** in -> STDIN_FILENO
@@ -40,6 +46,8 @@ int		add_process(char **cmd, int *returns_code, t_redirection *r)
 	waitpid(pid, &(*returns_code), 0);
 	if (pid == 0)
 	{
+		signal(SIGINT, SIG_DFL);
+		signal(SIGQUIT, SIG_DFL);
 		open_redirection(r);
 		execve(cmd[0], cmd, env);
 		exit(pid);
@@ -53,9 +61,12 @@ int		exec_fork(char **cmd, t_redirection *r)
 	int	return_code;
 	int	pid;
 
-	signal(SIGINT, NULL);
+	signal(SIGINT, sighandler);
+	signal(SIGQUIT, sighandler);
 	pid = add_process(cmd, &return_code, r);
 	if (pid != -1)
 		kill(pid, SIGINT);
+	signal(SIGINT, SIG_IGN);
+	signal(SIGQUIT, SIG_IGN);
 	return (return_code);
 }

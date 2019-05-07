@@ -3,16 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: apruvost <apruvost@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/12 17:01:09 by aleduc            #+#    #+#             */
-/*   Updated: 2019/05/07 23:17:59 by aleduc           ###   ########.fr       */
+/*   Updated: 2019/05/08 01:25:41 by apruvost         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh21.h"
 #include "lexer.h"
 #include "parser.h"
+
+int		siginthandler(int signum)
+{
+	(void)signum;
+	ft_printf("oui\n");
+}
 
 int		main(int argc, char **argv, char **environ)
 {
@@ -28,6 +34,8 @@ int		main(int argc, char **argv, char **environ)
 	ast = NULL;
 	welcome();
 	init_prompt(&pos);
+	signal(SIGINT, SIG_IGN);
+	signal(SIGQUIT, SIG_IGN);
 	while (21)
 	{
 		if (argc && argv && environ)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: apruvost <apruvost@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/22 13:33:53 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/05/07 20:05:59 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/08 01:02:43 by apruvost         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,7 @@ char				**create_list_env(t_env *my_env, int env);
 ** tools_env.c
 */
 
+int					is_env_empty(char *key);
 int					create_new_path(t_env *my_env, char *key, char *value, int env);
 int					search_line_env(t_env *my_env, char *key, int env);
 char				*value_line_path(char *key, int env);

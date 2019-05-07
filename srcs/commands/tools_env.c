@@ -3,14 +3,30 @@
 /*                                                        :::      ::::::::   */
 /*   tools_env.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: apruvost <apruvost@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/22 17:29:22 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/05/07 19:30:34 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/08 01:01:53 by apruvost         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/env.h"
+
+int			is_env_empty(char *key)
+{
+	char *test;
+
+	test = value_line_path(key, 0);
+	if (test == NULL)
+		return (1);
+	else if (ft_strequ(test, ""))
+	{
+		ft_strdel(&test);
+		return (1);
+	}
+	ft_strdel(&test);
+	return (0);
+}
 
 int			create_new_path(t_env *my_env, char *key, char *value, int env)
 {
