@@ -93,6 +93,7 @@ char		*heredoc(char *heredoc, t_pos *pos)
 	temp = NULL;
 	input = NULL;
 	lstcursor = NULL;
+	raw_term_mode();
 	multi_push(&multi);
 	multi->input = NULL;
 	dpush(&multi->input, ' ');
@@ -101,6 +102,7 @@ char		*heredoc(char *heredoc, t_pos *pos)
 		init_heredoc(pos);
 	input = lst_to_str(&multi, input);
 	ddellist(multi);
+	default_term_mode();
 	return (input);
 }
 

@@ -14,7 +14,6 @@
 
 void			init_prompt(t_pos *pos)
 {
-	raw_term_mode();
 	pos->history = NULL;
 	dpush(&pos->history, 'X');
 	pos->clipboard = NULL;
@@ -92,6 +91,7 @@ char			*prompt(t_multi *multi, t_pos *pos) //NORME
 
 	multi = NULL;
 	inputstr = NULL;
+	raw_term_mode();
 	print_prompt();
 	multi_push(&multi);
 	multi->input = NULL;
@@ -111,5 +111,6 @@ char			*prompt(t_multi *multi, t_pos *pos) //NORME
 	}
 	ddellist(multi);
 	pos->historycount = 0;
+	default_term_mode();
 	return (inputstr) ? inputstr : NULL;
 }
