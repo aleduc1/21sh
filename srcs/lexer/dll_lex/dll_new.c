@@ -6,17 +6,11 @@
 /*   By: aleduc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/04 13:46:00 by aleduc            #+#    #+#             */
-/*   Updated: 2019/05/04 14:00:55 by aleduc           ###   ########.fr       */
+/*   Updated: 2019/05/07 18:45:45 by aleduc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
-
-/*
- * Token need to be allocated before the call to this function
- * Then this functions only copy content to another token inside the DLL
- * So we can free the token sent after this call
-*/
 
 t_lex	*new_node(t_token **tok)
 {

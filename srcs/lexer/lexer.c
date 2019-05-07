@@ -6,7 +6,7 @@
 /*   By: mbellaic <mbellaic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/12 17:21:29 by aleduc            #+#    #+#             */
-/*   Updated: 2019/05/06 22:34:29 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/07 18:58:25 by aleduc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	add_token(t_lex **lexer, t_token **token)
 	}
 }
 
-int		ft_isnumbers(char *str) /* Put this in libft */
+int		ft_isnumbers(char *str)
 {
 	int		i;
 
@@ -85,7 +85,8 @@ void	compare_types(t_tab_type **tab_of_type, t_token **token, char *word)
 	while ((*tab_of_type)[i].type != NUL)
 	{
 		if (!(ft_strcmp(word, (*tab_of_type)[i].str)))
-			*token = create_token((*tab_of_type)[i].str, (*tab_of_type)[i].type);
+			*token = create_token((*tab_of_type)[i].str, \
+					(*tab_of_type)[i].type);
 		i++;
 	}
 	if (!(*token))
@@ -115,11 +116,10 @@ t_token	*check_type(t_tab_type **tab_of_type, char *input, int start, int end)
 	word = ft_strsub(input, start, end - start);
 	compare_types(tab_of_type, &token, word);
 	ft_strdel(&word);
-	//ft_memdel((void **)&word);
 	return (token);
 }
 
-int		skip_whitespace(char *str, int i) /* Put this in libft */
+int		skip_whitespace(char *str, int i)
 {
 	int		cpy;
 
@@ -197,7 +197,6 @@ void	check_double(char *input, int *i)
 	}
 }
 
-
 int		handle_whitespace(char *input, int i, t_lex **lex)
 {
 	int		cpy;
@@ -210,7 +209,7 @@ int		handle_whitespace(char *input, int i, t_lex **lex)
 	{
 		tok = create_token(" ", SPACE);
 		add_token(lex, &tok);
-		clean_inside_token(&tok);	
+		clean_inside_token(&tok);
 	}
 	return (i);
 }
@@ -230,29 +229,29 @@ void	reading_input(char *input, t_lex **lex)
 	set_tab_types(&tab_of_type);
 	while (input[i])
 	{
-		i = handle_whitespace(input, i, lex); // skip found whitespace till word, create space token if needed
-		last_t = i;                    // save starting point of the next word in last_t
-		while (input[i] && !(to_check)) // If to_check == 1 we need to create a token
+		i = handle_whitespace(input, i, lex);
+		last_t = i;
+		while (input[i] && !(to_check))
 		{
-			if (ft_isspace(input[i]) && (i != last_t)) // If we reached EOW send it to create a token
-					to_check = 1;
-			else if (input[i] == '\"') // Create a string token of whats inside ""
+			if (ft_isspace(input[i]) && (i != last_t))
+				to_check = 1;
+			else if (input[i] == '\"')
 			{
 				if (i == last_t)
 					tok = handle_string(input, &i, &last_t);
 				to_check = 1;
 			}
-			else if (is_in_tab(&tab_of_type, input[i])) // If input[i] is | or ;
+			else if (is_in_tab(&tab_of_type, input[i]))
 			{
 				if (i == last_t)
 				{
-					if (dub_possible(input[i]))	// Checking if double char token needed
+					if (dub_possible(input[i]))
 						check_double(input, &i);
 					i++;
 				}
 				to_check = 1;
 			}
-			else  // if current char was part of a word, keep going till you reach space or \0
+			else
 			{
 				i++;
 				if (input[i] == '\0')
@@ -262,11 +261,11 @@ void	reading_input(char *input, t_lex **lex)
 				}
 			}
 		}
-		if (to_check)  // we enter this when we know we can create a token safely
+		if (to_check)
 		{
-			if (!tok) // If the token doesnt already exist (via handle_string), create it
+			if (!tok)
 				tok = check_type(&tab_of_type, input, last_t, i);
-			if (tok->data[0])		// When the token is created or was created in string fct, add it to the lex
+			if (tok->data[0])
 				add_token(lex, &tok);
 			ft_strdel(&tok->data);
 			ft_memdel((void **)&tok);

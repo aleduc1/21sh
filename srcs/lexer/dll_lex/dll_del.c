@@ -6,7 +6,7 @@
 /*   By: aleduc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/06 18:04:36 by aleduc            #+#    #+#             */
-/*   Updated: 2019/05/06 18:22:29 by aleduc           ###   ########.fr       */
+/*   Updated: 2019/05/07 18:45:10 by aleduc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ t_lex	*dlldelfirst(t_lex **head)
 	return (todel);
 }
 
-
 t_lex	*dlldellast(t_lex **tail)
 {
 	t_lex	*todel;
@@ -37,7 +36,7 @@ t_lex	*dlldellast(t_lex **tail)
 	return (todel);
 }
 
-t_lex 	*dlldelone(t_lex **head, char *data)
+t_lex	*dlldelone(t_lex **head, char *data)
 {
 	t_lex	*ptr;
 	t_lex	*todel;
