@@ -6,7 +6,7 @@
 /*   By: aleduc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/04 17:15:13 by aleduc            #+#    #+#             */
-/*   Updated: 2019/05/06 22:35:26 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/07 21:08:38 by aleduc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,15 +102,25 @@ struct	s_redir
 
 /* Array of function pointer */
 void	set_tab_types(t_tab_type **tab_of_types);
+void	set_tab_types_2(t_tab_type **tab_of_types);
 void	compare_types(t_tab_type **tab_of_types, t_token **token, char *word);
 
 
 /* Lexing */
 t_lex	*lexer(char *input);
 void	reading_input(char *input, t_lex **lex);
+int		handle_tok(t_token **tok, t_lex **lex);
 t_token	*check_type(t_tab_type **tab_of_types, char *input, int start, int end);
 int		handle_whitespace(char *input, int i, t_lex **lex);
 int		ft_isnumbers(char *str);
+int		is_in_tab(t_tab_type **tab_of_type, char c);
+int		is_amper(char c);
+int		is_lesser_greater(char c);
+int		is_hyph(char c);
+int		skip_whitespace(char *str, int i);
+int		dub_possible(char c);
+void	check_double(char *input, int *i);
+t_token	*handle_string(char *input, int *i, int *last_t);
 
 
 /* Creating token */
@@ -118,6 +128,7 @@ t_token	*create_token(char *str, t_type types);
 t_token	*create_command_token(t_lex **command, t_type types);
 t_token	*word_or_number(char *data);
 t_lex	*add_delim(t_lex **lex);
+void	add_token(t_lex **lexer, t_token **token);
 
 
 /* Parsing */

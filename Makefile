@@ -121,7 +121,11 @@ SRCS_NAMES = main.c \
 			 tools_env.c \
 			 remove_space_token.c \
 			 interpreter.c \
-			 clean_redir.c
+			 clean_redir.c \
+			 adding_token.c \
+			 handle_stuff.c \
+			 if_checks.c
+
 
 OBJS_NAMES = $(SRCS_NAMES:.c=.o)
 HEADERS_NAMES = sh21.h lexer.h parser.h env.h
