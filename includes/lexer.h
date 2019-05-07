@@ -6,7 +6,7 @@
 /*   By: aleduc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/04 17:15:13 by aleduc            #+#    #+#             */
-/*   Updated: 2019/05/07 21:08:38 by aleduc           ###   ########.fr       */
+/*   Updated: 2019/05/07 23:25:31 by aleduc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,43 +22,19 @@ typedef	struct s_redir		t_redir;
 
 enum	e_token_type
 {
-//	LPAR,
-//	RPAR,
-//	LBRACKET,
-//	RBRACKET,
-//	LBRACE,
-//	RBRACE,
-//	AMPERSAND,
-//	DAMPERSAND,
 	SPIPE,
-//	DPIPE,
 	SCOLON,
-//	DSCOLON,
 	LESS,
 	DLESS,
 	LESSAMP,
-//	DLESSHYPH,
 	GREAT,
 	DGREAT,
 	GREATPIPE,
 	GREATAMP,
 	LESSGREAT,
-	SQUOTE,
-	DQUOTE,
-//	TQUOTE,
-	TILDE,
-	DOLLARS,
-//	ASTERIX,
-//	HASHTAG,
-//	SLASH,
-//	BACKSLASH,
-//	NEWLINE,
-//	TAB,
 	SPACE,
 	AMPGREAT,
 	AMPLESS,
-//	AMPGREATHYPH,
-//	AMPLESSHYPH,
 	LESSAMPHYPH,
 	GREATAMPHYPH,
 	NUMBER,
@@ -69,7 +45,7 @@ enum	e_token_type
 	NUL,
 };
 
-struct s_token
+struct	s_token
 {
 	char	*data;
 	t_lex	*command;
@@ -84,7 +60,7 @@ struct	s_lex
 	t_lex	*prev;
 };
 
-struct s_tab_type
+struct	s_tab_type
 {
 	char	*str;
 	t_type	type;
@@ -100,16 +76,16 @@ struct	s_redir
 	int		close;
 };
 
-/* Array of function pointer */
 void	set_tab_types(t_tab_type **tab_of_types);
 void	set_tab_types_2(t_tab_type **tab_of_types);
 void	compare_types(t_tab_type **tab_of_types, t_token **token, char *word);
 
-
-/* Lexing */
 t_lex	*lexer(char *input);
 void	reading_input(char *input, t_lex **lex);
 int		handle_tok(t_token **tok, t_lex **lex);
+int		handle_classic_case(int *i, int *last_t, char **input);
+void	handle_word_case(int *i, char **input, int *last_t, int *to_check);
+int		handle_string_case(int *i, int *last_t, char **input, t_token **tok);
 t_token	*check_type(t_tab_type **tab_of_types, char *input, int start, int end);
 int		handle_whitespace(char *input, int i, t_lex **lex);
 int		ft_isnumbers(char *str);
@@ -122,34 +98,25 @@ int		dub_possible(char c);
 void	check_double(char *input, int *i);
 t_token	*handle_string(char *input, int *i, int *last_t);
 
-
-/* Creating token */
 t_token	*create_token(char *str, t_type types);
 t_token	*create_command_token(t_lex **command, t_type types);
 t_token	*word_or_number(char *data);
 t_lex	*add_delim(t_lex **lex);
 void	add_token(t_lex **lexer, t_token **token);
 
-
-/* Parsing */
-/* Implementing SimpleCommandToken */
 void	simple_command(t_lex **head);
 
-/* Delim */
 void	set_delim(t_lex **head, t_lex **start, t_lex **end);
 t_lex	*identify_delim(t_lex **start, t_lex **end);
 
-/* TypeCheck */
 int		type_to_ignore(t_type type);
 int		type_to_end_on(t_type type);
 
-/* Attach */
 void	detach(t_lex **start, t_lex **end);
 void	attach(t_lex **head, t_lex **node, t_lex **end);
 t_lex	*detaching(t_lex **start, t_lex **end);
 void	attach_redir_node(t_redir **redir_info, t_lex **before_start);
 
-/* Implementing Redirect struct */
 int		handle_redir(t_lex **lex);
 int		cycle_redirect(t_lex **command_node);
 int		handle_needed_redir(t_lex **command_node, t_lex **redir_node);
@@ -166,7 +133,6 @@ int		handle_heredoc(t_lex **command_node);
 int		handle_great_hyph(t_lex **command_node);
 int		handle_less_hyph(t_lex **command_node);
 
-/* Struct filling */
 t_redir	*redir_struct_great(t_lex **start);
 t_redir	*redir_struct_great_and(t_lex **start);
 t_redir	*redir_struct_and_great(t_lex **start);
@@ -178,44 +144,34 @@ t_redir	*redir_struct_heredoc(t_lex **start);
 t_redir	*redir_struct_great_hyph(t_lex **start);
 t_redir	*redir_struct_less_hyph(t_lex **start);
 
-/* Grammatical rules */
 void	start_grammar_great(t_lex **start);
 int		end_grammar_great(t_lex **start, t_lex **end, t_type type_check);
 int		is_a_redirect(t_type type);
 
-/* Removing Useless Space from the dll */
 void	remove_space_token(t_lex **lexer);
 void	remove_node(t_lex **node_cmd_space);
 int		is_only_space(t_lex **node_cmd);
 
-/* DLL functions */
-/* Creation */
 t_lex	*new_node(t_token **tok);
 t_lex	*new_redir_node(t_token **tok, t_redir **redir_info);
 
-/* Insertion */
 void	dllinsfront(t_lex **head, t_lex **node);
 void	dllinsback(t_lex **tail, t_lex **node);
 void	dllinsafter(t_lex **prev_node, t_lex **node);
 void	dllinsbefore(t_lex **next_node, t_lex **node);
 
-/* Iteration */
 void	dllprinthead(t_lex **head);
 void	dllprinttail(t_lex **tail);
 t_lex	*dlllastnode(t_lex **head);
 int		dlliter(t_lex **head);
 
-/* Deletion */
 t_lex	*dlldelfirst(t_lex **head);
 t_lex	*dlldellast(t_lex **tail);
 t_lex	*dlldelone(t_lex **head, char *data);
 void	dll_del_node(t_lex **node);
 
-
-/* Error */
 void	ft_error(int code_error);
 
-/* Cleaning */
 void	clean_lex(t_lex **lex);
 void	clean_inside_token(t_token **token);
 void	clean_redir(t_redir **redir);

@@ -43,7 +43,7 @@ VPATH = objs:\
 
 CC = gcc
 ifeq ($(DEBUG), yes)
-	CFLAGS = -Wall -Wextra  -g3 
+	CFLAGS = -Wall -Wextra -Werror -g3 
 else
 	CFLAGS = -Wall -Wextra
 endif
@@ -103,7 +103,6 @@ SRCS_NAMES = main.c \
 			 handle_less_hyph.c \
 			 rules_great.c \
 			 is_a_redirect.c \
-			 ft_error.c \
 			 ast_parser.c \
 			 tree_utils.c \
 			 cmd_parser.c \
@@ -124,6 +123,7 @@ SRCS_NAMES = main.c \
 			 clean_redir.c \
 			 adding_token.c \
 			 handle_stuff.c \
+			 reading_tools.c \
 			 if_checks.c
 
 

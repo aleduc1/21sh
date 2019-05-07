@@ -6,7 +6,7 @@
 /*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/12 17:01:09 by aleduc            #+#    #+#             */
-/*   Updated: 2019/05/07 21:11:26 by aleduc           ###   ########.fr       */
+/*   Updated: 2019/05/07 23:17:59 by aleduc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int		main(int argc, char **argv, char **environ)
 		if (argc && argv && environ)
 		{
 			input = prompt(multi_input, &pos);
-			if(input)
+			if (input)
 			{
 				lex = lexer(input);
 				if (lex)

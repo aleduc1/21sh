@@ -6,7 +6,7 @@
 /*   By: mbellaic <mbellaic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/12 17:21:37 by aleduc            #+#    #+#             */
-/*   Updated: 2019/05/07 18:51:14 by aleduc           ###   ########.fr       */
+/*   Updated: 2019/05/07 23:21:52 by aleduc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,31 +14,23 @@
 
 void	set_tab_types_2(t_tab_type **tab_of_types)
 {
-	(*tab_of_types)[8].str = "'";
-	(*tab_of_types)[8].type = SQUOTE;
-	(*tab_of_types)[9].str = "\"";
-	(*tab_of_types)[9].type = DQUOTE;
-	(*tab_of_types)[10].str = "~";
-	(*tab_of_types)[10].type = TILDE;
-	(*tab_of_types)[11].str = "$";
-	(*tab_of_types)[11].type = DOLLARS;
-	(*tab_of_types)[12].str = " ";
-	(*tab_of_types)[12].type = SPACE;
-	(*tab_of_types)[13].str = "&>";
-	(*tab_of_types)[13].type = AMPGREAT;
-	(*tab_of_types)[14].str = "&<";
-	(*tab_of_types)[14].type = AMPLESS;
-	(*tab_of_types)[15].str = "<&-";
-	(*tab_of_types)[15].type = LESSAMPHYPH;
-	(*tab_of_types)[16].str = ">&-";
-	(*tab_of_types)[16].type = GREATAMPHYPH;
-	(*tab_of_types)[17].str = NULL;
-	(*tab_of_types)[17].type = NUL;
+	(*tab_of_types)[8].str = " ";
+	(*tab_of_types)[8].type = SPACE;
+	(*tab_of_types)[9].str = "&>";
+	(*tab_of_types)[9].type = AMPGREAT;
+	(*tab_of_types)[10].str = "&<";
+	(*tab_of_types)[10].type = AMPLESS;
+	(*tab_of_types)[11].str = "<&-";
+	(*tab_of_types)[11].type = LESSAMPHYPH;
+	(*tab_of_types)[12].str = ">&-";
+	(*tab_of_types)[12].type = GREATAMPHYPH;
+	(*tab_of_types)[13].str = NULL;
+	(*tab_of_types)[13].type = NUL;
 }
 
 void	set_tab_types(t_tab_type **tab_of_types)
 {
-	(*tab_of_types) = (t_tab_type *)ft_memalloc(sizeof(t_tab_type) * 18);
+	(*tab_of_types) = (t_tab_type *)ft_memalloc(sizeof(t_tab_type) * 14);
 	(*tab_of_types)[0].str = "|";
 	(*tab_of_types)[0].type = SPIPE;
 	(*tab_of_types)[1].str = ";";
