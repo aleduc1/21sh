@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: apruvost <apruvost@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/13 16:33:26 by aleduc            #+#    #+#             */
-/*   Updated: 2019/05/06 00:57:32 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/08 00:28:07 by apruvost         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,4 +160,5 @@ void				ft_reverse_tablo(char (*lst)[BUF_S]);
 void				ft_strsub_tab_fix(char (*lst)[BUF_S], char src[BUF_S], int start,
 					int len);
 void				ft_deplace(char (*lst)[BUF_S]);
+int					ft_isstrnum(char *s);
 #endif

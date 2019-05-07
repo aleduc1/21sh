@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   other_tools.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: apruvost <apruvost@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/22 17:57:48 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/05/07 00:13:59 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/08 00:26:30 by apruvost         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,11 +111,7 @@ int			is_builtin(char **argv, t_redirection *r)
 	else if (ft_strequ(argv[0], "cd"))
 		verif = 1;
 	else if (ft_strequ(argv[0], "exit"))
-	{
-		default_term_mode();
-		get_env(1);
-		exit(0);
-	}
+		verif = bt_exit(argv);
 	else
 		verif = -1;
 	return (verif);

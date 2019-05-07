@@ -36,7 +36,8 @@ VPATH = objs:\
 		srcs/parser/command:\
 		srcs/commands:\
 		srcs/cleaning:\
-		srcs/interpreter
+		srcs/interpreter\
+		srcs/builtins
 # ------------------ #
 # Compiler and flags #
 # ------------------ #
@@ -124,11 +125,12 @@ SRCS_NAMES = main.c \
 			 adding_token.c \
 			 handle_stuff.c \
 			 reading_tools.c \
-			 if_checks.c
+			 if_checks.c \
+			 bt_exit.c
 
 
 OBJS_NAMES = $(SRCS_NAMES:.c=.o)
-HEADERS_NAMES = sh21.h lexer.h parser.h env.h
+HEADERS_NAMES = sh21.h lexer.h parser.h env.h builtins.h
 LIBS_NAMES = libft.a
 
 OBJ = $(addprefix $(OBJDIR), $(OBJS_NAMES))
