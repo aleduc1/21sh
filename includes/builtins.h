@@ -3,5 +3,6 @@
 
 
 int		bt_exit(char **av);
+int		bt_echo(char **av);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: apruvost <apruvost@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/26 14:19:28 by apruvost          #+#    #+#             */
-/*   Updated: 2019/05/07 16:29:16 by apruvost         ###   ########.fr       */
+/*   Updated: 2019/05/08 00:45:45 by apruvost         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static int	echo_arg(char **av)
 ** Simple echo builtin
 */
 
-int			ft_echo(char **av)
+int			bt_echo(char **av)
 {
 	int	i;
 	int	arg_n;

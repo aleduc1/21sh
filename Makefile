@@ -125,7 +125,8 @@ SRCS_NAMES = main.c \
 			 handle_stuff.c \
 			 reading_tools.c \
 			 if_checks.c \
-			 bt_exit.c
+			 bt_exit.c \
+			 bt_echo.c
 
 
 OBJS_NAMES = $(SRCS_NAMES:.c=.o)
