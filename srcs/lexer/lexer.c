@@ -6,7 +6,7 @@
 /*   By: mbellaic <mbellaic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/12 17:21:29 by aleduc            #+#    #+#             */
-/*   Updated: 2019/05/07 23:18:47 by aleduc           ###   ########.fr       */
+/*   Updated: 2019/05/07 23:42:48 by aleduc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	reading_loop(char *input, t_lex **lex, t_token **tok, t_tab_type **t)
 		{
 			if (ft_isspace(input[i]) && (i != last_t))
 				to_check = 1;
-			else if (input[i] == '\"')
+			else if (input[i] == '\"' || input[i] == '\'')
 				to_check = handle_string_case(&i, &last_t, &input, tok);
 			else if (is_in_tab(t, input[i]))
 				to_check = handle_classic_case(&i, &last_t, &input);

@@ -6,7 +6,7 @@
 /*   By: aleduc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/07 20:56:21 by aleduc            #+#    #+#             */
-/*   Updated: 2019/05/07 20:56:54 by aleduc           ###   ########.fr       */
+/*   Updated: 2019/05/07 23:42:07 by aleduc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int		dub_possible(char c)
 	return (0);
 }
 
-t_token	*handle_string(char *input, int *i, int *last_t)
+t_token	*handle_string(char *input, int *i, int *last_t, char c)
 {
 	char	*word;
 	t_token	*tok;
@@ -37,7 +37,7 @@ t_token	*handle_string(char *input, int *i, int *last_t)
 	word = NULL;
 	tok = NULL;
 	(*last_t) = ++(*i);
-	while (input[(*i)] != '\"')
+	while (input[(*i)] != c)
 		(*i)++;
 	word = ft_strsub(input, *last_t, *i - *last_t);
 	tok = create_token(word, WORD);

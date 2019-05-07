@@ -6,7 +6,7 @@
 /*   By: aleduc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/07 22:44:50 by aleduc            #+#    #+#             */
-/*   Updated: 2019/05/07 22:56:27 by aleduc           ###   ########.fr       */
+/*   Updated: 2019/05/07 23:42:46 by aleduc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,11 @@ void	handle_word_case(int *i, char **input, int *last_t, int *to_check)
 int		handle_string_case(int *i, int *last_t, char **input, t_token **tok)
 {
 	if ((*i) == (*last_t))
-		(*tok) = handle_string((*input), i, last_t);
+	{
+		if ((*input)[(*i)] == '\"')
+			(*tok) = handle_string((*input), i, last_t, '\"');
+		else
+			(*tok) = handle_string((*input), i, last_t, '\'');
+	}
 	return (1);
 }
