@@ -6,12 +6,11 @@
 /*   By: mbellaic <mbellaic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/12 17:21:29 by aleduc            #+#    #+#             */
-/*   Updated: 2019/05/07 18:58:25 by aleduc           ###   ########.fr       */
+/*   Updated: 2019/05/07 20:49:19 by aleduc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
-#include "libft.h"
 
 t_lex	*add_delim(t_lex **lex)
 {

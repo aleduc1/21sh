@@ -6,7 +6,7 @@
 /*   By: aleduc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/04 16:04:00 by aleduc            #+#    #+#             */
-/*   Updated: 2019/05/05 18:09:02 by aleduc           ###   ########.fr       */
+/*   Updated: 2019/05/07 20:46:33 by aleduc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,13 @@
 
 void	detach(t_lex **start, t_lex **end)
 {
-	t_lex *BeforeStart;
-	t_lex *BeforeEnd;
+	t_lex *beforestart;
+	t_lex *beforeend;
 
-	BeforeStart = (*start)->prev;
-	BeforeEnd = (*end)->prev;
-	BeforeStart->next = NULL;
-	BeforeEnd->next = NULL;
+	beforestart = (*start)->prev;
+	beforeend = (*end)->prev;
+	beforestart->next = NULL;
+	beforeend->next = NULL;
 	(*start)->prev = NULL;
 	(*end)->prev = NULL;
 }
@@ -74,12 +74,6 @@ void	attach_redir_node(t_redir **redir_info, t_lex **before_start)
 
 	tok = create_token("redir", REDIR);
 	redir_node = new_redir_node(&tok, redir_info);
-	ft_putendl("=======REDIR=======");					/* ************ */
-	ft_putstr("TOKEN = ");								/*				*/
-	ft_putendl(redir_node->token->data);				/*	Debugging	*/
-	ft_putendl("\nSTRUCT CONTENT:");					/*				*/
-	print_struct(&redir_node->redir);					/* ************ */
-	ft_putendl("==================\n");
 	dllinsafter(before_start, &redir_node);
 	clean_inside_token(&tok);
 }

@@ -6,7 +6,7 @@
 /*   By: aleduc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/05 16:37:02 by aleduc            #+#    #+#             */
-/*   Updated: 2019/05/05 17:59:02 by aleduc           ###   ########.fr       */
+/*   Updated: 2019/05/07 20:34:40 by aleduc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,9 @@
 
 int		is_a_redirect(t_type t)
 {
-	if (t == GREAT || t == GREATAMP || t == AMPGREAT || t == DGREAT || t == LESS || t == LESSAMP || t == AMPLESS || t == DLESS || t == LESSAMPHYPH || t == GREATAMPHYPH)
+	if (t == GREAT || t == GREATAMP || t == AMPGREAT || t == DGREAT \
+			|| t == LESS || t == LESSAMP || t == AMPLESS || t == DLESS \
+			|| t == LESSAMPHYPH || t == GREATAMPHYPH)
 		return (1);
 	return (0);
 }

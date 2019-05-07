@@ -6,7 +6,7 @@
 /*   By: aleduc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/04 17:39:39 by aleduc            #+#    #+#             */
-/*   Updated: 2019/05/05 17:02:52 by aleduc           ###   ########.fr       */
+/*   Updated: 2019/05/07 20:35:49 by aleduc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ t_redir	*redir_struct_and_great(t_lex **start)
 	if (ptr->token->type == SPACE)
 		ptr = ptr->next;
 	if (ptr)
-			redir_info->filename = ft_strdup(ptr->token->data);
+		redir_info->filename = ft_strdup(ptr->token->data);
 	return (redir_info);
 }
 

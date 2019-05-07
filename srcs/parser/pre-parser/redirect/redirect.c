@@ -6,7 +6,7 @@
 /*   By: aleduc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/03 11:00:04 by aleduc            #+#    #+#             */
-/*   Updated: 2019/05/05 17:55:43 by aleduc           ###   ########.fr       */
+/*   Updated: 2019/05/07 20:43:25 by aleduc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ void	ft_default(t_redir **redir_info)
 
 	ptr = *redir_info;
 	t = ptr->type;
-	if (t == GREAT || t == LESSAMP || t == DGREAT || t == GREATAMPHYPH || t == LESSAMPHYPH)
+	if (t == GREAT || t == LESSAMP || t == DGREAT || t == GREATAMPHYPH \
+			|| t == LESSAMPHYPH)
 		ptr->src_fd[0] = ft_strdup("1");
 	else if (t == GREATAMP || t == AMPGREAT || t == AMPLESS)
 	{
@@ -29,18 +30,6 @@ void	ft_default(t_redir **redir_info)
 	}
 	else if (t == LESS || t == DLESS)
 		ptr->src_fd[0] = ft_strdup("0");
-}
-
-/*
-** Testing fct
-*/
-
-void	print_struct(t_redir **redir_info)
-{
- 	t_redir	*ptr;
-
- 	ptr = *redir_info;
- 	printf("src_fd : %s\ndest_fd : %s\ntype : %d\nfilename : %s\nHeredoc : %s\nclose : %d\n", ptr->src_fd[0], ptr->dest_fd, ptr->type, ptr->filename, ptr->heredoc, ptr->close);
 }
 
 int		handle_needed_redir(t_lex **command_node, t_lex **redir_node)
@@ -102,10 +91,7 @@ int		handle_redir(t_lex **lex)
 		if (ptr->token->type == CMD)
 		{
 			if (cycle_redirect(&ptr))
-			{
-				ft_putendl("Never in this shit");
 				return (1);
-			}
 		}
 		ptr = ptr->next;
 	}

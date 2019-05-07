@@ -6,7 +6,7 @@
 /*   By: aleduc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/04 16:00:07 by aleduc            #+#    #+#             */
-/*   Updated: 2019/05/05 18:26:17 by aleduc           ###   ########.fr       */
+/*   Updated: 2019/05/07 20:45:04 by aleduc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,28 +24,16 @@ int		end_grammar_great(t_lex **start, t_lex **end, t_type type_check)
 	if ((*end)->next)
 		(*end) = (*end)->next;
 	else
-	{
-		ft_putendl("Syntax error near unexpected token after I/O redirect");
 		return (1);
-	}
 	if ((*end) && (*end)->token->type == type_check && (*end)->next)
 		(*end) = (*end)->next;
 	if ((*end) && (*end)->token->type == type_check && !((*end)->next))
-	{
-		ft_putendl("Syntax error near unexpected token after I/O redirect");
 		return (1);
-	}
 	if (((*end)->token->type == SPACE) && ((*end)->next))
 		(*end) = (*end)->next;
 	if ((*end)->token->type == SPACE && !((*end)->next))
-	{
-		ft_putendl("Syntax error near unexpected token after I/O redirect");
 		return (1);
-	}
 	if ((*end)->token->type != NUMBER && (*end)->token->type != WORD)
-	{
-		ft_putendl("Syntax error near unexpected token after I/O redirect");
 		return (1);
-	}
 	return (0);
 }

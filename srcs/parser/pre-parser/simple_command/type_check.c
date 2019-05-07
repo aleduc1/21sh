@@ -1,8 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   type_check.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aleduc <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/05/07 20:46:40 by aleduc            #+#    #+#             */
+/*   Updated: 2019/05/07 20:47:19 by aleduc           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "lexer.h"
 
 /*
 ** Made a separate function to be able to use it for start and end
-*/ 
+*/
 
 int		is_operator(t_type type)
 {
@@ -26,7 +38,7 @@ int		type_to_end_on(t_type type)
 ** We want to start on the node after those type
 */
 
-int		type_to_ignore(t_type	type)
+int		type_to_ignore(t_type type)
 {
 	if (is_operator(type) || type == DELIM || type == CMD)
 		return (1);
