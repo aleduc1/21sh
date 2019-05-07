@@ -6,7 +6,7 @@
 /*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/22 13:33:53 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/05/07 00:19:53 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/07 20:05:59 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,13 +45,6 @@ typedef struct		s_env
 	struct s_env	*next;
 }					t_env;
 
-typedef struct		s_arg
-{
-	char			*key;
-	char			*value;
-	struct s_arg	*next;
-}					t_arg;
-
 typedef struct	s_commands
 {
 	char				**command;
@@ -74,28 +67,19 @@ void				delete_redirection(t_redirection **r);
 int					gest_return(int verif);
 int					is_builtin(char **argv, t_redirection *r);
 int					is_in_path(char ***command);
-char				**transfer_arg(t_arg *lst_arg);
-
-/*
-** find_var.c
-*/
-
-t_arg				*manage_arg_env(char **arg, t_env *my_env);
 
 /*
 ** parser.c
 */
 
-void				parser_var(char ***value, t_env *my_env);
-void				debug_arg(t_arg *arg);
+void				parser_var(char ***value);
 
 /*
 ** manage_env.c
 */
 
-int					edit_set(t_arg *arg);
-int					edit_set_cmd(char **argv);
-int					edit_setenv(char **argv);
+int					edit_set(char *key, char *value);
+int					edit_setenv(char *key, char *value);
 int					edit_export(char *key);
 int					ft_unsetenv(char *key);
 int					ft_unset(char *key);
@@ -105,9 +89,9 @@ char				**create_list_env(t_env *my_env, int env);
 ** tools_env.c
 */
 
-int					create_new_path(t_env *my_env, t_arg *arg, int env);
+int					create_new_path(t_env *my_env, char *key, char *value, int env);
 int					search_line_env(t_env *my_env, char *key, int env);
-char				*value_line_path(t_env *my_env, char *key, int env);
+char				*value_line_path(char *key, int env);
 
 /*
 ** builtin_env.c
@@ -124,11 +108,8 @@ int     builtin_env(t_redirection *r);
 t_env				*init_env(void);
 void				free_env(t_env **env);
 int					free_maillon_env(char *key, int env);
-t_arg				*init_arg(void);
-void				free_arg(t_arg **lst_arg);
-t_arg				*create_arg(char *key, char *value);
 t_env				*init_maillon_env(void);
-void	init_variable(void);
+void				init_variable(void);
 
 /*
 ** manage_file.c
@@ -142,8 +123,8 @@ int					file_exist(char *name);
 ** execute_command.c
 */
 
-int     			add_process(char *(*cmd), t_token *lex, int *returns_code, t_redirection *r);
-int					exec_fork(char **cmd, t_token *lex, t_redirection *r);
+int     			add_process(char *(*cmd), int *returns_code, t_redirection *r);
+int					exec_fork(char **cmd, t_redirection *r);
 void				open_redirection(t_redirection *r);
 void				close_redirection(t_env *my_env, int old_fd[3]);
 
@@ -159,10 +140,10 @@ void				delete_commands(t_commands **cmds);
 */
 
 int		ft_simple_command(char **argv, t_token *lex);
-//int		ft_pipe_double(t_cmd *cmds, t_env **my_env);
 int		ft_pipe(char **argv, t_token *lex, int end_pipe);
-//int		ft_ampersand(t_cmd *cmds, int num_process, t_env **my_env);
-//int		ft_ampersand_double(t_cmd *cmds, t_env **my_env);
+int		ft_pipe_double(char **argv, t_token *token);
+int		ft_ampersand(char **argv, t_token *token, int num_process);
+int		ft_ampersand_double(char **argv, t_token *token);
 
 
 t_env		*get_env(int is_end);

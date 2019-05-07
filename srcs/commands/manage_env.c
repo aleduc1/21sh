@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   manage_env.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sbelondr <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/22 14:54:24 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/05/06 04:57:00 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/07 19:07:32 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ int			edit_export(char *key)
 	return (verif);
 }
 
-int			edit_set(t_arg *arg)
+int			edit_set(char *key, char *value)
 {
 	t_env	*head;
 	t_env	*my_env;
@@ -93,44 +93,28 @@ int			edit_set(t_arg *arg)
 	verif = 0;
 	while (my_env->next)
 	{
-		if (ft_strequ(my_env->key, arg->key))
+		if (ft_strequ(my_env->key, key))
 		{
 			ft_strdel(&((my_env)->value));
-			my_env->value = ft_strdup(arg->value ? arg->value : "");
+			my_env->value = ft_strdup(value ? value : "");
 			verif = 1;
 			break ;
 		}
 		my_env = my_env->next;
 	}
 	if (verif == 0)
-		verif = create_new_path(my_env, arg, 0);
+		verif = create_new_path(my_env, key, value, 0);
 	my_env = head;
 	return (verif);
 }
 
-int			edit_set_cmd(char **argv)
-{
-	int		verif;
-	t_arg	*arg;
-
-	arg = create_arg(argv[1], argv[2]);
-	verif = edit_set(arg);
-	free_arg(&arg);
-	return (verif);
-}
-
-//int			ft_edit_set_str(char *key, char *value_pwd)
-
-int			edit_setenv(char **argv)
+int			edit_setenv(char *key, char *value)
 {
 	int	verif;
-	t_arg	*arg;
 
-	arg = create_arg(argv[1], argv[2]);
-	verif = edit_set(arg);
-	if (arg->key)
-		edit_export(arg->key);
-	free_arg(&arg);
+	verif = edit_set(key, value);
+	if (verif != -1)
+		verif = edit_export(key);
 	return (verif);
 }
 

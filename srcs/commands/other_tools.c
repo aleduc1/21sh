@@ -6,42 +6,11 @@
 /*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/22 17:57:48 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/05/07 00:13:59 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/07 19:36:41 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/env.h"
-
-/*
-** creer la commande depuis la struct t_arg pour pouvoir execve
-*/
-
-char		**transfer_arg(t_arg *lst_arg)
-{
-	int		i;
-	t_arg	*head;
-	char	**split;
-
-	i = 0;
-	head = lst_arg;
-	while (lst_arg)
-	{
-		i++;
-		lst_arg = lst_arg->next;
-	}
-	if (!(split = (char**)malloc(sizeof(char*) * (i + 1))))
-		return (NULL);
-	i = -1;
-	lst_arg = head;
-	while (lst_arg->value)
-	{
-		split[++i] = ft_strdup(lst_arg->value);
-		lst_arg = lst_arg->next;
-	}
-	split[++i] = NULL;
-	lst_arg = head;
-	return (split);
-}
 
 static int	path_of_commands(char ***command, char **split)
 {
@@ -78,7 +47,7 @@ int			is_in_path(char ***command)
 		return (-1);
 	if (access((*command)[0], F_OK) >= 0 && access((*command)[0], X_OK) >= 0)
 		return (1);
-	str = value_line_path(get_env(0), "PATH", 0);
+	str = value_line_path("PATH", 0);
 	if (!str)
 		return (-1);
 	split = ft_strsplit(str, ':');
@@ -97,7 +66,7 @@ int			is_builtin(char **argv, t_redirection *r)
 	else if (ft_strequ(argv[0], "set"))
 		verif = builtin_set(r);
 	else if (ft_strequ(argv[0], "setenv"))
-		verif = edit_setenv(argv);
+		verif = edit_setenv(argv[1], argv[2]);
 	else if (ft_strequ(argv[0], "unsetenv"))
 		verif = ft_unsetenv(argv[1]);
 	else if (ft_strequ(argv[0], "export"))
@@ -105,7 +74,7 @@ int			is_builtin(char **argv, t_redirection *r)
 	else if (ft_strequ(argv[0], "unset"))
 		verif = ft_unset(argv[1]);
 	else if (ft_strequ(argv[0], "editset"))
-		verif = edit_set_cmd(argv);
+		verif = edit_set(argv[1], argv[2]);
 	else if (ft_strequ(argv[0], "echo"))
 		verif = -1;
 	else if (ft_strequ(argv[0], "cd"))
@@ -123,14 +92,12 @@ int			is_builtin(char **argv, t_redirection *r)
 
 int			gest_return(int verif)
 {
-	t_arg	*arg;
 	char	*value;
 
+	verif = (verif == 256 || verif < 0) ? -1 : 0;
 	value = ft_itoa(verif);
-	arg = create_arg("?", value);
+	verif = edit_set("?", value);
 	ft_strdel(&value);
-	//verif = edit_set(arg);
-	free_arg(&arg);
 	return (verif);
 }
 

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser.c                                           :+:      :+:    :+:   */
+/*   parser_env.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sbelondr <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/07 10:31:02 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/05/05 07:54:27 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/07 23:37:54 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,11 @@ static void	copy_value(char *src, char **dst, int start, int end)
 	ft_strdel(&tmp);
 }
 
-static char	*manage_var(char *str, t_env *my_env)
+static char	*manage_var(char *str)
 {
 	char	*final;
 
-	final = value_line_path(my_env, str, 0);
+	final = value_line_path(str, 0);
 	if (!final)
 		final = ft_strdup("");
 	return (final);
@@ -40,7 +40,7 @@ static int	manage_home(char **dst, int index, t_env *my_env)
 	char	*data;
 
 	index += 1;
-	data = manage_var("HOME", my_env);
+	data = manage_var("HOME");
 	ft_strdel(&(*dst));
 	(*dst) = ft_strdup(data);
 	return (index);
@@ -51,7 +51,7 @@ static int	modify_dst(char *tmp, t_env *my_env, char **dst)
 	char	*stock;
 	char	*final;
 
-	stock = manage_var(tmp, my_env);
+	stock = manage_var(tmp);
 	ft_strdel(&tmp);
 	final = ft_strjoin(*dst, stock);
 	ft_strdel(&(*dst));
@@ -120,16 +120,18 @@ static char	*search_var(char *src, t_env *my_env)
 	return (dst);
 }
 
-void		parser_var(char ***value, t_env *my_env)
+void		parser_var(char ***value)
 {
+	t_env	*my_env;
 	char	*tmp;
 	int		i;
 
 	i = -1;
+	my_env = get_env(0);
 	while ((*value)[++i])
 	{
 		if (ft_strchr_exist((*value)[i], '$') ||
-				ft_strchr_exist((*value)[i], '~'))
+				(*value)[i][0] == '~')
 		{
 			tmp = search_var((*value)[i], my_env);
 			ft_strdel(&((*value)[i]));

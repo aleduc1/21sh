@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   list_env.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sbelondr <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/22 17:48:23 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/05/05 07:43:50 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/07 19:56:02 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,19 +25,11 @@ t_env		*init_maillon_env(void)
 	return (lst);
 }
 
-void	init_variable(void)
+void		init_variable(void)
 {
-	t_arg		*arg;
-
-	arg = create_arg("?", "0");
-	edit_set(arg);
-	free_arg(&arg);
-	arg = create_arg("FD_OUTPUT", "1");
-	edit_set(arg);
-	free_arg(&arg);
-	arg = create_arg("FD_ERROR_OUTPUT", "2");
-	edit_set(arg);
-	free_arg(&arg);
+	edit_set("?", "0");
+	edit_set("FD_OUTPUT", "1");
+	edit_set("FD_ERROR_OUTPUT", "2");
 }
 
 t_env		*init_env(void)
@@ -69,12 +61,10 @@ t_env		*init_env(void)
 int			free_maillon_env(char *key, int env)
 {
 	int		verif;
-	t_env	*head;
 	t_env	*my_env;
 	t_env	*last;
 
 	my_env = get_env(0);
-	head = my_env;
 	last = NULL;
 	verif = 0;
 	while (my_env->next)
@@ -93,7 +83,6 @@ int			free_maillon_env(char *key, int env)
 		last = my_env;
 		my_env = my_env->next;
 	}
-	my_env = head;
 	return (verif);
 }
 
