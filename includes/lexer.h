@@ -207,5 +207,6 @@ void	ft_error(int code_error);
 /* Cleaning */
 void	clean_lex(t_lex **lex);
 void	clean_inside_token(t_token **token);
+void	clean_redir(t_redir **redir);
 
 #endif

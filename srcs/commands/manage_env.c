@@ -12,17 +12,22 @@
 
 #include "../../includes/env.h"
 
-static int	count_env(t_env *my_env, int env)
+static int	count_env(int env)
 {
-	int	len;
+	t_env	*my_env;
+	t_env	*head;
+	int		len;
 
 	len = 0;
+	my_env = get_env(0);
+	head = my_env;
 	while (my_env->next)
 	{
 		if (env == 0 || (env == 1 && my_env->see_env == 1))
 			len++;
 		my_env = my_env->next;
 	}
+	my_env = head;
 	return (len);
 }
 
@@ -34,7 +39,7 @@ char		**create_list_env(t_env *my_env, int env)
 	int		len;
 
 	head = my_env;
-	len = count_env(my_env, env);
+	len = count_env(env);
 	my_env = head;
 	if (!(dst = (char**)malloc(sizeof(char*) * (len + 1))))
 		return (NULL);
@@ -54,100 +59,108 @@ char		**create_list_env(t_env *my_env, int env)
 	return (dst);
 }
 
-int			edit_export(char *key, t_env **my_env)
+int			edit_export(char *key)
 {
 	int		verif;
 	t_env	*head;
+	t_env	*my_env;
 
-	head = (*my_env);
+	my_env = get_env(0);
+	head = my_env;
 	verif = 0;
-	while ((*my_env)->next)
+	while (my_env->next)
 	{
-		if (ft_strequ((*my_env)->key, key))
+		if (ft_strequ(my_env->key, key))
 		{
 			verif = 1;
-			(*my_env)->see_env = 1;
+			my_env->see_env = 1;
 			break ;
 		}
-		(*my_env) = (*my_env)->next;
+		my_env = my_env->next;
 	}
-	(*my_env) = head;
+	my_env = head;
 	return (verif);
 }
 
-int			edit_set(t_arg *arg, t_env **my_env)
+int			edit_set(t_arg *arg)
 {
 	t_env	*head;
+	t_env	*my_env;
 	int		verif;
 
-	head = (*my_env);
+	my_env = get_env(0);
+	head = my_env;
 	verif = 0;
-	while ((*my_env)->next)
+	while (my_env->next)
 	{
-		if (ft_strequ((*my_env)->key, arg->key))
+		if (ft_strequ(my_env->key, arg->key))
 		{
-			ft_strdel(&((*my_env)->value));
-			(*my_env)->value = ft_strdup(arg->value ? arg->value : "");
+			ft_strdel(&((my_env)->value));
+			my_env->value = ft_strdup(arg->value ? arg->value : "");
 			verif = 1;
 			break ;
 		}
-		(*my_env) = (*my_env)->next;
+		my_env = my_env->next;
 	}
 	if (verif == 0)
-		verif = create_new_path(*my_env, arg, 0);
-	(*my_env) = head;
+		verif = create_new_path(my_env, arg, 0);
+	my_env = head;
 	return (verif);
 }
-/*
-int			edit_set_cmd(t_cmd *cmd, t_env **my_env)
+
+int			edit_set_cmd(char **argv)
 {
 	int		verif;
 	t_arg	*arg;
 
-	arg = create_arg(cmd->argv[1], cmd->argv[2]);
-	verif = edit_set(arg, &(*my_env));
+	arg = create_arg(argv[1], argv[2]);
+	verif = edit_set(arg);
 	free_arg(&arg);
 	return (verif);
 }
-*//*
-int			edit_setenv(t_cmd *cmd, t_env **my_env)
+
+//int			ft_edit_set_str(char *key, char *value_pwd)
+
+int			edit_setenv(char **argv)
 {
 	int	verif;
 	t_arg	*arg;
 
-	arg = create_arg(cmd->argv[1], cmd->argv[2]);
-	verif = edit_set(arg, &(*my_env));
+	arg = create_arg(argv[1], argv[2]);
+	verif = edit_set(arg);
 	if (arg->key)
-		edit_export(arg->key, &(*my_env));
+		edit_export(arg->key);
 	free_arg(&arg);
 	return (verif);
 }
-*/
-int			ft_unsetenv(char *key, t_env **my_env)
+
+int			ft_unsetenv(char *key)
 {
 	int		verif;
 	t_env	*head;
+	t_env	*my_env;
 
-	head = (*my_env);
+	my_env = get_env(0);
+	head = my_env;
 	verif = 0;
-	while ((*my_env)->next)
+	while (my_env->next)
 	{
-		if (ft_strequ((*my_env)->key, key))
+		if (ft_strequ(my_env->key, key))
 		{
-			(*my_env)->see_env = 0;
+			my_env->see_env = 0;
 			verif = 1;
 			break ;
 		}
-		(*my_env) = (*my_env)->next;
+		my_env = my_env->next;
 	}
-	(*my_env) = head;
+	my_env = head;
 	return (verif);
 }
 
-int			ft_unset(char *key, t_env **my_env)
+int			ft_unset(char *key)
 {
 	int	verif;
 
-	verif = free_maillon_env(&(*my_env), key, 0);
+	verif = free_maillon_env(key, 0);
 	return (verif);
 }

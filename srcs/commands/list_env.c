@@ -25,18 +25,18 @@ t_env		*init_maillon_env(void)
 	return (lst);
 }
 
-static void	init_variable(t_env **my_env)
+void	init_variable(void)
 {
 	t_arg		*arg;
 
 	arg = create_arg("?", "0");
-	edit_set(arg, &(*my_env));
+	edit_set(arg);
 	free_arg(&arg);
 	arg = create_arg("FD_OUTPUT", "1");
-	edit_set(arg, &(*my_env));
+	edit_set(arg);
 	free_arg(&arg);
 	arg = create_arg("FD_ERROR_OUTPUT", "2");
-	edit_set(arg, &(*my_env));
+	edit_set(arg);
 	free_arg(&arg);
 }
 
@@ -63,36 +63,37 @@ t_env		*init_env(void)
 		current->next = init_maillon_env();
 		current = current->next;
 	}
-	init_variable(&current);
 	return (head);
 }
 
-int			free_maillon_env(t_env **my_env, char *key, int env)
+int			free_maillon_env(char *key, int env)
 {
 	int		verif;
 	t_env	*head;
+	t_env	*my_env;
 	t_env	*last;
 
-	head = (*my_env);
+	my_env = get_env(0);
+	head = my_env;
 	last = NULL;
 	verif = 0;
-	while ((*my_env)->next)
+	while (my_env->next)
 	{
-		if (ft_strequ((*my_env)->key, key) && (env == 0 ||
-					(env == 1 && (*my_env)->see_env == 1)))
+		if (ft_strequ(my_env->key, key) && (env == 0 ||
+					(env == 1 && my_env->see_env == 1)))
 		{
-			last->next = (*my_env)->next;
-			ft_strdel(&((*my_env)->key));
-			ft_strdel(&((*my_env)->value));
-			free(*my_env);
-			(*my_env) = NULL;
+			last->next = my_env->next;
+			ft_strdel(&(my_env->key));
+			ft_strdel(&(my_env->value));
+			free(my_env);
+			my_env = NULL;
 			verif = 1;
 			break ;
 		}
-		last = (*my_env);
-		(*my_env) = (*my_env)->next;
+		last = my_env;
+		my_env = my_env->next;
 	}
-	(*my_env) = head;
+	my_env = head;
 	return (verif);
 }
 

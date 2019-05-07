@@ -24,6 +24,16 @@ t_redirection	*init_redirection(void)
 	return (r);
 }
 
+int				send_dev_null(void)
+{
+	int	fd;
+
+	fd = file_exist("/dev/null");
+	if (fd > -1)
+		fd = open("/dev/null", O_RDWR);
+	return (fd);
+}
+
 t_redirection	*fill_redirection(t_token *t)
 {
 	int				num_src;
@@ -38,7 +48,9 @@ t_redirection	*fill_redirection(t_token *t)
 		if (h->token->type == REDIR && h->redir)
 		{
 			num_src = ft_atoi(h->redir->src_fd[0]);
-			num_dest = ft_atoi(h->redir->dest_fd);
+			num_dest = h->redir->dest_fd ? ft_atoi(h->redir->dest_fd) : -1;
+			if (num_dest == -1)
+				num_dest = send_dev_null();
 			if (num_src == STDIN_FILENO)
 				r->in = num_dest;
 			else if (num_src == STDOUT_FILENO)
@@ -53,5 +65,6 @@ t_redirection	*fill_redirection(t_token *t)
 
 void			delete_redirection(t_redirection **r)
 {
-	ft_memdel((void**)&r);
+	free(*r);
+	(*r) = NULL;
 }

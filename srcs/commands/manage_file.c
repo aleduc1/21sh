@@ -16,7 +16,7 @@
 ** F_OK: file exist
 */
 
-static int	file_exist(char *name)
+int			file_exist(char *name)
 {
 	int	fd;
 
@@ -33,6 +33,10 @@ static int	file_exist(char *name)
 	return (-1);
 }
 
+/*
+** O_TRUNC -> remove data in file
+*/
+
 int			open_file_great(t_redir *redir)
 {
 	if (redir->filename)
@@ -41,10 +45,13 @@ int			open_file_great(t_redir *redir)
 		return (0);
 	if (ft_atoi(redir->dest_fd) == -1)
 		return (-1);
+	ft_strdel(&redir->dest_fd);
 	if (redir->type == DGREAT)
 		redir->dest_fd = ft_itoa(get_end_line(redir->filename));
-	else
+	else if (redir->type == GREAT)
 		redir->dest_fd = ft_itoa(open(redir->filename, O_RDWR | O_TRUNC));
+	else
+		redir->dest_fd = ft_itoa(open(redir->filename, O_RDWR));
 	return (1);
 }
 
@@ -90,7 +97,7 @@ int			open_file_dless(t_redir *redir, t_pos *pos)
 	return (1);
 }
 
-int			close_file_command(t_lex *lex)
+int			close_file_command(t_lex *lex, t_redirection **r)
 {
 	t_lex	*head;
 
@@ -98,12 +105,14 @@ int			close_file_command(t_lex *lex)
 	while (lex)
 	{
 		if (lex->token->type == REDIR && lex->redir &&
+				lex->redir->dest_fd &&
 				ft_atoi(lex->redir->dest_fd) != -1)
 			if (lex->redir->filename || lex->redir->close == 1)
 				close(ft_atoi(lex->redir->dest_fd));
 		lex = lex->next;
 	}
 	lex = head;
+	delete_redirection(&(*r));
 	return (0);
 }
 

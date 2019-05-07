@@ -97,15 +97,15 @@ int			is_builtin(char **argv, t_redirection *r)
 	else if (ft_strequ(argv[0], "set"))
 		verif = builtin_set(r);
 	else if (ft_strequ(argv[0], "setenv"))
-		verif = 1;//verif = edit_setenv(cmd, &(*my_env));
+		verif = edit_setenv(argv);
 	else if (ft_strequ(argv[0], "unsetenv"))
-		verif = 1;//verif = ft_unsetenv(argv[1], &(*my_env));
+		verif = ft_unsetenv(argv[1]);
 	else if (ft_strequ(argv[0], "export"))
-		verif = 1;//verif = edit_export(argv[1], &(*my_env));
+		verif = edit_export(argv[1]);
 	else if (ft_strequ(argv[0], "unset"))
-		verif = 1;//verif = ft_unset(argv[1], &(*my_env));
+		verif = ft_unset(argv[1]);
 	else if (ft_strequ(argv[0], "editset"))
-		verif = 1;//verif = edit_set_cmd(cmd, &(*my_env));
+		verif = edit_set_cmd(argv);
 	else if (ft_strequ(argv[0], "echo"))
 		verif = -1;
 	else if (ft_strequ(argv[0], "cd"))
@@ -139,7 +139,10 @@ t_env		*get_env(int is_end)
 	static t_env	*my_env;
 
 	if (my_env == NULL)
+	{
 		my_env = init_env();
+		init_variable();
+	}
 	if (is_end)
 		free_env(&my_env);
 	return (my_env);

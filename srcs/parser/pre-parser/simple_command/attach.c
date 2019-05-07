@@ -81,4 +81,5 @@ void	attach_redir_node(t_redir **redir_info, t_lex **before_start)
 	print_struct(&redir_node->redir);					/* ************ */
 	ft_putendl("==================\n");
 	dllinsafter(before_start, &redir_node);
+	clean_inside_token(&tok);
 }

@@ -103,19 +103,19 @@ int		ft_pipe(char **argv, t_token *lex, int end_pipe)
 	r->in = choice_fd(r->in, in, STDIN_FILENO);
 	if (end_pipe)
 	{
-		if ((return_code = is_builtin(argv, lex->command)) == -1)
+		if ((return_code = is_builtin(argv, r)) == -1)
 			pids = add_process(argv, lex, &return_code, r);
-		close_file_command(lex->command);
+		close_file_command(lex->command, &r);
 		gest_return(return_code);
 	}
 	else
 	{
 		pipe(pipes);
 		r->out = choice_fd(r->out, pipes[1], STDOUT_FILENO);
-		if ((pids = is_builtin(argv, lex->command)) == -1)
+		if ((pids = is_builtin(argv, r)) == -1)
 			pids = add_process(argv, lex, &return_code, r);
 		close(pipes[1]);
-		close_file_command(lex->command);
+		close_file_command(lex->command, &r);
 		in = pipes[0];
 	}
 	return (0);
@@ -148,9 +148,9 @@ int		ft_simple_command(char **argv, t_token *lex)
 	int				verif;
 
 	r = fill_redirection(lex);
-	if ((verif = is_builtin(argv, lex->command)) == -1)
+	if ((verif = is_builtin(argv, r)) == -1)
 		verif = exec_fork(argv, lex, r);
-	close_file_command(lex->command);
+	close_file_command(lex->command, &r);
 	gest_return(verif);
 	return (verif);
 }

@@ -209,7 +209,8 @@ int		handle_whitespace(char *input, int i, t_lex **lex)
 	if (i != cpy)
 	{
 		tok = create_token(" ", SPACE);
-		add_token(lex, &tok);		
+		add_token(lex, &tok);
+		clean_inside_token(&tok);	
 	}
 	return (i);
 }

@@ -93,12 +93,12 @@ void				debug_arg(t_arg *arg);
 ** manage_env.c
 */
 
-int					edit_set(t_arg *arg, t_env **my_env);
-//int					edit_set_cmd(t_cmd *cmd, t_env **my_env);
-//int					edit_setenv(t_cmd *cmd, t_env **my_env);
-int					edit_export(char *key, t_env **my_env);
-int					ft_unsetenv(char *key, t_env **my_env);
-int					ft_unset(char *key, t_env **my_env);
+int					edit_set(t_arg *arg);
+int					edit_set_cmd(char **argv);
+int					edit_setenv(char **argv);
+int					edit_export(char *key);
+int					ft_unsetenv(char *key);
+int					ft_unset(char *key);
 char				**create_list_env(t_env *my_env, int env);
 
 /*
@@ -123,18 +123,20 @@ int     builtin_env(t_redirection *r);
 
 t_env				*init_env(void);
 void				free_env(t_env **env);
-int					free_maillon_env(t_env **my_env, char *key, int env);
+int					free_maillon_env(char *key, int env);
 t_arg				*init_arg(void);
 void				free_arg(t_arg **lst_arg);
 t_arg				*create_arg(char *key, char *value);
 t_env				*init_maillon_env(void);
+void	init_variable(void);
 
 /*
 ** manage_file.c
 */
 
 int					open_file_command(t_redir *redir, t_pos *pos);
-int					close_file_command(t_lex *lex);
+int					close_file_command(t_lex *lex, t_redirection **r);
+int					file_exist(char *name);
 
 /*
 ** execute_command.c

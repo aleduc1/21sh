@@ -27,9 +27,9 @@ void	clean_lex(t_lex **lex)
 {
 	if ((!lex) || (!(*lex)))
 		return ;
-
 	if ((*lex)->next)
 		clean_lex(&(*lex)->next);
+	clean_redir(&((*lex)->redir));
 	clean_inside_token(&(*lex)->token);
 	free((*lex));
 	(*lex) = NULL;
