@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   copy_paste.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mbellaic <mbellaic@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/05/08 00:30:30 by mbellaic          #+#    #+#             */
+/*   Updated: 2019/05/08 00:31:48 by mbellaic         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "sh21.h"
 
 void		copy_selection_left(t_node *cursorcpy, t_pos *pos, int count)
@@ -65,6 +77,5 @@ t_node		*paste_clipboard(t_node **input, t_node *lstcursor, t_pos *pos)
 		i++;
 	}
 	lstcursor = find_tail(lstcursor, pos);
-	//lstcursor = lstcursor->next;
 	return (lstcursor);
 }

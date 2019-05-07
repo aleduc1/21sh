@@ -19,22 +19,17 @@ void			get_cursor(int i, int j, char answer[], t_pos *pos)
 
 	ft_bzero(xchar, 5);
 	ft_bzero(ychar, 5);
-
 	while (answer[++i] != ';')
 	{
 		if ((answer[i] >= '0' && answer[i] <= '9'))
-		{
 			xchar[j++] = answer[i];
-		}
 	}
 	xchar[j] = '\0';
 	j = 0;
 	while (answer[++i] != 'R')
 	{
 		if ((answer[i] >= '0' && answer[i] <= '9'))
-		{
 			ychar[j++] = answer[i];
-		}
 	}
 	ychar[j] = '\0';
 	pos->row = ft_atoi(xchar);

@@ -61,7 +61,7 @@ int			check_heredoc(t_node *input, char *heredoc)
 
 	lstcursor = input;
 	temp = heredoc_string(lstcursor);
-	if(ft_strcmp(heredoc, temp) == 0)
+	if (ft_strcmp(heredoc, temp) == 0)
 	{
 		free(temp);
 		return (1);
@@ -70,7 +70,8 @@ int			check_heredoc(t_node *input, char *heredoc)
 	return (-1);
 }
 
-int			input_heredoc(t_multi *lstcursor, t_multi **multi, t_pos *pos, char *heredoc)
+int			input_heredoc(t_multi *lstcursor, t_multi **multi, t_pos *pos, \
+																char *heredoc)
 {
 	lstcursor = *multi;
 	multi_push(multi);
@@ -79,7 +80,7 @@ int			input_heredoc(t_multi *lstcursor, t_multi **multi, t_pos *pos, char *hered
 	dpush(&lstcursor->input, ' ');
 	ft_putstr("heredoc>");
 	read_input(&lstcursor->input, pos);
-	return(check_heredoc(lstcursor->input, heredoc));
+	return (check_heredoc(lstcursor->input, heredoc));
 }
 
 char		*heredoc(char *heredoc, t_pos *pos)
@@ -98,11 +99,10 @@ char		*heredoc(char *heredoc, t_pos *pos)
 	multi->input = NULL;
 	dpush(&multi->input, ' ');
 	init_heredoc(pos);
-	while((input_heredoc(lstcursor, &multi, pos, heredoc)) < 0)
+	while ((input_heredoc(lstcursor, &multi, pos, heredoc)) < 0)
 		init_heredoc(pos);
 	input = lst_to_str(&multi, input);
 	ddellist(multi);
 	default_term_mode();
 	return (input);
 }
-

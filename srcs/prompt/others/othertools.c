@@ -6,7 +6,7 @@
 /*   By: mbellaic <mbellaic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/12 17:19:04 by aleduc            #+#    #+#             */
-/*   Updated: 2019/05/05 16:32:34 by mbellaic         ###   ########.fr       */
+/*   Updated: 2019/05/08 00:29:56 by mbellaic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char		*reverse_str(char *inputstr)
 	start = inputstr;
 	len = ft_strlen(inputstr);
 	end = (inputstr + len - 1);
-	while (start < end )
+	while (start < end)
 	{
 		*start = *start ^ *end;
 		*end = *end ^ *start;
@@ -59,9 +59,9 @@ t_node		*find_tail(t_node *lstcursor, t_pos *pos)
 
 char		*lst_to_str_mod(t_multi *lstcursor, char *temp)
 {
-	int i;
-	int len;
-	t_node *cpycursor;
+	int		i;
+	int		len;
+	t_node	*cpycursor;
 
 	i = 0;
 	len = 0;
@@ -98,7 +98,7 @@ char		*lst_to_str_loop(t_multi *lstcursor, char *inputstr)
 		free(temp);
 		if (trash != NULL)
 			free(trash);
-		lstcursor =	lstcursor->prev;
+		lstcursor = lstcursor->prev;
 	}
 	return (inputstr);
 }
@@ -107,6 +107,7 @@ char		*lst_to_str(t_multi **multi, char *inputstr)
 {
 	t_multi	*lstcursor;
 	char	*finalstr;
+	int		i;
 
 	inputstr = ft_strdup("\0");
 	lstcursor = *multi;
@@ -117,10 +118,10 @@ char		*lst_to_str(t_multi **multi, char *inputstr)
 	finalstr = ft_strdup(inputstr);
 	inputstr--;
 	free(inputstr);
-	int i = 0;
+	i = 0;
 	while (finalstr[i])
 		if (finalstr[i++] != ' ' || finalstr[i] != '\t')
 			return (finalstr);
-	free (finalstr);
+	free(finalstr);
 	return (NULL);
 }

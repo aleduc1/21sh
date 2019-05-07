@@ -6,11 +6,12 @@
 /*   By: mbellaic <mbellaic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/12 17:13:21 by aleduc            #+#    #+#             */
-/*   Updated: 2019/05/04 22:03:25 by mbellaic         ###   ########.fr       */
+/*   Updated: 2019/05/08 01:48:09 by mbellaic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh21.h"
+#include "env.h"
 
 void			init_prompt(t_pos *pos)
 {
@@ -69,7 +70,6 @@ t_node			*read_input(t_node **input, t_pos *pos)
 	while (read(STDIN_FILENO, &buffer, 1000) > 0 && !ENTER)
 	{
 		lstcursor = editline(pos, lstcursor, input, buffer);
-		//printf("%c('%d') | %c('%d') | %c('%d') | %c('%d')\n", buffer[0], buffer[0],buffer[1],buffer[1],buffer[2],buffer[2],buffer[3], buffer[3]);
 		stalk_cursor(pos);
 		ft_bzero(buffer, 1000);
 		if (pos->stop == 1)
@@ -83,6 +83,23 @@ t_node			*read_input(t_node **input, t_pos *pos)
 	return (*input);
 }
 
+char			*check_prompt(char *inputstr)
+{
+	if (getenv("TERM") != NULL)
+	{
+		raw_term_mode();
+		return ((char *)-1);
+	}
+	else
+	{
+		ft_putstr("\n\033[31m[DUMB_MODE] &> \033[0m");
+		if ((get_next_line(STDIN_FILENO, &inputstr) != -1)\
+			&& !ft_strequ(inputstr, ""))
+			return(inputstr);
+	}
+	return (NULL);
+}
+
 char			*prompt(t_multi *multi, t_pos *pos) //NORME
 {
 	t_integrity	count;
@@ -91,7 +108,8 @@ char			*prompt(t_multi *multi, t_pos *pos) //NORME
 
 	multi = NULL;
 	inputstr = NULL;
-	raw_term_mode();
+	if((inputstr = check_prompt(inputstr)) != (char *)-1)
+		return (inputstr);
 	print_prompt();
 	multi_push(&multi);
 	multi->input = NULL;

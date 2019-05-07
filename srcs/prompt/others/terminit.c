@@ -6,13 +6,13 @@
 /*   By: mbellaic <mbellaic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/12 17:19:28 by aleduc            #+#    #+#             */
-/*   Updated: 2019/04/12 16:05:13 by mbellaic         ###   ########.fr       */
+/*   Updated: 2019/05/08 00:27:45 by mbellaic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh21.h"
 
-void		welcome(void)
+void				welcome(void)
 {
 	ft_putstr("\033[1;32m\n");
 	ft_putstr("██████╗  ██╗███████╗██╗  ██╗\n");
