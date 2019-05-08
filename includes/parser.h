@@ -6,7 +6,7 @@
 /*   By: mbellaic <mbellaic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/08 02:34:29 by mbellaic          #+#    #+#             */
-/*   Updated: 2019/05/08 02:35:59 by mbellaic         ###   ########.fr       */
+/*   Updated: 2019/05/08 03:26:24 by mbellaic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include "sh21.h"
 # include "lexer.h"
 
+int					g_print_ast;
 t_lex				*g_stream;
 int					g_out;
 

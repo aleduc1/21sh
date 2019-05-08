@@ -6,7 +6,7 @@
 /*   By: mbellaic <mbellaic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/12 17:01:09 by aleduc            #+#    #+#             */
-/*   Updated: 2019/05/08 03:21:25 by mbellaic         ###   ########.fr       */
+/*   Updated: 2019/05/08 03:29:30 by mbellaic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,19 @@ int			siginthandler(int signum)
 {
 	(void)signum;
 	ft_printf("oui\n");
+}
+
+void		flags(int argc, char **argv)
+{
+	g_print_ast = 0;
+	if (argc >= 2)
+	{
+		if (strcmp(argv[1], "--ast") == 0)
+			g_print_ast = 1;
+		if (strcmp(argv[1], "-a") == 0)
+			g_print_ast = 1;
+	}
+	return ;
 }
 
 void		run(char *input, t_pos *pos)
@@ -46,9 +59,10 @@ int			main(int argc, char **argv, char **environ)
 	input = NULL;
 	multi_input = NULL;
 	welcome();
-	init_prompt(&pos);
-	signal(SIGINT, SIG_IGN);
 	signal(SIGQUIT, SIG_IGN);
+	signal(SIGINT, SIG_IGN);
+	flags(argc, argv);
+	init_prompt(&pos);
 	while (21)
 	{
 		if (argc && argv && environ)

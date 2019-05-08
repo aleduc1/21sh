@@ -6,7 +6,7 @@
 /*   By: mbellaic <mbellaic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/08 02:33:01 by mbellaic          #+#    #+#             */
-/*   Updated: 2019/05/08 02:43:23 by mbellaic         ###   ########.fr       */
+/*   Updated: 2019/05/08 03:29:44 by mbellaic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,8 +79,11 @@ t_ast		*ast_parser(t_lex *tokens)
 		clean_ast(ast);
 		return (NULL);
 	}
-	ft_putstr("---------------AST---------------\n");
-	pretty_print(ast);
-	ft_putstr("---------------------------------\n");
+	if (g_print_ast == 1)
+	{
+		ft_putstr("---------------AST---------------\n");
+		pretty_print(ast);
+		ft_putstr("---------------------------------\n");
+	}
 	return (ast);
 }
