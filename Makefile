@@ -108,6 +108,7 @@ SRCS_NAMES = main.c \
 			 tree_utils.c \
 			 cmd_parser.c \
 			 builtin_env.c\
+			 builtin_cd.c\
 			 commands.c\
 			 execute_command.c\
 			 list_commands.c\

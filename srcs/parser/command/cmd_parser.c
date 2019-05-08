@@ -57,6 +57,7 @@ int			*run_pipe(t_token *cmd_list, t_pos *pos, int end_pipe)
 	argv = get_argv(cmd_list);
 	files_handler(cmd_list, pos);
 	ft_pipe(argv, cmd_list, end_pipe);
+	ft_arraydel(&argv);
 	return (0);
 }
 
@@ -67,5 +68,6 @@ int			*run_cmd(t_token *cmd_list, t_pos *pos)
 	argv = get_argv(cmd_list);
 	files_handler(cmd_list, pos);
 	ft_simple_command(argv, cmd_list);
+	ft_arraydel(&argv);
 	return (0);
 }

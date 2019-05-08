@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apruvost <apruvost@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/22 13:33:53 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/05/08 01:02:43 by apruvost         ###   ########.fr       */
+/*   Updated: 2019/05/08 02:26:58 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,12 @@ char				*value_line_path(char *key, int env);
 int		return_good_fd(t_lex *lex, int fd);
 int     builtin_set(t_redirection *r);
 int     builtin_env(t_redirection *r);
+
+/*
+** builtin_cd.c
+*/
+
+int		builtin_cd(char **arguments);
 
 /*
 ** list_env.c
