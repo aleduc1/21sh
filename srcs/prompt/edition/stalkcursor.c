@@ -19,17 +19,21 @@ void			get_cursor(int i, int j, char answer[], t_pos *pos)
 
 	ft_bzero(xchar, 5);
 	ft_bzero(ychar, 5);
-	while (answer[++i] != ';')
+	++i;
+	while (answer[i] && answer[i] != ';')
 	{
 		if ((answer[i] >= '0' && answer[i] <= '9'))
 			xchar[j++] = answer[i];
+		++i;
 	}
 	xchar[j] = '\0';
 	j = 0;
-	while (answer[++i] != 'R')
+	++i;
+	while (answer[i] && answer[i] != 'R')
 	{
 		if ((answer[i] >= '0' && answer[i] <= '9'))
 			ychar[j++] = answer[i];
+		++i;
 	}
 	ychar[j] = '\0';
 	pos->row = ft_atoi(xchar);
@@ -38,18 +42,18 @@ void			get_cursor(int i, int j, char answer[], t_pos *pos)
 
 void			stalk_cursor(t_pos *pos)
 {
-	char		answer[16];
+	char		*answer;
 	size_t		answerlen;
 	int			i;
 	int			j;
 
 	i = 1;
 	j = 0;
-	ft_bzero(answer, 16);
+	answer = ft_memalloc(sizeof(char) * 16);
 	ioctl(STDOUT_FILENO, TIOCGWINSZ, &pos->termsize);
 	write(0, "\x1B[6n", 5);
 	answerlen = 0;
-	while (answerlen < sizeof(answer) - 1 &&
+	while (answerlen < 16 - 1 &&
 			read(STDIN_FILENO, answer + answerlen, 1) == 1)
 	{
 		if (answer[answerlen++] == 'R')
@@ -57,6 +61,7 @@ void			stalk_cursor(t_pos *pos)
 	}
 	answer[answerlen] = '\0';
 	get_cursor(i, j, answer, pos);
+	free(answer);
 }
 
 void			get_tail(t_pos *pos)

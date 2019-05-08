@@ -6,7 +6,7 @@
 /*   By: aleduc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/04 17:15:13 by aleduc            #+#    #+#             */
-/*   Updated: 2019/05/07 23:43:25 by aleduc           ###   ########.fr       */
+/*   Updated: 2019/05/08 18:36:49 by aleduc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,7 @@ int		skip_whitespace(char *str, int i);
 int		dub_possible(char c);
 void	check_double(char *input, int *i);
 t_token	*handle_string(char *input, int *i, int *last_t, char c);
+t_token	*handle_string_squote(char *input, int *i, int *last_t, char c);
 
 t_token	*create_token(char *str, t_type types);
 t_token	*create_command_token(t_lex **command, t_type types);

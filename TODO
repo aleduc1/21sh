@@ -1,7 +1,3 @@
- builtin -> sam
+envoyer les quotes dans le lexer -> MOUA
 
- norme -> sam
-
- leaks -> sam
-
-
+fix les signaux pendant HEREDOC et quote multiligne -> Max
