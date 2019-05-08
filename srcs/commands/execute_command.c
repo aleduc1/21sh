@@ -6,16 +6,17 @@
 /*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/02 08:43:53 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/05/08 14:17:05 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/08 16:23:10 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "env.h"
 
-static int sighandler(int signum)
+static int	sighandler(int signum)
 {
 	(void)signum;
 	ft_putchar('\n');
+	return (0);
 }
 
 /*
@@ -24,14 +25,14 @@ static int sighandler(int signum)
 ** error -> STDERR_FILLENO
 */
 
-void	open_redirection(t_redirection *r)
+void		open_redirection(t_redirection *r)
 {
 	dup2(r->in, STDIN_FILENO);
 	dup2(r->out, STDOUT_FILENO);
 	dup2(r->error, STDERR_FILENO);
 }
 
-int		add_process(char **cmd, int *returns_code, t_redirection *r)
+int			add_process(char **cmd, int *returns_code, t_redirection *r)
 {
 	char	**env;
 	int		pid;
@@ -57,7 +58,7 @@ int		add_process(char **cmd, int *returns_code, t_redirection *r)
 	return (pid);
 }
 
-int		exec_fork(char **cmd, t_redirection *r)
+int			exec_fork(char **cmd, t_redirection *r)
 {
 	int	return_code;
 	int	pid;

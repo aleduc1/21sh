@@ -6,7 +6,7 @@
 /*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/07 10:31:02 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/05/08 14:17:22 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/08 16:31:21 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,39 +25,7 @@ static void	copy_value(char *src, char **dst, int start, int end)
 	ft_strdel(&tmp);
 }
 
-static char	*manage_var(char *str)
-{
-	char	*final;
-
-	final = value_line_path(str, 0);
-	if (!final)
-		final = ft_strdup("");
-	return (final);
-}
-
-static int	manage_home(char *src, char **dst, int index, t_env *my_env)
-{
-	char	*data;
-
-	index += 1;
-	if (src[index] == '-')
-	{
-		index++;
-		data = manage_var("OLDPWD");
-	}
-	else if (src[index] == '+')
-	{
-		index++;
-		data = manage_var("PWD");
-	}
-	else
-		data = manage_var("HOME");
-	ft_strdel(&(*dst));
-	(*dst) = data;
-	return (index);
-}
-
-static int	modify_dst(char *tmp, t_env *my_env, char **dst)
+static int	modify_dst(char *tmp, char **dst)
 {
 	char	*stock;
 	char	*final;
@@ -75,7 +43,7 @@ static int	modify_dst(char *tmp, t_env *my_env, char **dst)
 	return (0);
 }
 
-static int	apply_rules(char *src, char **dst, int index, t_env *my_env)
+static int	apply_rules(char *src, char **dst, int index)
 {
 	int		i;
 	char	*tmp;
@@ -96,13 +64,13 @@ static int	apply_rules(char *src, char **dst, int index, t_env *my_env)
 		else
 			tmp = ft_strsub(src, index + 1, ft_strlen(src));
 	}
-	modify_dst(tmp, my_env, &(*dst));
+	modify_dst(tmp, &(*dst));
 	if (i < 0)
 		i = ft_strlen(src);
 	return (i);
 }
 
-static char	*search_var(char *src, t_env *my_env)
+static char	*search_var(char *src)
 {
 	int		i;
 	int		len;
@@ -120,9 +88,9 @@ static char	*search_var(char *src, t_env *my_env)
 			if (i != last)
 				copy_value(src, &dst, last, i);
 			if (src[i] == '~' && i == 0)
-				i = manage_home(src, &dst, i, my_env) - 1;
+				i = manage_home(src, &dst, i) - 1;
 			else
-				i = apply_rules(src, &dst, i, my_env);
+				i = apply_rules(src, &dst, i);
 			last = i + 1;
 		}
 	}
@@ -133,18 +101,16 @@ static char	*search_var(char *src, t_env *my_env)
 
 void		parser_var(char ***value)
 {
-	t_env	*my_env;
 	char	*tmp;
 	int		i;
 
 	i = -1;
-	my_env = get_env(0, NULL);
 	while ((*value)[++i])
 	{
 		if ((*value)[i][0] != '\'' && (ft_strchr_exist((*value)[i], '$') ||
 				(*value)[i][0] == '~'))
 		{
-			tmp = search_var((*value)[i], my_env);
+			tmp = search_var((*value)[i]);
 			ft_strdel(&((*value)[i]));
 			(*value)[i] = tmp ? ft_strdup(tmp) : NULL;
 			ft_strdel(&tmp);

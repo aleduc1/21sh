@@ -1,28 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtins.h                                         :+:      :+:    :+:   */
+/*   ft_remove_last_chr.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sbelondr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/05/08 16:01:05 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/05/08 16:02:42 by sbelondr         ###   ########.fr       */
+/*   Created: 2019/05/08 15:45:17 by sbelondr          #+#    #+#             */
+/*   Updated: 2019/05/08 15:47:27 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#	ifndef BUILTINS_H
-#	define BUILTINS_H
+#include "libft.h"
 
-#include "env.h"
-
-typedef struct		s_cd
+void		ft_remove_last_chr(char **str)
 {
-	int		arg__;
-	char	*directory;
-	char	*curpath;
-}					t_cd;
+	int		i;
+	int		len;
+	int		index;
+	char	*tmp;
 
-int					bt_exit(char **av);
-int					bt_echo(char **av);
-
-#	endif
+	i = -1;
+	len = ft_strlen(*str);
+	while ((*str)[++i] && i < (len - 1))
+		if ((*str)[i] == '\n')
+			index = i;
+	tmp = ft_strsub((*str), 1, index);
+	ft_strdel(&(*str));
+	(*str) = tmp;
+}

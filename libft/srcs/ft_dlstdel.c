@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_dlstdel.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sbelondr <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/05/08 16:13:47 by sbelondr          #+#    #+#             */
+/*   Updated: 2019/05/08 16:14:30 by sbelondr         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "libft.h"
 
 t_dlist	*ft_dlstdelfirst(t_dlist **head)
@@ -12,7 +24,6 @@ t_dlist	*ft_dlstdelfirst(t_dlist **head)
 	return (todel);
 }
 
-
 t_dlist	*ft_dlstdellast(t_dlist **tail)
 {
 	t_dlist	*todel;
@@ -25,7 +36,7 @@ t_dlist	*ft_dlstdellast(t_dlist **tail)
 	return (todel);
 }
 
-t_dlist *ft_dlstdelone(t_dlist **head, void *data)
+t_dlist	*ft_dlstdelone(t_dlist **head, void *data)
 {
 	t_dlist	*ptr;
 	t_dlist	*todel;

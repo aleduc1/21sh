@@ -6,9 +6,11 @@
 /*   By: apruvost <apruvost@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/07 16:38:12 by apruvost          #+#    #+#             */
-/*   Updated: 2019/05/08 00:29:06 by apruvost         ###   ########.fr       */
+/*   Updated: 2019/05/08 16:18:33 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "libft.h"
 
 int		ft_isstrnum(char *s)
 {

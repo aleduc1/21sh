@@ -6,19 +6,20 @@
 /*   By: apruvost <apruvost@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/13 16:33:26 by aleduc            #+#    #+#             */
-/*   Updated: 2019/05/08 02:20:58 by apruvost         ###   ########.fr       */
+/*   Updated: 2019/05/08 16:13:09 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LIBFT_H
-# define LIBFT_H
+#	ifndef LIBFT_H
+#	define LIBFT_H
+
 #define BUF_S 1024
-# include <string.h>
-# include <stdlib.h>
-# include <unistd.h>
-# include <sys/types.h>
-# include <sys/stat.h>
-# include <fcntl.h>
+#include <string.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
 #include "ft_printf.h"
 
 typedef struct		s_list
@@ -78,7 +79,8 @@ char				*ft_strncat(char *s1, const char *s2, size_t n);
 char				*ft_strncpy(char *dst, const char *src, size_t len);
 char				*ft_strrchr(const char *s, int c);
 char				*ft_strstr(const char *haystack, const char *needle);
-char				*ft_strnstr(const char *haystack, const char *needle, size_t len);
+char				*ft_strnstr(const char *haystack, const char *needle,
+		size_t len);
 int					ft_atoi(const char *str);
 int					ft_isalpha(int c);
 int					ft_isdigit(int c);
@@ -157,9 +159,11 @@ int					ft_strchr_exist(char *s, char c);
 int					ft_numlen(int n);
 void				ft_pow_array_fix(int i, char (*nb)[BUF_S]);
 void				ft_reverse_tablo(char (*lst)[BUF_S]);
-void				ft_strsub_tab_fix(char (*lst)[BUF_S], char src[BUF_S], int start,
-					int len);
+void				ft_strsub_tab_fix(char (*lst)[BUF_S], char src[BUF_S],
+		int start, int len);
 void				ft_deplace(char (*lst)[BUF_S]);
 int					ft_isstrnum(char *s);
 char				*ft_jointhree(char *s1, char *s2, char *s3);
-#endif
+void				ft_remove_last_chr(char **str);
+
+#	endif

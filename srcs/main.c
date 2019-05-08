@@ -6,7 +6,7 @@
 /*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/12 17:01:09 by aleduc            #+#    #+#             */
-/*   Updated: 2019/05/08 14:23:29 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/08 16:19:10 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ int			siginthandler(int signum)
 {
 	(void)signum;
 	ft_printf("oui\n");
+	return (0);
 }
 
 void		flags(int argc, char **argv)

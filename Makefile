@@ -109,13 +109,18 @@ SRCS_NAMES = main.c \
 			 tree_utils.c \
 			 cmd_parser.c \
 			 builtin_env.c\
+			 builtin_env_commands.c\
 			 builtin_cd.c\
+			 builtin_cd_verif.c\
 			 commands.c\
+			 commands_pipe.c\
 			 execute_command.c\
 			 list_commands.c\
 			 list_env.c\
 			 list_redirection.c\
 			 manage_env.c\
+			 manage_set.c\
+			 manage_variable.c\
 			 manage_file.c\
 			 other_tools.c\
 			 parser_env.c\
@@ -128,13 +133,7 @@ SRCS_NAMES = main.c \
 			 reading_tools.c \
 			 if_checks.c \
 			 bt_exit.c \
-			 bt_echo.c \
-			 bt_cd.c \
-			 bt_cd_utils.c \
-			 bt_cd_utilstwo.c \
-			 bt_cd_canonical_a.c \
-			 bt_cd_canonical_b.c \
-			 bt_cd_canonical_c.c
+			 bt_echo.c
 
 
 OBJS_NAMES = $(SRCS_NAMES:.c=.o)
