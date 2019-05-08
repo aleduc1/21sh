@@ -6,7 +6,7 @@
 /*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/12 17:01:09 by aleduc            #+#    #+#             */
-/*   Updated: 2019/05/08 17:55:07 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/08 23:55:32 by aleduc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,14 @@
 #include "parser.h"
 #include "env.h"
 
-int			siginthandler(int signum)
+int		siginthandler(int signum)
 {
 	(void)signum;
 	ft_printf("oui\n");
 	return (0);
 }
 
-void		flags(int argc, char **argv)
+void	flags(int argc, char **argv)
 {
 	g_print_ast = 0;
 	if (argc >= 2)
@@ -35,14 +35,30 @@ void		flags(int argc, char **argv)
 	return ;
 }
 
-void		run(char *input, t_pos *pos)
+int		check_whitespace_input(char *input)
+{
+	int		i;
+
+	i = 0;
+	while (input[i])
+	{	
+		if (ft_isspace(input[i]))
+			i++;
+		else
+			return (1);
+	}
+	return (0);
+}
+
+
+void	run(char *input, t_pos *pos)
 {
 	t_lex	*lex;
 	t_ast	*ast;
 
 	lex = NULL;
 	ast = NULL;
-	if ((lex = lexer(input)))
+	if ((check_whitespace_input(input)) && (lex = lexer(input)))
 	{
 		ft_strdel(&input);
 		if ((ast = ast_parser(lex)) && (solo_tree(ast, pos) < 0))
@@ -58,7 +74,7 @@ void		run(char *input, t_pos *pos)
 	}
 }
 
-int			main(int argc, char **argv, char **environ)
+int		main(int argc, char **argv, char **environ)
 {
 	t_multi	*multi_input;
 	char	*input;
