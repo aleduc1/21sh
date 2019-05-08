@@ -1,14 +1,26 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parser.h                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mbellaic <mbellaic@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/05/08 02:34:29 by mbellaic          #+#    #+#             */
+/*   Updated: 2019/05/08 03:26:24 by mbellaic         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef PARSER_H
 # define PARSER_H
 
-#include "sh21.h"
-#include "lexer.h"
+# include "sh21.h"
+# include "lexer.h"
 
-t_lex				*stream;
-int					get_out;
+int					g_print_ast;
+t_lex				*g_stream;
+int					g_out;
 
 # define OPERATORS (t->type == SCOLON || t->type == SPIPE || t->type == DELIM)
-
 
 typedef struct		s_ast
 {
@@ -19,6 +31,9 @@ typedef struct		s_ast
 
 void				pretty_print(t_ast *tree);
 t_ast				*node_ast(t_token *token, t_ast *l, t_ast *r);
+t_token				*next(void);
+t_token				*peek(void);
+int					bp(t_token *token);
 void				clean_ast(t_ast *node);
 
 t_ast				*expr(int rbp);

@@ -36,7 +36,7 @@ VPATH = objs:\
 		srcs/parser/command:\
 		srcs/commands:\
 		srcs/cleaning:\
-		srcs/interpreter\
+		srcs/interpreter:\
 		srcs/builtins
 # ------------------ #
 # Compiler and flags #
@@ -44,7 +44,7 @@ VPATH = objs:\
 
 CC = gcc
 ifeq ($(DEBUG), yes)
-	CFLAGS = -Wall -Wextra -Werror -g3 
+	CFLAGS = -Wall -Wextra -Werror -g3
 else
 	CFLAGS = -Wall -Wextra -g3
 endif
@@ -105,9 +105,11 @@ SRCS_NAMES = main.c \
 			 rules_great.c \
 			 is_a_redirect.c \
 			 ast_parser.c \
+			 ast_parser_tools.c \
 			 tree_utils.c \
 			 cmd_parser.c \
 			 builtin_env.c\
+			 builtin_cd.c\
 			 commands.c\
 			 execute_command.c\
 			 list_commands.c\

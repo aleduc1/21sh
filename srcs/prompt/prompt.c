@@ -6,7 +6,7 @@
 /*   By: mbellaic <mbellaic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/12 17:13:21 by aleduc            #+#    #+#             */
-/*   Updated: 2019/05/08 01:48:09 by mbellaic         ###   ########.fr       */
+/*   Updated: 2019/05/08 02:08:22 by mbellaic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,11 +83,15 @@ t_node			*read_input(t_node **input, t_pos *pos)
 	return (*input);
 }
 
-char			*check_prompt(char *inputstr)
+char			*check_prompt(char *inputstr, t_multi **multi)
 {
 	if (getenv("TERM") != NULL)
 	{
 		raw_term_mode();
+		print_prompt();
+		multi_push(multi);
+		(*multi)->input = NULL;
+		dpush(&(*multi)->input, ' ');
 		return ((char *)-1);
 	}
 	else
@@ -95,12 +99,12 @@ char			*check_prompt(char *inputstr)
 		ft_putstr("\n\033[31m[DUMB_MODE] &> \033[0m");
 		if ((get_next_line(STDIN_FILENO, &inputstr) != -1)\
 			&& !ft_strequ(inputstr, ""))
-			return(inputstr);
+			return (inputstr);
 	}
 	return (NULL);
 }
 
-char			*prompt(t_multi *multi, t_pos *pos) //NORME
+char			*prompt(t_multi *multi, t_pos *pos)
 {
 	t_integrity	count;
 	t_multi		*lstcursor;
@@ -108,12 +112,8 @@ char			*prompt(t_multi *multi, t_pos *pos) //NORME
 
 	multi = NULL;
 	inputstr = NULL;
-	if((inputstr = check_prompt(inputstr)) != (char *)-1)
+	if ((inputstr = check_prompt(inputstr, &multi)) != (char *)-1)
 		return (inputstr);
-	print_prompt();
-	multi_push(&multi);
-	multi->input = NULL;
-	dpush(&multi->input, ' ');
 	multi->input = read_input(&multi->input, pos);
 	lstcursor = multi;
 	if (multi->input)
@@ -124,7 +124,7 @@ char			*prompt(t_multi *multi, t_pos *pos) //NORME
 			lstcursor = lstcursor->prev;
 		lstcursor = multi;
 		inputstr = lst_to_str(&multi, inputstr);
-		if(inputstr)
+		if (inputstr)
 			inserthistory(pos->history, inputstr, pos);
 	}
 	ddellist(multi);

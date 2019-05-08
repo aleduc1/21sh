@@ -1,33 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ast_parser.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mbellaic <mbellaic@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/05/08 02:30:45 by mbellaic          #+#    #+#             */
+/*   Updated: 2019/05/08 02:35:14 by mbellaic         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "lexer.h"
 #include "sh21.h"
 #include "parser.h"
-
-t_token			*next()
-{
-	stream =	(stream->next) ? stream->next : stream;
-	return (stream) ? (stream->token) : (NULL);
-}
-
-t_token			*peek()
-{
-	return (stream->next) ? (stream->next->token) : (NULL);
-}
-
-int				bp(t_token *token)
-{
-	if(token == NULL)
-		return (0);
-	else if(token->type == DELIM)
-		return (-10);
-	else if(token->type == CMD)
-		return (10);
-	else if(token->type == SCOLON)
-		return (20);
-	else if(token->type == SPIPE)
-		return (30);
-	else
-		return (0);
-}
 
 t_ast			*nud(t_token *t)
 {
@@ -37,7 +22,7 @@ t_ast			*nud(t_token *t)
 	{
 		ft_putstr("21sh: parse error near: ");
 		ft_putendl(t->data);
-		get_out = 1;
+		g_out = 1;
 		return (node_ast(t, NULL, NULL));
 	}
 	else
@@ -54,7 +39,7 @@ t_ast			*led(t_ast *left, t_token *t)
 	{
 		ft_putstr("21sh: parse error near: ");
 		ft_putendl(t->data);
-		get_out = 1;
+		g_out = 1;
 		return (left);
 	}
 	else
@@ -66,7 +51,7 @@ t_ast			*expr(int rbp)
 	t_ast		*left;
 
 	left = NULL;
-	if(get_out == 1)
+	if (g_out == 1)
 		return (left);
 	left = nud(next());
 	while (rbp < bp(peek()))
