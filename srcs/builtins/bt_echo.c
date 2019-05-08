@@ -6,7 +6,7 @@
 /*   By: apruvost <apruvost@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/26 14:19:28 by apruvost          #+#    #+#             */
-/*   Updated: 2019/05/08 00:45:45 by apruvost         ###   ########.fr       */
+/*   Updated: 2019/05/08 23:26:30 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static int	echo_arg(char **av)
 ** Simple echo builtin
 */
 
-int			bt_echo(char **av)
+int			bt_echo(char **av, t_redirection *r)
 {
 	int	i;
 	int	arg_n;
@@ -49,12 +49,12 @@ int			bt_echo(char **av)
 	i += arg_n;
 	while (av[i] != NULL)
 	{
-		ft_putstr(av[i]);
+		ft_dprintf(r->out, "%s", av[i]);
 		if (av[i + 1] != NULL)
-			ft_putchar(' ');
+			ft_dprintf(r->out, " ");
 		i++;
 	}
 	if (!arg_n)
-		ft_putchar('\n');
+		ft_dprintf(r->out, "\n");
 	return (0);
 }

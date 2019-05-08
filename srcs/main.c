@@ -6,7 +6,7 @@
 /*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/12 17:01:09 by aleduc            #+#    #+#             */
-/*   Updated: 2019/05/08 17:27:01 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/08 17:55:07 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,11 +52,9 @@ void		run(char *input, t_pos *pos)
 	}
 	else if (input)
 	{
-		ft_printf("ici %p %p %p %p\n", input, lex, ast, pos);
 		ft_strdel(&input);
 		clean_lex(&lex);
 		clean_ast(ast);
-		ft_printf("ici %p %p %p %p\n", input, lex, ast, pos);
 	}
 }
 

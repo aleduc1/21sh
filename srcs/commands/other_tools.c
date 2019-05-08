@@ -6,7 +6,7 @@
 /*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/22 17:57:48 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/05/08 16:34:02 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/08 23:27:34 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ int			is_builtin(char **argv, t_redirection *r)
 	else if (ft_strequ(argv[0], "editset"))
 		verif = edit_set(argv[1], argv[2]);
 	else if (ft_strequ(argv[0], "echo"))
-		verif = bt_echo(argv);
+		verif = bt_echo(argv, r);
 	else if (ft_strequ(argv[0], "cd"))
 		verif = (builtin_cd(argv) < 0) ? -2 : 0;
 	else if (ft_strequ(argv[0], "exit"))

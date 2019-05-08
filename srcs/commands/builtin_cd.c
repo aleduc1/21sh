@@ -6,7 +6,7 @@
 /*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 21:20:48 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/05/08 16:41:29 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/08 20:30:45 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,12 @@ static int	simple_cd(char ***arguments, char *mot_clef)
 	line = value_line_path(mot_clef, 0);
 	if (!line)
 		return (-1);
-	ft_strdel(&((*arguments)[1]));
-	ft_strdel(&((*arguments)[2]));
+	// if (!((*arguments) = (char**)malloc(sizeof(char*) * 3)))
+	// 	return (-1);
+//	ft_strdel(&((*arguments)[1]));
+//	if ((*arguments)[2])
+//		ft_strdel(&((*arguments)[2]));
+	(*arguments)[0] = "test";
 	(*arguments)[1] = line;
 	(*arguments)[2] = 0;
 	return (1);
@@ -94,7 +98,7 @@ int			builtin_cd(char **arguments)
 		return (-2);
 	verif = search_rules_cd(&arguments);
 	ft_bzero(buf, BUF_S);
-	getcwd(buf, BUF_S);
+	getcwd(buf, BUF_S - 1);
 	(verif >= 0) ? verif = chdir(arguments[1]) : 0;
 	(verif < 0) ? verif = check_return(arguments, verif) : 0;
 	if (verif >= 0)

@@ -41,7 +41,6 @@ $(NAME): $(OBJ)
 
 $(DIROBJ)/%.o: %.c
 	@gcc $< $(FLAGS) -c -o $@
-	@echo "\033[36mft_printf\033[0m $*: \033[32mOk\033[0m"
 
 clean:
 	@rm -f $(OBJ)

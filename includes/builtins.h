@@ -6,7 +6,7 @@
 /*   By: sbelondr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/08 16:01:05 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/05/08 16:02:42 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/08 23:27:06 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,6 @@ typedef struct		s_cd
 }					t_cd;
 
 int					bt_exit(char **av);
-int					bt_echo(char **av);
+int					bt_echo(char **av, t_redirection *r);
 
 #	endif
