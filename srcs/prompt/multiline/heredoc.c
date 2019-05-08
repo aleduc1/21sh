@@ -14,6 +14,7 @@
 
 void		init_heredoc(t_pos *pos)
 {
+	pos->multiline = 1;
 	pos->historycount = 0;
 	pos->historysum = 0;
 	pos->nblines = 0;

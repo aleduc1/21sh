@@ -108,7 +108,7 @@ t_node	*home_end(t_node *lstcursor, char buffer[], t_pos *pos)
 t_node	*ctrl_n_friends(t_node *lstcursor, t_node **input, char buffer[], \
 																t_pos *pos)
 {
-	if (CTRL_D)
+	if (CTRL_D && !(*input)->next && pos->multiline != 1)
 	{
 		default_term_mode();
 		get_env(1, NULL);
@@ -119,6 +119,7 @@ t_node	*ctrl_n_friends(t_node *lstcursor, t_node **input, char buffer[], \
 		while (((*input)->next) != NULL)
 			ddel(input, *input);
 		pos->stop = 1;
+		pos->multiline = 0;
 		ft_putchar('\n');
 	}
 	return (lstcursor);
