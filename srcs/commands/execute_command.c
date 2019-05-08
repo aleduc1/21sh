@@ -3,20 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   execute_command.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: apruvost <apruvost@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/02 08:43:53 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/05/08 16:23:10 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/08 17:31:38 by apruvost         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "env.h"
 
-static int	sighandler(int signum)
+static void	sighandler(int signum)
 {
 	(void)signum;
 	ft_putchar('\n');
-	return (0);
 }
 
 /*
