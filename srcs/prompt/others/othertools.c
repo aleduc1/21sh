@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   othertools.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbellaic <mbellaic@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/12 17:19:04 by aleduc            #+#    #+#             */
-/*   Updated: 2019/05/08 00:29:56 by mbellaic         ###   ########.fr       */
+/*   Updated: 2019/05/08 17:07:56 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,11 +117,11 @@ char		*lst_to_str(t_multi **multi, char *inputstr)
 	inputstr++;
 	finalstr = ft_strdup(inputstr);
 	inputstr--;
-	free(inputstr);
+	ft_strdel(&inputstr);
 	i = 0;
 	while (finalstr[i])
 		if (finalstr[i++] != ' ' || finalstr[i] != '\t')
 			return (finalstr);
-	free(finalstr);
+	ft_strdel(&finalstr);
 	return (NULL);
 }
