@@ -31,6 +31,7 @@ void			init_prompt(t_pos *pos)
 	pos->startcolumn = 0;
 	pos->tailcolumn = 0;
 	pos->tailrow = 0;
+	pos->multiline = 0;
 	pos->stop = 0;
 }
 
@@ -47,11 +48,13 @@ int				check_integrity(t_node *input, t_multi **multi, t_pos *pos,\
 	key_occurence(cursor, count);
 	if ((count->dquote % 2) != 0)
 	{
+		pos->multiline = 1;
 		dquote(lstcursor, multi, pos);
 		return (-1);
 	}
 	if ((count->quote % 2) != 0)
 	{
+		pos->multiline = 1;
 		quote(lstcursor, multi, pos);
 		return (-1);
 	}
@@ -127,7 +130,7 @@ char			*prompt(t_multi *multi, t_pos *pos)
 			inserthistory(pos->history, inputstr, pos);
 	}
 	ddellist(multi);
-	reset_stop(&inputstr, pos);
+	reset_stop(&inputstr, pos, &count);
 	pos->historycount = 0;
 	default_term_mode();
 	return (inputstr) ? inputstr : NULL;

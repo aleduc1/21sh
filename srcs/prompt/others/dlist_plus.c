@@ -39,10 +39,12 @@ void		multi_push(t_multi **head)
 	(*head) = new_node;
 }
 
-void	reset_stop(char **inputstr, t_pos *pos)
+void	reset_stop(char **inputstr, t_pos *pos, t_integrity *count)
 {
 	if (pos->stop == 1)
 	{
+		count->quote = 0;
+		count->dquote = 0;
 		pos->stop = 0;
 		ft_strdel(inputstr);
 	}
