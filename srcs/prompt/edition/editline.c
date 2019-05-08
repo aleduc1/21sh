@@ -80,7 +80,7 @@ void		actualize(t_pos *pos, t_node *lstcursor, t_node **input,\
 		pos->currentline++;
 	}
 	else
-		ft_putchar(buffer[0]);
+		ft_putstr(buffer);
 	get_tail(pos);
 	redraw(pos, lstcursor);
 	savecursor(pos);
@@ -90,13 +90,17 @@ void		actualize(t_pos *pos, t_node *lstcursor, t_node **input,\
 t_node		*editline(t_pos *pos, t_node *lstcursor, \
 						t_node **input, char buffer[])
 {
+	int i;
+
+	i = 0;
 	if (!PRINTABLE)
 		lstcursor = check_input(lstcursor, input, buffer, pos);
 	if (PRINTABLE)
 	{
 		if (pos->selection == 1)
 			lstcursor = delete_selection(input, lstcursor, pos);
-		insert(lstcursor, buffer[0]);
+		while(buffer[i])
+			insert(lstcursor, buffer[i++]);
 		actualize(pos, lstcursor, input, buffer);
 	}
 	return (lstcursor);
