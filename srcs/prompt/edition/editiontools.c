@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   editiontools.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aleduc <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/12 17:17:31 by aleduc            #+#    #+#             */
-/*   Updated: 2019/03/12 17:17:53 by aleduc           ###   ########.fr       */
+/*   Updated: 2019/05/08 05:14:27 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,13 @@ void		print_prompt(void)
 	char	**promptpath;
 	int		i;
 
+	ft_bzero(cwd, 1024);
 	getcwd(cwd, 1023);
+	if (cwd[0] == '\0')
+	{
+		ft_putstr("[EASTER_EGG] » ");
+		return ;
+	}
 	promptpath = ft_strsplit(cwd, '/');
 	i = 0;
 	while (promptpath[i])
