@@ -119,7 +119,7 @@ t_node				*check_input(t_node *lstcursor, t_node **input, \
 void				wrapping(t_pos *pos);
 void				redraw(t_pos *pos, t_node *lstcursor);
 void				actualize(t_pos *pos, t_node *lstcursor, \
-								t_node **input, char buffer[]);
+								t_node **input, char buffer);
 t_node				*editline(t_pos *pos, t_node *lstcursor, \
 								t_node **input, char buffer[]);
 t_node				*read_input(t_node **input, t_pos *pos);

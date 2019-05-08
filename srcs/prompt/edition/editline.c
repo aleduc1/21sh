@@ -68,19 +68,19 @@ void		redraw(t_pos *pos, t_node *lstcursor)
 }
 
 void		actualize(t_pos *pos, t_node *lstcursor, t_node **input,\
-														char buffer[])
+														char buffer)
 {
 	stalk_cursor(pos);
 	if (pos->column == pos->termsize.ws_col)
 	{
-		ft_putchar(buffer[0]);
+		ft_putchar(buffer);
 		wrapping(pos);
 		go_downleft(pos);
 		pos->nblines++;
 		pos->currentline++;
 	}
 	else
-		ft_putstr(buffer);
+		ft_putchar(buffer);
 	get_tail(pos);
 	redraw(pos, lstcursor);
 	savecursor(pos);
@@ -100,8 +100,10 @@ t_node		*editline(t_pos *pos, t_node *lstcursor, \
 		if (pos->selection == 1)
 			lstcursor = delete_selection(input, lstcursor, pos);
 		while(buffer[i])
-			insert(lstcursor, buffer[i++]);
-		actualize(pos, lstcursor, input, buffer);
+		{
+			insert(lstcursor, buffer[i]);
+			actualize(pos, lstcursor, input, buffer[i++]);
+		}
 	}
 	return (lstcursor);
 }
