@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   bt_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apruvost <apruvost@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/21 13:52:06 by apruvost          #+#    #+#             */
-/*   Updated: 2019/05/07 16:32:01 by apruvost         ###   ########.fr       */
+/*   Updated: 2019/05/08 14:17:58 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int		bt_exit(char **av)
 	{
 		ft_dprintf(2, "exit\n");
 		default_term_mode();
-		get_env(1);
+		get_env(1, NULL);
 		exit(0);
 	}
 	if (ft_isstrnum(av[1]))
@@ -62,7 +62,7 @@ int		bt_exit(char **av)
 		{
 			ft_dprintf(2, "exit\n");
 			default_term_mode();
-			get_env(1);
+			get_env(1, NULL);
 			exit(ft_atoi(av[1]));
 		}
 		ft_dprintf(2, "21sh: exit: too many arguments\n");
@@ -70,6 +70,6 @@ int		bt_exit(char **av)
 	}
 	ft_dprintf(2, "21sh: exit: %s: numeric argument required\n", av[1]);
 	default_term_mode();
-	get_env(1);
+	get_env(1, NULL);
 	exit(255);
 }

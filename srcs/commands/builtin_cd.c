@@ -6,7 +6,7 @@
 /*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 21:20:48 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/05/08 02:58:28 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/08 14:16:48 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,7 +142,7 @@ int			builtin_cd(char **arguments)
 	int			verif;
 	char		buf[BUF_S];
 
-	environ = create_list_env(get_env(0), 0);
+	environ = create_list_env(get_env(0, NULL), 0);
 	if (ft_arraylen(arguments) > 2)
 	{
 		error_cd(1, NULL);

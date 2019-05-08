@@ -6,7 +6,7 @@
 /*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/22 13:33:53 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/05/08 13:43:00 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/08 14:23:06 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,9 @@ typedef struct	s_commands
 	struct s_commands	*next;
 }t_commands;
 
-int     check_is_env_command(char **input);
+int    		check_is_env_command(char **input);
+int			create_new_path_env(char *key, char *value, int env);
+void	check_delete_env_command(void);
 
 
 /*
@@ -157,5 +159,5 @@ int		ft_ampersand(char **argv, t_token *token, int num_process);
 int		ft_ampersand_double(char **argv, t_token *token);
 
 
-t_env		*get_env(int is_end);
+t_env		*get_env(int is_end, t_env *f_line);
 #	endif

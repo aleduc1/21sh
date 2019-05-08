@@ -6,7 +6,7 @@
 /*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/22 17:36:44 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/05/08 13:55:39 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/08 14:41:22 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int		builtin_env_display(t_redirection *r)
 	char	**lst_env;
 
 	i = -1;
-	lst_env = create_list_env(get_env(0), 1);
+	lst_env = create_list_env(get_env(0, NULL), 1);
 	while (lst_env[++i])
 		ft_dprintf(r->out, "%s\n", lst_env[i]);
 	if (i == 0)
@@ -99,6 +99,27 @@ int		check_is_env_command(char **input)
 	return (1);
 }
 
+/*
+** separer le mallon avant delete
+*/
+
+void	check_delete_env_command(void)
+{
+	t_env	*my_env;
+	t_env	*head;
+
+	my_env = get_env(0, NULL);
+	head = NULL;
+	if (my_env && my_env->see_env == 3)
+	{
+		head = my_env->next;
+		ft_strdel(&(my_env->key));
+		ft_strdel(&(my_env->value));
+		free(my_env);
+		get_env(0, head);
+	}
+}
+
 int		builtin_env(t_redirection *r, char **argv)
 {
 	int		verif;
@@ -113,7 +134,7 @@ int		builtin_set(t_redirection *r)
 	int		i;
 	char	**lst_env;
 
-	lst_env = create_list_env(get_env(0), 0);
+	lst_env = create_list_env(get_env(0, NULL), 0);
 	i = -1;
 	while (lst_env[++i])
 		ft_dprintf(r->out, "%s\n", lst_env[i]);

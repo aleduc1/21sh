@@ -6,7 +6,7 @@
 /*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/22 17:57:48 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/05/08 05:04:52 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/08 14:50:31 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ static int	path_of_commands(char ***command, char **split)
 	char	*dst;
 
 	i = -1;
+	if (!split)
+		return (-1);
 	while (split[++i])
 	{
 		dst = ft_strjoin(split[i], "/");
@@ -97,7 +99,7 @@ int			gest_return(int verif)
 	return (verif);
 }
 
-t_env		*get_env(int is_end)
+t_env		*get_env(int is_end, t_env *f_line)
 {
 	static t_env	*my_env;
 
@@ -105,6 +107,12 @@ t_env		*get_env(int is_end)
 	{
 		my_env = init_env();
 		init_variable();
+	}
+	if (f_line)
+	{
+		if (f_line->next == NULL)
+			f_line->next = my_env;
+		my_env = f_line;
 	}
 	if (is_end)
 		free_env(&my_env);

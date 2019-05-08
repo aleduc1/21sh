@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_command.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apruvost <apruvost@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/02 08:43:53 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/05/08 02:08:57 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/08 14:17:05 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int		add_process(char **cmd, int *returns_code, t_redirection *r)
 		ft_dprintf(STDERR_FILENO, "21sh: command not found: %s\n", cmd[0]);
 		return (*returns_code);
 	}
-	env = create_list_env(get_env(0), 0);
+	env = create_list_env(get_env(0, NULL), 0);
 	pid = fork();
 	waitpid(pid, &(*returns_code), 0);
 	if (pid == 0)

@@ -6,7 +6,7 @@
 /*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/22 17:48:23 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/05/08 13:42:06 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/08 14:17:15 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int			free_maillon_env(char *key, int env)
 	t_env	*my_env;
 	t_env	*last;
 
-	my_env = get_env(0);
+	my_env = get_env(0, NULL);
 	last = NULL;
 	verif = 0;
 	while (my_env->next)

@@ -6,7 +6,7 @@
 /*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/07 10:31:02 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/05/08 13:57:24 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/08 14:17:22 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,7 +138,7 @@ void		parser_var(char ***value)
 	int		i;
 
 	i = -1;
-	my_env = get_env(0);
+	my_env = get_env(0, NULL);
 	while ((*value)[++i])
 	{
 		if ((*value)[i][0] != '\'' && (ft_strchr_exist((*value)[i], '$') ||

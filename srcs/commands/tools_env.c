@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tools_env.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apruvost <apruvost@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/22 17:29:22 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/05/08 01:01:53 by apruvost         ###   ########.fr       */
+/*   Updated: 2019/05/08 14:49:25 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,19 @@ int			is_env_empty(char *key)
 		return (1);
 	}
 	ft_strdel(&test);
+	return (0);
+}
+
+int			create_new_path_env(char *key, char *value, int env)
+{
+	t_env	*head;
+
+	head = init_maillon_env();
+	head->key = ft_strdup(key);
+	head->value = ft_strdup(value ? value : "");
+	head->see_env = env;
+	head->next = NULL;
+	get_env(0, head);
 	return (0);
 }
 
@@ -62,13 +75,13 @@ char		*value_line_path(char *key, int env)
 	t_env	*my_env;
 	char	*dst;
 
-	my_env = get_env(0);
+	my_env = get_env(0, NULL);
 	dst = NULL;
 	while (my_env)
 	{
 		if (ft_strequ(my_env->key, key))
 		{
-			if (env == 0 || (env == my_env->see_env))
+			if (env == 0 || (env == my_env->see_env) || my_env->see_env == 3)
 			{
 				dst = ft_strdup(my_env->value);
 				return (dst);
