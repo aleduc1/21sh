@@ -6,7 +6,7 @@
 /*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/22 14:54:24 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/05/08 15:32:56 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/09 00:12:02 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,8 @@ int			edit_setenv(char *key, char *value)
 {
 	int	verif;
 
+	if (!value)
+		value = "";
 	verif = edit_set(key, value);
 	if (verif != -1)
 		verif = edit_export(key);

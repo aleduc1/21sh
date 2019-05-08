@@ -6,7 +6,7 @@
 /*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/07 10:31:02 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/05/08 16:31:21 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/09 00:04:08 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,17 @@ static char	*search_var(char *src)
 	return (dst);
 }
 
+static void	ft_remove_quote(char **str)
+{
+	int		len;
+	char	*tmp;
+
+	len = ft_strlen(*str);
+	tmp = ft_strsub(*str, 1, len - 2);
+	ft_strdel(&(*str));
+	(*str) = tmp;
+}
+
 void		parser_var(char ***value)
 {
 	char	*tmp;
@@ -107,8 +118,9 @@ void		parser_var(char ***value)
 	i = -1;
 	while ((*value)[++i])
 	{
-		if ((*value)[i][0] != '\'' && (ft_strchr_exist((*value)[i], '$') ||
-				(*value)[i][0] == '~'))
+		if ((*value)[i][0] == '\'')
+			ft_remove_quote(&((*value)[i]));
+		else if (ft_strchr_exist((*value)[i], '$') || (*value)[i][0] == '~')
 		{
 			tmp = search_var((*value)[i]);
 			ft_strdel(&((*value)[i]));

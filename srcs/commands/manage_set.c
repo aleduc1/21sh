@@ -6,7 +6,7 @@
 /*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/22 14:54:24 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/05/08 15:33:16 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/09 00:11:46 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ int			edit_set(char *key, char *value)
 	my_env = get_env(0, NULL);
 	head = my_env;
 	verif = 0;
+	if (!value)
+		value = "";
 	while (my_env->next)
 	{
 		if (ft_strequ(my_env->key, key))
@@ -50,6 +52,8 @@ int			edit_set_command_env(char *key, char *value)
 {
 	int		verif;
 
+	if (!value)
+		value = "";
 	verif = create_new_path_env(key, value, 3);
 	return (verif);
 }

@@ -6,7 +6,7 @@
 /*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/26 16:44:29 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/05/08 16:47:58 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/09 00:53:27 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,8 @@ int			open_file_dless(t_redir *redir, t_pos *pos)
 	name = ft_strdup("/tmp/.21sh0");
 	redir->filename = name;
 	str = heredoc(redir->heredoc, pos);
+	if (!str)
+		return (-1);	
 	ft_remove_last_chr(&str);
 	fd = file_exist(name);
 	if (fd > -1)
