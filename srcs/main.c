@@ -6,7 +6,7 @@
 /*   By: mbellaic <mbellaic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/12 17:01:09 by aleduc            #+#    #+#             */
-/*   Updated: 2019/05/08 03:19:43 by mbellaic         ###   ########.fr       */
+/*   Updated: 2019/05/08 03:21:25 by mbellaic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,16 @@
 #include "lexer.h"
 #include "parser.h"
 
-int		siginthandler(int signum)
+int			siginthandler(int signum)
 {
 	(void)signum;
 	ft_printf("oui\n");
 }
 
-void	run(char *input, t_pos *pos)
+void		run(char *input, t_pos *pos)
 {
-	t_lex *lex;
-	t_ast *ast;
+	t_lex	*lex;
+	t_ast	*ast;
 
 	lex = NULL;
 	ast = NULL;
@@ -37,9 +37,9 @@ void	run(char *input, t_pos *pos)
 	}
 }
 
-int		main(int argc, char **argv, char **environ)
+int			main(int argc, char **argv, char **environ)
 {
-  	t_multi	*multi_input;
+	t_multi	*multi_input;
 	char	*input;
 	t_pos	pos;
 
