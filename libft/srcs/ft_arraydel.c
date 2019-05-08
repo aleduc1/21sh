@@ -6,7 +6,7 @@
 /*   By: sbelondr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 22:17:10 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/04/08 09:52:15 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/08 01:59:55 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void		ft_arraydel(char ***line)
 	int	i;
 
 	i = -1;
-	if (*line)
+	if (line && *line)
 	{
 		while ((*line)[++i])
 			ft_strdel(&((*line)[i]));

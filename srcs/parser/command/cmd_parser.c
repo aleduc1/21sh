@@ -11,11 +11,8 @@ int				get_argc(t_lex *cursor)
 	{
 		if(cursor->token->type == WORD || cursor->token->type == NUMBER)
 			len++;
-		ft_putstr(cursor->token->data);
-		ft_putstr(" ->");
 		cursor = cursor->next;
 	}
-	ft_putstr("\n");
 	return (len);
 }
 char			**get_argv(t_token *cmd_list)
@@ -33,10 +30,7 @@ char			**get_argv(t_token *cmd_list)
 	while(cursor)
 	{
 		if(cursor->token->type == WORD || cursor->token->type == NUMBER)
-		{
 			argv[i++] = ft_strdup(cursor->token->data);
-		printf("argv[%d] = %s|\n", i - 1, argv[i - 1]);
-		}
 		cursor = cursor->next;
 	}
 	argv[i] = NULL;
@@ -65,6 +59,7 @@ int			*run_pipe(t_token *cmd_list, t_pos *pos, int end_pipe)
 	ft_pipe(argv, cmd_list, end_pipe);
 	return (0);
 }
+
 int			*run_cmd(t_token *cmd_list, t_pos *pos)
 {
 	char	**argv;

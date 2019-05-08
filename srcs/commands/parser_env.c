@@ -6,11 +6,11 @@
 /*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/07 10:31:02 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/05/07 23:37:54 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/08 01:46:50 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/env.h"
+#include "env.h"
 
 static void	copy_value(char *src, char **dst, int start, int end)
 {
@@ -35,12 +35,23 @@ static char	*manage_var(char *str)
 	return (final);
 }
 
-static int	manage_home(char **dst, int index, t_env *my_env)
+static int	manage_home(char *src, char **dst, int index, t_env *my_env)
 {
 	char	*data;
 
 	index += 1;
-	data = manage_var("HOME");
+	if (src[index] == '-')
+	{
+		index++;
+		data = manage_var("OLDPWD");
+	}
+	else if (src[index] == '+')
+	{
+		index++;
+		data = manage_var("PWD");
+	}
+	else
+		data = manage_var("HOME");
 	ft_strdel(&(*dst));
 	(*dst) = ft_strdup(data);
 	return (index);
@@ -108,8 +119,8 @@ static char	*search_var(char *src, t_env *my_env)
 		{
 			if (i != last)
 				copy_value(src, &dst, last, i);
-			if (src[i] == '~')
-				i = manage_home(&dst, i, my_env) - 1;
+			if (src[i] == '~' && i == 0)
+				i = manage_home(src, &dst, i, my_env) - 1;
 			else
 				i = apply_rules(src, &dst, i, my_env);
 			last = i + 1;
@@ -130,8 +141,8 @@ void		parser_var(char ***value)
 	my_env = get_env(0);
 	while ((*value)[++i])
 	{
-		if (ft_strchr_exist((*value)[i], '$') ||
-				(*value)[i][0] == '~')
+		if ((*value)[i][0] != '\'' && (ft_strchr_exist((*value)[i], '$') ||
+				(*value)[i][0] == '~'))
 		{
 			tmp = search_var((*value)[i], my_env);
 			ft_strdel(&((*value)[i]));
