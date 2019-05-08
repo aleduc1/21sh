@@ -6,13 +6,22 @@
 /*   By: apruvost <apruvost@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/08 18:27:24 by apruvost          #+#    #+#             */
-/*   Updated: 2019/05/07 16:29:05 by apruvost         ###   ########.fr       */
+/*   Updated: 2019/05/08 03:28:05 by apruvost         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "env.h"
+#include "builtins.h"
 
-int		cd_chdir(t_cd *cd, char ***env)
+int		cd_err(t_cd *cd)
+{
+	if (cd->directory)
+		ft_strdel(&cd->directory);
+	if (cd->curpath)
+		ft_strdel(&cd->curpath);
+	return (1);
+}
+
+int		cd_chdir(t_cd *cd)
 {
 	char	*tmp;
 	char	path[PATH_MAX];
@@ -20,20 +29,16 @@ int		cd_chdir(t_cd *cd, char ***env)
 	if (chdir(cd->curpath) == -1)
 	{
 		dprintf(2, "21sh: cd: permission denied: %s\n", cd->directory);
-		return (1);
+		return (cd_err(cd));
 	}
-	if (cd->arg_P)
-	{
-		tmp = ft_getenvval("PWD", *env);
-		ft_setenv("PWD", getcwd(path, PATH_MAX), 1, env);
-		ft_setenv("OLDPWD", tmp, 1, env);
-	}
-	else
-	{
-		tmp = ft_getenvval("PWD", *env);
-		ft_setenv("PWD", cd->curpath, 1, env);
-		ft_setenv("OLDPWD", tmp, 1, env);
-	}
+	tmp = value_line_path("PWD", 0);
+	edit_setenv("PWD", cd->curpath);
+	edit_setenv("OLDPWD", tmp);
+	if (cd->arg__)
+		ft_printf("%s\n", cd->curpath);
+	ft_strdel(&tmp);
+	ft_strdel(&cd->directory);
+	ft_strdel(&cd->curpath);
 	return (0);
 }
 

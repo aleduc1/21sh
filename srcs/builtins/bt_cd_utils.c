@@ -6,13 +6,13 @@
 /*   By: apruvost <apruvost@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/06 17:22:06 by apruvost          #+#    #+#             */
-/*   Updated: 2019/05/07 16:28:50 by apruvost         ###   ########.fr       */
+/*   Updated: 2019/05/08 03:28:00 by apruvost         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "env.h"
+#include "builtins.h"
 
-int		getnextpath(char *path)
+int		cd_getnextpath(char *path)
 {
 	int	i;
 
@@ -53,7 +53,7 @@ int		cd_testcdpath(char *path, char *directory, char **test)
 	int		j;
 	char	*tmp;
 
-	i = ft_getnextpath(path);
+	i = cd_getnextpath(path);
 	if ((tmp = (char *)malloc(sizeof(char) * (i + 1))) == NULL)
 	{
 		dprintf(2, "21sh: cd: Failed to malloc\n");			// NO MEMORY
@@ -62,47 +62,4 @@ int		cd_testcdpath(char *path, char *directory, char **test)
 	j = cd_testpath(tmp, directory, test);
 	ft_strdel(&tmp);
 	return (j);
-}
-
-/*
-** Function to get arguments
-*/
-
-int		cd_getargs(char **av, t_cd *cd)
-{
-	int	i;
-	int	j;
-
-	i = 1;
-
-	while (av[i])
-	{
-		if (av[i][0] == '-')
-		{
-			j = 1;
-			while (av[i][j] != '\0' && (av[i][j] == 'L' || av[i][j] == 'P'))
-				j++;
-			if (av[i][j] == '\0')
-			{
-				if (av[i][j - 1] == 'L')
-				{
-					cd->arg_L = 1;
-					cd->arg_P = 1;
-				}
-				else if (av[i][j - 1] == 'P')
-				{
-					cd->arg_L = 1;
-					cd->arg_P = 1;
-				}
-				else
-					return (i);
-				i++;
-			}
-			else 
-				return (i);
-		}
-		else
-			return (i);
-	}
-	return (i);
 }

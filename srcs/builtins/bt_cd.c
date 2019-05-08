@@ -6,11 +6,11 @@
 /*   By: apruvost <apruvost@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/19 17:56:32 by apruvost          #+#    #+#             */
-/*   Updated: 2019/05/07 16:29:11 by apruvost         ###   ########.fr       */
+/*   Updated: 2019/05/08 03:38:54 by apruvost         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "env.h"
+#include "builtins.h"
 
 /*
 ** cd [-L|-P] [directory]
@@ -59,7 +59,7 @@
 ** If, during above steps, PWD variable is set, change OLD_PWD to value of old working directory (current working directory prior to cd call) 
 */
 
-static int	cd_stepten(t_cd *cd, char ***env)					// Step 10
+static int	cd_stepten(t_cd *cd)					// Step 10
 {
 	struct stat	sb;
 	
@@ -67,51 +67,52 @@ static int	cd_stepten(t_cd *cd, char ***env)					// Step 10
 	if (stat(cd->curpath, &sb) == -1)
 	{
 		dprintf(2, "21sh: cd: permission denied\n");
-		return (1);
+		return (cd_err(cd));
 	}
 	if ((sb.st_mode & S_IFMT) != S_IFDIR)
 	{
 		dprintf(2, "21sh: cd: no such file or directory: %s\n", cd->directory);
-		return (1);
+		return (cd_err(cd));
 	}
-	if (cd_chdir(cd, env))
-		return (1);
+	if (cd_chdir(cd))
+		return (cd_err(cd));
 	return (0);
 }
 
-static int	cd_stepsev(t_cd *cd, char ***env)
+static int	cd_stepsev(t_cd *cd)
 {
 	char	*bin;
+	char	*binn;
 
-	if (cd->arg_P == 1)											// Step 7
-		return (cd_stepten(cd, env));
 	if (cd->curpath[0] != '/')
 	{
-		bin = ft_getenvval("PWD", *env);
+		bin = value_line_path("PWD", 0);
+		binn = cd->curpath;
 		cd->curpath = ft_jointhree(bin, "/", cd->curpath);
+		ft_strdel(&binn);
 		ft_strdel(&bin);
 	}
 	if (!cd_canonical(cd))											// Step 8
-		return (1);
+		return (cd_err(cd));
 //	cd_path_max(cd, env);										// Step 9
-	return (cd_stepten(cd, env));
+	return (cd_stepten(cd));
 }
 
-static int	cd_stepfive(t_cd *cd, char **env)
+static int	cd_stepfive(t_cd *cd)
 {
 	char	*test;
 	char	*path;
 	int		j;
 
 	test = NULL;
-	if (ft_isenvempty("CDPATH", env))
+	if (is_env_empty("CDPATH"))
 	{
 		if (!cd_testpath(".", cd->directory, &test))
 			return (0);
 		cd->curpath = test;
 		return (1);
 	}
-	path = ft_getenvval("CDPATH", env);
+	path = value_line_path("CDPATH", 0);
 	j = 7;
 	while (path[j] != '\0')
 	{
@@ -121,7 +122,7 @@ static int	cd_stepfive(t_cd *cd, char **env)
 			ft_strdel(&path);
 			return (1);
 		}
-		j += getnextpath(&(path[j]));
+		j += cd_getnextpath(&(path[j]));
 	}
 	ft_strdel(&path);
 	return (0);
@@ -129,36 +130,44 @@ static int	cd_stepfive(t_cd *cd, char **env)
 
 static void	cd_init(char **av, t_cd *cd)
 {
-	int		i;
-
-	cd->arg_P = 0;
-	cd->arg_L = 0;
-	i = cd_getargs(av, cd);										// V
-	cd->directory = av[i];
+	cd->arg__ = 0;
+	cd->curpath = NULL;
+	if (!av[1])
+	{
+		cd->directory = NULL;
+		return ;
+	}
+	if (ft_strequ(av[1], "-"))
+	{
+		cd->directory = value_line_path("OLDPWD", 0);
+		cd->arg__ = 1;
+		return ;
+	}										// V
+	cd->directory = ft_strdup(av[1]);
 }
 
-int			ft_cd(char **av, char ***env)
+int			bt_cd(char **av)
 {
 	t_cd	cd;
 
 	cd_init(av, &cd);							// V
-	if (cd.directory == NULL && ft_isenvempty("HOME", *env))	// Step 1
-		return (1);
+	if (cd.directory == NULL && is_env_empty("HOME"))	// Step 1
+		return (cd_err(&cd));
 	if (cd.directory == NULL)									// Step 2
-		cd.directory = ft_getenvval("HOME", *env);
+		cd.directory = value_line_path("HOME", 0);
 	if (cd.directory[0] == '/')									// Step 3
 	{
 		cd.curpath = ft_strdup(cd.directory);
-		return (cd_stepsev(&cd, env));
+		return (cd_stepsev(&cd));
 	}
 	if (cd.directory[0] != '.' ||
 		(cd.directory[0] != '.' && cd.directory[1] != '.'))		// Step 4
 	{
-		if (cd_stepfive(&cd, *env))								// Step 5
-			return (cd_stepsev(&cd, env));
+		if (cd_stepfive(&cd))								// Step 5
+			return (cd_stepsev(&cd));
 		dprintf(2, "21sh: cd: %s: No such file or directory\n", cd.directory);
-		return (1);
+		return (cd_err(&cd));
 	}
 	cd.curpath = ft_strdup(cd.directory);						// Step 6
-	return (cd_stepsev(&cd, env));
+	return (cd_stepsev(&cd));
 }
