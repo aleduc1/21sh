@@ -6,7 +6,7 @@
 /*   By: mbellaic <mbellaic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/12 17:18:42 by aleduc            #+#    #+#             */
-/*   Updated: 2019/04/27 19:50:01 by mbellaic         ###   ########.fr       */
+/*   Updated: 2019/05/08 02:10:27 by mbellaic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,6 +119,7 @@ t_node	*ctrl_n_friends(t_node *lstcursor, t_node **input, char buffer[], \
 		while (((*input)->next) != NULL)
 			ddel(input, *input);
 		pos->stop = 1;
+		ft_putchar('\n');
 	}
 	return (lstcursor);
 }
