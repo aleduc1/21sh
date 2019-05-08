@@ -3,14 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   other_tools.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apruvost <apruvost@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/22 17:57:48 by sbelondr          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2019/05/08 03:31:22 by apruvost         ###   ########.fr       */
-=======
-/*   Updated: 2019/05/08 02:36:34 by sbelondr         ###   ########.fr       */
->>>>>>> 4584f1a500f049cd06645f77a51b1b2fff55cb9c
+/*   Updated: 2019/05/08 04:22:20 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +62,7 @@ int			is_builtin(char **argv, t_redirection *r)
 	int		verif;
 
 	if (ft_strequ(argv[0], "env"))
-		verif = builtin_env(r);
+		verif = builtin_env(r, argv);
 	else if (ft_strequ(argv[0], "set"))
 		verif = builtin_set(r);
 	else if (ft_strequ(argv[0], "setenv"))
@@ -82,11 +78,7 @@ int			is_builtin(char **argv, t_redirection *r)
 	else if (ft_strequ(argv[0], "echo"))
 		verif = bt_echo(argv);
 	else if (ft_strequ(argv[0], "cd"))
-<<<<<<< HEAD
 		verif = bt_cd(argv);
-=======
-		verif = builtin_cd(argv);
->>>>>>> 4584f1a500f049cd06645f77a51b1b2fff55cb9c
 	else if (ft_strequ(argv[0], "exit"))
 		verif = bt_exit(argv);
 	else

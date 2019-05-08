@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   stalkcursor.c                                      :+:      :+:    :+:   */
+/*   del_keyhook.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbellaic <mbellaic@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/12 17:19:17 by aleduc            #+#    #+#             */
-/*   Updated: 2019/04/17 15:24:00 by mbellaic         ###   ########.fr       */
+/*   Updated: 2019/05/08 04:46:15 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ t_node	*backspace(t_node *lstcursor, t_node **input, char buffer[], t_pos *pos)
 
 t_node	*del_key(t_node *lstcursor, t_node **input, char buffer[], t_pos *pos)
 {
-	if (DELETE && lstcursor->prev)
+	if (DELETE && lstcursor->prev && lstcursor->next)
 	{
 		ft_putstr(tgetstr("dc", NULL));
 		if (pos->tailcolumn == 1)
@@ -51,6 +51,13 @@ t_node	*del_key(t_node *lstcursor, t_node **input, char buffer[], t_pos *pos)
 		lstcursor = lstcursor->prev;
 		ddel(input, lstcursor->next);
 		redraw(pos, lstcursor);
+	}
+	if (DELETE && lstcursor->prev && !lstcursor->next)
+	{
+		ft_putstr(tgetstr("dc", NULL));
+		pos->tailcolumn--;
+		lstcursor = lstcursor->prev;
+		ddel(input, lstcursor->next);
 	}
 	return (lstcursor);
 }

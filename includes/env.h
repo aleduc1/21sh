@@ -6,7 +6,7 @@
 /*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/22 13:33:53 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/05/08 02:26:58 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/08 04:23:21 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ char				*value_line_path(char *key, int env);
 
 int		return_good_fd(t_lex *lex, int fd);
 int     builtin_set(t_redirection *r);
-int     builtin_env(t_redirection *r);
+int     builtin_env(t_redirection *r, char **argv);
 
 /*
 ** builtin_cd.c

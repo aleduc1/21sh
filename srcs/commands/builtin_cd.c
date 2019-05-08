@@ -6,13 +6,13 @@
 /*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 21:20:48 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/05/08 02:35:30 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/08 02:58:28 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "env.h"
 
-int		ft_lastchr(const char *s, int c)
+int			ft_lastchr(const char *s, int c)
 {
 	int	cnt;
 	int	last;
@@ -36,7 +36,7 @@ int			check_arg(char ***arguments)
 	return (0);
 }
 
-void	error_cd(int code, char *str)
+void		error_cd(int code, char *str)
 {
 	struct stat	st;
 

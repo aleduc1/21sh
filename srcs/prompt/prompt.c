@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbellaic <mbellaic@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/12 17:13:21 by aleduc            #+#    #+#             */
-/*   Updated: 2019/05/08 02:08:22 by mbellaic         ###   ########.fr       */
+/*   Updated: 2019/05/08 04:31:24 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,18 +60,18 @@ int				check_integrity(t_node *input, t_multi **multi, t_pos *pos,\
 
 t_node			*read_input(t_node **input, t_pos *pos)
 {
-	char		buffer[1000];
+	char		buffer[4096];
 	t_node		*lstcursor;
 
 	lstcursor = *input;
 	reset_multi(pos);
-	ft_bzero(buffer, 1000);
+	ft_bzero(buffer, 4096);
 	ft_putstr(tgetstr("im", NULL));
-	while (read(STDIN_FILENO, &buffer, 1000) > 0 && !ENTER)
+	while (read(STDIN_FILENO, &buffer, 4095) > 0 && !ENTER)
 	{
 		lstcursor = editline(pos, lstcursor, input, buffer);
 		stalk_cursor(pos);
-		ft_bzero(buffer, 1000);
+		ft_bzero(buffer, 4096);
 		if (pos->stop == 1)
 		{
 			pos->stop = 0;
