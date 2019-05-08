@@ -36,7 +36,7 @@ VPATH = objs:\
 		srcs/parser/command:\
 		srcs/commands:\
 		srcs/cleaning:\
-		srcs/interpreter\
+		srcs/interpreter:\
 		srcs/builtins
 # ------------------ #
 # Compiler and flags #
