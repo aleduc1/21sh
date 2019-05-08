@@ -6,13 +6,14 @@
 /*   By: mbellaic <mbellaic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/12 17:01:09 by aleduc            #+#    #+#             */
-/*   Updated: 2019/05/08 03:29:30 by mbellaic         ###   ########.fr       */
+/*   Updated: 2019/05/08 13:53:50 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh21.h"
 #include "lexer.h"
 #include "parser.h"
+#include "env.h"
 
 int			siginthandler(int signum)
 {
@@ -67,7 +68,11 @@ int			main(int argc, char **argv, char **environ)
 	{
 		if (argc && argv && environ)
 			if ((input = prompt(multi_input, &pos)))
-				run(input, &pos);
+			{
+				check_is_env_command(&input);
+				if (input)
+					run(input, &pos);
+			}
 	}
 	return (0);
 }

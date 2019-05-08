@@ -6,7 +6,7 @@
 /*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/22 17:48:23 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/05/07 19:56:02 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/08 13:42:06 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int			free_maillon_env(char *key, int env)
 	while (my_env->next)
 	{
 		if (ft_strequ(my_env->key, key) && (env == 0 ||
-					(env == 1 && my_env->see_env == 1)))
+					(env == 1 && my_env->see_env == 1) || my_env->see_env == 3))
 		{
 			last->next = my_env->next;
 			ft_strdel(&(my_env->key));

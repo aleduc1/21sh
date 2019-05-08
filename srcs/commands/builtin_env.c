@@ -6,29 +6,11 @@
 /*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/22 17:36:44 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/05/08 03:50:17 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/08 13:55:39 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "env.h"
-
-void		reset_pos(t_pos *pos)
-{
-	pos->historycount = 0;
-	pos->historysum = 0;
-	pos->nblines = 0;
-	pos->currentline = 0;
-	pos->selection = 0;
-	pos->selectcount = 0;
-	pos->inputlen = 0;
-	pos->savecolumn = 0;
-	pos->saverow = 0;
-	pos->startrow = 0;
-	pos->startcolumn = 0;
-	pos->tailcolumn = 0;
-	pos->tailrow = 0;
-	pos->stop = 0;
-}
 
 int		builtin_env_display(t_redirection *r)
 {
@@ -45,59 +27,84 @@ int		builtin_env_display(t_redirection *r)
 	return (0);
 }
 
-t_env	*copy_env(t_env *default_env)
+char	*manip_command_env(char ***input, int index)
 {
-	t_env	*new_env;
-	t_env	*head;
+	char	*str;
+	char	*tmp;
+	char	*stock;
 
-	new_env = init_maillon_env();
-	head = new_env;
-	while (default_env->next)
+	if (!((*input)[index]))
+		return (NULL);
+	str = ft_strdup((*input)[index]);
+	while ((*input)[++index])
 	{
-		new_env->key = ft_strdup(default_env->key);
-		new_env->value = ft_strdup(default_env->value);
-		new_env->see_env = default_env->see_env;
-		new_env->next = init_maillon_env();
-		default_env = default_env->next;
-		if (default_env->next)
-			new_env = new_env->next;
+		stock = ft_strjoin(" ", (*input)[index]);
+		tmp = ft_strjoin(str, stock);
+		ft_strdel(&stock);
+		ft_strdel(&str);
+		str = ft_strdup(tmp);
+		ft_strdel(&tmp);
 	}
-	ft_printf("================= fin =============\n");
-	new_env = head;
-	return (new_env);
+	return (str);
 }
 
-void	builtin_env_command(char **argv, t_redirection *r)
+int		fuck_env(char **input, char **final)
 {
-	edit_setenv("salut", "toi");
-	builtin_env_display(r);
+	int		i;
+	char	**str;
+
+	i = 0;
+	while (input[++i])
+	{
+		if (ft_strchr_exist(input[i], '='))
+		{
+			str = ft_strsplit(input[i], '=');
+			edit_set_command_env(str[0], str[1]);
+			ft_arraydel(&str);
+		}
+		else
+		{
+			if (ft_strchr_exist(input[i], '<') ||
+						ft_strchr_exist(input[i], '>'))
+				return (0);
+			break ;
+		}
+	}
+	(*final) = manip_command_env(&input, i);
+	return (1);
+}
+
+int		check_is_env_command(char **input)
+{
+	char	*final;
+	char	**str;
+	int		verif;
+
+	final = NULL;
+	str = ft_strsplit(*input, 0);
+	if (ft_strequ(str[0], "env") == 0 || (!str[1]))
+	{
+		ft_arraydel(&str);
+		return (0);
+	}
+	verif = fuck_env(str, &final);
+	if (final)
+		ft_printf("%s|\n", final);
+	if (verif == 1)
+	{
+		ft_strdel(&(*input));
+		(*input) = final;
+	}
+	ft_arraydel(&str);
+	return (1);
 }
 
 int		builtin_env(t_redirection *r, char **argv)
 {
 	int		verif;
-	t_env	*default_env;
-	t_env	*edit_df_env;
 
 	verif = 0;
-	default_env = get_env(0);
-	if (ft_arraylen(argv) == 1)
-		verif = builtin_env_display(r);
-	else
-	{
-		edit_df_env = get_env(0);
-		default_env = copy_env(edit_df_env);
-		builtin_env_command(argv, r);
-	ft_printf("================= 1 =============\n");
-		edit_df_env = get_env(0);
-	ft_printf("================= 2 =============\n");
-		free_env(&edit_df_env);
-	ft_printf("================= 3 =============\n");
-		edit_df_env = copy_env(default_env);
-	ft_printf("================= 4 =============\n");
-	builtin_env_display(r);
-	exit(0);
-	}
+	verif = builtin_env_display(r);
 	return (verif);
 }
 

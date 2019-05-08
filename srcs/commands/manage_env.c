@@ -6,7 +6,7 @@
 /*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/22 14:54:24 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/05/07 19:07:32 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/08 13:40:36 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ static int	count_env(int env)
 	head = my_env;
 	while (my_env->next)
 	{
-		if (env == 0 || (env == 1 && my_env->see_env == 1))
+		if (env == 0 || (env == 1 && my_env->see_env == 1) ||
+				my_env->see_env == 3)
 			len++;
 		my_env = my_env->next;
 	}
@@ -46,7 +47,8 @@ char		**create_list_env(t_env *my_env, int env)
 	len = -1;
 	while (my_env->next)
 	{
-		if (env == 0 || (env == 1 && my_env->see_env == 1))
+		if (env == 0 || (env == 1 && my_env->see_env == 1) ||
+				my_env->see_env == 3)
 		{
 			str = ft_strjoin(my_env->key, "=");
 			dst[++len] = ft_strjoin(str, my_env->value ? my_env->value : "");
@@ -78,6 +80,22 @@ int			edit_export(char *key)
 		}
 		my_env = my_env->next;
 	}
+	my_env = head;
+	return (verif);
+}
+
+int			edit_set_command_env(char *key, char *value)
+{
+	t_env	*head;
+	t_env	*my_env;
+	int		verif;
+
+	my_env = get_env(0);
+	head = my_env;
+	verif = 0;
+	while (my_env->next)
+		my_env = my_env->next;
+	verif = create_new_path(my_env, key, value, 3);
 	my_env = head;
 	return (verif);
 }

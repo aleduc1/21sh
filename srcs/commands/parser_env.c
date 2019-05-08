@@ -6,7 +6,7 @@
 /*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/07 10:31:02 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/05/08 01:46:50 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/08 13:57:24 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ static int	manage_home(char *src, char **dst, int index, t_env *my_env)
 	else
 		data = manage_var("HOME");
 	ft_strdel(&(*dst));
-	(*dst) = ft_strdup(data);
+	(*dst) = data;
 	return (index);
 }
 

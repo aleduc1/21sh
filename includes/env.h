@@ -6,7 +6,7 @@
 /*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/22 13:33:53 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/05/08 04:23:21 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/08 13:43:00 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,9 @@ typedef struct	s_commands
 	struct s_commands	*next;
 }t_commands;
 
+int     check_is_env_command(char **input);
+
+
 /*
 ** list_redirection.c
 */
@@ -80,6 +83,7 @@ void				parser_var(char ***value);
 
 int					edit_set(char *key, char *value);
 int					edit_setenv(char *key, char *value);
+int					edit_set_command_env(char *key, char *value);
 int					edit_export(char *key);
 int					ft_unsetenv(char *key);
 int					ft_unset(char *key);
