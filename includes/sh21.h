@@ -186,6 +186,7 @@ t_node				*undo_selection(t_node *lstcursor, t_pos *pos);
 t_node				*find_tail(t_node *lstcursor, t_pos *pos);
 
 void				reset_multi(t_pos *pos);
+void				reset_stop(char **inputstr, t_pos *pos);
 void				key_occurence(t_node *cursor, t_integrity *count);
 void				dquote(t_multi *lstcursor, t_multi **multi, t_pos *pos);
 void				quote(t_multi *lstcursor, t_multi **multi, t_pos *pos);

@@ -74,7 +74,6 @@ t_node			*read_input(t_node **input, t_pos *pos)
 		ft_bzero(buffer, 4096);
 		if (pos->stop == 1)
 		{
-			pos->stop = 0;
 			return (*input);
 		}
 	}
@@ -120,14 +119,15 @@ char			*prompt(t_multi *multi, t_pos *pos)
 	{
 		count.dquote = 0;
 		count.quote = 0;
-		while (check_integrity(lstcursor->input, &multi, pos, &count) < 0)
+		while (check_integrity(lstcursor->input, &multi, pos, &count) < 0 && pos->stop != 1)
 			lstcursor = lstcursor->prev;
 		lstcursor = multi;
 		inputstr = lst_to_str(&multi, inputstr);
-		if (inputstr)
+		if (inputstr && pos->stop != 1)
 			inserthistory(pos->history, inputstr, pos);
 	}
 	ddellist(multi);
+	reset_stop(&inputstr, pos);
 	pos->historycount = 0;
 	default_term_mode();
 	return (inputstr) ? inputstr : NULL;
