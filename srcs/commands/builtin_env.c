@@ -6,7 +6,7 @@
 /*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/22 17:36:44 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/05/09 04:40:18 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/09 06:15:06 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,7 @@ static int	ft_simple_command_r(char **argv, t_redirection *r)
 	return (verif);
 }
 
-
-int		builtin_env_display(t_redirection *r)
+int			builtin_env_display(t_redirection *r)
 {
 	int		i;
 	char	**lst_env;
@@ -37,10 +36,10 @@ int		builtin_env_display(t_redirection *r)
 	return (0);
 }
 
-int		builtin_env_s(t_redirection *r, char **argv)
+int			builtin_env_s(t_redirection *r, char **argv)
 {
 	int	pid;
-	int		i;
+	int	i;
 
 	i = 0;
 	pid = fork();
@@ -50,7 +49,7 @@ int		builtin_env_s(t_redirection *r, char **argv)
 		{
 			if (ft_strchr_exist(argv[i], '='))
 				edit_set_command_env(argv[i]);
-			else if (ft_strchr_exist(argv[i], '>') == 0||
+			else if (ft_strchr_exist(argv[i], '>') == 0 ||
 					ft_strchr_exist(argv[i], '>') == 0)
 				break ;
 		}
@@ -64,7 +63,7 @@ int		builtin_env_s(t_redirection *r, char **argv)
 	return (pid);
 }
 
-int		builtin_env(t_redirection *r, char **argv)
+int			builtin_env(t_redirection *r, char **argv)
 {
 	int	pid;
 	int	rt;
@@ -75,7 +74,7 @@ int		builtin_env(t_redirection *r, char **argv)
 	return (rt);
 }
 
-int		builtin_set(t_redirection *r)
+int			builtin_set(t_redirection *r)
 {
 	int		i;
 	char	**lst_env;

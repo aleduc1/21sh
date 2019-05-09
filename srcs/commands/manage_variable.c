@@ -6,11 +6,29 @@
 /*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/07 10:31:02 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/05/08 16:27:26 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/09 06:21:44 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "env.h"
+
+int		modify_dst(char *tmp, char **dst)
+{
+	char	*stock;
+	char	*final;
+
+	stock = manage_var(tmp);
+	ft_strdel(&tmp);
+	final = ft_strjoin(*dst, stock);
+	ft_strdel(&(*dst));
+	if (final)
+		(*dst) = ft_strdup(final);
+	else
+		(*dst) = NULL;
+	ft_strdel(&stock);
+	ft_strdel(&final);
+	return (0);
+}
 
 char	*manage_var(char *str)
 {

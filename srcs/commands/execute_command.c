@@ -6,7 +6,7 @@
 /*   By: apruvost <apruvost@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/02 08:43:53 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/05/09 03:07:13 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/09 06:17:22 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int			exec_fork(char **cmd, t_redirection *r)
 	signal(SIGINT, sighandler);
 	signal(SIGQUIT, sighandler);
 	pid = add_process(cmd, &return_code, r);
-	while(wait(&return_code) != -1)
+	while (wait(&return_code) != -1)
 		continue ;
 	if (pid != -1)
 		kill(pid, SIGINT);

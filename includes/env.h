@@ -6,7 +6,7 @@
 /*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/22 13:33:53 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/05/09 04:59:32 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/09 06:21:00 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ int					is_in_path(char ***command);
 */
 
 void				parser_var(char ***value);
+int					modify_dst(char *tmp, char **dst);
 
 /*
 ** manage_env.c

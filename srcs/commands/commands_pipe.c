@@ -6,7 +6,7 @@
 /*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/09 10:50:50 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/05/09 05:22:33 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/09 06:17:51 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int		ft_pipe(char **argv, t_token *token, int end_pipe)
 		if ((return_code = is_builtin(argv, r)) == -1)
 			pids = add_process(argv, &return_code, r);
 		waitpid(pids, &return_code, 0);
-		while(wait(&return_code) != -1)
+		while (wait(&return_code) != -1)
 			continue ;
 		close_file_command(token->command, &r);
 		gest_return(return_code);

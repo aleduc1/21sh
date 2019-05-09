@@ -6,7 +6,7 @@
 /*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/07 10:31:02 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/05/09 00:04:08 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/09 06:21:09 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,24 +23,6 @@ static void	copy_value(char *src, char **dst, int start, int end)
 	ft_strdel(&stock);
 	(*dst) = tmp ? ft_strdup(tmp) : NULL;
 	ft_strdel(&tmp);
-}
-
-static int	modify_dst(char *tmp, char **dst)
-{
-	char	*stock;
-	char	*final;
-
-	stock = manage_var(tmp);
-	ft_strdel(&tmp);
-	final = ft_strjoin(*dst, stock);
-	ft_strdel(&(*dst));
-	if (final)
-		(*dst) = ft_strdup(final);
-	else
-		(*dst) = NULL;
-	ft_strdel(&stock);
-	ft_strdel(&final);
-	return (0);
 }
 
 static int	apply_rules(char *src, char **dst, int index)
