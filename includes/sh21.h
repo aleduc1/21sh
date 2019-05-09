@@ -13,18 +13,11 @@
 #ifndef SH21_H
 # define SH21_H
 
-# include <sys/types.h>
-# include <sys/stat.h>
 # include <termios.h>
 # include <term.h>
-# include <dirent.h>
-# include <signal.h>
 # include <unistd.h>
-# include <stdio.h>
 # include <stdlib.h>
 # include <pwd.h>
-# include <grp.h>
-# include <time.h>
 # include <sys/ioctl.h>
 # include "libft.h"
 # include "get_next_line.h"
