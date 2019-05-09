@@ -6,13 +6,13 @@
 /*   By: mbellaic <mbellaic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/12 17:17:14 by aleduc            #+#    #+#             */
-/*   Updated: 2019/04/08 15:58:55 by mbellaic         ###   ########.fr       */
+/*   Updated: 2019/05/09 06:28:45 by aleduc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh21.h"
 
-void		ddelmul(t_multi **head, t_multi *del)
+void	ddelmul(t_multi **head, t_multi *del)
 {
 	if (*head == NULL || del == NULL)
 		return ;
@@ -27,7 +27,7 @@ void		ddelmul(t_multi **head, t_multi *del)
 	return ;
 }
 
-void		multi_push(t_multi **head)
+void	multi_push(t_multi **head)
 {
 	t_multi	*new_node;
 

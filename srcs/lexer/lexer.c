@@ -6,11 +6,18 @@
 /*   By: mbellaic <mbellaic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/12 17:21:29 by aleduc            #+#    #+#             */
-/*   Updated: 2019/05/08 17:59:27 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/09 06:36:56 by aleduc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
+
+int		dub_possible(char c)
+{
+	if (c == '|' || c == '&' || c == '>' || c == '<' || c == ';')
+		return (1);
+	return (0);
+}
 
 int		init_variables(t_token **tok, int *to_check, int *i, t_tab_type **t)
 {

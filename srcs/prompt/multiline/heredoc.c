@@ -6,7 +6,7 @@
 /*   By: mbellaic <mbellaic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/12 17:01:09 by aleduc            #+#    #+#             */
-/*   Updated: 2019/05/09 00:57:39 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/09 06:27:10 by aleduc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,11 +86,9 @@ char		*heredoc(char *heredoc, t_pos *pos)
 {
 	t_multi	*multi;
 	t_multi	*lstcursor;
-	char	*temp;
 	char	*input;
 
 	multi = NULL;
-	temp = NULL;
 	input = NULL;
 	lstcursor = NULL;
 	raw_term_mode();
@@ -98,11 +96,11 @@ char		*heredoc(char *heredoc, t_pos *pos)
 	multi->input = NULL;
 	dpush(&multi->input, ' ');
 	init_heredoc(pos);
-	while (((input_heredoc(lstcursor, &multi, pos, heredoc)) < 0) && pos->stop != 1)
+	while (((input_heredoc(lstcursor, &multi, pos, heredoc)) < 0) \
+			&& pos->stop != 1)
 		init_heredoc(pos);
 	input = lst_to_str(&multi, input);
 	ddellist(multi);
-	pos->multiline = 0;
 	if (pos->stop == 1)
 	{
 		pos->stop = 0;

@@ -6,7 +6,7 @@
 /*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/12 17:13:21 by aleduc            #+#    #+#             */
-/*   Updated: 2019/05/08 04:31:24 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/09 06:29:39 by aleduc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,6 @@ char			*prompt(t_multi *multi, t_pos *pos)
 	t_multi		*lstcursor;
 	char		*inputstr;
 
-	multi = NULL;
 	inputstr = NULL;
 	if ((inputstr = check_prompt(inputstr, &multi)) != (char *)-1)
 		return (inputstr);
@@ -118,9 +117,9 @@ char			*prompt(t_multi *multi, t_pos *pos)
 	lstcursor = multi;
 	if (multi->input)
 	{
-		count.dquote = 0;
-		count.quote = 0;
-		while (check_integrity(lstcursor->input, &multi, pos, &count) < 0 && pos->stop != 1)
+		ft_bzero(&count, sizeof(t_integrity));
+		while (check_integrity(lstcursor->input, &multi, pos, &count) < 0 \
+				&& pos->stop != 1)
 			lstcursor = lstcursor->prev;
 		lstcursor = multi;
 		inputstr = lst_to_str(&multi, inputstr);

@@ -6,28 +6,11 @@
 /*   By: aleduc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/07 20:56:21 by aleduc            #+#    #+#             */
-/*   Updated: 2019/05/08 19:15:19 by aleduc           ###   ########.fr       */
+/*   Updated: 2019/05/09 06:40:31 by aleduc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
-
-int		skip_whitespace(char *str, int i)
-{
-	int		cpy;
-
-	cpy = i;
-	while (str[cpy] && ft_isspace(str[cpy]))
-		cpy++;
-	return (cpy);
-}
-
-int		dub_possible(char c)
-{
-	if (c == '|' || c == '&' || c == '>' || c == '<' || c == ';')
-		return (1);
-	return (0);
-}
 
 t_token	*handle_string(char *input, int *i, int *last_t, char c)
 {
@@ -119,7 +102,8 @@ int		handle_whitespace(char *input, int i, t_lex **lex)
 
 	tok = NULL;
 	cpy = i;
-	i = skip_whitespace(input, i);
+	while (input[i] && ft_isspace(input[i]))
+		i++;
 	if (i != cpy)
 	{
 		tok = create_token(" ", SPACE);

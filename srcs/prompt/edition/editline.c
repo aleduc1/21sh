@@ -6,7 +6,7 @@
 /*   By: mbellaic <mbellaic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/12 17:18:01 by aleduc            #+#    #+#             */
-/*   Updated: 2019/04/27 19:49:46 by mbellaic         ###   ########.fr       */
+/*   Updated: 2019/05/09 06:17:01 by aleduc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ t_node		*editline(t_pos *pos, t_node *lstcursor, \
 	{
 		if (pos->selection == 1)
 			lstcursor = delete_selection(input, lstcursor, pos);
-		while(buffer[i])
+		while (buffer[i])
 		{
 			insert(lstcursor, buffer[i]);
 			actualize(pos, lstcursor, input, buffer[i++]);
