@@ -41,6 +41,7 @@ void		multi_push(t_multi **head)
 
 void	reset_stop(char **inputstr, t_pos *pos, t_integrity *count)
 {
+	pos->multiline = 0;
 	if (pos->stop == 1)
 	{
 		count->quote = 0;

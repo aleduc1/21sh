@@ -12,7 +12,7 @@
 
 #include "sh21.h"
 
-void			get_cursor(int i, int j, char answer[], t_pos *pos)
+void			get_cursor(int i, int j, char *answer, t_pos *pos)
 {
 	char		xchar[5];
 	char		ychar[5];
