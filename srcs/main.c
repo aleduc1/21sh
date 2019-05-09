@@ -6,7 +6,7 @@
 /*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/12 17:01:09 by aleduc            #+#    #+#             */
-/*   Updated: 2019/05/09 03:24:34 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/09 06:35:48 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 int		siginthandler(int signum)
 {
 	(void)signum;
-	ft_printf("oui\n");
+	ft_printf("signal handler\n");
 	return (0);
 }
 
@@ -41,7 +41,7 @@ int		check_whitespace_input(char *input)
 
 	i = 0;
 	while (input[i])
-	{	
+	{
 		if (ft_isspace(input[i]))
 			i++;
 		else
@@ -49,7 +49,6 @@ int		check_whitespace_input(char *input)
 	}
 	return (0);
 }
-
 
 void	run(char *input, t_pos *pos)
 {
@@ -90,13 +89,10 @@ int		main(int argc, char **argv, char **environ)
 	while (21)
 	{
 		if (argc && argv && environ)
+		{
 			if ((input = prompt(multi_input, &pos)))
-			{
-//				check_is_env_command(&input);
-//				if (input)
-					run(input, &pos);
-//				check_delete_env_command();
-			}
+				run(input, &pos);
+		}
 	}
 	return (0);
 }
