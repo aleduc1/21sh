@@ -37,7 +37,7 @@ t_node		*try_to_match(t_node *cursor, t_integrity *count, char type)
 				count->dquote++;
 			if (type == '\'')
 				count->quote++;
-			return (cursor->prev);
+			return (cursor);
 		}
 		cursor = cursor->prev;
 	}
