@@ -6,7 +6,7 @@
 /*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/22 13:33:53 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/05/08 16:41:09 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/09 04:59:32 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ char				**create_list_env(t_env *my_env, int env);
 
 int					edit_set(char *key, char *value);
 int					ft_unset(char *key);
-int					edit_set_command_env(char *key, char *value);
+int					edit_set_command_env(char *str);
 
 /*
 ** tools_env.c
@@ -122,7 +122,7 @@ int					create_new_path(t_env *my_env, char *key, char *value,
 
 int					return_good_fd(t_lex *lex, int fd);
 int					builtin_set(t_redirection *r);
-int					builtin_env(t_redirection *r);
+int					builtin_env(t_redirection *r, char **argv);
 
 /*
 ** builtin_cd.c
@@ -135,7 +135,7 @@ int					builtin_cd(char **arguments);
 */
 
 int					ft_lastchr(const char *s, int c);
-int					check_arg(char ***arguments);
+void				check_arg(char **str);
 void				error_cd(int code, char *str);
 
 /*

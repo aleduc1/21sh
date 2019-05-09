@@ -6,7 +6,7 @@
 /*   By: sbelondr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/08 16:38:47 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/05/08 16:41:15 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/09 05:12:58 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,18 @@ int			ft_lastchr(const char *s, int c)
 	return (cnt);
 }
 
-int			check_arg(char ***arguments)
+void		check_arg(char **str)
 {
-	if (ft_strequ((*arguments)[1], "--"))
-		return (1);
-	if (ft_strequ((*arguments)[1], "-"))
-		return (2);
-	return (0);
+	if (ft_strequ(*str, "-"))
+	{
+		ft_strdel(&(*str));
+		(*str) = value_line_path("OLDPWD", 0);
+	}
+	else if (ft_strequ(*str, "--"))
+	{
+		ft_strdel(&(*str));
+		(*str) = value_line_path("HOME", 0);
+	}
 }
 
 void		error_cd(int code, char *str)

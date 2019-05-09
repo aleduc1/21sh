@@ -6,7 +6,7 @@
 /*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/12 17:01:09 by aleduc            #+#    #+#             */
-/*   Updated: 2019/05/08 23:55:32 by aleduc           ###   ########.fr       */
+/*   Updated: 2019/05/09 03:24:34 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,10 +92,10 @@ int		main(int argc, char **argv, char **environ)
 		if (argc && argv && environ)
 			if ((input = prompt(multi_input, &pos)))
 			{
-				check_is_env_command(&input);
-				if (input)
+//				check_is_env_command(&input);
+//				if (input)
 					run(input, &pos);
-				check_delete_env_command();
+//				check_delete_env_command();
 			}
 	}
 	return (0);
