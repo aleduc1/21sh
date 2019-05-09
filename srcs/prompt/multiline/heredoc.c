@@ -102,6 +102,7 @@ char		*heredoc(char *heredoc, t_pos *pos)
 		init_heredoc(pos);
 	input = lst_to_str(&multi, input);
 	ddellist(multi);
+	pos->multiline = 0;
 	if (pos->stop == 1)
 	{
 		pos->stop = 0;

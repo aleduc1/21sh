@@ -70,15 +70,13 @@ t_node			*read_input(t_node **input, t_pos *pos)
 	reset_multi(pos);
 	ft_bzero(buffer, 4096);
 	ft_putstr(tgetstr("im", NULL));
-	while (read(STDIN_FILENO, &buffer, 4095) > 0 && !ENTER)
+	while (read(STDIN_FILENO, &buffer, 4095) < 4095 && !ENTER)
 	{
 		lstcursor = editline(pos, lstcursor, input, buffer);
 		stalk_cursor(pos);
 		ft_bzero(buffer, 4096);
 		if (pos->stop == 1)
-		{
 			return (*input);
-		}
 	}
 	travel_to_last(lstcursor, pos);
 	ft_putstr("\n");
