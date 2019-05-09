@@ -14,6 +14,7 @@
 
 void				welcome(void)
 {
+	ft_putstr("\033[2J\033[H");
 	ft_putstr("\033[1;32m\n");
 	ft_putstr("██████╗  ██╗███████╗██╗  ██╗\n");
 	usleep(150000);
