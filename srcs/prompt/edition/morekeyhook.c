@@ -86,9 +86,12 @@ t_node	*home_end(t_node *lstcursor, char buffer[], t_pos *pos)
 {
 	if (HOME)
 	{
-		while (pos->column > 1 && lstcursor->next != NULL)
+		while (lstcursor->next != NULL)
 		{
-			ft_putstr(tgetstr("le", NULL));
+			if (pos->column == 1)
+				go_upright(pos);
+			else
+				ft_putstr(tgetstr("le", NULL));
 			lstcursor = lstcursor->next;
 			stalk_cursor(pos);
 		}
@@ -97,6 +100,9 @@ t_node	*home_end(t_node *lstcursor, char buffer[], t_pos *pos)
 	{
 		while (lstcursor->prev != NULL)
 		{
+			if (pos->column == pos->termsize.ws_col)
+				go_downleft(pos);
+			else
 			ft_putstr(tgetstr("nd", NULL));
 			lstcursor = lstcursor->prev;
 			stalk_cursor(pos);
@@ -120,6 +126,7 @@ t_node	*ctrl_n_friends(t_node *lstcursor, t_node **input, char buffer[], \
 			ddel(input, *input);
 		pos->stop = 1;
 		pos->multiline = 0;
+		travel_to_last(lstcursor, pos);
 		ft_putchar('\n');
 	}
 	return (lstcursor);
