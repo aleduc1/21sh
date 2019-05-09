@@ -6,12 +6,11 @@
 /*   By: aleduc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/03 11:00:04 by aleduc            #+#    #+#             */
-/*   Updated: 2019/05/07 20:43:25 by aleduc           ###   ########.fr       */
+/*   Updated: 2019/05/09 07:33:48 by aleduc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
-#include <stdio.h>
 
 void	ft_default(t_redir **redir_info)
 {

@@ -6,7 +6,7 @@
 /*   By: aleduc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/04 22:40:12 by aleduc            #+#    #+#             */
-/*   Updated: 2019/05/05 17:03:37 by aleduc           ###   ########.fr       */
+/*   Updated: 2019/05/09 07:31:49 by aleduc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ int		handle_and_less(t_lex **command_node)
 		redir_info = redir_struct_and_less(&start);
 		clean_lex(&start);
 		attach_redir_node(&redir_info, &before_start);
-		handle_less(command_node);
 	}
 	return (0);
 }

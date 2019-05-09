@@ -6,7 +6,7 @@
 /*   By: aleduc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/04 16:27:49 by aleduc            #+#    #+#             */
-/*   Updated: 2019/05/05 18:02:12 by aleduc           ###   ########.fr       */
+/*   Updated: 2019/05/09 07:32:08 by aleduc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,10 +53,7 @@ int		handle_great(t_lex **command_node)
 	{
 		start_grammar_great(&start);
 		if (end_grammar_great(&start, &end, GREAT) == 1)
-		{
-			ft_putendl("Never in this shit");
 			return (1);
-		}
 		before_start = detaching(&start, &end);
 		redir_info = redir_struct_great(&start);
 		clean_lex(&start);

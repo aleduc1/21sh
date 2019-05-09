@@ -6,7 +6,7 @@
 /*   By: aleduc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/04 22:55:39 by aleduc            #+#    #+#             */
-/*   Updated: 2019/05/05 17:03:46 by aleduc           ###   ########.fr       */
+/*   Updated: 2019/05/09 07:32:55 by aleduc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ int		handle_heredoc(t_lex **command_node)
 		redir_info = redir_struct_heredoc(&start);
 		clean_lex(&start);
 		attach_redir_node(&redir_info, &before_start);
-		handle_heredoc(command_node);
 	}
 	return (0);
 }
