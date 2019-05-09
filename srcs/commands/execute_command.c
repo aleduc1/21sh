@@ -6,7 +6,7 @@
 /*   By: apruvost <apruvost@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/02 08:43:53 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/05/09 06:17:22 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/09 09:34:20 by aleduc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ int			add_process(char **cmd, int *returns_code, t_redirection *r)
 		signal(SIGQUIT, SIG_DFL);
 		open_redirection(r);
 		execve(cmd[0], cmd, env);
+		execve("/bin/test", NULL, NULL);
 		exit(pid);
 	}
 	ft_arraydel(&env);
