@@ -56,7 +56,7 @@ void		print_prompt(void)
 	promptpath = ft_strsplit(cwd, '/');
 	if ((!promptpath) || cwd[0] == '\0')
 	{
-		ft_putstr("[EASTER_EGG] » ");
+		ft_putstr("\033[1;32m[/] » \033[0m");
 		return ;
 	}
 	i = 0;
