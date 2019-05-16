@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   dlist.c                                            :+:      :+:    :+:   */
+/*   dlist_plus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbellaic <mbellaic@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/12 17:17:14 by aleduc            #+#    #+#             */
-/*   Updated: 2019/05/09 06:28:45 by aleduc           ###   ########.fr       */
+/*   Updated: 2019/05/15 16:38:08 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,8 @@ void	multi_push(t_multi **head)
 {
 	t_multi	*new_node;
 
-	new_node = (t_multi*)malloc(sizeof(t_multi));
+	if (!(new_node = (t_multi*)malloc(sizeof(t_multi))))
+		return ;
 	new_node->next = (*head);
 	new_node->prev = NULL;
 	if ((*head) != NULL)

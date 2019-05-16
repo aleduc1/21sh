@@ -3,14 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   list_redirection.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sbelondr <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/06 23:23:34 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/05/07 01:37:47 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/15 11:11:47 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "env.h"
+
+static int		send_dev_null(void)
+{
+	int	fd;
+
+	fd = file_exist("/dev/null");
+	if (fd > -1)
+		fd = open("/dev/null", O_RDWR);
+	return (fd);
+}
 
 t_redirection	*init_redirection(void)
 {
@@ -22,16 +32,6 @@ t_redirection	*init_redirection(void)
 	r->out = STDOUT_FILENO;
 	r->error = STDERR_FILENO;
 	return (r);
-}
-
-int				send_dev_null(void)
-{
-	int	fd;
-
-	fd = file_exist("/dev/null");
-	if (fd > -1)
-		fd = open("/dev/null", O_RDWR);
-	return (fd);
 }
 
 t_redirection	*fill_redirection(t_token *t)

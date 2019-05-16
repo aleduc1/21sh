@@ -6,7 +6,7 @@
 /*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/22 17:48:23 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/05/08 14:17:15 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/16 15:03:23 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,13 +64,13 @@ int			free_maillon_env(char *key, int env)
 	t_env	*my_env;
 	t_env	*last;
 
-	my_env = get_env(0, NULL);
+	my_env = get_env(0);
 	last = NULL;
 	verif = 0;
 	while (my_env->next)
 	{
 		if (ft_strequ(my_env->key, key) && (env == 0 ||
-					(env == 1 && my_env->see_env == 1) || my_env->see_env == 3))
+					(env == 1 && my_env->see_env == 1)))
 		{
 			last->next = my_env->next;
 			ft_strdel(&(my_env->key));
@@ -88,15 +88,10 @@ int			free_maillon_env(char *key, int env)
 
 void		free_env(t_env **lst)
 {
-	t_env	*tmp;
-
-	while (*lst)
-	{
-		tmp = (*lst);
-		(*lst) = (*lst)->next;
-		ft_strdel(&(tmp->key));
-		ft_strdel(&(tmp->value));
-		free(tmp);
-		tmp = NULL;
-	}
+	if ((*lst)->next)
+		free_env(&((*lst)->next));
+	ft_strdel(&((*lst)->key));
+	ft_strdel(&((*lst)->value));
+	free(*lst);
+	(*lst) = NULL;
 }

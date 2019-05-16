@@ -44,7 +44,7 @@ VPATH = objs:\
 
 CC = gcc
 ifeq ($(DEBUG), yes)
-	CFLAGS = -Wall -Wextra -Werror
+	CFLAGS = -Wall -Wextra -Werror -g3
 else
 	CFLAGS = -Wall -Wextra -g3
 endif
@@ -109,22 +109,22 @@ SRCS_NAMES = main.c \
 			 tree_utils.c \
 			 cmd_parser.c \
 			 builtin_env.c\
-			 builtin_env_commands.c\
 			 builtin_cd.c\
 			 builtin_cd_verif.c\
 			 commands.c\
 			 commands_pipe.c\
 			 execute_command.c\
-			 list_commands.c\
 			 list_env.c\
 			 list_redirection.c\
 			 manage_env.c\
 			 manage_set.c\
 			 manage_variable.c\
 			 manage_file.c\
+			 manage_quote.c\
 			 other_tools.c\
-			 parser_env.c\
+			 parser_var.c\
 			 tools_env.c \
+			 add_quote.c\
 			 remove_space_token.c \
 			 interpreter.c \
 			 clean_redir.c \

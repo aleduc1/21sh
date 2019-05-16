@@ -6,12 +6,16 @@
 /*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/22 17:57:48 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/05/09 03:40:18 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/16 15:00:08 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "env.h"
 #include "builtins.h"
+
+/*
+** split is all the path
+*/
 
 static int	path_of_commands(char ***command, char **split)
 {
@@ -29,8 +33,7 @@ static int	path_of_commands(char ***command, char **split)
 		if (access(str, F_OK) >= 0 && access(str, X_OK) >= 0)
 		{
 			ft_strdel(&((*command)[0]));
-			(*command)[0] = ft_strdup(str);
-			ft_strdel(&str);
+			(*command)[0] = str;
 			ft_strdel(&dst);
 			return (1);
 		}
@@ -59,6 +62,13 @@ int			is_in_path(char ***command)
 	ft_arraydel(&split);
 	return (result);
 }
+
+/*
+** search if it's a builtin
+**	return 0 if it's a builtin and if it's command work
+**	return -2 if it's a builtin and if it's command not work
+**	return -1 if it's not a builtin
+*/
 
 int			is_builtin(char **argv, t_redirection *r)
 {
@@ -89,6 +99,11 @@ int			is_builtin(char **argv, t_redirection *r)
 	return (verif);
 }
 
+/*
+** edit the local variable ('?') for know if the last command
+** has worked
+*/
+
 int			gest_return(int verif)
 {
 	char	*value;
@@ -100,7 +115,12 @@ int			gest_return(int verif)
 	return (verif);
 }
 
-t_env		*get_env(int is_end, t_env *f_line)
+/*
+** is_end = 1 -> free env
+** f_line is not null -> modify head env by f_line
+*/
+
+t_env		*get_env(int is_end)
 {
 	static t_env	*my_env;
 
@@ -108,12 +128,6 @@ t_env		*get_env(int is_end, t_env *f_line)
 	{
 		my_env = init_env();
 		init_variable();
-	}
-	if (f_line)
-	{
-		if (f_line->next == NULL)
-			f_line->next = my_env;
-		my_env = f_line;
 	}
 	if (is_end)
 		free_env(&my_env);

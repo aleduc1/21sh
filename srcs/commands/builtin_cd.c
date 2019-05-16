@@ -6,7 +6,7 @@
 /*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 21:20:48 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/05/09 06:13:30 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/15 11:17:07 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static int	check_return(char *arguments, int verif)
 	return (verif);
 }
 
-int			launch_cd(char **str)
+static int	launch_cd(char **str)
 {
 	char	buf[BUF_S];
 	int		verif;

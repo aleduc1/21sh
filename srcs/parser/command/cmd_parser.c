@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_parser.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbellaic <mbellaic@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/08 03:02:22 by mbellaic          #+#    #+#             */
-/*   Updated: 2019/05/08 03:04:19 by mbellaic         ###   ########.fr       */
+/*   Updated: 2019/05/15 15:33:15 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ int			*run_cmd(t_token *cmd_list, t_pos *pos)
 	argv = get_argv(cmd_list);
 	files_handler(cmd_list, pos);
 	ft_simple_command(argv, cmd_list);
-	ft_arraydel(&argv);
+	if (argv && *argv)
+		ft_arraydel(&argv);
 	return (0);
 }

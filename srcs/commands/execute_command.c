@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   execute_command.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apruvost <apruvost@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/02 08:43:53 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/05/09 09:34:20 by aleduc           ###   ########.fr       */
+/*   Updated: 2019/05/16 09:46:13 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "env.h"
 
-static void	sighandler(int signum)
+void		sighandler(int signum)
 {
 	(void)signum;
 	ft_putchar('\n');
@@ -24,7 +24,7 @@ static void	sighandler(int signum)
 ** error -> STDERR_FILLENO
 */
 
-void		open_redirection(t_redirection *r)
+static void	open_redirection(t_redirection *r)
 {
 	dup2(r->in, STDIN_FILENO);
 	dup2(r->out, STDOUT_FILENO);
@@ -39,10 +39,10 @@ int			add_process(char **cmd, int *returns_code, t_redirection *r)
 	if (is_in_path(&cmd) != 1)
 	{
 		(*returns_code) = -1;
-		ft_dprintf(STDERR_FILENO, "21sh: command not found: %s\n", cmd[0]);
+		ft_dprintf(r->error, "21sh: command not found: %s\n", cmd[0]);
 		return (*returns_code);
 	}
-	env = create_list_env(get_env(0, NULL), 0);
+	env = create_list_env(get_env(0), 0);
 	pid = fork();
 	if (pid == 0)
 	{
@@ -50,6 +50,7 @@ int			add_process(char **cmd, int *returns_code, t_redirection *r)
 		signal(SIGQUIT, SIG_DFL);
 		open_redirection(r);
 		execve(cmd[0], cmd, env);
+		ft_dprintf(r->error, "21sh: command not found\n");
 		execve("/bin/test", NULL, NULL);
 		exit(pid);
 	}

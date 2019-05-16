@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   stalkcursor.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbellaic <mbellaic@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/12 17:19:17 by aleduc            #+#    #+#             */
-/*   Updated: 2019/05/09 06:17:13 by aleduc           ###   ########.fr       */
+/*   Updated: 2019/05/15 16:30:43 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,8 @@ void			stalk_cursor(t_pos *pos)
 
 	i = 1;
 	j = 0;
-	answer = ft_memalloc(sizeof(char) * 16);
+	if (!(answer = ft_memalloc(sizeof(char) * 16)))
+		return ;
 	ioctl(STDOUT_FILENO, TIOCGWINSZ, &pos->termsize);
 	write(0, "\x1B[6n", 5);
 	answerlen = 0;

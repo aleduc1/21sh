@@ -6,7 +6,7 @@
 /*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/09 10:50:50 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/05/09 04:38:45 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/16 12:21:07 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,17 +16,20 @@
 ** simple command
 */
 
-int		ft_simple_command(char **argv, t_token *token)
+int			ft_simple_command(char **argv, t_token *token)
 {
 	t_redirection	*r;
 	int				verif;
+	char			**cpy_argv;
 
-	parser_var(&argv);
+	cpy_argv = ft_arraydup(argv);
+	parser_var(&cpy_argv);
 	r = fill_redirection(token);
-	if ((verif = is_builtin(argv, r)) == -1)
-		verif = exec_fork(argv, r);
+	if ((verif = is_builtin(cpy_argv, r)) == -1)
+		verif = exec_fork(cpy_argv, r);
 	close_file_command(token->command, &r);
 	gest_return(verif);
+	ft_arraydel(&cpy_argv);
 	return (verif);
 }
 
@@ -34,7 +37,7 @@ int		ft_simple_command(char **argv, t_token *token)
 ** ||
 */
 
-int		ft_pipe_double(char **argv, t_token *token)
+int			ft_pipe_double(char **argv, t_token *token)
 {
 	int		check;
 	char	*str;
@@ -52,7 +55,7 @@ int		ft_pipe_double(char **argv, t_token *token)
 ** num_process: processus en cours (mettre a 1 la premiere fois)
 */
 
-int		background_process(char **argv, t_token *token, int num_process)
+static int	background_process(char **argv, t_token *token, int num_process)
 {
 	int	result;
 	int	pid;
@@ -70,7 +73,7 @@ int		background_process(char **argv, t_token *token, int num_process)
 	return (pid);
 }
 
-int		ft_ampersand(char **argv, t_token *token, int num_process)
+int			ft_ampersand(char **argv, t_token *token, int num_process)
 {
 	int	result;
 
@@ -89,7 +92,7 @@ int		ft_ampersand(char **argv, t_token *token, int num_process)
 ** &&
 */
 
-int		ft_ampersand_double(char **argv, t_token *token)
+int			ft_ampersand_double(char **argv, t_token *token)
 {
 	int		check;
 	char	*str;

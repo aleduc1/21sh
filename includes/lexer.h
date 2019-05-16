@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aleduc <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/04 17:15:13 by aleduc            #+#    #+#             */
-/*   Updated: 2019/05/09 07:22:31 by aleduc           ###   ########.fr       */
+/*   Updated: 2019/05/15 15:59:34 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,5 +176,12 @@ void	ft_error(int code_error);
 void	clean_lex(t_lex **lex);
 void	clean_inside_token(t_token **token);
 void	clean_redir(t_redir **redir);
+
+/*
+** add_quote.c
+*/
+
+char	*add_dquote_to_str(char *str);
+char	*add_squote_to_str(char **str_addr);
 
 #endif

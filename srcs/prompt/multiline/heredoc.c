@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbellaic <mbellaic@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/12 17:01:09 by aleduc            #+#    #+#             */
-/*   Updated: 2019/05/09 06:27:10 by aleduc           ###   ########.fr       */
+/*   Updated: 2019/05/15 16:31:34 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,8 @@ char		*heredoc_string(t_node *lstcursor)
 		len++;
 		lstcursor = lstcursor->next;
 	}
-	temp = malloc(sizeof(char) * len + 1);
+	if (!(temp = malloc(sizeof(char) * len + 1)))
+		return (NULL);
 	while (lstcursor->prev)
 	{
 		temp[i] = lstcursor->key;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tree_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbellaic <mbellaic@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/08 02:33:01 by mbellaic          #+#    #+#             */
-/*   Updated: 2019/05/08 03:29:44 by mbellaic         ###   ########.fr       */
+/*   Updated: 2019/05/15 16:28:23 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,8 @@ t_ast		*node_ast(t_token *token, t_ast *l, t_ast *r)
 {
 	t_ast	*node;
 
-	node = (t_ast *)malloc(sizeof(t_ast));
+	if (!(node = (t_ast *)malloc(sizeof(t_ast))))
+		return (NULL);
 	node->token = token;
 	node->l = l;
 	node->r = r;

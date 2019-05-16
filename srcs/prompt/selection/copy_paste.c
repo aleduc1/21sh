@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   copy_paste.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbellaic <mbellaic@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/08 00:30:30 by mbellaic          #+#    #+#             */
-/*   Updated: 2019/05/08 00:31:48 by mbellaic         ###   ########.fr       */
+/*   Updated: 2019/05/15 16:38:30 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,8 @@ void		copy_selection(t_node *lstcursor, t_pos *pos)
 
 	if (pos->clipboard != NULL)
 		free(pos->clipboard);
-	pos->clipboard = (char *)malloc(sizeof(char) * 4096);
+	if (!(pos->clipboard = (char *)malloc(sizeof(char) * 4096)))
+		return ;
 	cursorcpy = lstcursor;
 	count = pos->selectcount;
 	if (count < 0)

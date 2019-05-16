@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   history.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbellaic <mbellaic@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/12 17:18:13 by aleduc            #+#    #+#             */
-/*   Updated: 2019/04/27 18:53:45 by mbellaic         ###   ########.fr       */
+/*   Updated: 2019/05/15 16:38:21 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,8 @@ void			inserthistory(t_node *prev_node, char *line, t_pos *pos)
 		return ;
 	if (prev_node == NULL)
 		return ;
-	new_node = (t_node*)malloc(sizeof(t_node));
+	if (!(new_node = (t_node*)malloc(sizeof(t_node))))
+		return ;
 	new_node->line = ft_strdup_history(line);
 	pos->historysum++;
 	new_node->next = prev_node->next;

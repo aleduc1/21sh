@@ -6,7 +6,7 @@
 /*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/12 17:19:04 by aleduc            #+#    #+#             */
-/*   Updated: 2019/05/08 17:07:56 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/15 16:33:02 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,8 @@ char		*lst_to_str_mod(t_multi *lstcursor, char *temp)
 		cpycursor = cpycursor->next;
 	}
 	cpycursor = lstcursor->input->next;
-	temp = malloc(sizeof(char) * len + 2);
+	if (!(temp = malloc(sizeof(char) * len + 2)))
+		return (NULL);
 	while (cpycursor)
 	{
 		temp[i++] = cpycursor->key;

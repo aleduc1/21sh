@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser_env.c                                       :+:      :+:    :+:   */
+/*   parser_var.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/07 10:31:02 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/05/09 06:21:09 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/16 09:27:38 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,7 @@ static void	copy_value(char *src, char **dst, int start, int end)
 	tmp = ft_strjoin(*dst, stock);
 	ft_strdel(&(*dst));
 	ft_strdel(&stock);
-	(*dst) = tmp ? ft_strdup(tmp) : NULL;
-	ft_strdel(&tmp);
+	(*dst) = tmp ? tmp : NULL;
 }
 
 static int	apply_rules(char *src, char **dst, int index)
@@ -37,14 +36,13 @@ static int	apply_rules(char *src, char **dst, int index)
 	}
 	else
 	{
-		i = ft_chr_index(src + index + 1, '$');
-		if (i > -1)
-		{
-			i += index;
-			tmp = ft_strsub(src, index + 1, i - index);
-		}
-		else
-			tmp = ft_strsub(src, index + 1, ft_strlen(src));
+		i = index;
+		while (src[++i])
+			if (ft_isalnum(src[i]) == 0 && src[i] != '_' &&
+			src[i] != '?')
+				break ;
+		i--;
+		tmp = ft_strsub(src, index + 1, i - index);
 	}
 	modify_dst(tmp, &(*dst));
 	if (i < 0)
@@ -81,32 +79,26 @@ static char	*search_var(char *src)
 	return (dst);
 }
 
-static void	ft_remove_quote(char **str)
-{
-	int		len;
-	char	*tmp;
-
-	len = ft_strlen(*str);
-	tmp = ft_strsub(*str, 1, len - 2);
-	ft_strdel(&(*str));
-	(*str) = tmp;
-}
-
 void		parser_var(char ***value)
 {
 	char	*tmp;
-	int		i;
+	int		index;
 
-	i = -1;
-	while ((*value)[++i])
+	index = -1;
+	while ((*value)[++index])
 	{
-		if ((*value)[i][0] == '\'')
-			ft_remove_quote(&((*value)[i]));
-		else if (ft_strchr_exist((*value)[i], '$') || (*value)[i][0] == '~')
+		if ((*value)[index][0] == '"')
+			index = ft_apply_dquote(&(*value), index);
+		if (index == -1)
+			break ;
+		if ((*value)[index][0] == '\'')
+			ft_remove_quote(&((*value)[index]));
+		else if (ft_strchr_exist((*value)[index], '$') ||
+				(*value)[index][0] == '~')
 		{
-			tmp = search_var((*value)[i]);
-			ft_strdel(&((*value)[i]));
-			(*value)[i] = tmp ? ft_strdup(tmp) : NULL;
+			tmp = search_var((*value)[index]);
+			ft_strdel(&((*value)[index]));
+			(*value)[index] = tmp ? ft_strdup(tmp) : NULL;
 			ft_strdel(&tmp);
 		}
 	}

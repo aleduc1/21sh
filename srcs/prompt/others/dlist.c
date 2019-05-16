@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dlist.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbellaic <mbellaic@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/12 17:17:14 by aleduc            #+#    #+#             */
-/*   Updated: 2019/04/08 15:58:55 by mbellaic         ###   ########.fr       */
+/*   Updated: 2019/05/15 16:37:59 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@ void		dpush(t_node **head, char key)
 {
 	t_node	*new_node;
 
-	new_node = (t_node*)malloc(sizeof(t_node));
+	if (!(new_node = (t_node*)malloc(sizeof(t_node))))
+		return ;
 	new_node->key = key;
 	new_node->next = (*head);
 	new_node->prev = NULL;
@@ -54,7 +55,8 @@ void		insert(t_node *prev_node, char key)
 
 	if (prev_node == NULL)
 		return ;
-	new_node = (t_node*)malloc(sizeof(t_node));
+	if (!(new_node = (t_node*)malloc(sizeof(t_node))))
+		return ;
 	new_node->key = key;
 	new_node->next = prev_node->next;
 	prev_node->next = new_node;

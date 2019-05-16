@@ -6,42 +6,13 @@
 /*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/22 17:29:22 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/05/08 19:38:39 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/16 15:10:03 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/env.h"
 
-int			is_env_empty(char *key)
-{
-	char *test;
-
-	test = value_line_path(key, 0);
-	if (test == NULL)
-		return (1);
-	else if (ft_strequ(test, ""))
-	{
-		ft_strdel(&test);
-		return (1);
-	}
-	ft_strdel(&test);
-	return (0);
-}
-
-int			create_new_path_env(char *key, char *value, int env)
-{
-	t_env	*head;
-
-	head = init_maillon_env();
-	head->key = ft_strdup(key);
-	head->value = ft_strdup(value ? value : "");
-	head->see_env = env;
-	head->next = NULL;
-	get_env(0, head);
-	return (0);
-}
-
-int			create_new_path(t_env *my_env, char *key, char *value, int env)
+int			create_new_line_env(t_env *my_env, char *key, char *value, int env)
 {
 	while (my_env->next)
 		my_env = my_env->next;
@@ -52,36 +23,18 @@ int			create_new_path(t_env *my_env, char *key, char *value, int env)
 	return (0);
 }
 
-int			search_line_env(t_env *my_env, char *key, int env)
-{
-	if (!(my_env && key))
-		return (-1);
-	while (my_env->next)
-	{
-		if (ft_strequ(my_env->key, key))
-		{
-			if (my_env->see_env == env || env == 0)
-				return (1);
-			else
-				return (0);
-		}
-		my_env = my_env->next;
-	}
-	return (0);
-}
-
 char		*value_line_path(char *key, int env)
 {
 	t_env	*my_env;
 	char	*dst;
 
-	my_env = get_env(0, NULL);
+	my_env = get_env(0);
 	dst = NULL;
 	while (my_env)
 	{
 		if (ft_strequ(my_env->key, key))
 		{
-			if (env == 0 || (env == my_env->see_env) || my_env->see_env == 3)
+			if (env == 0 || (env == my_env->see_env))
 			{
 				dst = ft_strdup(my_env->value);
 				return (dst);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   types.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbellaic <mbellaic@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/12 17:21:37 by aleduc            #+#    #+#             */
-/*   Updated: 2019/05/07 23:21:52 by aleduc           ###   ########.fr       */
+/*   Updated: 2019/05/15 16:37:16 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,8 @@ void	set_tab_types_2(t_tab_type **tab_of_types)
 
 void	set_tab_types(t_tab_type **tab_of_types)
 {
-	(*tab_of_types) = (t_tab_type *)ft_memalloc(sizeof(t_tab_type) * 14);
+	if (!((*tab_of_types) = (t_tab_type *)ft_memalloc(sizeof(t_tab_type) * 14)))
+		return ;
 	(*tab_of_types)[0].str = "|";
 	(*tab_of_types)[0].type = SPIPE;
 	(*tab_of_types)[1].str = ";";

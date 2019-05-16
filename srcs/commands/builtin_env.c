@@ -6,11 +6,16 @@
 /*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/22 17:36:44 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/05/09 06:15:06 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/16 15:09:00 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "env.h"
+
+/*
+** Gerer l'environnement vide
+** env -i dd=ff
+*/
 
 static int	ft_simple_command_r(char **argv, t_redirection *r)
 {
@@ -21,25 +26,31 @@ static int	ft_simple_command_r(char **argv, t_redirection *r)
 	return (verif);
 }
 
-int			builtin_env_display(t_redirection *r)
+static int	builtin_env_display(t_redirection *r)
 {
-	int		i;
-	char	**lst_env;
+	t_env	*lst;
+	t_env	*my_env;
 
-	i = -1;
-	lst_env = create_list_env(get_env(0, NULL), 1);
-	while (lst_env[++i])
-		ft_dprintf(r->out, "%s\n", lst_env[i]);
-	if (i == 0)
-		ft_dprintf(r->error, "You are nothing value in env\n");
-	ft_arraydel(&lst_env);
+	my_env = get_env(0);
+	lst = my_env;
+	while (lst->next)
+	{
+		if (lst->see_env == 1)
+			ft_dprintf(r->out, "%s=%s\n", lst->key, lst->value);
+		lst = lst->next;
+	}
 	return (0);
 }
 
-int			builtin_env_s(t_redirection *r, char **argv)
+// static void	blt_env_opt_i(t_env **my_env)
+// {
+// 	free_env(&(*my_env));
+// }
+
+static int	builtin_env_s(t_redirection *r, char **argv)
 {
-	int	pid;
-	int	i;
+	int		pid;
+	int		i;
 
 	i = 0;
 	pid = fork();
@@ -50,7 +61,7 @@ int			builtin_env_s(t_redirection *r, char **argv)
 			if (ft_strchr_exist(argv[i], '='))
 				edit_set_command_env(argv[i]);
 			else if (ft_strchr_exist(argv[i], '>') == 0 ||
-					ft_strchr_exist(argv[i], '>') == 0)
+					ft_strchr_exist(argv[i], '<') == 0)
 				break ;
 		}
 		if (!argv[i])
@@ -79,7 +90,7 @@ int			builtin_set(t_redirection *r)
 	int		i;
 	char	**lst_env;
 
-	lst_env = create_list_env(get_env(0, NULL), 0);
+	lst_env = create_list_env(get_env(0), 0);
 	i = -1;
 	while (lst_env[++i])
 		ft_dprintf(r->out, "%s\n", lst_env[i]);

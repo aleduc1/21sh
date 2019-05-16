@@ -6,7 +6,7 @@
 /*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/26 16:44:29 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/05/09 06:18:29 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/15 11:50:30 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int			file_exist(char *name)
 ** O_TRUNC -> remove data in file
 */
 
-int			open_file_great(t_redir *redir)
+static int	open_file_great(t_redir *redir)
 {
 	if (redir->filename)
 		redir->dest_fd = ft_itoa(file_exist(redir->filename));
@@ -48,16 +48,14 @@ int			open_file_great(t_redir *redir)
 	ft_strdel(&redir->dest_fd);
 	if (redir->type == DGREAT)
 		redir->dest_fd = ft_itoa(get_end_line(redir->filename));
-	else if (redir->type == GREAT)
-		redir->dest_fd = ft_itoa(open(redir->filename, O_RDWR | O_TRUNC));
-	else if (redir->type == DLESS)
+	else if (redir->type == GREAT || redir->type == DLESS)
 		redir->dest_fd = ft_itoa(open(redir->filename, O_RDWR | O_TRUNC));
 	else
 		redir->dest_fd = ft_itoa(open(redir->filename, O_RDWR));
 	return (1);
 }
 
-int			open_file_dless(t_redir *redir, t_pos *pos)
+static int	open_file_dless(t_redir *redir, t_pos *pos)
 {
 	int		fd;
 	char	*name;
@@ -102,6 +100,14 @@ int			close_file_command(t_lex *lex, t_redirection **r)
 	delete_redirection(&(*r));
 	return (0);
 }
+
+/*
+** pos -> pour les heredocs
+** LESS -> <
+** DLESS -> <<
+** GREAT -> >
+** DGREAT -> >>
+*/
 
 int			open_file_command(t_redir *redir, t_pos *pos)
 {

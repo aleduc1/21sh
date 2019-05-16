@@ -6,7 +6,7 @@
 /*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/22 14:54:24 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/05/09 00:12:02 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/16 14:59:06 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,11 @@ static int	count_env(int env)
 	int		len;
 
 	len = 0;
-	my_env = get_env(0, NULL);
+	my_env = get_env(0);
 	head = my_env;
 	while (my_env->next)
 	{
-		if (env == 0 || (env == 1 && my_env->see_env == 1) ||
-				my_env->see_env == 3)
+		if (env == 0 || (env == 1 && my_env->see_env == 1))
 			len++;
 		my_env = my_env->next;
 	}
@@ -47,8 +46,7 @@ char		**create_list_env(t_env *my_env, int env)
 	len = -1;
 	while (my_env->next)
 	{
-		if (env == 0 || (env == 1 && my_env->see_env == 1) ||
-				my_env->see_env == 3)
+		if (env == 0 || (env == 1 && my_env->see_env == 1))
 		{
 			str = ft_strjoin(my_env->key, "=");
 			dst[++len] = ft_strjoin(str, my_env->value ? my_env->value : "");
@@ -67,7 +65,7 @@ int			edit_export(char *key)
 	t_env	*head;
 	t_env	*my_env;
 
-	my_env = get_env(0, NULL);
+	my_env = get_env(0);
 	head = my_env;
 	verif = 0;
 	while (my_env->next)
@@ -102,7 +100,7 @@ int			ft_unsetenv(char *key)
 	t_env	*head;
 	t_env	*my_env;
 
-	my_env = get_env(0, NULL);
+	my_env = get_env(0);
 	head = my_env;
 	verif = 0;
 	while (my_env->next)
