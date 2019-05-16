@@ -6,7 +6,7 @@
 /*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/22 17:36:44 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/05/16 15:09:00 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/16 15:28:51 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static int	builtin_env_display(t_redirection *r)
 	t_env	*lst;
 	t_env	*my_env;
 
-	my_env = get_env(0);
+	my_env = get_env(0, NULL);
 	lst = my_env;
 	while (lst->next)
 	{
@@ -90,7 +90,7 @@ int			builtin_set(t_redirection *r)
 	int		i;
 	char	**lst_env;
 
-	lst_env = create_list_env(get_env(0), 0);
+	lst_env = create_list_env(get_env(0, NULL), 0);
 	i = -1;
 	while (lst_env[++i])
 		ft_dprintf(r->out, "%s\n", lst_env[i]);

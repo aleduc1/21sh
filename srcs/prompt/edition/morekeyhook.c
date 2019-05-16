@@ -6,7 +6,7 @@
 /*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/12 17:18:42 by aleduc            #+#    #+#             */
-/*   Updated: 2019/05/16 09:46:48 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/16 15:29:39 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ t_node	*ctrl_n_friends(t_node *lstcursor, t_node **input, char buffer[], \
 	if (CTRL_D && !(*input)->next && pos->multiline != 1)
 	{
 		default_term_mode();
-		get_env(1);
+		get_env(1, NULL);
 		exit(0);
 	}
 	if (CTRL_C)

@@ -6,7 +6,7 @@
 /*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/22 14:54:24 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/05/16 14:54:20 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/16 15:27:53 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int			edit_set(char *key, char *value)
 	t_env	*head;
 	int		verif;
 
-	my_env = get_env(0);
+	my_env = get_env(0, NULL);
 	head = my_env;
 	verif = 0;
 	if (!value)

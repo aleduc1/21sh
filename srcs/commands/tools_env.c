@@ -6,7 +6,7 @@
 /*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/22 17:29:22 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/05/16 15:10:03 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/16 15:29:30 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ char		*value_line_path(char *key, int env)
 	t_env	*my_env;
 	char	*dst;
 
-	my_env = get_env(0);
+	my_env = get_env(0, NULL);
 	dst = NULL;
 	while (my_env)
 	{

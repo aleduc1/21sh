@@ -6,7 +6,7 @@
 /*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/22 13:33:53 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/05/16 09:45:40 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/16 15:27:19 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void				delete_redirection(t_redirection **r);
 int					gest_return(int verif);
 int					is_builtin(char **argv, t_redirection *r);
 int					is_in_path(char ***command);
-t_env				*get_env(int is_end);
+t_env				*get_env(int is_end, t_env *head);
 
 /*
 ** parser_var.c

@@ -6,7 +6,7 @@
 /*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/22 14:54:24 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/05/16 14:59:06 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/16 15:29:22 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static int	count_env(int env)
 	int		len;
 
 	len = 0;
-	my_env = get_env(0);
+	my_env = get_env(0, NULL);
 	head = my_env;
 	while (my_env->next)
 	{
@@ -65,7 +65,7 @@ int			edit_export(char *key)
 	t_env	*head;
 	t_env	*my_env;
 
-	my_env = get_env(0);
+	my_env = get_env(0, NULL);
 	head = my_env;
 	verif = 0;
 	while (my_env->next)
@@ -100,7 +100,7 @@ int			ft_unsetenv(char *key)
 	t_env	*head;
 	t_env	*my_env;
 
-	my_env = get_env(0);
+	my_env = get_env(0, NULL);
 	head = my_env;
 	verif = 0;
 	while (my_env->next)

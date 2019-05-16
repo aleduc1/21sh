@@ -6,7 +6,7 @@
 /*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/22 17:57:48 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/05/16 15:00:08 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/16 15:23:24 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,7 @@ int			gest_return(int verif)
 ** f_line is not null -> modify head env by f_line
 */
 
-t_env		*get_env(int is_end)
+t_env		*get_env(int is_end, t_env *head)
 {
 	static t_env	*my_env;
 
@@ -128,6 +128,10 @@ t_env		*get_env(int is_end)
 	{
 		my_env = init_env();
 		init_variable();
+	}
+	if (head)
+	{
+		my_env = head;
 	}
 	if (is_end)
 		free_env(&my_env);
