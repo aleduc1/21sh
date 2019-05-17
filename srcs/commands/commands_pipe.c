@@ -6,29 +6,29 @@
 /*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/09 10:50:50 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/05/16 15:28:57 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/17 14:41:28 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "env.h"
 
-static void	redirection_fd_pipe(int in, int out, int fd)
+static void	redirection_fd_pipe(t_redirection *r)
 {
-	if (fd >= 0)
-		close(fd);
-	if (in != STDIN_FILENO)
+	if (r->fd_pipe >= 0)
+		close(r->fd_pipe);
+	if (r->in != STDIN_FILENO)
 	{
-		dup2(in, STDIN_FILENO);
-		close(in);
+		dup2(r->in, STDIN_FILENO);
+		close(r->in);
 	}
-	if (out != STDOUT_FILENO)
+	if (r->out != STDOUT_FILENO)
 	{
-		dup2(out, STDOUT_FILENO);
-		close(out);
+		dup2(r->out, STDOUT_FILENO);
+		close(r->out);
 	}
 }
 
-static int	add_pipe_process(char **cmd, t_redirection *r, int fd)
+int			add_pipe_process(char **cmd, t_redirection *r)
 {
 	int		pid;
 	char	**environ;
@@ -44,7 +44,7 @@ static int	add_pipe_process(char **cmd, t_redirection *r, int fd)
 	{
 		signal(SIGINT, SIG_DFL);
 		signal(SIGQUIT, SIG_DFL);
-		redirection_fd_pipe(r->in, r->out, fd);
+		redirection_fd_pipe(r);
 		execve(cmd[0], cmd, environ);
 		ft_dprintf(r->error, "21sh: command not found: %s\n", cmd[0]);
 		execve("/bin/test", NULL, NULL);
@@ -66,8 +66,9 @@ static int	is_not_end(char **argv, int in, t_redirection *r)
 		r->out = fd[1];
 	if (r->in == STDIN_FILENO)
 		r->in = in;
+	r->fd_pipe = fd[0];
 	if ((pid = is_builtin(argv, r)) == -1)
-		pid = add_pipe_process(argv, r, fd[0]);
+		pid = add_pipe_process(argv, r);
 	signal(SIGINT, SIG_IGN);
 	signal(SIGQUIT, SIG_IGN);
 	if (in != 0)
@@ -84,8 +85,9 @@ static int	is_end(char **argv, int in, t_redirection *r)
 	signal(SIGQUIT, sighandler);
 	if (r->in == STDIN_FILENO)
 		r->in = in;
+	r->fd_pipe = -1;
 	if ((pid = is_builtin(argv, r)) == -1)
-		pid = add_pipe_process(argv, r, -1);
+		pid = add_pipe_process(argv, r);
 	signal(SIGINT, SIG_IGN);
 	signal(SIGQUIT, SIG_IGN);
 	close(in);

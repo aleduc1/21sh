@@ -6,34 +6,20 @@
 /*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/22 17:36:44 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/05/16 15:28:51 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/17 14:41:44 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "env.h"
 
-/*
-** Gerer l'environnement vide
-** env -i dd=ff
-*/
-
-static int	ft_simple_command_r(char **argv, t_redirection *r)
-{
-	int	verif;
-
-	if ((verif = is_builtin(argv, r)) == -1)
-		verif = exec_fork(argv, r);
-	return (verif);
-}
-
-static int	builtin_env_display(t_redirection *r)
+static int		builtin_env_display(t_redirection *r)
 {
 	t_env	*lst;
-	t_env	*my_env;
 
-	my_env = get_env(0, NULL);
-	lst = my_env;
-	while (lst->next)
+	lst = get_env(3, NULL);
+	if (!lst)
+		ft_dprintf(r->error, "You are nothing value in env\n");
+	while (lst && lst->next)
 	{
 		if (lst->see_env == 1)
 			ft_dprintf(r->out, "%s=%s\n", lst->key, lst->value);
@@ -42,50 +28,64 @@ static int	builtin_env_display(t_redirection *r)
 	return (0);
 }
 
-// static void	blt_env_opt_i(t_env **my_env)
-// {
-// 	free_env(&(*my_env));
-// }
-
-static int	builtin_env_s(t_redirection *r, char **argv)
+static t_env	*builtin_env_key(t_env *my_env, char *argv, int *ret)
 {
-	int		pid;
+	if (ft_strchr_exist(argv, '='))
+	{
+		edit_set_command_env(argv, my_env);
+		my_env = get_env(0, NULL);
+	}
+	else if (ft_strequ(argv, "-i"))
+		my_env = get_env(1, NULL);
+	else
+		(*ret) = 1;
+	return (my_env);
+}
+
+static int		builtin_env_s(t_redirection *r, char **argv, pid_t pid)
+{
+	t_env	*my_env;
 	int		i;
+	int		ret;
 
 	i = 0;
+	ret = 0;
+	my_env = get_env(0, NULL);
 	pid = fork();
 	if (pid == 0)
 	{
 		while (argv[++i])
 		{
-			if (ft_strchr_exist(argv[i], '='))
-				edit_set_command_env(argv[i]);
-			else if (ft_strchr_exist(argv[i], '>') == 0 ||
-					ft_strchr_exist(argv[i], '<') == 0)
+			my_env = builtin_env_key(my_env, argv[i], &ret);
+			if (ret == 1)
 				break ;
 		}
-		if (!argv[i])
+		if (!argv[i] || ft_strequ(argv[i], "env"))
 			builtin_env_display(r);
 		else
-			ft_simple_command_r(argv + i, r);
+			ft_simple_command_env(argv + i, r);
 		execve("/bin/test", NULL, NULL);
 		exit(pid);
 	}
+	kill(pid, SIGINT);
 	return (pid);
 }
 
-int			builtin_env(t_redirection *r, char **argv)
+int				builtin_env(t_redirection *r, char **argv)
 {
-	int	pid;
-	int	rt;
+	pid_t	pid;
+	int		rt;
 
-	pid = builtin_env_s(r, argv);
+	signal(SIGINT, SIG_IGN);
+	signal(SIGQUIT, SIG_IGN);
+	pid = 0;
+	pid = builtin_env_s(r, argv, pid);
 	while (wait(&rt) != -1)
 		continue ;
-	return (rt);
+	return (0);
 }
 
-int			builtin_set(t_redirection *r)
+int				builtin_set(t_redirection *r)
 {
 	int		i;
 	char	**lst_env;

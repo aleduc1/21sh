@@ -6,7 +6,7 @@
 /*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/22 13:33:53 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/05/16 15:27:19 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/17 14:20:01 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ typedef struct		s_redirection
 	int		in;
 	int		out;
 	int		error;
+	int		fd_pipe;
 }					t_redirection;
 
 typedef struct		s_env
@@ -90,7 +91,7 @@ char				**create_list_env(t_env *my_env, int env);
 
 int					edit_set(char *key, char *value);
 int					ft_unset(char *key);
-int					edit_set_command_env(char *str);
+int					edit_set_command_env(char *str, t_env *my_env);
 
 /*
 ** tools_env.c
@@ -126,10 +127,15 @@ void				error_cd(int code, char *str);
 */
 
 t_env				*init_env(void);
-void				free_env(t_env **env);
-int					free_maillon_env(char *key, int env);
 t_env				*init_maillon_env(void);
 void				init_variable(void);
+
+/*
+** free_env.c
+*/
+
+void				free_env(t_env **env);
+int					free_maillon_env(char *key, int env);
 
 /*
 ** manage_file.c
@@ -147,6 +153,7 @@ int					add_process(char *(*cmd), int *returns_code,
 		t_redirection *r);
 int					exec_fork(char **cmd, t_redirection *r);
 void				sighandler(int signum);
+int					ft_simple_command_env(char **argv, t_redirection *r);
 
 /*
 ** commands.c
@@ -162,6 +169,7 @@ int					ft_ampersand_double(char **argv, t_token *token);
 */
 
 int					ft_pipe(char **argv, t_token *lex, int end_pipe);
+int					add_pipe_process(char **cmd, t_redirection *r);
 
 /*
 ** manage_quote.c

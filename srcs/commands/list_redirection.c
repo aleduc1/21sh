@@ -6,7 +6,7 @@
 /*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/06 23:23:34 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/05/15 11:11:47 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/17 14:02:50 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ t_redirection	*init_redirection(void)
 	r->in = STDIN_FILENO;
 	r->out = STDOUT_FILENO;
 	r->error = STDERR_FILENO;
+	r->fd_pipe = -1;
 	return (r);
 }
 

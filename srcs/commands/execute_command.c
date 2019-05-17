@@ -6,7 +6,7 @@
 /*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/02 08:43:53 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/05/16 15:29:03 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/17 14:41:20 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,4 +73,22 @@ int			exec_fork(char **cmd, t_redirection *r)
 	signal(SIGINT, SIG_IGN);
 	signal(SIGQUIT, SIG_IGN);
 	return (return_code);
+}
+
+int			ft_simple_command_env(char **argv, t_redirection *r)
+{
+	int	verif;
+
+	signal(SIGINT, sighandler);
+	signal(SIGQUIT, sighandler);
+	get_env(1, NULL);
+	get_env(0, NULL);
+	if ((verif = is_builtin(argv, r)) == -1)
+	{
+		if (r->fd_pipe == -1)
+			verif = exec_fork(argv, r);
+		else
+			verif = add_pipe_process(argv, r);
+	}
+	return (verif);
 }

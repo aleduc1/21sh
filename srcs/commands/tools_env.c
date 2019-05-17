@@ -6,7 +6,7 @@
 /*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/22 17:29:22 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/05/16 15:29:30 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/17 09:05:46 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,24 @@
 
 int			create_new_line_env(t_env *my_env, char *key, char *value, int env)
 {
-	while (my_env->next)
-		my_env = my_env->next;
+	t_env	*head;
+
+	head = NULL;
+	if (!(my_env))
+	{
+		my_env = init_maillon_env();
+		head = my_env;
+	}
+	else
+		while (my_env->next)
+			my_env = my_env->next;
 	my_env->key = ft_strdup(key);
 	my_env->value = ft_strdup(value);
 	my_env->see_env = env;
 	my_env->next = init_maillon_env();
+	my_env = my_env->next;
+	if (head)
+		get_env(0, head);
 	return (0);
 }
 

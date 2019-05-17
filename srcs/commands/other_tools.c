@@ -6,7 +6,7 @@
 /*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/22 17:57:48 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/05/16 15:23:24 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/17 10:26:02 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,16 +124,16 @@ t_env		*get_env(int is_end, t_env *head)
 {
 	static t_env	*my_env;
 
-	if (my_env == NULL)
+	if (is_end == 3 && (!my_env))
+		return (NULL);
+	if ((!my_env) && (!head))
 	{
 		my_env = init_env();
 		init_variable();
 	}
 	if (head)
-	{
 		my_env = head;
-	}
-	if (is_end)
+	if (is_end == 1)
 		free_env(&my_env);
 	return (my_env);
 }
