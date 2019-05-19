@@ -6,7 +6,7 @@
 /*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/09 10:50:50 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/05/17 14:41:28 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/19 13:32:59 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,16 @@ static void	redirection_fd_pipe(t_redirection *r)
 		dup2(r->out, STDOUT_FILENO);
 		close(r->out);
 	}
+	if (r->error != STDERR_FILENO)
+	{
+		dup2(r->error, STDERR_FILENO);
+		close(r->error);
+	}
 }
 
 int			add_pipe_process(char **cmd, t_redirection *r)
 {
-	int		pid;
+	pid_t	pid;
 	char	**environ;
 
 	if (is_in_path(&cmd) != 1)
@@ -67,8 +72,13 @@ static int	is_not_end(char **argv, int in, t_redirection *r)
 	if (r->in == STDIN_FILENO)
 		r->in = in;
 	r->fd_pipe = fd[0];
-	if ((pid = is_builtin(argv, r)) == -1)
-		pid = add_pipe_process(argv, r);
+	pid = fork();
+	if (pid == 0)
+	{
+		if ((pid = is_builtin(argv, r)) == -1)
+			pid = add_pipe_process(argv, r);
+		execve("/bin/test", NULL, NULL);
+	}
 	signal(SIGINT, SIG_IGN);
 	signal(SIGQUIT, SIG_IGN);
 	if (in != 0)
