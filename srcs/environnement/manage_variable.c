@@ -6,7 +6,7 @@
 /*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/07 10:31:02 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/05/15 11:10:56 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/20 12:17:57 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,10 @@ char	*manage_var(char *str)
 {
 	char	*final;
 
-	final = value_line_path(str, 0);
+	if (ft_strequ(str, "$"))
+		final = ft_itoa(getpid());
+	else
+		final = value_line_path(str, 0);
 	if (!final)
 		final = ft_strdup("");
 	return (final);

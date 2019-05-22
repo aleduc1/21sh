@@ -6,7 +6,7 @@
 /*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/12 17:01:09 by aleduc            #+#    #+#             */
-/*   Updated: 2019/05/09 06:35:48 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/22 09:52:20 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "lexer.h"
 #include "parser.h"
 #include "env.h"
+#include "job.h"
 
 int		siginthandler(int signum)
 {
@@ -81,18 +82,15 @@ int		main(int argc, char **argv, char **environ)
 
 	input = NULL;
 	multi_input = NULL;
+	ign_signaux();
 	welcome();
-	signal(SIGQUIT, SIG_IGN);
-	signal(SIGINT, SIG_IGN);
 	flags(argc, argv);
 	init_prompt(&pos);
 	while (21)
 	{
 		if (argc && argv && environ)
-		{
 			if ((input = prompt(multi_input, &pos)))
 				run(input, &pos);
-		}
 	}
 	return (0);
 }

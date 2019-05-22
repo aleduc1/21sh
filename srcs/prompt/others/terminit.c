@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   terminit.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbellaic <mbellaic@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/12 17:19:28 by aleduc            #+#    #+#             */
-/*   Updated: 2019/05/08 00:27:45 by mbellaic         ###   ########.fr       */
+/*   Updated: 2019/05/22 10:24:44 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh21.h"
+#include "job.h"
 
 void				welcome(void)
 {
@@ -50,4 +51,5 @@ void				raw_term_mode(void)
 	term.c_cc[VTIME] = 0;
 	tcsetattr(STDIN_FILENO, TCSANOW, &term);
 	tgetent(NULL, getenv("TERM"));
+	static_shell(&term);
 }

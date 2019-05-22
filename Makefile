@@ -35,6 +35,8 @@ VPATH = objs:\
 		srcs/parser/ast:\
 		srcs/parser/command:\
 		srcs/commands:\
+		srcs/job-control:\
+		srcs/environnement:\
 		srcs/cleaning:\
 		srcs/interpreter:\
 		srcs/builtins
@@ -134,11 +136,17 @@ SRCS_NAMES = main.c \
 			 reading_tools.c \
 			 if_checks.c \
 			 bt_exit.c \
-			 bt_echo.c
+			 bt_echo.c\
+			 add_job.c\
+			 gest_process.c\
+			 process.c\
+			 shell_struct.c\
+			 tools_job.c\
+			 signaux.c
 
 
 OBJS_NAMES = $(SRCS_NAMES:.c=.o)
-HEADERS_NAMES = sh21.h lexer.h parser.h env.h builtins.h
+HEADERS_NAMES = sh21.h lexer.h parser.h env.h builtins.h job.h
 LIBS_NAMES = libft.a
 
 OBJ = $(addprefix $(OBJDIR), $(OBJS_NAMES))

@@ -6,13 +6,13 @@
 /*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/09 10:50:50 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/05/19 13:32:59 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/21 15:34:36 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "env.h"
 
-static void	redirection_fd_pipe(t_redirection *r)
+void	redirection_fd_pipe(t_redirection *r)
 {
 	if (r->fd_pipe >= 0)
 		close(r->fd_pipe);

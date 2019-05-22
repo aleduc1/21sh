@@ -6,12 +6,13 @@
 /*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/22 17:57:48 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/05/19 13:39:18 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/22 10:29:57 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "env.h"
 #include "builtins.h"
+#include "job.h"
 
 /*
 ** split is all the path
@@ -63,6 +64,13 @@ int			is_in_path(char ***command)
 	return (result);
 }
 
+int			bt_jobs(char **argv, t_redirection *r)
+{
+	job_notif();
+	//ft_dprintf(r->out, "PID: %5ld PGID: %5ld\n", getpid(), getpgrp());
+	return (0);
+}
+
 /*
 ** search if it's a builtin
 **	return 0 if it's a builtin and if it's command work
@@ -94,6 +102,8 @@ int			is_builtin(char **argv, t_redirection *r)
 		verif = (builtin_cd(argv) < 0) ? -2 : 0;
 	else if (ft_strequ(argv[0], "exit"))
 		verif = bt_exit(argv);
+	else if (ft_strequ(argv[0], "jobs"))
+		verif = bt_jobs(argv, r);
 	else
 		verif = -1;
 	return (verif);

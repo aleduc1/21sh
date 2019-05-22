@@ -6,16 +6,47 @@
 /*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/02 08:43:53 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/05/17 14:41:20 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/20 19:34:38 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "env.h"
 
+/*
+** https://www.gnu.org/software/libc/manual/html_node/Data-Structures.html#Data-Structures
+** https://www.gnu.org/software/libc/manual/html_node/Initializing-the-Shell.html#Initializing-the-Shell
+** https://www.gnu.org/software/libc/manual/html_node/Launching-Jobs.html#Launching-Jobs
+** https://www.gnu.org/software/libc/manual/html_node/Foreground-and-Background.html
+*/
+
 void		sighandler(int signum)
 {
 	(void)signum;
 	ft_putchar('\n');
+}
+
+void		handler_ctrl_z(int sig)
+{
+	pid_t	pid;
+
+	(void)sig;
+	if ((pid = tcgetpgrp(STDIN_FILENO)) < 0)
+		ft_dprintf(STDERR_FILENO, "Error tcgetpgrp\n");
+	else
+	{
+		ft_printf("suite pid = %d\n", getpid());
+		if (setpgid(getpid(), 0) != 0)
+			ft_dprintf(STDERR_FILENO, "Error setpgid\n");
+		else
+		{
+			if (tcsetpgrp(STDIN_FILENO, getpid()) != 0)
+				ft_dprintf(STDERR_FILENO, "Error tcsetpgrp\n");
+			else if ((pid = tcgetpgrp(STDIN_FILENO)) < 0)
+				ft_dprintf(STDERR_FILENO, "Error tcgetpgrp 2\n");
+		}
+	}
+	ft_printf("pid = %d %d\n", pid, getpid());
+	tcgetpgrp(pid);
 }
 
 /*
@@ -65,6 +96,7 @@ int			exec_fork(char **cmd, t_redirection *r)
 
 	signal(SIGINT, sighandler);
 	signal(SIGQUIT, sighandler);
+	signal(SIGTSTP, handler_ctrl_z);
 	pid = add_process(cmd, &return_code, r);
 	while (wait(&return_code) != -1)
 		continue ;
@@ -72,6 +104,7 @@ int			exec_fork(char **cmd, t_redirection *r)
 		kill(pid, SIGINT);
 	signal(SIGINT, SIG_IGN);
 	signal(SIGQUIT, SIG_IGN);
+	signal(SIGTSTP, SIG_IGN);
 	return (return_code);
 }
 
