@@ -6,7 +6,7 @@
 /*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/12 17:19:28 by aleduc            #+#    #+#             */
-/*   Updated: 2019/05/22 10:24:44 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/23 09:53:53 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,13 @@ void				default_term_mode(void)
 void				raw_term_mode(void)
 {
 	struct termios	term;
+	t_shell			*s;
+
+	s = get_shell();
+	s->term = STDIN_FILENO;
+	while (tcgetpgrp (s->term) != (s->pgid = getpgrp()))
+        kill (- s->pgid, SIGTTIN);
+	ign_signaux();
 
 	tcgetattr(STDIN_FILENO, &term);
 	term.c_lflag &= ~(ICANON | ECHO | ISIG);
@@ -51,5 +58,8 @@ void				raw_term_mode(void)
 	term.c_cc[VTIME] = 0;
 	tcsetattr(STDIN_FILENO, TCSANOW, &term);
 	tgetent(NULL, getenv("TERM"));
-	static_shell(&term);
+
+	s->pgid = getpid();
+	s->interactive = isatty(s->term);
+	s->term_shell = term;
 }

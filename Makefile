@@ -142,7 +142,8 @@ SRCS_NAMES = main.c \
 			 process.c\
 			 shell_struct.c\
 			 tools_job.c\
-			 signaux.c
+			 signaux.c\
+			 bt_jobs.c
 
 
 OBJS_NAMES = $(SRCS_NAMES:.c=.o)

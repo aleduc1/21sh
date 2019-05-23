@@ -6,7 +6,7 @@
 /*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/21 10:40:08 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/05/22 10:23:12 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/23 09:53:14 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,15 +20,16 @@
 static t_shell	*init_shell_list(void *term)
 {
 	t_shell			*shell;
-	struct termios	*t;
+//	struct termios	*t;
 
+(void)term;
 	if (!(shell = (t_shell*)malloc(sizeof(t_shell) * 1)))
 		return (NULL);
-	shell->pgid = getpgrp();
-	shell->term = STDIN_FILENO;
-	shell->interactive = isatty(shell->term);
-	t = (struct termios*)term;
-	shell->term_shell = *t;
+//	shell->pgid = getpgrp();
+//	shell->term = STDIN_FILENO;
+//	shell->interactive = isatty(shell->term);
+//	t = (struct termios*)term;
+//	shell->term_shell = *t;
 	return (shell);
 }
 

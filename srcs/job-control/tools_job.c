@@ -6,7 +6,7 @@
 /*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/21 09:24:08 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/05/22 09:40:58 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/23 15:15:49 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,21 +41,39 @@ t_job		*init_job(void)
 	return (j);
 }
 
-void		free_job(t_job *j)
+void		free_process(t_process **p)
 {
-	free(j);
-	j = NULL;
+	if (!(p && (*p)))
+		return ;
+	if ((*p)->next)
+		free_process(&((*p)->next));
+	if ((*p)->next == NULL && (*p)->stopped == 1)
+		ft_arraydel(&((*p)->cmd));
+	free(*p);
+	(*p) = NULL;
+}
+
+void		free_job(t_job **j)
+{
+	if ((*j)->next)
+		free_job(&((*j)->next));
+	free_process(&((*j)->first_process));
+	free((*j)->first_process);
+	free(*j);
+	(*j) = NULL;
 }
 
 t_job	*get_first_job(t_job *new_job)
 {
 	static t_job	*job;
+	t_job			*sv;
 
-	if (!job)
-		job = init_job();
 	if (new_job)
 		job = new_job;
-	return (job);
+	else if (!job)
+		job = init_job();
+	sv = job;
+	return (sv);
 }
 
 t_job	*find_job(pid_t pid)

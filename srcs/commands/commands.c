@@ -6,7 +6,7 @@
 /*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/09 10:50:50 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/05/22 10:51:55 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/23 15:23:58 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,32 +17,48 @@
 ** simple command
 */
 
+/*
+** launch_job(j, 0); & continue_job(j, 0); -> &
+**
+** ps au
+*/
+
 int			ft_simple_command(char **argv, t_token *token)
 {
 	t_redirection	*r;
 	int				verif;
 	char			**cpy_argv;
 	t_job			*j;
+	t_process		*p;
+	t_job			*h;
 
 	cpy_argv = ft_arraydup(argv);
 	verif = 0;
 	r = fill_redirection(token);
 	parser_var(&cpy_argv);
 	j = get_first_job(NULL);
-	j->first_process->cmd = cpy_argv;
+	h = j;
+	while (j->pgid != 0)
+	{
+		ft_printf("je suis la\n");
+		j->next = init_job();
+		j = j->next;
+	}
+	p = j->first_process;
+	ft_arraydel(&(p->cmd));
+	p->cmd = cpy_argv;
 	j->r = r;
 	if ((verif = is_builtin(cpy_argv, r)) == -1)
 	{
 		if (is_in_path(&cpy_argv) == 1)
-		{
-			launch_job(j, 0);
-			job_notif();
-			continue_job(j, 0);
-		}
+			launch_job(j, 1);
+		else
+			ft_dprintf(r->error, "21sh: command not found: %s\n",
+					p->cmd[0]);
 	}
-	close_file_command(token->command, &r);
+//	close_file_command(token->command, &r);
 	gest_return(verif);
-	ft_arraydel(&cpy_argv);
+	j = h;
 	return (verif);
 }
 

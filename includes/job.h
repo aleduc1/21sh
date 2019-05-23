@@ -6,7 +6,7 @@
 /*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/21 09:17:14 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/05/22 10:30:39 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/23 14:34:55 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,8 @@ t_job			*find_job(pid_t pid);
 int				job_is_completed(t_job *job);
 int				job_is_stop(t_job *job);
 t_job			*init_job(void);
-void			free_job(t_job *j);
+t_process		*init_process(void);
+void			free_job(t_job **j);
 
 /*
 ** process.c

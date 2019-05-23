@@ -6,18 +6,11 @@
 /*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/02 08:43:53 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/05/20 19:34:38 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/23 12:08:17 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "env.h"
-
-/*
-** https://www.gnu.org/software/libc/manual/html_node/Data-Structures.html#Data-Structures
-** https://www.gnu.org/software/libc/manual/html_node/Initializing-the-Shell.html#Initializing-the-Shell
-** https://www.gnu.org/software/libc/manual/html_node/Launching-Jobs.html#Launching-Jobs
-** https://www.gnu.org/software/libc/manual/html_node/Foreground-and-Background.html
-*/
 
 void		sighandler(int signum)
 {

@@ -6,7 +6,7 @@
 /*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/19 13:59:26 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/05/22 09:27:27 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/23 15:28:00 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	add_in_fg(t_job *j, int value)
 	{
 		tcsetattr(shell->term, TCSADRAIN, &(j->tmodes));
 		if (kill(-j->pgid, SIGCONT) < 0)
-			ft_dprintf(j->r->error, "Kill not work!\n");
+			ft_dprintf(j->r->error, "fg: Kill not work!\n");
 	}
 	wait_for_jobs(j);
 	tcsetpgrp(shell->term, shell->pgid);
@@ -43,5 +43,5 @@ void	add_in_bg(t_job *j, int value)
 
 	shell = get_shell();
 	if (value && (kill(-j->pgid, SIGCONT) < 0))
-		ft_dprintf(j->r->error, "Kill not work!\n");
+		ft_dprintf(j->r->error, "bg: Kill not work!\n");
 }
