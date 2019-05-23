@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   bt_cd_utilstwo.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: apruvost <apruvost@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/08 18:27:24 by apruvost          #+#    #+#             */
-/*   Updated: 2019/05/08 04:24:34 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/23 20:42:36 by apruvost         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ int		cd_err(t_cd *cd)
 int		cd_chdir(t_cd *cd)
 {
 	char	*tmp;
-	char	path[4096];
 
 	if (chdir(cd->curpath) == -1)
 	{

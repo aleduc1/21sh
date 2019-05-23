@@ -6,7 +6,7 @@
 /*   By: apruvost <apruvost@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/19 17:56:32 by apruvost          #+#    #+#             */
-/*   Updated: 2019/05/08 03:38:54 by apruvost         ###   ########.fr       */
+/*   Updated: 2019/05/23 20:41:27 by apruvost         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,27 @@
 **
 ** If, during above steps, PWD variable is set, change OLD_PWD to value of old working directory (current working directory prior to cd call) 
 */
+
+int			is_env_empty(char *value)
+{
+	char *str;
+
+	str = value_line_path(value, 0);
+	if (str)
+	{
+		if (ft_strequ(str, ""))
+		{
+		ft_strdel(&str);
+		return (1);
+		}
+		else
+		{
+		ft_strdel(&str);
+		return (0);
+		}
+	}
+	return (1);
+}
 
 static int	cd_stepten(t_cd *cd)					// Step 10
 {
@@ -145,6 +166,7 @@ static void	cd_init(char **av, t_cd *cd)
 	}										// V
 	cd->directory = ft_strdup(av[1]);
 }
+
 
 int			bt_cd(char **av)
 {
