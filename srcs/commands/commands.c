@@ -6,7 +6,7 @@
 /*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/09 10:50:50 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/05/24 02:30:23 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/24 16:36:12 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 
 void		display_lst_job(t_job *j)
 {
-	t_job	*sv;
+	t_job		*sv;
 	t_process	*p;
 
 	sv = j;
@@ -42,7 +42,7 @@ void		display_lst_job(t_job *j)
 			p->pid, p->completed, p->stopped, p->status);
 			p = p->next;
 		}
-		ft_printf("pgpid = %ld\nnotified = %d\n", sv->pgid, sv->notified);
+		ft_printf("pgpid = %d\nnotified = %d\n", sv->pgid, sv->notified);
 		sv = sv->next;
 		ft_printf("___________________________\n");
 	}
@@ -93,6 +93,7 @@ int			ft_simple_command(char **argv, t_token *token)
 	r = fill_redirection(token);
 	parser_var(&cpy_argv);
 	j = get_first_job(NULL);
+	//display_lst_job(j);
 	while (j->pgid != 0)
 	{
 		j->next = init_job();

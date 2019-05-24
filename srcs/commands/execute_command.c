@@ -6,7 +6,7 @@
 /*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/02 08:43:53 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/05/24 02:18:51 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/24 16:37:53 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 void		sighandler(int signum)
 {
 	(void)signum;
-	ft_printf("ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss");
 	ft_putchar('\n');
 }
 
@@ -39,7 +38,6 @@ void		handler_ctrl_z(int sig)
 				ft_dprintf(STDERR_FILENO, "Error tcgetpgrp 2\n");
 		}
 	}
-	ft_printf("pid = %d %d\n", pid, getpid());
 	tcgetpgrp(pid);
 }
 

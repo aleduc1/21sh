@@ -6,7 +6,7 @@
 /*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/21 11:34:26 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/05/24 02:24:25 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/24 16:39:09 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,11 +63,14 @@ void	update_status(void)
 	int		status;
 	pid_t	pid;
 
-	ft_printf("ici\n");
-	pid = waitpid(WAIT_ANY, &status, WUNTRACED | WNOHANG);
-	while (!mark_process_status(pid, status))
+	dfl_signaux();
+	while (1)
+	{
 		pid = waitpid(WAIT_ANY, &status, WUNTRACED | WNOHANG);
-	ft_printf("_______\n");
+		if (mark_process_status(pid, status))
+			break ;
+	}
+	ign_signaux();
 }
 
 void	wait_for_jobs(t_job *j)
@@ -75,22 +78,15 @@ void	wait_for_jobs(t_job *j)
 	int		status;
 	pid_t	pid;
 
-if (ft_strequ(j->first_process->cmd[0], "/bin/ls"))
-{
-	waitpid(j->first_process->pid, &status, 0);
-	kill(j->first_process->pid, SIGCONT);
-	return ;
-}
-	ft_printf("ICI %s %d\n", j->first_process->cmd[0], j->first_process->completed);
-	pid = waitpid(WAIT_ANY, &status, WUNTRACED);
-	ft_printf("fin premier wait\n");
-	while (!mark_process_status(pid, status) && !job_is_stop(j) &&
-		!job_is_completed(j))
-		{
-			ft_printf("boucle\n");
-		pid = waitpid(WAIT_ANY, &status, WUNTRACED);
-		}
-	ft_printf("FiN\n");
+	dfl_signaux();
+	while (1)
+	{
+		pid = waitpid(-j->pgid, &status, WUNTRACED);
+		if (mark_process_status(pid, status) || job_is_stop(j) ||
+			job_is_completed(j))
+			break ;
+	}
+	ign_signaux();
 }
 
 void	job_info(t_job *j, char *status)

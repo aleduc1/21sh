@@ -6,7 +6,7 @@
 /*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/21 09:17:14 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/05/23 21:37:12 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/24 15:44:56 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,8 @@ void			job_info(t_job *j, char *status);
 void			wait_for_jobs(t_job *j);
 void			update_status(void);
 int				mark_process_status(pid_t pid, int status);
+
+void		display_lst_job(t_job *j);
 
 
 void	redirection_fd_pipe(t_redirection *r);

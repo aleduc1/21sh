@@ -6,7 +6,7 @@
 /*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/19 13:59:26 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/05/24 02:23:24 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/24 16:10:30 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@
 void	add_in_fg(t_job *j, int value)
 {
 	t_shell	*shell;
+	pid_t	pid;
+	int		status;
 
 	shell = get_shell();
 	tcsetpgrp(shell->term, j->pgid);
