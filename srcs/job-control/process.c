@@ -6,7 +6,7 @@
 /*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/21 09:42:05 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/05/23 15:28:13 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/24 00:50:05 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static void	act_job(t_job *j, int fg)
 		add_in_fg(j, 0);
 	else
 		add_in_bg(j, 0);
-	ign_signaux();
+//	ign_signaux();
 }
 
 int			launch_job(t_job *j, int fg)

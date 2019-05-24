@@ -6,7 +6,7 @@
 /*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/09 10:50:50 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/05/23 15:23:58 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/24 02:30:23 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,63 @@
 ** ps au
 */
 
+void		display_lst_job(t_job *j)
+{
+	t_job	*sv;
+	t_process	*p;
+
+	sv = j;
+	if (!sv)
+		return ;
+	while (sv)
+	{
+		ft_printf("===========================\n");
+		p = sv->first_process;
+		while (p)
+		{
+			ft_arraydisplay(p->cmd);
+			ft_printf("pid = %d\ncompleted = %d\nstopped = %d\nstatus = %d\n",
+			p->pid, p->completed, p->stopped, p->status);
+			p = p->next;
+		}
+		ft_printf("pgpid = %ld\nnotified = %d\n", sv->pgid, sv->notified);
+		sv = sv->next;
+		ft_printf("___________________________\n");
+	}
+}
+
+void		clean_fuck_list(void)
+{
+	t_job	**j;
+	t_job	*last;
+	t_job	*next;
+	t_job	*h;
+
+	j = static_job();
+	h = *j;
+	last = NULL;
+	while (*j)
+	{
+		next = (*j)->next;
+		if ((*j)->first_process->stopped == 0)
+		{
+			if (last)
+				last->next = next;
+			else if (next)
+			{
+				h = next;
+			}
+			else
+				h = init_job();
+			free_job(&(*j));
+		}
+		else
+			last = (*j);
+		(*j) = next;
+	}
+	(*j) = h;
+}
+
 int			ft_simple_command(char **argv, t_token *token)
 {
 	t_redirection	*r;
@@ -30,17 +87,14 @@ int			ft_simple_command(char **argv, t_token *token)
 	char			**cpy_argv;
 	t_job			*j;
 	t_process		*p;
-	t_job			*h;
 
 	cpy_argv = ft_arraydup(argv);
 	verif = 0;
 	r = fill_redirection(token);
 	parser_var(&cpy_argv);
 	j = get_first_job(NULL);
-	h = j;
 	while (j->pgid != 0)
 	{
-		ft_printf("je suis la\n");
 		j->next = init_job();
 		j = j->next;
 	}
@@ -56,9 +110,10 @@ int			ft_simple_command(char **argv, t_token *token)
 			ft_dprintf(r->error, "21sh: command not found: %s\n",
 					p->cmd[0]);
 	}
-//	close_file_command(token->command, &r);
+	if (j->first_process->stopped == 0)
+		close_file_command(token->command, &r);
 	gest_return(verif);
-	j = h;
+	clean_fuck_list();
 	return (verif);
 }
 

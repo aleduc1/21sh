@@ -6,7 +6,7 @@
 /*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/23 10:54:45 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/05/23 14:55:56 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/24 02:08:10 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 int		bt_jobs(t_redirection *r)
 {
-	ft_dprintf(r->out, "Builtin jobs:\n");
 	job_notif();
 	return (0);
 }

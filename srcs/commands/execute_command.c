@@ -6,7 +6,7 @@
 /*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/02 08:43:53 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/05/23 12:08:17 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/24 02:18:51 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 void		sighandler(int signum)
 {
 	(void)signum;
+	ft_printf("ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss");
 	ft_putchar('\n');
 }
 
@@ -70,7 +71,7 @@ int			add_process(char **cmd, int *returns_code, t_redirection *r)
 	pid = fork();
 	if (pid == 0)
 	{
-		signal(SIGINT, SIG_DFL);
+		//signal(SIGINT, SIG_DFL);
 		signal(SIGQUIT, SIG_DFL);
 		open_redirection(r);
 		execve(cmd[0], cmd, env);
@@ -95,7 +96,7 @@ int			exec_fork(char **cmd, t_redirection *r)
 		continue ;
 	if (pid != -1)
 		kill(pid, SIGINT);
-	signal(SIGINT, SIG_IGN);
+	//signal(SIGINT, SIG_IGN);
 	signal(SIGQUIT, SIG_IGN);
 	signal(SIGTSTP, SIG_IGN);
 	return (return_code);

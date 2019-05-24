@@ -6,7 +6,7 @@
 /*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/21 09:24:08 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/05/23 15:15:49 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/24 00:42:56 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,37 +43,51 @@ t_job		*init_job(void)
 
 void		free_process(t_process **p)
 {
-	if (!(p && (*p)))
+	if ((!p) || (!(*p)))
 		return ;
 	if ((*p)->next)
 		free_process(&((*p)->next));
-	if ((*p)->next == NULL && (*p)->stopped == 1)
+	if ((*p)->pid > 0)
 		ft_arraydel(&((*p)->cmd));
 	free(*p);
 	(*p) = NULL;
 }
 
+t_job	**static_job(void)
+{
+	static t_job	*job;
+
+	if (!job)
+		job = init_job();
+	return (&job);
+}
+
 void		free_job(t_job **j)
 {
+	free_process(&((*j)->first_process));
+	free((*j)->first_process);
+	free(*j);
+	(*j) = NULL;
+
+	/*t_job	**j;
+
+	j = (!job) ? static_job() : job;
 	if ((*j)->next)
 		free_job(&((*j)->next));
 	free_process(&((*j)->first_process));
 	free((*j)->first_process);
 	free(*j);
-	(*j) = NULL;
+	(*j) = NULL;*/
 }
 
 t_job	*get_first_job(t_job *new_job)
 {
-	static t_job	*job;
-	t_job			*sv;
+	t_job	**job;
 
+	job = static_job();
 	if (new_job)
-		job = new_job;
-	else if (!job)
-		job = init_job();
-	sv = job;
-	return (sv);
+		(*job) = new_job;
+	return (*job);
 }
 
 t_job	*find_job(pid_t pid)
