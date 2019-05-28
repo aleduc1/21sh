@@ -6,7 +6,7 @@
 /*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/22 17:36:44 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/05/28 10:45:34 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/28 11:18:19 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ static int		builtin_env_s(t_redirection *r, char **argv, pid_t pid)
 		if (!argv[i] || ft_strequ(argv[i], "env"))
 			builtin_env_display(r);
 		else
-			ft_simple_command_env(argv + i, r);
+			ft_simple_command_redirection(argv + i, r);
 		execve("/bin/test", NULL, NULL);
 		exit(pid);
 	}

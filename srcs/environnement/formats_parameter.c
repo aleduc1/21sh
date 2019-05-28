@@ -6,15 +6,11 @@
 /*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/29 11:12:26 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/05/28 10:00:19 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/28 11:33:34 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "env.h"
-
-/*
-** http://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_06_02
-*/
 
 /*
 ** return parameter si existe sinon word
@@ -67,7 +63,7 @@ char	*parameter_interrogation(char *parameter, char *word)
 }
 
 /*
-** si parameter existe et a deja une valeur, 
+** si parameter existe et a deja une valeur,
 ** remplace ca valeur par word
 */
 

@@ -6,7 +6,7 @@
 /*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/27 12:02:28 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/05/27 13:58:28 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/28 11:14:59 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,10 +73,9 @@ int				is_other_expansion(char *tmp, char **dst)
 	return (1);
 }
 
-void    parameter_expansion(char *tmp, char **dst)
+void			parameter_expansion(char *tmp, char **dst)
 {
-    char	*key;
-	char	*value;
+	char	*key;
 	int		i;
 
 	if (!tmp)

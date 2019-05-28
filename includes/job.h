@@ -6,7 +6,7 @@
 /*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/21 09:17:14 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/05/28 08:06:52 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/28 12:02:07 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,11 +44,13 @@ typedef struct	s_job
 	struct s_job	*next;
 }				t_job;
 
+t_job		*edit_lst_job(char **argv, t_token *t, t_redirection *r);
+
 /*
 ** shell_struct.c
 */
 
-t_shell			**static_shell(void *term);
+t_shell			**static_shell(void);
 t_shell			*get_shell(void);
 void			delete_shell(void);
 
@@ -101,7 +103,7 @@ int				mark_process_status(pid_t pid, int status);
 void		display_lst_job(t_job *j);
 
 
-void	redirection_fd_pipe(t_redirection *r);
+
 void		clean_fuck_list(void);
 
 #	endif

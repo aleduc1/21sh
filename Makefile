@@ -115,7 +115,6 @@ SRCS_NAMES = main.c \
 			 builtin_cd_verif.c\
 			 commands.c\
 			 commands_pipe.c\
-			 execute_command.c\
 			 list_env.c\
 			 free_env.c\
 			 list_redirection.c\

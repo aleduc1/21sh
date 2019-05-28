@@ -6,12 +6,21 @@
 /*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/09 10:50:50 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/05/28 10:00:40 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/28 12:59:19 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "env.h"
 #include "job.h"
+
+/*
+** command error
+*/
+
+void		display_error_command(t_redirection *r, char **cmd)
+{
+	ft_dprintf(r->error, "21sh: command not found: %s\n", cmd[0]);
+}
 
 /*
 ** simple command
@@ -71,6 +80,28 @@ void		clean_fuck_list(void)
 	(*j) = h;
 }
 
+t_job		*edit_lst_job(char **argv, t_token *t, t_redirection *r)
+{
+	t_job			*j;
+	t_process		*p;
+
+	j = get_first_job(NULL);
+	while (j->pgid != 0)
+	{
+		if (!j->next)
+			j->next = init_job();
+		j = j->next;
+	}
+	p = j->first_process;
+	p->cmd = ft_arraydup(argv);
+	parser_var(&p->cmd);
+	if (t)
+		j->r = fill_redirection(t);
+	else
+		j->r = r;
+	return (j);
+}
+
 int			ft_simple_command(char **argv, t_token *token)
 {
 	int				verif;
@@ -78,27 +109,43 @@ int			ft_simple_command(char **argv, t_token *token)
 	t_process		*p;
 
 	verif = 0;
-	j = get_first_job(NULL);
-	while (j->pgid != 0)
-	{
-		j->next = init_job();
-		j = j->next;
-	}
+	j = edit_lst_job(argv, token, NULL);
 	p = j->first_process;
-	p->cmd = ft_arraydup(argv);
-	parser_var(&p->cmd);
-	j->r = fill_redirection(token);
 	if ((verif = is_builtin(p->cmd, j->r)) == -1)
 	{
 		if (is_in_path(&p->cmd) == 1)
 			verif = launch_job(j, 1);
 		else
-			ft_dprintf(j->r->error, "21sh: command not found: %s\n",
-					p->cmd[0]);
+			display_error_command(j->r, p->cmd);
 	}
 	if (p->completed == 1 || p->pid == 0)
 	{
 		close_file_command(token->command, &j->r);
+		clean_fuck_list();
+	}
+	gest_return(verif);
+	return (verif);
+}
+
+int			ft_simple_command_redirection(char **argv, t_redirection *r)
+{
+	int				verif;
+	t_job			*j;
+	t_process		*p;
+
+	verif = 0;
+	j = edit_lst_job(argv, NULL, r);
+	p = j->first_process;
+	if ((verif = is_builtin(p->cmd, j->r)) == -1)
+	{
+		if (is_in_path(&p->cmd) == 1)
+			verif = launch_job(j, 1);
+		else
+			display_error_command(j->r, p->cmd);
+	}
+	if (p->completed == 1 || p->pid == 0)
+	{
+	//	close_file_command(token->command, &j->r);
 		clean_fuck_list();
 	}
 	gest_return(verif);
@@ -134,23 +181,14 @@ int			ft_ampersand(char **argv, t_token *token)
 	t_process		*p;
 
 	verif = 0;
-	j = get_first_job(NULL);
-	while (j->pgid != 0)
-	{
-		j->next = init_job();
-		j = j->next;
-	}
+	j = edit_lst_job(argv, token, NULL);
 	p = j->first_process;
-	p->cmd = ft_arraydup(argv);
-	parser_var(&p->cmd);
-	j->r = fill_redirection(token);
 	if ((verif = is_builtin(p->cmd, j->r)) == -1)
 	{
 		if (is_in_path(&p->cmd) == 1)
 			verif = launch_job(j, 0);
 		else
-			ft_dprintf(j->r->error, "21sh: command not found: %s\n",
-					p->cmd[0]);
+			display_error_command(j->r, p->cmd);
 	}
 	if (p->completed == 1 || p->pid == 0)
 	{

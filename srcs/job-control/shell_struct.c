@@ -6,7 +6,7 @@
 /*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/21 10:40:08 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/05/23 09:53:14 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/28 12:02:22 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,28 +17,21 @@
 ** tcgetattr(shell->term, &(shell->term_shell));
 */
 
-static t_shell	*init_shell_list(void *term)
+static t_shell	*init_shell_list(void)
 {
 	t_shell			*shell;
-//	struct termios	*t;
 
-(void)term;
 	if (!(shell = (t_shell*)malloc(sizeof(t_shell) * 1)))
 		return (NULL);
-//	shell->pgid = getpgrp();
-//	shell->term = STDIN_FILENO;
-//	shell->interactive = isatty(shell->term);
-//	t = (struct termios*)term;
-//	shell->term_shell = *t;
 	return (shell);
 }
 
-t_shell			**static_shell(void *term)
+t_shell			**static_shell(void)
 {
 	static t_shell	*shell;
 
 	if (!shell)
-		shell = init_shell_list(term);
+		shell = init_shell_list();
 	return (&shell);
 }
 
@@ -46,7 +39,7 @@ t_shell			*get_shell(void)
 {
 	t_shell **shell;
 
-	shell = static_shell(NULL);
+	shell = static_shell();
 	return (*shell);
 }
 
@@ -54,7 +47,7 @@ void			delete_shell(void)
 {
 	t_shell	**shell;
 
-	shell = static_shell(NULL);
+	shell = static_shell();
 	free(*shell);
 	*shell = NULL;
 }

@@ -6,7 +6,7 @@
 /*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/23 10:54:45 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/05/28 09:16:10 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/28 12:56:32 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ int		bt_jobs(void)
 {
 	t_job	*j;
 
+	update_status();
 	j = get_first_job(NULL);
 	while (j)
 	{
@@ -31,27 +32,43 @@ int		bt_jobs(void)
 int		bt_bg(void)
 {
 	t_job	*j;
+	t_job	*is_stopped;
 
 	j = get_first_job(NULL);
-	if (j->first_process->stopped == 0)
+	is_stopped = NULL;
+	while (j)
+	{
+		if (j->first_process->stopped == 1)
+			is_stopped = j;
+		j = j->next;
+	}
+	if (!is_stopped)
 	{
 		ft_dprintf(2, "42sh: bg no current job\n");
 		return (-2);
 	}
-	continue_job(j, 0);
+	continue_job(is_stopped, 0);
 	return (0);
 }
 
 int		bt_fg(void)
 {
 	t_job	*j;
+	t_job	*is_stopped;
 
 	j = get_first_job(NULL);
-	if (j->first_process->stopped == 0)
+	is_stopped = NULL;
+	while (j)
+	{
+		if (j->first_process->stopped == 1)
+			is_stopped = j;
+		j = j->next;
+	}
+	if (!is_stopped)
 	{
 		ft_dprintf(2, "42sh: fg: no current job\n");
 		return (-2);
 	}
-	continue_job(j, 1);
+	continue_job(is_stopped, 1);
 	return (0);
 }

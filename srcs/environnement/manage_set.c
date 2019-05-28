@@ -6,7 +6,7 @@
 /*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/22 14:54:24 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/05/28 10:45:48 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/28 11:18:42 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int			edit_set_fork(char **value, t_redirection *r)
 	if (pid == 0)
 	{
 		result = edit_set_no_fork(value);
-		ft_simple_command_env(value + result, r);
+		ft_simple_command_redirection(value + result, r);
 		execve("/bin/test", NULL, NULL);
 		exit(pid);
 	}
