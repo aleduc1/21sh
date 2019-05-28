@@ -6,7 +6,7 @@
 /*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/21 09:24:08 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/05/28 08:30:23 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/28 13:21:15 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ t_job		*init_job(void)
 	j->pgid = 0;
 	j->notified = 0;
 	j->r = NULL;
+	j->t = NULL;
 	j->next = NULL;
 	return (j);
 }
@@ -64,10 +65,13 @@ void		free_process(t_process **p)
 
 void		free_job(t_job **j)
 {
-	free_process(&((*j)->first_process));
-	free((*j)->first_process);
-	free(*j);
-	(*j) = NULL;
+	if (j && (*j))
+	{
+		free_process(&((*j)->first_process));
+		free((*j)->first_process);
+		free(*j);
+		(*j) = NULL;
+	}
 }
 
 void		free_all_job(void)
@@ -79,6 +83,7 @@ void		free_all_job(void)
 	while (*j)
 	{
 		h = (*j)->next;
+		close_file_command((*j)->t->command, &(*j)->r);
 		free_job(&(*j));
 		(*j) = h;
 	}

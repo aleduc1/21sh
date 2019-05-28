@@ -48,7 +48,7 @@ static int	is_not_end(t_job *j, t_process *p, int in)
 	pid = fork();
 	if (pid == 0)
 	{
-		if ((pid = is_builtin(p->cmd, j->r)) == -1)
+		if ((pid = is_builtin(j)) == -1)
 		{
 			if (is_in_path(&p->cmd) == 1)
 				pid = launch_job(j, 1);
@@ -71,7 +71,7 @@ static int	is_end(t_job *j, t_process *p, int in)
 	if (j->r->in == STDIN_FILENO)
 		j->r->in = in;
 	j->r->fd_pipe = -1;
-	if ((verif = is_builtin(p->cmd, j->r)) == -1)
+	if ((verif = is_builtin(j)) == -1)
 	{
 		if (is_in_path(&p->cmd) == 1)
 			verif = launch_job(j, 1);

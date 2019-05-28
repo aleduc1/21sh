@@ -6,7 +6,7 @@
 /*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/22 17:57:48 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/05/28 10:14:02 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/28 13:25:10 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,35 +71,37 @@ int			is_in_path(char ***command)
 **	return -1 if it's not a builtin
 */
 
-int			is_builtin(char **argv, t_redirection *r)
+int			is_builtin(t_job *j)//char **argv, t_redirection *r)
 {
 	int		verif;
+	char	**av;
 
-	if (ft_strequ(argv[0], "env"))
-		verif = builtin_env(r, argv);
-	else if (ft_strequ(argv[0], "set"))
-		verif = builtin_set(r);
-	else if (ft_strequ(argv[0], "setenv"))
-		verif = edit_setenv(argv[1], argv[2]);
-	else if (ft_strequ(argv[0], "unsetenv"))
-		verif = ft_unsetenv(argv[1]);
-	else if (ft_strequ(argv[0], "export"))
-		verif = bt_export(argv + 1);
-	else if (ft_strequ(argv[0], "unset"))
-		verif = ft_unset(argv[1]);
-	else if (ft_strchr_exist(argv[0], '='))
-		verif = edit_set(argv, r);
-	else if (ft_strequ(argv[0], "echo"))
-		verif = bt_echo(argv, r);
-	else if (ft_strequ(argv[0], "cd"))
-		verif = (builtin_cd(argv) < 0) ? -2 : 0;
-	else if (ft_strequ(argv[0], "exit"))
-		verif = bt_exit(argv);
-	else if (ft_strequ(argv[0], "jobs"))
+	av = j->first_process->cmd;
+	if (ft_strequ(av[0], "env"))
+		verif = builtin_env(j->r, av);
+	else if (ft_strequ(av[0], "set"))
+		verif = builtin_set(j->r);
+	else if (ft_strequ(av[0], "setenv"))
+		verif = edit_setenv(av[1], av[2]);
+	else if (ft_strequ(av[0], "unsetenv"))
+		verif = ft_unsetenv(av[1]);
+	else if (ft_strequ(av[0], "export"))
+		verif = bt_export(av + 1);
+	else if (ft_strequ(av[0], "unset"))
+		verif = ft_unset(av[1]);
+	else if (ft_strchr_exist(av[0], '='))
+		verif = edit_set(av, j->r);
+	else if (ft_strequ(av[0], "echo"))
+		verif = bt_echo(av, j->r);
+	else if (ft_strequ(av[0], "cd"))
+		verif = (builtin_cd(av) < 0) ? -2 : 0;
+	else if (ft_strequ(av[0], "exit"))
+		verif = bt_exit(j);
+	else if (ft_strequ(av[0], "jobs"))
 		verif = bt_jobs();
-	else if (ft_strequ(argv[0], "fg"))
+	else if (ft_strequ(av[0], "fg"))
 		verif = bt_fg();
-	else if (ft_strequ(argv[0], "bg"))
+	else if (ft_strequ(av[0], "bg"))
 		verif = bt_bg();
 	else
 		verif = -1;

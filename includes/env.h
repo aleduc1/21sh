@@ -45,6 +45,34 @@ typedef struct		s_env
 	struct s_env	*next;
 }					t_env;
 
+typedef struct	s_shell
+{
+	pid_t			pgid;
+	struct termios	term_shell;
+	int				interactive;
+	int				term;
+}				t_shell;
+
+typedef struct	s_process
+{
+	char				**cmd;
+	pid_t				pid;
+	int					completed;
+	int					stopped;
+	int					status;
+	struct s_process	*next;
+}				t_process;
+
+typedef struct	s_job
+{
+	t_process		*first_process;
+	pid_t			pgid;
+	int				notified;
+	struct termios	tmodes;
+	t_redirection	*r;
+	t_token			*t;
+	struct s_job	*next;
+}				t_job;
 
 void	redirection_fd_pipe(t_redirection *r);
 
@@ -69,7 +97,7 @@ void				delete_redirection(t_redirection **r);
 */
 
 int					gest_return(int verif);
-int					is_builtin(char **argv, t_redirection *r);
+int					is_builtin(t_job *j);
 int					is_in_path(char ***command);
 t_env				*get_env(int is_end, t_env *head);
 

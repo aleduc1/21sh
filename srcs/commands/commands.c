@@ -6,7 +6,7 @@
 /*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/09 10:50:50 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/05/28 12:59:19 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/28 13:22:31 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,7 @@ t_job		*edit_lst_job(char **argv, t_token *t, t_redirection *r)
 			j->next = init_job();
 		j = j->next;
 	}
+	j->t = t;
 	p = j->first_process;
 	p->cmd = ft_arraydup(argv);
 	parser_var(&p->cmd);
@@ -102,16 +103,16 @@ t_job		*edit_lst_job(char **argv, t_token *t, t_redirection *r)
 	return (j);
 }
 
-int			ft_simple_command(char **argv, t_token *token)
+int			ft_simple_command(char **argv, t_token *t)
 {
 	int				verif;
 	t_job			*j;
 	t_process		*p;
 
 	verif = 0;
-	j = edit_lst_job(argv, token, NULL);
+	j = edit_lst_job(argv, t, NULL);
 	p = j->first_process;
-	if ((verif = is_builtin(p->cmd, j->r)) == -1)
+	if ((verif = is_builtin(j)) == -1)
 	{
 		if (is_in_path(&p->cmd) == 1)
 			verif = launch_job(j, 1);
@@ -120,7 +121,7 @@ int			ft_simple_command(char **argv, t_token *token)
 	}
 	if (p->completed == 1 || p->pid == 0)
 	{
-		close_file_command(token->command, &j->r);
+		close_file_command(t->command, &j->r);
 		clean_fuck_list();
 	}
 	gest_return(verif);
@@ -136,7 +137,7 @@ int			ft_simple_command_redirection(char **argv, t_redirection *r)
 	verif = 0;
 	j = edit_lst_job(argv, NULL, r);
 	p = j->first_process;
-	if ((verif = is_builtin(p->cmd, j->r)) == -1)
+	if ((verif = is_builtin(j)) == -1)
 	{
 		if (is_in_path(&p->cmd) == 1)
 			verif = launch_job(j, 1);
@@ -144,10 +145,7 @@ int			ft_simple_command_redirection(char **argv, t_redirection *r)
 			display_error_command(j->r, p->cmd);
 	}
 	if (p->completed == 1 || p->pid == 0)
-	{
-	//	close_file_command(token->command, &j->r);
 		clean_fuck_list();
-	}
 	gest_return(verif);
 	return (verif);
 }
@@ -183,7 +181,7 @@ int			ft_ampersand(char **argv, t_token *token)
 	verif = 0;
 	j = edit_lst_job(argv, token, NULL);
 	p = j->first_process;
-	if ((verif = is_builtin(p->cmd, j->r)) == -1)
+	if ((verif = is_builtin(j)) == -1)
 	{
 		if (is_in_path(&p->cmd) == 1)
 			verif = launch_job(j, 0);
@@ -191,10 +189,7 @@ int			ft_ampersand(char **argv, t_token *token)
 			display_error_command(j->r, p->cmd);
 	}
 	if (p->completed == 1 || p->pid == 0)
-	{
-		close_file_command(token->command, &j->r);
 		clean_fuck_list();
-	}
 	gest_return(verif);
 	return (verif);
 }

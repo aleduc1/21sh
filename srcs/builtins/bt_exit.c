@@ -63,29 +63,29 @@
 ** valeur de retour du shell
 */
 
-int		bt_exit(char **av)
+int		bt_exit(t_job *j)
 {
 	delete_shell();
 	default_term_mode();
 	get_env(1, NULL);
-	if (av == NULL || av[1] == NULL)
+	if ((!j) || (!j->first_process->cmd) || (!j->first_process->cmd[1]))
 	{
 		free_all_job();
 		ft_dprintf(2, "exit\n");
 		exit(0);
 	}
-	if (ft_isstrnum(av[1]))
+	if (ft_isstrnum(j->first_process->cmd[1]))
 	{
-		if (av[2] == NULL)
+		if (j->first_process->cmd[2] == NULL)
 		{
 			free_all_job();
 			ft_dprintf(2, "exit\n");
-			exit(ft_atoi(av[1]));
+			exit(ft_atoi(j->first_process->cmd[1]));
 		}
 		ft_dprintf(2, "21sh: exit: too many arguments\n");
 		return (1);
 	}
 	free_all_job();
-	ft_dprintf(2, "21sh: exit: %s: numeric argument required\n", av[1]);
+	ft_dprintf(2, "21sh: exit: %s: numeric argument required\n", j->first_process->cmd[1]);
 	exit(255);
 }

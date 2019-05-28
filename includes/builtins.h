@@ -14,6 +14,7 @@
 #	define BUILTINS_H
 
 #include "env.h"
+#include "job.h"
 
 typedef struct		s_cd
 {
@@ -22,7 +23,7 @@ typedef struct		s_cd
 	char	*curpath;
 }					t_cd;
 
-int					bt_exit(char **av);
+int					bt_exit(t_job *j);
 int					bt_echo(char **av, t_redirection *r);
 
 /*
