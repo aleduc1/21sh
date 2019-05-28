@@ -6,7 +6,7 @@
 /*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/22 13:33:53 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/05/20 18:19:19 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/28 10:45:57 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ t_env				*get_env(int is_end, t_env *head);
 */
 
 void				parser_var(char ***value);
+char				*search_var(char *src);
 
 /*
 ** manage_env.c
@@ -89,7 +90,8 @@ char				**create_list_env(t_env *my_env, int env);
 ** manage_set.c
 */
 
-int					edit_set(char *key, char *value);
+int					edit_set(char **value, t_redirection *r);
+int					add_set_value(char *key, char *value);
 int					ft_unset(char *key);
 int					edit_set_command_env(char *str, t_env *my_env);
 
@@ -180,5 +182,24 @@ int					ft_apply_dquote(char ***value, int index);
 
 
 void	run(char *input, t_pos *pos);
+
+/*
+** parameter_expansion.c
+*/
+
+void			    parameter_expansion(char *tmp, char **dst);
+
+/*
+** formats_parameter.c
+*/
+
+char				*parameter_moins(char *parameter, char *word);
+char				*parameter_equals(char *parameter, char *word);
+char				*parameter_interrogation(char *parameter, char *word);
+char				*parameter_plus(char *parameter, char *word);
+
+char				*parameter_hash_first(char *parameter);
+char				*parameter_hash_end(char *parameter);
+char				*parameter_percents(char *parameter);
 
 #	endif

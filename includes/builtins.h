@@ -6,7 +6,7 @@
 /*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/08 16:01:05 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/05/23 12:06:34 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/28 10:15:01 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,9 @@ int					bt_echo(char **av, t_redirection *r);
 ** bt_jobs.c
 */
 
-int					bt_jobs(t_redirection *r);
-int					bt_bg(t_redirection *r);
-int					bt_fg(t_redirection *r);
+int					bt_jobs(void);
+int					bt_bg(void);
+int					bt_fg(void);
+int					bt_export(char **value);
 
 #	endif

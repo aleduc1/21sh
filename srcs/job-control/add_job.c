@@ -6,7 +6,7 @@
 /*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/19 13:59:26 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/05/24 16:10:30 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/28 10:03:10 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,6 @@
 void	add_in_fg(t_job *j, int value)
 {
 	t_shell	*shell;
-	pid_t	pid;
-	int		status;
 
 	shell = get_shell();
 	tcsetpgrp(shell->term, j->pgid);
@@ -31,7 +29,7 @@ void	add_in_fg(t_job *j, int value)
 	{
 		tcsetattr(shell->term, TCSADRAIN, &(j->tmodes));
 		if (kill(-j->pgid, SIGCONT) < 0)
-			ft_dprintf(j->r->error, "fg: Kill not work!\n");
+			ft_dprintf(j->r->error, "42sh: fg: Kill not work!\n");
 	}
 	wait_for_jobs(j);
 	tcsetpgrp(shell->term, shell->pgid);
@@ -42,8 +40,11 @@ void	add_in_fg(t_job *j, int value)
 void	add_in_bg(t_job *j, int value)
 {
 	t_shell	*shell;
+	char	*itoa_pid;
 
 	shell = get_shell();
+	itoa_pid = ft_itoa(j->first_process->pid);
+	add_set_value("!", itoa_pid);
 	if (value && (kill(-j->pgid, SIGCONT) < 0))
-		ft_dprintf(j->r->error, "bg: Kill not work!\n");
+		ft_dprintf(j->r->error, "42sh: bg: Kill not work!\n");
 }

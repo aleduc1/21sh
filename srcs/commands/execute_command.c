@@ -6,7 +6,7 @@
 /*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/02 08:43:53 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/05/24 16:37:53 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/28 10:45:27 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ int			add_process(char **cmd, int *returns_code, t_redirection *r)
 		return (*returns_code);
 	}
 	env = create_list_env(get_env(0, NULL), 0);
+	ft_arraydisplay(env);
 	pid = fork();
 	if (pid == 0)
 	{
@@ -99,6 +100,7 @@ int			exec_fork(char **cmd, t_redirection *r)
 	signal(SIGTSTP, SIG_IGN);
 	return (return_code);
 }
+
 
 int			ft_simple_command_env(char **argv, t_redirection *r)
 {

@@ -6,21 +6,19 @@
 /*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/22 14:54:24 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/05/17 09:19:33 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/28 10:45:48 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "env.h"
 
-int			edit_set(char *key, char *value)
+int			add_set_value(char *key, char *value)
 {
 	t_env	*my_env;
-	t_env	*head;
 	int		verif;
 
-	my_env = get_env(0, NULL);
-	head = my_env;
 	verif = 0;
+	my_env = get_env(0, NULL);
 	if (!value)
 		value = "";
 	while (my_env->next)
@@ -36,8 +34,67 @@ int			edit_set(char *key, char *value)
 	}
 	if (verif == 0)
 		verif = create_new_line_env(my_env, key, value, 0);
-	my_env = head;
 	return (verif);
+}
+
+int			edit_set_no_fork(char **value)
+{
+	int		verif;
+	char	*key;
+	int		i;
+	int		cnt;
+
+	i = -1;
+	verif = 0;
+	while (value[++i])
+	{
+		if ((cnt = ft_chr_index(value[i], '=')) > 0)
+		{
+			key = ft_strsub(value[i], 0, cnt);
+			verif = add_set_value(key, value[i] + cnt + 1);
+			ft_strdel(&key);
+		}
+		else
+			break ;
+	}
+	return (i);
+}
+
+int			edit_set_fork(char **value, t_redirection *r)
+{
+	pid_t	pid;
+	int		result;
+
+	signal(SIGINT, SIG_IGN);
+	signal(SIGQUIT, SIG_IGN);
+	pid = fork();
+	if (pid == 0)
+	{
+		result = edit_set_no_fork(value);
+		ft_simple_command_env(value + result, r);
+		execve("/bin/test", NULL, NULL);
+		exit(pid);
+	}
+	while (wait(&result) != -1)
+		continue ;
+	return (result);
+}
+
+int			edit_set(char **value, t_redirection *r)
+{
+	int		result;
+	int		i;
+
+	i = -1;
+	result = 0;
+	while (value[++i])
+		if (ft_chr_index(value[i], '=') < 2)
+			break ;
+	if (!value[i])
+		result = edit_set_no_fork(value);
+	else
+		edit_set_fork(value, r);
+	return (result);
 }
 
 int			ft_unset(char *key)

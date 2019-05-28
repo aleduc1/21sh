@@ -6,7 +6,7 @@
 /*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/21 13:52:06 by apruvost          #+#    #+#             */
-/*   Updated: 2019/05/23 14:36:34 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/27 10:48:03 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,32 +65,27 @@
 
 int		bt_exit(char **av)
 {
-	t_job	*j;
-
-	j = get_first_job(NULL);
 	delete_shell();
-	free_job(&j);
+	default_term_mode();
+	get_env(1, NULL);
 	if (av == NULL || av[1] == NULL)
 	{
+		free_all_job();
 		ft_dprintf(2, "exit\n");
-		default_term_mode();
-		get_env(1, NULL);
 		exit(0);
 	}
 	if (ft_isstrnum(av[1]))
 	{
 		if (av[2] == NULL)
 		{
+			free_all_job();
 			ft_dprintf(2, "exit\n");
-			default_term_mode();
-			get_env(1, NULL);
 			exit(ft_atoi(av[1]));
 		}
 		ft_dprintf(2, "21sh: exit: too many arguments\n");
 		return (1);
 	}
+	free_all_job();
 	ft_dprintf(2, "21sh: exit: %s: numeric argument required\n", av[1]);
-	default_term_mode();
-	get_env(1, NULL);
 	exit(255);
 }

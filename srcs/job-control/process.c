@@ -6,7 +6,7 @@
 /*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/21 09:42:05 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/05/24 16:18:15 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/28 10:42:49 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ static int	launch_process(t_process *p, pid_t pgid, t_redirection *r, int fg)
 	s = get_shell();
 	dfl_signaux();
 	environ = create_list_env(get_env(0, NULL), 0);
+	//ft_arraydisplay(environ);
 	if (s->interactive)
 	{
 		pid = getpid();
@@ -41,7 +42,7 @@ static void	act_job(t_job *j, int fg)
 {
 	t_shell	*shell;
 
-	job_info(j, "launched");
+	//job_info(j, "launched");
 	shell = get_shell();
 	if (!shell->interactive)
 		wait_for_jobs(j);
@@ -49,7 +50,6 @@ static void	act_job(t_job *j, int fg)
 		add_in_fg(j, 0);
 	else
 		add_in_bg(j, 0);
-//	ign_signaux();
 }
 
 int			launch_job(t_job *j, int fg)
@@ -61,7 +61,6 @@ int			launch_job(t_job *j, int fg)
 	while (p)
 	{
 		pid = fork();
-		//job_notif();
 		if (pid == 0)
 			launch_process(p, j->pgid, j->r, fg);
 		else if (pid < 0)

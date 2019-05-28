@@ -6,7 +6,7 @@
 /*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/21 11:34:26 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/05/24 16:39:09 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/28 08:30:45 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,14 +63,14 @@ void	update_status(void)
 	int		status;
 	pid_t	pid;
 
-	dfl_signaux();
+//	dfl_signaux();
 	while (1)
 	{
 		pid = waitpid(WAIT_ANY, &status, WUNTRACED | WNOHANG);
 		if (mark_process_status(pid, status))
 			break ;
 	}
-	ign_signaux();
+//	ign_signaux();
 }
 
 void	wait_for_jobs(t_job *j)
@@ -78,7 +78,7 @@ void	wait_for_jobs(t_job *j)
 	int		status;
 	pid_t	pid;
 
-	dfl_signaux();
+//	dfl_signaux();
 	while (1)
 	{
 		pid = waitpid(-j->pgid, &status, WUNTRACED);
@@ -86,7 +86,7 @@ void	wait_for_jobs(t_job *j)
 			job_is_completed(j))
 			break ;
 	}
-	ign_signaux();
+//	ign_signaux();
 }
 
 void	job_info(t_job *j, char *status)

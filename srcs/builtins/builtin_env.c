@@ -6,7 +6,7 @@
 /*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/22 17:36:44 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/05/17 14:41:44 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/28 10:45:34 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,10 @@ int				builtin_env(t_redirection *r, char **argv)
 	signal(SIGINT, SIG_IGN);
 	signal(SIGQUIT, SIG_IGN);
 	pid = 0;
-	pid = builtin_env_s(r, argv, pid);
+	if (!argv)
+		builtin_env_display(r);
+	else
+		pid = builtin_env_s(r, argv, pid);
 	while (wait(&rt) != -1)
 		continue ;
 	return (0);

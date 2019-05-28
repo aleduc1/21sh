@@ -6,7 +6,7 @@
 /*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/22 17:29:22 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/05/17 09:05:46 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/27 11:41:56 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,4 +57,19 @@ char		*value_line_path(char *key, int env)
 		my_env = my_env->next;
 	}
 	return (dst);
+}
+
+int			value_is_empty(char *key)
+{
+	t_env	*my_env;
+
+	my_env = get_env(0, NULL);
+	while (my_env)
+	{
+		if (ft_strequ(my_env->key, key))
+			if (ft_strequ(my_env->value, ""))
+				return (1);
+		my_env = my_env->next;
+	}
+	return (0);
 }

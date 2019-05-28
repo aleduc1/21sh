@@ -6,7 +6,7 @@
 /*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/22 17:48:23 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/05/17 14:19:05 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/27 17:03:16 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,12 @@ t_env		*init_maillon_env(void)
 
 void		init_variable(void)
 {
-	edit_set("?", "0");
-	edit_set("FD_OUTPUT", "1");
-	edit_set("FD_ERROR_OUTPUT", "2");
+	add_set_value("?", "0");
+	add_set_value("0", "21sh");
+	add_set_value("-", "");
+	add_set_value("#", "0");
+	add_set_value("FD_OUTPUT", "1");
+	add_set_value("FD_ERROR_OUTPUT", "2");
 }
 
 t_env		*init_env(void)

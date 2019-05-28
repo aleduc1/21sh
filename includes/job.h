@@ -6,7 +6,7 @@
 /*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/21 09:17:14 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/05/24 15:44:56 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/28 08:06:52 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ t_job			*init_job(void);
 t_process		*init_process(void);
 void			free_job(t_job **j);
 t_job			**static_job(void);
+void			free_all_job(void);
 
 /*
 ** process.c
@@ -101,5 +102,6 @@ void		display_lst_job(t_job *j);
 
 
 void	redirection_fd_pipe(t_redirection *r);
+void		clean_fuck_list(void);
 
 #	endif

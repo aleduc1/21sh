@@ -6,7 +6,7 @@
 /*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/22 17:57:48 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/05/23 12:12:36 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/28 10:14:02 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,11 +84,11 @@ int			is_builtin(char **argv, t_redirection *r)
 	else if (ft_strequ(argv[0], "unsetenv"))
 		verif = ft_unsetenv(argv[1]);
 	else if (ft_strequ(argv[0], "export"))
-		verif = edit_export(argv[1]);
+		verif = bt_export(argv + 1);
 	else if (ft_strequ(argv[0], "unset"))
 		verif = ft_unset(argv[1]);
-	else if (ft_strequ(argv[0], "editset"))
-		verif = edit_set(argv[1], argv[2]);
+	else if (ft_strchr_exist(argv[0], '='))
+		verif = edit_set(argv, r);
 	else if (ft_strequ(argv[0], "echo"))
 		verif = bt_echo(argv, r);
 	else if (ft_strequ(argv[0], "cd"))
@@ -96,11 +96,11 @@ int			is_builtin(char **argv, t_redirection *r)
 	else if (ft_strequ(argv[0], "exit"))
 		verif = bt_exit(argv);
 	else if (ft_strequ(argv[0], "jobs"))
-		verif = bt_jobs(r);
+		verif = bt_jobs();
 	else if (ft_strequ(argv[0], "fg"))
-		verif = bt_fg(r);
+		verif = bt_fg();
 	else if (ft_strequ(argv[0], "bg"))
-		verif = bt_bg(r);
+		verif = bt_bg();
 	else
 		verif = -1;
 	return (verif);
@@ -117,7 +117,7 @@ int			gest_return(int verif)
 
 	verif = (verif == 256 || verif < 0) ? -1 : 0;
 	value = ft_itoa(verif);
-	verif = edit_set("?", value);
+	verif = add_set_value("?", value);
 	ft_strdel(&value);
 	return (verif);
 }

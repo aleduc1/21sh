@@ -6,7 +6,7 @@
 /*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 21:20:48 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/05/15 11:17:07 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/27 11:06:30 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ static int	launch_cd(char **str)
 	{
 		ft_bzero(buf, BUF_S);
 		getcwd(buf, BUF_S);
-		edit_set("PWD", buf);
+		add_set_value("PWD", buf);
 	}
 	else
 		error_cd(verif, *str);
@@ -80,7 +80,7 @@ int			builtin_cd(char **av)
 	ft_bzero(buf, BUF_S);
 	getcwd(buf, BUF_S - 1);
 	verif = launch_cd(&str);
-	edit_set("OLDPWD", buf);
+	add_set_value("OLDPWD", buf);
 	if (str)
 		ft_strdel(&str);
 	return (verif);
