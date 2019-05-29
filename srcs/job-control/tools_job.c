@@ -19,6 +19,7 @@ t_process	*init_process(void)
 	if (!(p = (t_process*)malloc(sizeof(t_process) * 1)))
 		return (NULL);
 	p->cmd = NULL;
+	//p->process_id = 0;
 	p->pid = 0;
 	p->completed = 0;
 	p->stopped = 0;
@@ -37,7 +38,8 @@ t_job		*init_job(void)
 	j->pgid = 0;
 	j->notified = 0;
 	j->r = NULL;
-	j->t = NULL;
+	j->len_close = 0;
+	j->close_fd = NULL;
 	j->next = NULL;
 	return (j);
 }
@@ -57,18 +59,35 @@ void		free_process(t_process **p)
 		return ;
 	if ((*p)->next)
 		free_process(&((*p)->next));
-	if ((*p)->cmd && (*p)->cmd[0])
+	if ((*p)->cmd)
 		ft_arraydel(&((*p)->cmd));
 	free(*p);
 	(*p) = NULL;
+}
+
+void		clean_file(t_job *j)
+{
+	int	i;
+
+	if (j->len_close > 0)
+	{
+		i = -1;
+		while (++i < j->len_close)
+			close(j->close_fd[i]);
+	}
+	delete_redirection(&j->r);
+	free(j->close_fd);
+	j->close_fd = NULL;
 }
 
 void		free_job(t_job **j)
 {
 	if (j && (*j))
 	{
+		clean_file(*j);
 		free_process(&((*j)->first_process));
 		free((*j)->first_process);
+		(*j)->first_process = NULL;
 		free(*j);
 		(*j) = NULL;
 	}
@@ -83,7 +102,7 @@ void		free_all_job(void)
 	while (*j)
 	{
 		h = (*j)->next;
-		close_file_command((*j)->t->command, &(*j)->r);
+		//close_file_command((*j)->t->command, &(*j)->r);
 		free_job(&(*j));
 		(*j) = h;
 	}

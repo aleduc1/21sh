@@ -12,6 +12,7 @@
 
 #include "env.h"
 #include "job.h"
+#include "builtins.h"
 
 /*
 ** command error
@@ -41,8 +42,8 @@ void		display_lst_job(t_job *j)
 		while (p)
 		{
 			ft_arraydisplay(p->cmd);
-			ft_printf("pid = %d\ncompleted = %d\nstopped = %d\nstatus = %d\n",
-			p->pid, p->completed, p->stopped, p->status);
+			ft_printf("pointeur cmd = %p\npid = %d\ncompleted = %d\nstopped = %d\nstatus = %d\n",
+			&p->cmd, p->pid, p->completed, p->stopped, p->status);
 			p = p->next;
 		}
 		ft_printf("pgpid = %d\nnotified = %d\n", sv->pgid, sv->notified);
@@ -71,6 +72,7 @@ void		clean_fuck_list(void)
 				last->next = next;
 			else
 				h = NULL;
+			
 			free_job(&(*j));
 		}
 		else
@@ -80,21 +82,56 @@ void		clean_fuck_list(void)
 	(*j) = h;
 }
 
+int			file_to_close(t_token *t, t_job *j)
+{
+	t_lex	*lex;
+	int		i;
+
+	lex = t->command;
+	while (lex)
+	{
+		if (lex->token->type == REDIR && lex->redir &&
+				lex->redir->dest_fd &&
+				ft_atoi(lex->redir->dest_fd) != -1)
+			if (lex->redir->filename || lex->redir->close == 1)
+				j->len_close++;
+		lex = lex->next;
+	}
+	lex = t->command;
+	if (!(j->close_fd = (int*)malloc(sizeof(int) * (j->len_close + 1))))
+		return (-1);
+	i = -1;
+	while (lex)
+	{
+		if (lex->token->type == REDIR && lex->redir &&
+				lex->redir->dest_fd &&
+				ft_atoi(lex->redir->dest_fd) != -1)
+			if (lex->redir->filename || lex->redir->close == 1)
+				j->close_fd[++i] = ft_atoi(lex->redir->dest_fd);
+		lex = lex->next;
+	}
+	return (0);
+}
+
 t_job		*edit_lst_job(char **argv, t_token *t, t_redirection *r)
 {
 	t_job			*j;
 	t_process		*p;
+	int				process_id;
 
 	j = get_first_job(NULL);
+	process_id = 0;
 	while (j->pgid != 0)
 	{
+		process_id = j->first_process->process_id;
 		if (!j->next)
 			j->next = init_job();
 		j = j->next;
 	}
-	j->t = t;
+	file_to_close(t, j);
 	p = j->first_process;
 	p->cmd = ft_arraydup(argv);
+	p->process_id = process_id + 1;
 	parser_var(&p->cmd);
 	if (t)
 		j->r = fill_redirection(t);
@@ -120,22 +157,22 @@ int			ft_simple_command(char **argv, t_token *t)
 			display_error_command(j->r, p->cmd);
 	}
 	if (p->completed == 1 || p->pid == 0)
-	{
-		close_file_command(t->command, &j->r);
 		clean_fuck_list();
-	}
 	gest_return(verif);
 	return (verif);
 }
 
-int			ft_simple_command_redirection(char **argv, t_redirection *r)
+int			ft_simple_command_redirection(char **av, t_redirection *r)
 {
 	int				verif;
 	t_job			*j;
 	t_process		*p;
 
 	verif = 0;
-	j = edit_lst_job(argv, NULL, r);
+	j = init_job();
+	j->first_process->cmd = ft_arraydup(av);
+	j->r = r;
+	j->next = NULL;
 	p = j->first_process;
 	if ((verif = is_builtin(j)) == -1)
 	{
@@ -144,8 +181,11 @@ int			ft_simple_command_redirection(char **argv, t_redirection *r)
 		else
 			display_error_command(j->r, p->cmd);
 	}
-	if (p->completed == 1 || p->pid == 0)
-		clean_fuck_list();
+	ft_arraydel(&p->cmd);
+	free(p);
+	p = NULL;
+	free(j);
+	j = NULL;
 	gest_return(verif);
 	return (verif);
 }

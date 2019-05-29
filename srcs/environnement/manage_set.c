@@ -37,7 +37,7 @@ int			add_set_value(char *key, char *value)
 	return (verif);
 }
 
-int			edit_set_no_fork(char **value)
+int			edit_set_no_command(char **value)
 {
 	int		verif;
 	char	*key;
@@ -60,23 +60,16 @@ int			edit_set_no_fork(char **value)
 	return (i);
 }
 
-int			edit_set_fork(char **value, t_redirection *r)
+int			edit_set_command(char **value, t_redirection *r)
 {
-	pid_t	pid;
+	t_env	*cpy_env;
 	int		result;
 
-	signal(SIGINT, SIG_IGN);
-	signal(SIGQUIT, SIG_IGN);
-	pid = fork();
-	if (pid == 0)
-	{
-		result = edit_set_no_fork(value);
-		ft_simple_command_redirection(value + result, r);
-		execve("/bin/test", NULL, NULL);
-		exit(pid);
-	}
-	while (wait(&result) != -1)
-		continue ;
+	cpy_env = ft_cpy_env();
+	result = edit_set_no_command(value);
+	ft_simple_command_redirection(value + result, r);
+	get_env(1, NULL);
+	get_env(0, cpy_env);
 	return (result);
 }
 
@@ -91,9 +84,9 @@ int			edit_set(char **value, t_redirection *r)
 		if (ft_chr_index(value[i], '=') < 2)
 			break ;
 	if (!value[i])
-		result = edit_set_no_fork(value);
+		result = edit_set_no_command(value);
 	else
-		edit_set_fork(value, r);
+		edit_set_command(value, r);
 	return (result);
 }
 

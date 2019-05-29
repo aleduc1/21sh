@@ -60,3 +60,26 @@ t_env		*init_env(void)
 	}
 	return (head);
 }
+
+t_env		*ft_cpy_env(void)
+{
+	t_env	*my_env;
+	t_env	*dst;
+	t_env	*h;
+
+	my_env = get_env(0, NULL);
+	dst = init_maillon_env();
+	h = dst;
+	if (!my_env)
+		return (h);
+	while (my_env->next)
+	{
+		dst->key = ft_strdup(my_env->key);
+		dst->value = ft_strdup(my_env->value);
+		dst->see_env = my_env->see_env;
+		dst->next = init_maillon_env();
+		dst = dst->next;
+		my_env = my_env->next;
+	}
+	return (h);
+}

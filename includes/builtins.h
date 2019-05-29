@@ -30,7 +30,7 @@ int					bt_echo(char **av, t_redirection *r);
 ** bt_jobs.c
 */
 
-int					bt_jobs(void);
+int					bt_jobs(char **av);
 int					bt_bg(void);
 int					bt_fg(void);
 int					bt_export(char **value);

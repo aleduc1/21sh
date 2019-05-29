@@ -71,7 +71,7 @@ int			is_in_path(char ***command)
 **	return -1 if it's not a builtin
 */
 
-int			is_builtin(t_job *j)//char **argv, t_redirection *r)
+int			is_builtin(t_job *j)
 {
 	int		verif;
 	char	**av;
@@ -98,7 +98,7 @@ int			is_builtin(t_job *j)//char **argv, t_redirection *r)
 	else if (ft_strequ(av[0], "exit"))
 		verif = bt_exit(j);
 	else if (ft_strequ(av[0], "jobs"))
-		verif = bt_jobs();
+		verif = bt_jobs(av);
 	else if (ft_strequ(av[0], "fg"))
 		verif = bt_fg();
 	else if (ft_strequ(av[0], "bg"))

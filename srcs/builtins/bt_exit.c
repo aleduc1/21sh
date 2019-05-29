@@ -65,27 +65,34 @@
 
 int		bt_exit(t_job *j)
 {
-	delete_shell();
-	default_term_mode();
+	int	rt;
+
 	get_env(1, NULL);
 	if ((!j) || (!j->first_process->cmd) || (!j->first_process->cmd[1]))
 	{
 		free_all_job();
+		delete_shell();
+		default_term_mode();
 		ft_dprintf(2, "exit\n");
 		exit(0);
 	}
 	if (ft_isstrnum(j->first_process->cmd[1]))
 	{
-		if (j->first_process->cmd[2] == NULL)
+		if (!j->first_process->cmd[2])
 		{
+			rt = ft_atoi(j->first_process->cmd[1]);
 			free_all_job();
+			delete_shell();
+			default_term_mode();
 			ft_dprintf(2, "exit\n");
-			exit(ft_atoi(j->first_process->cmd[1]));
+			exit(rt);
 		}
 		ft_dprintf(2, "21sh: exit: too many arguments\n");
 		return (1);
 	}
-	free_all_job();
 	ft_dprintf(2, "21sh: exit: %s: numeric argument required\n", j->first_process->cmd[1]);
+	free_all_job();
+	delete_shell();
+	default_term_mode();
 	exit(255);
 }

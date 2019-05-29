@@ -56,6 +56,7 @@ typedef struct	s_shell
 typedef struct	s_process
 {
 	char				**cmd;
+	int					process_id;
 	pid_t				pid;
 	int					completed;
 	int					stopped;
@@ -70,7 +71,8 @@ typedef struct	s_job
 	int				notified;
 	struct termios	tmodes;
 	t_redirection	*r;
-	t_token			*t;
+	int				len_close;
+	int				*close_fd;
 	struct s_job	*next;
 }				t_job;
 
@@ -162,6 +164,7 @@ void				error_cd(int code, char *str);
 t_env				*init_env(void);
 t_env				*init_maillon_env(void);
 void				init_variable(void);
+t_env				*ft_cpy_env(void);
 
 /*
 ** free_env.c
