@@ -38,15 +38,15 @@ int		mark_process_status(pid_t pid, int status)
 					if (WIFSTOPPED(status))
 					{
 						p->stopped = 1;
-						ft_dprintf(j->r->error, "[%d]%c\tStopped(%d)\t%s\n",
+						ft_dprintf(j->r->error, "\n[%d]%c\tStopped(%d)\t%s\n",
 						j->first_process->process_id, '+', WSTOPSIG(status), j->first_process->cmd[0]);
 					}
 					else
 					{
 						p->completed = 1;
 						if (WIFSIGNALED(status))
-							ft_dprintf(j->r->error, "\nProcess end pid = %d %d",
-							(int)pid, status);
+							;//ft_dprintf(j->r->error, "\nProcess end pid = %d %d",
+							//(int)pid, status);
 					}
 					return (0);
 				}

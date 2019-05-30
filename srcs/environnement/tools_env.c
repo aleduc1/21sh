@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/env.h"
+#include "env.h"
 
 int			create_new_line_env(t_env *my_env, char *key, char *value, int env)
 {

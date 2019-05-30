@@ -12,9 +12,37 @@
 
 #include "job.h"
 
+/*
+** WTERMSIG(j->first_process->status));
+*/
+
 char		*ft_inter_signal(int sig)
 {
-	;
+	char	*str;
+
+	if (sig == 1)
+		str = ft_strdup("Terminated(SIGHUP)");
+	else if (sig == 2)
+		str = ft_strdup("Terminated(SIGINT)");
+	else if (sig == 3)
+		str = ft_strdup("Terminated(SIGQUIT)");
+	else if (sig == 9)
+		str = ft_strdup("Terminated(SIGKILL)");
+	else if (sig == 13)
+		str = ft_strdup("Terminated(SIGPIPE)");
+	else if (sig == 15)
+		str = ft_strdup("Terminated(SIGTERM)");
+	else if (sig == 17)
+		str = ft_strdup("Stopped(SIGSTOP)");
+	else if (sig == 18)
+		str = ft_strdup("Stopped(SIGTSTP)");
+	else if (sig == 21)
+		str = ft_strdup("Stopped(SIGTTIN)");
+	else if (sig == 22)
+		str = ft_strdup("Stopped(SIGTTOU)");
+	else
+		str = ft_itoa(sig);
+	return (str);
 }
 
 static void	bt_jobs_p(t_job *j, int is_stopped)
@@ -28,25 +56,29 @@ static void	bt_jobs_p(t_job *j, int is_stopped)
 static void	bt_jobs_l(t_job *j, int is_stopped)
 {
 	if (is_stopped)
-		ft_printf("[%d]%c\t%d: %d\t%s\n", j->first_process->process_id,
-			'+', j->first_process->pid, 11, j->first_process->cmd[0]);
+		ft_printf("[%d]%c\t%d Suspended: %d\t%s\n", j->first_process->process_id,
+			'+', j->first_process->pid, WSTOPSIG(j->first_process->status),
+			j->first_process->cmd[0]);
 	else
 	{
 		ft_printf("[%d]%c\t%d: %d\t%s\n", j->first_process->process_id,
-			'-', j->first_process->pid, 11, j->first_process->cmd[0]);
+			'-', j->first_process->pid, WSTOPSIG(j->first_process->status),
+			j->first_process->cmd[0]);
 	}
 }
 
 static void	bt_jobs_s(t_job *j, int is_stopped)
 {
+	char	*str;
+
+	str = ft_inter_signal(WSTOPSIG(j->first_process->status));
 	if (is_stopped)
-		ft_printf("[%d]%c\tStopped(SIGTSTP)\t%s\n", j->first_process->process_id,
-			'+', j->first_process->cmd[0]);
+		ft_printf("[%d]%c\t%s\t%s\n", j->first_process->process_id,
+			'+', str, j->first_process->cmd[0]);
 	else
-		ft_printf("[%d]%c\tCompleted()\t%s\n", j->first_process->process_id,
-			'-', j->first_process->cmd[0]);
-	ft_printf("signal: %d - %d", WSTOPSIG(j->first_process->status),
-	WTERMSIG(j->first_process->status));
+		ft_printf("[%d]%c\t%s\t%s\n", j->first_process->process_id,
+			'-', str, j->first_process->cmd[0]);
+	ft_strdel(&str);
 }
 
 int		bt_jobs(char **av)
