@@ -6,7 +6,7 @@
 /*   By: apruvost <apruvost@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/08 18:27:24 by apruvost          #+#    #+#             */
-/*   Updated: 2019/05/23 20:42:36 by apruvost         ###   ########.fr       */
+/*   Updated: 2019/05/30 19:08:02 by apruvost         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,21 +41,6 @@ int		cd_chdir(t_cd *cd)
 	return (0);
 }
 
-/*
-** 9 - If curpath longer than {PATH_MAX} (including ter null) and directory not longer than {PATH_MAX} (including ter null) :
-**     curpath shall be converted from absolute pathname to equ relative pathname if possible
-**         This conversion always considered possible if PWD, with trailing '/' is an initial substring of curpath
-**         Whether or not considered possile under other circumstances unspecified
-**     Implementations may also apply this conversio if curpath not longer than {PATH_MAX} or directory was longer than {PATH_MAX}
-
-
-int		cd_path_max(t_cd *cd, t_env *env)
-{
-	
-}
-
-*/
-
 int		cd_canonical_del(t_cd *cd, size_t a, size_t b, size_t len)
 {
 	char	*tmp;
@@ -72,7 +57,8 @@ int		cd_canonical_del(t_cd *cd, size_t a, size_t b, size_t len)
 		if (i == a && a != b)
 			i = b;
 		tmp[j] = cd->curpath[i];
-		i++;
+		if (cd->curpath[i] != '\0')
+			i++;
 		j++;
 	}
 	ft_strdel(&(cd->curpath));
@@ -95,10 +81,8 @@ int		cd_canonical(t_cd *cd)
 {
 	if (cd_canonical_a(cd))
 		return (0);
-	ft_printf("Path before canonical b : %s\n", cd->curpath);
 	if (cd_canonical_b(cd))
 		return (0);
-	ft_printf("Path after canonical b : %s\n", cd->curpath);
 	cd_canonical_c(cd);
 	if (cd->curpath[0] == '\0')
 	{

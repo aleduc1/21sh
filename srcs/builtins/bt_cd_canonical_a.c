@@ -6,7 +6,7 @@
 /*   By: apruvost <apruvost@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/10 17:47:29 by apruvost          #+#    #+#             */
-/*   Updated: 2019/05/08 03:28:14 by apruvost         ###   ########.fr       */
+/*   Updated: 2019/05/30 19:04:42 by apruvost         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int		cd_canonical_getdot(t_cd *cd, size_t *a, size_t *b)
 	{
 		if (cd->curpath[i] == '.')
 		{
-			if (cd->curpath[i + j] == '/')
+			if (cd->curpath[i + j] == '/' || cd->curpath[i + j] == '\0')
 			{
 				while (cd->curpath[i + j] == '/')
 					j++;

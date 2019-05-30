@@ -6,7 +6,7 @@
 /*   By: apruvost <apruvost@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/10 17:20:14 by apruvost          #+#    #+#             */
-/*   Updated: 2019/05/08 03:28:31 by apruvost         ###   ########.fr       */
+/*   Updated: 2019/05/30 18:36:33 by apruvost         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ int		cd_canonical_getslash(t_cd *cd, size_t *a, size_t *b)
 		{
 			if (cd->curpath[i + j] == '/' || (cd->curpath[i + j] == '\0' && i != 0))
 			{
-				ft_printf("Bonsoir, trouvé '/' a %d + %d dans %s\n", i, j, cd->curpath);
 				while (cd->curpath[i + j] == '/')
 					j++;
 				if (i == 0)
