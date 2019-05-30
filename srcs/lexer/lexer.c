@@ -74,6 +74,7 @@ t_lex	*lexer(char *input)
 	reading_input(input, &lex);
 	lex = add_delim(&lex);
 	simple_command(&lex);
+	dllprinthead(&lex);
 	if (handle_redir(&lex))
 	{
 		clean_lex(&lex);
