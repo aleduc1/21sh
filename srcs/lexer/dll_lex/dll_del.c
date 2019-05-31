@@ -6,13 +6,13 @@
 /*   By: aleduc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/06 18:04:36 by aleduc            #+#    #+#             */
-/*   Updated: 2019/05/07 18:45:10 by aleduc           ###   ########.fr       */
+/*   Updated: 2019/05/31 21:08:42 by aleduc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
 
-t_lex	*dlldelfirst(t_lex **head)
+void	dlldelfirst(t_lex **head)
 {
 	t_lex	*todel;
 
@@ -21,7 +21,12 @@ t_lex	*dlldelfirst(t_lex **head)
 	*head = (*head)->next;
 	todel->next = NULL;
 	todel->prev = NULL;
-	return (todel);
+	if (todel->token)
+	{
+		ft_memdel((void**)&(todel->token->data));
+		ft_memdel((void**)&(todel->token));
+	}
+	ft_memdel((void**)&todel);
 }
 
 t_lex	*dlldellast(t_lex **tail)

@@ -6,7 +6,7 @@
 /*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/04 17:15:13 by aleduc            #+#    #+#             */
-/*   Updated: 2019/05/31 19:21:23 by aleduc           ###   ########.fr       */
+/*   Updated: 2019/05/31 21:09:10 by aleduc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,7 +166,7 @@ void	dllprinttail(t_lex **tail);
 t_lex	*dlllastnode(t_lex **head);
 int		dlliter(t_lex **head);
 
-t_lex	*dlldelfirst(t_lex **head);
+void	dlldelfirst(t_lex **head);
 t_lex	*dlldellast(t_lex **tail);
 t_lex	*dlldelone(t_lex **head, char *data);
 void	dll_del_node(t_lex **node);

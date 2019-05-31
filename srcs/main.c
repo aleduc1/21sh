@@ -6,7 +6,7 @@
 /*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/12 17:01:09 by aleduc            #+#    #+#             */
-/*   Updated: 2019/05/31 18:59:40 by aleduc           ###   ########.fr       */
+/*   Updated: 2019/05/31 21:15:07 by aleduc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ void	run(char *input, t_pos *pos)
 	ast = NULL;
 	if ((check_whitespace_input(input)) && (lex = lexer(input)))
 	{
+		ft_putendl("aaa");
 		ft_strdel(&input);
 		if ((ast = ast_parser(lex)) && (solo_tree(ast, pos) < 0))
 			interpreter(ast, pos);
@@ -66,11 +67,13 @@ void	run(char *input, t_pos *pos)
 		clean_ast(ast);
 	}
 	else if (input)
-	{
+	{	
+		ft_putendl("aaa");
 		ft_strdel(&input);
 		clean_lex(&lex);
 		clean_ast(ast);
 	}
+	dllprinthead(&lex);
 }
 
 int		main(int argc, char **argv, char **environ)
