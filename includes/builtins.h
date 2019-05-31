@@ -6,7 +6,7 @@
 /*   By: apruvost <apruvost@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/08 16:01:05 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/05/23 20:34:12 by apruvost         ###   ########.fr       */
+/*   Updated: 2019/05/31 00:43:50 by apruvost         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,5 +42,10 @@ int					cd_canonical_getslash(t_cd *cd, size_t *a, size_t *b);
 int					cd_canonical_del(t_cd *cd, size_t a, size_t b, size_t len);
 int					cd_chdir(t_cd *cd);
 int					cd_err(t_cd *cd);
+
+int					ft_getopt(int ac, char *const *av, const char *optstr);
+void				ft_getopt_reset(void);
+
+int					bt_lel(char **av);
 
 #	endif
