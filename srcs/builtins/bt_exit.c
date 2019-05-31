@@ -6,11 +6,12 @@
 /*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/21 13:52:06 by apruvost          #+#    #+#             */
-/*   Updated: 2019/05/16 15:28:39 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/23 14:36:34 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "env.h"
+#include "job.h"
 
 /*
 ** exit [n]
@@ -64,6 +65,11 @@
 
 int		bt_exit(char **av)
 {
+	t_job	*j;
+
+	j = get_first_job(NULL);
+	delete_shell();
+	free_job(&j);
 	if (av == NULL || av[1] == NULL)
 	{
 		ft_dprintf(2, "exit\n");

@@ -6,7 +6,7 @@
 /*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/07 10:31:02 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/05/16 09:27:38 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/20 12:15:53 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,15 @@ static int	apply_rules(char *src, char **dst, int index)
 	else
 	{
 		i = index;
+
 		while (src[++i])
-			if (ft_isalnum(src[i]) == 0 && src[i] != '_' &&
-			src[i] != '?')
+			if ((ft_isalnum(src[i]) == 0 && src[i] != '_'))
+			{
+				if (src[index + i] == '?' || src[index + i] == '$')
+					++i;
 				break ;
-		i--;
+			}
+		--i;
 		tmp = ft_strsub(src, index + 1, i - index);
 	}
 	modify_dst(tmp, &(*dst));

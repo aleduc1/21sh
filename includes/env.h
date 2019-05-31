@@ -6,7 +6,7 @@
 /*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/22 13:33:53 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/05/19 13:39:30 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/20 18:19:19 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,7 +161,7 @@ int					ft_simple_command_env(char **argv, t_redirection *r);
 
 int					ft_simple_command(char **argv, t_token *lex);
 int					ft_pipe_double(char **argv, t_token *token);
-int					ft_ampersand(char **argv, t_token *token, int num_process);
+int					ft_ampersand(char **argv, t_token *token);
 int					ft_ampersand_double(char **argv, t_token *token);
 
 /*
@@ -177,5 +177,8 @@ int					add_pipe_process(char **cmd, t_redirection *r);
 
 void				ft_remove_quote(char **str);
 int					ft_apply_dquote(char ***value, int index);
+
+
+void	run(char *input, t_pos *pos);
 
 #	endif

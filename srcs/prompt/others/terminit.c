@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   terminit.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbellaic <mbellaic@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/12 17:19:28 by aleduc            #+#    #+#             */
-/*   Updated: 2019/05/08 00:27:45 by mbellaic         ###   ########.fr       */
+/*   Updated: 2019/05/23 22:42:32 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh21.h"
+#include "job.h"
 
 void				welcome(void)
 {
@@ -43,11 +44,20 @@ void				default_term_mode(void)
 void				raw_term_mode(void)
 {
 	struct termios	term;
+	t_shell			*s;
 
+	s = get_shell();
+	s->term = STDIN_FILENO;
+	while (tcgetpgrp (s->term) != (s->pgid = getpgrp()))
+        kill (- s->pgid, SIGTTIN);
+	ign_signaux();
 	tcgetattr(STDIN_FILENO, &term);
 	term.c_lflag &= ~(ICANON | ECHO | ISIG);
 	term.c_cc[VMIN] = 1;
 	term.c_cc[VTIME] = 0;
 	tcsetattr(STDIN_FILENO, TCSANOW, &term);
 	tgetent(NULL, getenv("TERM"));
+	s->pgid = getpid();
+	s->interactive = isatty(s->term);
+	s->term_shell = term;
 }

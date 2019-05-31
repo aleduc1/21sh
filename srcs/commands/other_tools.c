@@ -6,12 +6,13 @@
 /*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/22 17:57:48 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/05/19 13:39:18 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/23 12:12:36 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "env.h"
 #include "builtins.h"
+#include "job.h"
 
 /*
 ** split is all the path
@@ -94,6 +95,12 @@ int			is_builtin(char **argv, t_redirection *r)
 		verif = (builtin_cd(argv) < 0) ? -2 : 0;
 	else if (ft_strequ(argv[0], "exit"))
 		verif = bt_exit(argv);
+	else if (ft_strequ(argv[0], "jobs"))
+		verif = bt_jobs(r);
+	else if (ft_strequ(argv[0], "fg"))
+		verif = bt_fg(r);
+	else if (ft_strequ(argv[0], "bg"))
+		verif = bt_bg(r);
 	else
 		verif = -1;
 	return (verif);

@@ -6,7 +6,7 @@
 /*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/08 03:02:22 by mbellaic          #+#    #+#             */
-/*   Updated: 2019/05/15 15:33:15 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/20 11:18:08 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,10 @@ int			*run_cmd(t_token *cmd_list, t_pos *pos)
 
 	argv = get_argv(cmd_list);
 	files_handler(cmd_list, pos);
-	ft_simple_command(argv, cmd_list);
+//	if (ft_strequ(argv[0], "exit") == 0)
+//		ft_ampersand(argv, cmd_list);
+//	else
+		ft_simple_command(argv, cmd_list);
 	if (argv && *argv)
 		ft_arraydel(&argv);
 	return (0);

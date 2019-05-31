@@ -6,7 +6,7 @@
 /*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/02 08:43:53 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/05/17 14:41:20 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/24 16:37:53 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,29 @@ void		sighandler(int signum)
 {
 	(void)signum;
 	ft_putchar('\n');
+}
+
+void		handler_ctrl_z(int sig)
+{
+	pid_t	pid;
+
+	(void)sig;
+	if ((pid = tcgetpgrp(STDIN_FILENO)) < 0)
+		ft_dprintf(STDERR_FILENO, "Error tcgetpgrp\n");
+	else
+	{
+		ft_printf("suite pid = %d\n", getpid());
+		if (setpgid(getpid(), 0) != 0)
+			ft_dprintf(STDERR_FILENO, "Error setpgid\n");
+		else
+		{
+			if (tcsetpgrp(STDIN_FILENO, getpid()) != 0)
+				ft_dprintf(STDERR_FILENO, "Error tcsetpgrp\n");
+			else if ((pid = tcgetpgrp(STDIN_FILENO)) < 0)
+				ft_dprintf(STDERR_FILENO, "Error tcgetpgrp 2\n");
+		}
+	}
+	tcgetpgrp(pid);
 }
 
 /*
@@ -46,7 +69,7 @@ int			add_process(char **cmd, int *returns_code, t_redirection *r)
 	pid = fork();
 	if (pid == 0)
 	{
-		signal(SIGINT, SIG_DFL);
+		//signal(SIGINT, SIG_DFL);
 		signal(SIGQUIT, SIG_DFL);
 		open_redirection(r);
 		execve(cmd[0], cmd, env);
@@ -65,13 +88,15 @@ int			exec_fork(char **cmd, t_redirection *r)
 
 	signal(SIGINT, sighandler);
 	signal(SIGQUIT, sighandler);
+	signal(SIGTSTP, handler_ctrl_z);
 	pid = add_process(cmd, &return_code, r);
 	while (wait(&return_code) != -1)
 		continue ;
 	if (pid != -1)
 		kill(pid, SIGINT);
-	signal(SIGINT, SIG_IGN);
+	//signal(SIGINT, SIG_IGN);
 	signal(SIGQUIT, SIG_IGN);
+	signal(SIGTSTP, SIG_IGN);
 	return (return_code);
 }
 

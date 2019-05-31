@@ -1,0 +1,49 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   add_job.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/05/19 13:59:26 by sbelondr          #+#    #+#             */
+/*   Updated: 2019/05/24 16:10:30 by sbelondr         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "job.h"
+
+/*
+** TCSADRAIN
+** The change occurs after all output written to fildes has been transmitted to
+** the terminal.
+** kill(-pgid, SIG) -> kill un grp d'id
+*/
+
+void	add_in_fg(t_job *j, int value)
+{
+	t_shell	*shell;
+	pid_t	pid;
+	int		status;
+
+	shell = get_shell();
+	tcsetpgrp(shell->term, j->pgid);
+	if (value)
+	{
+		tcsetattr(shell->term, TCSADRAIN, &(j->tmodes));
+		if (kill(-j->pgid, SIGCONT) < 0)
+			ft_dprintf(j->r->error, "fg: Kill not work!\n");
+	}
+	wait_for_jobs(j);
+	tcsetpgrp(shell->term, shell->pgid);
+	tcgetattr(shell->term, &j->tmodes);
+	tcsetattr(shell->term, TCSADRAIN, &(shell->term_shell));
+}
+
+void	add_in_bg(t_job *j, int value)
+{
+	t_shell	*shell;
+
+	shell = get_shell();
+	if (value && (kill(-j->pgid, SIGCONT) < 0))
+		ft_dprintf(j->r->error, "bg: Kill not work!\n");
+}
