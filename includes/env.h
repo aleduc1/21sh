@@ -6,7 +6,7 @@
 /*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/22 13:33:53 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/05/20 18:19:19 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/28 11:51:31 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,39 @@ typedef struct		s_env
 	struct s_env	*next;
 }					t_env;
 
+typedef struct	s_shell
+{
+	pid_t			pgid;
+	struct termios	term_shell;
+	int				interactive;
+	int				term;
+}				t_shell;
+
+typedef struct	s_process
+{
+	char				**cmd;
+	int					process_id;
+	pid_t				pid;
+	int					completed;
+	int					stopped;
+	int					status;
+	struct s_process	*next;
+}				t_process;
+
+typedef struct	s_job
+{
+	t_process		*first_process;
+	pid_t			pgid;
+	int				notified;
+	struct termios	tmodes;
+	t_redirection	*r;
+	int				len_close;
+	int				*close_fd;
+	struct s_job	*next;
+}				t_job;
+
+void	redirection_fd_pipe(t_redirection *r);
+
 /*
 ** manage_variable.c
 */
@@ -66,7 +99,7 @@ void				delete_redirection(t_redirection **r);
 */
 
 int					gest_return(int verif);
-int					is_builtin(char **argv, t_redirection *r);
+int					is_builtin(t_job *j);
 int					is_in_path(char ***command);
 t_env				*get_env(int is_end, t_env *head);
 
@@ -75,6 +108,7 @@ t_env				*get_env(int is_end, t_env *head);
 */
 
 void				parser_var(char ***value);
+char				*search_var(char *src);
 
 /*
 ** manage_env.c
@@ -89,7 +123,8 @@ char				**create_list_env(t_env *my_env, int env);
 ** manage_set.c
 */
 
-int					edit_set(char *key, char *value);
+int					edit_set(char **value, t_redirection *r);
+int					add_set_value(char *key, char *value);
 int					ft_unset(char *key);
 int					edit_set_command_env(char *str, t_env *my_env);
 
@@ -129,6 +164,7 @@ void				error_cd(int code, char *str);
 t_env				*init_env(void);
 t_env				*init_maillon_env(void);
 void				init_variable(void);
+t_env				*ft_cpy_env(void);
 
 /*
 ** free_env.c
@@ -146,20 +182,13 @@ int					close_file_command(t_lex *lex, t_redirection **r);
 int					file_exist(char *name);
 
 /*
-** execute_command.c
-*/
-
-int					add_process(char *(*cmd), int *returns_code,
-		t_redirection *r);
-int					exec_fork(char **cmd, t_redirection *r);
-void				sighandler(int signum);
-int					ft_simple_command_env(char **argv, t_redirection *r);
-
-/*
 ** commands.c
 */
 
+void				display_error_command(t_redirection *r, char **cmd);
 int					ft_simple_command(char **argv, t_token *lex);
+int					ft_simple_command_redirection(char **argv,
+		t_redirection *r);
 int					ft_pipe_double(char **argv, t_token *token);
 int					ft_ampersand(char **argv, t_token *token);
 int					ft_ampersand_double(char **argv, t_token *token);
@@ -180,5 +209,26 @@ int					ft_apply_dquote(char ***value, int index);
 
 
 void	run(char *input, t_pos *pos);
+
+/*
+** parameter_expansion.c
+*/
+
+void			    parameter_expansion(char *tmp, char **dst);
+
+/*
+** formats_parameter.c
+*/
+
+char				*parameter_moins(char *parameter, char *word);
+char				*parameter_equals(char *parameter, char *word);
+char				*parameter_interrogation(char *parameter, char *word);
+char				*parameter_plus(char *parameter, char *word);
+
+char				*parameter_hash_first(char *parameter);
+char				*parameter_hash_end(char *parameter);
+char				*parameter_percents(char *parameter);
+
+
 
 #	endif

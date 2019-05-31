@@ -6,13 +6,13 @@
 /*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/21 09:42:05 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/05/24 16:18:15 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/28 11:28:20 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "job.h"
 
-static int	launch_process(t_process *p, pid_t pgid, t_redirection *r, int fg)
+int		launch_process(t_process *p, pid_t pgid, t_redirection *r, int fg)
 {
 	pid_t	pid;
 	char	**environ;
@@ -37,19 +37,20 @@ static int	launch_process(t_process *p, pid_t pgid, t_redirection *r, int fg)
 	exit(0);
 }
 
-static void	act_job(t_job *j, int fg)
+void	act_job(t_job *j, int fg)
 {
 	t_shell	*shell;
 
-	job_info(j, "launched");
 	shell = get_shell();
 	if (!shell->interactive)
 		wait_for_jobs(j);
 	else if (fg)
 		add_in_fg(j, 0);
 	else
+	{
+		job_info(j, "launched");
 		add_in_bg(j, 0);
-//	ign_signaux();
+	}
 }
 
 int			launch_job(t_job *j, int fg)
@@ -61,7 +62,6 @@ int			launch_job(t_job *j, int fg)
 	while (p)
 	{
 		pid = fork();
-		//job_notif();
 		if (pid == 0)
 			launch_process(p, j->pgid, j->r, fg);
 		else if (pid < 0)

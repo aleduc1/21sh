@@ -66,10 +66,11 @@ int				search_keyhook(t_node **input, char buffer[], char *current_choice)
 		ddel(input, (*input)->next);
 	}
 	if (CTRL_C)
-	{
+	
 		ft_strdel(&current_choice);
 		return (-1);
 	}
+	return (0);
 }
 
 char			*input_search(t_node **input, char *passed_input, t_pos *pos)

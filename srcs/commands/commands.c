@@ -6,21 +6,25 @@
 /*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/09 10:50:50 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/05/24 16:36:12 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/28 13:22:31 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "env.h"
 #include "job.h"
+#include "builtins.h"
+
+/*
+** command error
+*/
+
+void		display_error_command(t_redirection *r, char **cmd)
+{
+	ft_dprintf(r->error, "21sh: command not found: %s\n", cmd[0]);
+}
 
 /*
 ** simple command
-*/
-
-/*
-** launch_job(j, 0); & continue_job(j, 0); -> &
-**
-** ps au
 */
 
 void		display_lst_job(t_job *j)
@@ -38,8 +42,8 @@ void		display_lst_job(t_job *j)
 		while (p)
 		{
 			ft_arraydisplay(p->cmd);
-			ft_printf("pid = %d\ncompleted = %d\nstopped = %d\nstatus = %d\n",
-			p->pid, p->completed, p->stopped, p->status);
+			ft_printf("pointeur cmd = %p\npid = %d\ncompleted = %d\nstopped = %d\nstatus = %d\n",
+			&p->cmd, p->pid, p->completed, p->stopped, p->status);
 			p = p->next;
 		}
 		ft_printf("pgpid = %d\nnotified = %d\n", sv->pgid, sv->notified);
@@ -61,16 +65,14 @@ void		clean_fuck_list(void)
 	while (*j)
 	{
 		next = (*j)->next;
-		if ((*j)->first_process->stopped == 0)
+		if (((*j)->first_process->completed == 1 ||
+		(*j)->first_process->pid == 0) && (*j)->first_process->stopped == 0)
 		{
 			if (last)
 				last->next = next;
-			else if (next)
-			{
-				h = next;
-			}
 			else
-				h = init_job();
+				h = NULL;
+			
 			free_job(&(*j));
 		}
 		else
@@ -80,48 +82,113 @@ void		clean_fuck_list(void)
 	(*j) = h;
 }
 
-int			ft_simple_command(char **argv, t_token *token)
+int			file_to_close(t_token *t, t_job *j)
 {
-	t_redirection	*r;
+	t_lex	*lex;
+	int		i;
+
+	lex = t->command;
+	while (lex)
+	{
+		if (lex->token->type == REDIR && lex->redir &&
+				lex->redir->dest_fd &&
+				ft_atoi(lex->redir->dest_fd) != -1)
+			if (lex->redir->filename || lex->redir->close == 1)
+				j->len_close++;
+		lex = lex->next;
+	}
+	lex = t->command;
+	if (!(j->close_fd = (int*)malloc(sizeof(int) * (j->len_close + 1))))
+		return (-1);
+	i = -1;
+	while (lex)
+	{
+		if (lex->token->type == REDIR && lex->redir &&
+				lex->redir->dest_fd &&
+				ft_atoi(lex->redir->dest_fd) != -1)
+			if (lex->redir->filename || lex->redir->close == 1)
+				j->close_fd[++i] = ft_atoi(lex->redir->dest_fd);
+		lex = lex->next;
+	}
+	return (0);
+}
+
+t_job		*edit_lst_job(char **argv, t_token *t, t_redirection *r)
+{
+	t_job			*j;
+	t_process		*p;
+	int				process_id;
+
+	j = get_first_job(NULL);
+	process_id = 0;
+	while (j->pgid != 0)
+	{
+		process_id = j->first_process->process_id;
+		if (!j->next)
+			j->next = init_job();
+		j = j->next;
+	}
+	file_to_close(t, j);
+	p = j->first_process;
+	p->cmd = ft_arraydup(argv);
+	p->process_id = process_id + 1;
+	parser_var(&p->cmd);
+	if (t)
+		j->r = fill_redirection(t);
+	else
+		j->r = r;
+	return (j);
+}
+
+int			ft_simple_command(char **argv, t_token *t)
+{
 	int				verif;
-	char			**cpy_argv;
 	t_job			*j;
 	t_process		*p;
 
-	cpy_argv = ft_arraydup(argv);
 	verif = 0;
-	r = fill_redirection(token);
-	parser_var(&cpy_argv);
-	j = get_first_job(NULL);
-	//display_lst_job(j);
-	while (j->pgid != 0)
-	{
-		j->next = init_job();
-		j = j->next;
-	}
+	j = edit_lst_job(argv, t, NULL);
 	p = j->first_process;
-	ft_arraydel(&(p->cmd));
-	p->cmd = cpy_argv;
-	j->r = r;
-	if ((verif = is_builtin(cpy_argv, r)) == -1)
+	if ((verif = is_builtin(j)) == -1)
 	{
-		if (is_in_path(&cpy_argv) == 1)
-			launch_job(j, 1);
+		if (is_in_path(&p->cmd) == 1)
+			verif = launch_job(j, 1);
 		else
-			ft_dprintf(r->error, "21sh: command not found: %s\n",
-					p->cmd[0]);
+			display_error_command(j->r, p->cmd);
 	}
-	if (j->first_process->stopped == 0)
-		close_file_command(token->command, &r);
+	if (p->completed == 1 || p->pid == 0)
+		clean_fuck_list();
 	gest_return(verif);
-	clean_fuck_list();
 	return (verif);
 }
 
-/*
-** if ((verif = is_builtin(cpy_argv, r)) == -1)
-** verif = exec_fork(cpy_argv, r);
-*/
+int			ft_simple_command_redirection(char **av, t_redirection *r)
+{
+	int				verif;
+	t_job			*j;
+	t_process		*p;
+
+	verif = 0;
+	j = init_job();
+	j->first_process->cmd = ft_arraydup(av);
+	j->r = r;
+	j->next = NULL;
+	p = j->first_process;
+	if ((verif = is_builtin(j)) == -1)
+	{
+		if (is_in_path(&p->cmd) == 1)
+			verif = launch_job(j, 1);
+		else
+			display_error_command(j->r, p->cmd);
+	}
+	ft_arraydel(&p->cmd);
+	free(p);
+	p = NULL;
+	free(j);
+	j = NULL;
+	gest_return(verif);
+	return (verif);
+}
 
 /*
 ** ||
@@ -145,81 +212,27 @@ int			ft_pipe_double(char **argv, t_token *token)
 ** num_process: processus en cours (mettre a 1 la premiere fois)
 */
 
-static int	background_process(char **argv, t_token *token)
-{
-	int		result;
-	pid_t	test;
-
-	result = 0;
-	if ((test = tcgetpgrp(STDIN_FILENO)) < 0)
-		ft_dprintf(STDERR_FILENO, "Error tcgetpgrp\n");
-	else
-	{
-		if (setpgid(getpid(), 0) != 0)
-			ft_dprintf(STDERR_FILENO, "Error setpgid\n");
-		else
-		{
-			ft_printf("start pid = %d\n", (int)getpid());
-			if (tcsetpgrp(STDIN_FILENO, getpid()) != 0)
-				ft_dprintf(STDERR_FILENO, "Error tcsetpgrp\n");
-			else if ((test = tcgetpgrp(STDOUT_FILENO)) < 0)
-				ft_dprintf(STDERR_FILENO, "Error tcgetpgrp 2\n");
-			else
-			{
-				ft_printf("PID: %d\n", (int)test);
-				ft_simple_command(argv, token);
-			}
-		}
-	}
-	return (result);
-}
-
 int			ft_ampersand(char **argv, t_token *token)
 {
-	int			result;
+	int				verif;
+	t_job			*j;
+	t_process		*p;
 
-	result = 0;
-	result = background_process(argv, token);
-	if (result != -1)
+	verif = 0;
+	j = edit_lst_job(argv, token, NULL);
+	p = j->first_process;
+	if ((verif = is_builtin(j)) == -1)
 	{
-		ft_printf("[0] Done\t%s\n", argv[0]);
-		kill(result, SIGTTOU);
+		if (is_in_path(&p->cmd) == 1)
+			verif = launch_job(j, 0);
+		else
+			display_error_command(j->r, p->cmd);
 	}
-	return (result);
+	if (p->completed == 1 || p->pid == 0)
+		clean_fuck_list();
+	gest_return(verif);
+	return (verif);
 }
-
-// static int	background_process(char **argv, t_token *token, int num_process)
-// {
-// 	int	result;
-// 	int	pid;
-
-// 	pid = fork();
-// 	if (pid > 0)
-// 		ft_printf("[%d] %d\n", num_process, pid);
-// 	waitpid(pid, &result, 0);
-// 	if (pid == 0)
-// 	{
-// 		ft_simple_command(argv, token);
-// 		execve("/bin/test", NULL, NULL);
-// 		exit(pid);
-// 	}
-// 	return (pid);
-// }
-
-// int			ft_ampersand(char **argv, t_token *token, int num_process)
-// {
-// 	int	result;
-
-// 	result = 0;
-// 	signal(SIGTTOU, NULL);
-// 	result = background_process(argv, token, num_process);
-// 	if (result != -1)
-// 	{
-// 		ft_printf("[%d] Done\t%s\n", num_process, argv[0]);
-// 		kill(result, SIGTTOU);
-// 	}
-// 	return (result);
-// }
 
 /*
 ** &&

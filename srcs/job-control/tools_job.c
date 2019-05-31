@@ -6,7 +6,7 @@
 /*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/21 09:24:08 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/05/24 00:42:56 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/28 13:21:15 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ t_process	*init_process(void)
 	if (!(p = (t_process*)malloc(sizeof(t_process) * 1)))
 		return (NULL);
 	p->cmd = NULL;
+	//p->process_id = 0;
 	p->pid = 0;
 	p->completed = 0;
 	p->stopped = 0;
@@ -37,20 +38,10 @@ t_job		*init_job(void)
 	j->pgid = 0;
 	j->notified = 0;
 	j->r = NULL;
+	j->len_close = 0;
+	j->close_fd = NULL;
 	j->next = NULL;
 	return (j);
-}
-
-void		free_process(t_process **p)
-{
-	if ((!p) || (!(*p)))
-		return ;
-	if ((*p)->next)
-		free_process(&((*p)->next));
-	if ((*p)->pid > 0)
-		ft_arraydel(&((*p)->cmd));
-	free(*p);
-	(*p) = NULL;
 }
 
 t_job	**static_job(void)
@@ -62,22 +53,59 @@ t_job	**static_job(void)
 	return (&job);
 }
 
+void		free_process(t_process **p)
+{
+	if ((!p) || (!(*p)))
+		return ;
+	if ((*p)->next)
+		free_process(&((*p)->next));
+	if ((*p)->cmd)
+		ft_arraydel(&((*p)->cmd));
+	free(*p);
+	(*p) = NULL;
+}
+
+void		clean_file(t_job *j)
+{
+	int	i;
+
+	if (j->len_close > 0)
+	{
+		i = -1;
+		while (++i < j->len_close)
+			close(j->close_fd[i]);
+	}
+	delete_redirection(&j->r);
+	free(j->close_fd);
+	j->close_fd = NULL;
+}
+
 void		free_job(t_job **j)
 {
-	free_process(&((*j)->first_process));
-	free((*j)->first_process);
-	free(*j);
-	(*j) = NULL;
+	if (j && (*j))
+	{
+		clean_file(*j);
+		free_process(&((*j)->first_process));
+		free((*j)->first_process);
+		(*j)->first_process = NULL;
+		free(*j);
+		(*j) = NULL;
+	}
+}
 
-	/*t_job	**j;
+void		free_all_job(void)
+{
+	t_job	**j;
+	t_job	*h;
 
-	j = (!job) ? static_job() : job;
-	if ((*j)->next)
-		free_job(&((*j)->next));
-	free_process(&((*j)->first_process));
-	free((*j)->first_process);
-	free(*j);
-	(*j) = NULL;*/
+	j = static_job();
+	while (*j)
+	{
+		h = (*j)->next;
+		//close_file_command((*j)->t->command, &(*j)->r);
+		free_job(&(*j));
+		(*j) = h;
+	}
 }
 
 t_job	*get_first_job(t_job *new_job)

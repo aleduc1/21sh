@@ -6,15 +6,11 @@
 /*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/21 11:34:26 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/05/24 16:39:09 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/28 12:58:03 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "job.h"
-
-/*
-** https://www.gnu.org/software/libc/manual/html_node/Stopped-and-Terminated-Jobs.html#Stopped-and-Terminated-Jobs
-*/
 
 /*
 ** stock le status du pid
@@ -40,13 +36,17 @@ int		mark_process_status(pid_t pid, int status)
 				{
 					p->status = status;
 					if (WIFSTOPPED(status))
+					{
 						p->stopped = 1;
+						ft_dprintf(j->r->error, "\n[%d]%c\tStopped(%d)\t%s\n",
+						j->first_process->process_id, '+', WSTOPSIG(status), j->first_process->cmd[0]);
+					}
 					else
 					{
 						p->completed = 1;
 						if (WIFSIGNALED(status))
-							ft_dprintf(j->r->error, "Process end pid = %d %d",
-							(int)pid, status);
+							;//ft_dprintf(j->r->error, "\nProcess end pid = %d %d",
+							//(int)pid, status);
 					}
 					return (0);
 				}
@@ -63,14 +63,12 @@ void	update_status(void)
 	int		status;
 	pid_t	pid;
 
-	dfl_signaux();
 	while (1)
 	{
 		pid = waitpid(WAIT_ANY, &status, WUNTRACED | WNOHANG);
 		if (mark_process_status(pid, status))
 			break ;
 	}
-	ign_signaux();
 }
 
 void	wait_for_jobs(t_job *j)
@@ -78,7 +76,6 @@ void	wait_for_jobs(t_job *j)
 	int		status;
 	pid_t	pid;
 
-	dfl_signaux();
 	while (1)
 	{
 		pid = waitpid(-j->pgid, &status, WUNTRACED);
@@ -86,7 +83,6 @@ void	wait_for_jobs(t_job *j)
 			job_is_completed(j))
 			break ;
 	}
-	ign_signaux();
 }
 
 void	job_info(t_job *j, char *status)

@@ -6,7 +6,7 @@
 /*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/21 13:52:06 by apruvost          #+#    #+#             */
-/*   Updated: 2019/05/23 14:36:34 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/27 10:48:03 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,34 +63,36 @@
 ** valeur de retour du shell
 */
 
-int		bt_exit(char **av)
+int		bt_exit(t_job *j)
 {
-	t_job	*j;
+	int	rt;
 
-	j = get_first_job(NULL);
-	delete_shell();
-	free_job(&j);
-	if (av == NULL || av[1] == NULL)
+	get_env(1, NULL);
+	if ((!j) || (!j->first_process->cmd) || (!j->first_process->cmd[1]))
 	{
-		ft_dprintf(2, "exit\n");
+		free_all_job();
+		delete_shell();
 		default_term_mode();
-		get_env(1, NULL);
+		ft_dprintf(2, "exit\n");
 		exit(0);
 	}
-	if (ft_isstrnum(av[1]))
+	if (ft_isstrnum(j->first_process->cmd[1]))
 	{
-		if (av[2] == NULL)
+		if (!j->first_process->cmd[2])
 		{
-			ft_dprintf(2, "exit\n");
+			rt = ft_atoi(j->first_process->cmd[1]);
+			free_all_job();
+			delete_shell();
 			default_term_mode();
-			get_env(1, NULL);
-			exit(ft_atoi(av[1]));
+			ft_dprintf(2, "exit\n");
+			exit(rt);
 		}
 		ft_dprintf(2, "21sh: exit: too many arguments\n");
 		return (1);
 	}
-	ft_dprintf(2, "21sh: exit: %s: numeric argument required\n", av[1]);
+	ft_dprintf(2, "21sh: exit: %s: numeric argument required\n", j->first_process->cmd[1]);
+	free_all_job();
+	delete_shell();
 	default_term_mode();
-	get_env(1, NULL);
 	exit(255);
 }

@@ -118,15 +118,14 @@ SRCS_NAMES = main.c \
 			 builtin_cd_verif.c\
 			 commands.c\
 			 commands_pipe.c\
-			 execute_command.c\
 			 list_env.c\
 			 free_env.c\
 			 list_redirection.c\
 			 manage_env.c\
 			 manage_set.c\
+			 manage_quote.c\
 			 manage_variable.c\
 			 manage_file.c\
-			 manage_quote.c\
 			 other_tools.c\
 			 parser_var.c\
 			 tools_env.c \
@@ -146,7 +145,9 @@ SRCS_NAMES = main.c \
 			 shell_struct.c\
 			 tools_job.c\
 			 signaux.c\
-			 bt_jobs.c
+			 bt_jobs.c\
+			 parameter_expansion.c\
+			 formats_parameter.c
 
 
 OBJS_NAMES = $(SRCS_NAMES:.c=.o)

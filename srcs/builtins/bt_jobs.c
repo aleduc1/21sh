@@ -6,32 +6,147 @@
 /*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/23 10:54:45 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/05/24 02:08:10 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/28 12:56:32 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "job.h"
 
-int		bt_jobs(t_redirection *r)
+/*
+** WTERMSIG(j->first_process->status));
+*/
+
+char		*ft_inter_signal(int sig)
 {
-	job_notif();
+	char	*str;
+
+	if (sig == 1)
+		str = ft_strdup("Terminated(SIGHUP)");
+	else if (sig == 2)
+		str = ft_strdup("Terminated(SIGINT)");
+	else if (sig == 3)
+		str = ft_strdup("Terminated(SIGQUIT)");
+	else if (sig == 9)
+		str = ft_strdup("Terminated(SIGKILL)");
+	else if (sig == 13)
+		str = ft_strdup("Terminated(SIGPIPE)");
+	else if (sig == 15)
+		str = ft_strdup("Terminated(SIGTERM)");
+	else if (sig == 17)
+		str = ft_strdup("Stopped(SIGSTOP)");
+	else if (sig == 18)
+		str = ft_strdup("Stopped(SIGTSTP)");
+	else if (sig == 21)
+		str = ft_strdup("Stopped(SIGTTIN)");
+	else if (sig == 22)
+		str = ft_strdup("Stopped(SIGTTOU)");
+	else
+		str = ft_itoa(sig);
+	return (str);
+}
+
+static void	bt_jobs_p(t_job *j, int is_stopped)
+{
+	if (is_stopped)
+		ft_printf("%d\n", j->first_process->pid);
+	else
+		ft_printf("%d\n", j->first_process->pid);
+}
+
+static void	bt_jobs_l(t_job *j, int is_stopped)
+{
+	if (is_stopped)
+		ft_printf("[%d]%c\t%d Suspended: %d\t%s\n", j->first_process->process_id,
+			'+', j->first_process->pid, WSTOPSIG(j->first_process->status),
+			j->first_process->cmd[0]);
+	else
+	{
+		ft_printf("[%d]%c\t%d: %d\t%s\n", j->first_process->process_id,
+			'-', j->first_process->pid, WSTOPSIG(j->first_process->status),
+			j->first_process->cmd[0]);
+	}
+}
+
+static void	bt_jobs_s(t_job *j, int is_stopped)
+{
+	char	*str;
+
+	str = ft_inter_signal(WSTOPSIG(j->first_process->status));
+	if (is_stopped)
+		ft_printf("[%d]%c\t%s\t%s\n", j->first_process->process_id,
+			'+', str, j->first_process->cmd[0]);
+	else
+		ft_printf("[%d]%c\t%s\t%s\n", j->first_process->process_id,
+			'-', str, j->first_process->cmd[0]);
+	ft_strdel(&str);
+}
+
+int		bt_jobs(char **av)
+{
+	t_job	*j;
+	void	(*p)(t_job*, int);
+
+	update_status();
+	p = &bt_jobs_s;
+	while (*(++av))
+	{
+		if (ft_strequ(*av, "-p"))
+			p = &bt_jobs_p;
+		else if (ft_strequ(*av, "-l"))
+			p = &bt_jobs_l;
+	}
+	j = get_first_job(NULL);
+	while (j)
+	{
+		if (job_is_completed(j))
+			(*p)(j, 0);
+		else if (job_is_stop(j) && (!j->notified))
+			(*p)(j, 1);
+		j = j->next;
+	}
 	return (0);
 }
 
-int		bt_bg(t_redirection *r)
+int		bt_bg(void)
 {
 	t_job	*j;
+	t_job	*is_stopped;
 
 	j = get_first_job(NULL);
-	continue_job(j, 0);
+	is_stopped = NULL;
+	while (j)
+	{
+		if (j->first_process->stopped == 1)
+			is_stopped = j;
+		j = j->next;
+	}
+	if (!is_stopped)
+	{
+		ft_dprintf(2, "42sh: bg no current job\n");
+		return (-2);
+	}
+	continue_job(is_stopped, 0);
 	return (0);
 }
 
-int		bt_fg(t_redirection *r)
+int		bt_fg(void)
 {
 	t_job	*j;
+	t_job	*is_stopped;
 
 	j = get_first_job(NULL);
-	continue_job(j, 1);
+	is_stopped = NULL;
+	while (j)
+	{
+		if (j->first_process->stopped == 1)
+			is_stopped = j;
+		j = j->next;
+	}
+	if (!is_stopped)
+	{
+		ft_dprintf(2, "42sh: fg: no current job\n");
+		return (-2);
+	}
+	continue_job(is_stopped, 1);
 	return (0);
 }

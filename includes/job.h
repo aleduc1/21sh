@@ -6,7 +6,7 @@
 /*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/21 09:17:14 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/05/24 15:44:56 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/28 13:20:40 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,39 +16,13 @@
 #include "sh21.h"
 #include "env.h"
 
-typedef struct	s_shell
-{
-	pid_t			pgid;
-	struct termios	term_shell;
-	int				interactive;
-	int				term;
-}				t_shell;
-
-typedef struct	s_process
-{
-	char				**cmd;
-	pid_t				pid;
-	int					completed;
-	int					stopped;
-	int					status;
-	struct s_process	*next;
-}				t_process;
-
-typedef struct	s_job
-{
-	t_process		*first_process;
-	pid_t			pgid;
-	int				notified;
-	struct termios	tmodes;
-	t_redirection	*r;
-	struct s_job	*next;
-}				t_job;
+t_job		*edit_lst_job(char **argv, t_token *t, t_redirection *r);
 
 /*
 ** shell_struct.c
 */
 
-t_shell			**static_shell(void *term);
+t_shell			**static_shell(void);
 t_shell			*get_shell(void);
 void			delete_shell(void);
 
@@ -71,12 +45,15 @@ t_job			*init_job(void);
 t_process		*init_process(void);
 void			free_job(t_job **j);
 t_job			**static_job(void);
+void			free_all_job(void);
 
 /*
 ** process.c
 */
 
 int				launch_job(t_job *j, int fg);
+int     		launch_process(t_process *p, pid_t pgid, t_redirection *r, int fg);
+void	        act_job(t_job *j, int fg);
 
 /*
 ** add_job.c
@@ -100,6 +77,7 @@ int				mark_process_status(pid_t pid, int status);
 void		display_lst_job(t_job *j);
 
 
-void	redirection_fd_pipe(t_redirection *r);
+
+void		clean_fuck_list(void);
 
 #	endif

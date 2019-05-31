@@ -6,11 +6,12 @@
 /*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/22 14:54:24 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/05/16 15:29:22 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/28 10:16:17 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "env.h"
+#include "builtins.h"
 
 static int	count_env(int env)
 {
@@ -88,7 +89,7 @@ int			edit_setenv(char *key, char *value)
 
 	if (!value)
 		value = "";
-	verif = edit_set(key, value);
+	verif = add_set_value(key, value);
 	if (verif != -1)
 		verif = edit_export(key);
 	return (verif);
@@ -114,5 +115,28 @@ int			ft_unsetenv(char *key)
 		my_env = my_env->next;
 	}
 	my_env = head;
+	return (verif);
+}
+
+int			bt_export(char **value)
+{
+	int		i;
+	int		verif;
+	char	**spl;
+
+	i = -1;
+	verif = 0;
+	while (value[++i])
+	{
+		if (ft_strchr_exist(value[i], '='))
+		{
+			spl = ft_strsplit(value[i], '=');
+			if (spl && spl[0])
+				verif = edit_setenv(spl[0], spl[1]);
+			ft_arraydel(&spl);
+		}
+		else
+			verif = edit_export(value[i]);
+	}
 	return (verif);
 }
