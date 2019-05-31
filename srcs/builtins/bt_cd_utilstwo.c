@@ -6,11 +6,13 @@
 /*   By: apruvost <apruvost@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/08 18:27:24 by apruvost          #+#    #+#             */
-/*   Updated: 2019/05/30 19:08:02 by apruvost         ###   ########.fr       */
+/*   Updated: 2019/05/31 07:47:07 by apruvost         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtins.h"
+
+extern	int g_optind;
 
 int		cd_err(t_cd *cd)
 {
@@ -24,6 +26,7 @@ int		cd_err(t_cd *cd)
 int		cd_chdir(t_cd *cd)
 {
 	char	*tmp;
+	char	*bin;
 
 	if (chdir(cd->curpath) == -1)
 	{
@@ -31,7 +34,14 @@ int		cd_chdir(t_cd *cd)
 		return (cd_err(cd));
 	}
 	tmp = value_line_path("PWD", 0);
-	edit_setenv("PWD", cd->curpath);
+	if (cd->arg_P)
+	{
+		bin = getcwd(NULL, MAXPATHLEN);
+		edit_setenv("PWD", bin);
+		ft_strdel(&bin);
+	}
+	else 
+		edit_setenv("PWD", cd->curpath);
 	edit_setenv("OLDPWD", tmp);
 	if (cd->arg__)
 		ft_printf("%s\n", cd->curpath);
@@ -52,7 +62,7 @@ int		cd_canonical_del(t_cd *cd, size_t a, size_t b, size_t len)
 	tmp[len] = '\0';
 	i = 0;
 	j = 0;
-	while (cd->curpath[i] != '\0')
+	while (cd->curpath[i] != '\0' && j < len)
 	{
 		if (i == a && a != b)
 			i = b;
@@ -90,4 +100,33 @@ int		cd_canonical(t_cd *cd)
 		return (0);
 	}
 	return (1);
+}
+
+int		cd_getopt(char ac, char **av, t_cd *cd)
+{
+	int	i;
+	char arg;
+
+	while ((arg = ft_getopt(ac, av, "LP")) != -1)
+	{
+		if (arg == 'L')
+		{
+			cd->arg_L = 1;
+			cd->arg_P = 0;
+		}
+		else if (arg == 'P')
+		{
+			cd->arg_P = 1;
+			cd->arg_L = 0;
+		}
+		else
+		{
+			ft_dprintf(2, "usage: cd [-L|-P] [dir]\n");
+			ft_getopt_reset();
+			return (0);
+		}
+	}
+	i = g_optind;
+	ft_getopt_reset();
+	return (i);
 }
