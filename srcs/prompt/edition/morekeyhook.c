@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   morekeyhook.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mbellaic <mbellaic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/12 17:18:42 by aleduc            #+#    #+#             */
-/*   Updated: 2019/05/16 15:29:39 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/30 17:12:09 by mbellaic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,8 +112,13 @@ t_node	*home_end(t_node *lstcursor, char buffer[], t_pos *pos)
 t_node	*ctrl_n_friends(t_node *lstcursor, t_node **input, char buffer[], \
 																t_pos *pos)
 {
+	char	*search_result;
+	int i;
+
+	i = 0;
 	if (CTRL_D && !(*input)->next && pos->multiline != 1)
 	{
+		history_file(pos->history);
 		default_term_mode();
 		get_env(1, NULL);
 		exit(0);
@@ -126,6 +131,23 @@ t_node	*ctrl_n_friends(t_node *lstcursor, t_node **input, char buffer[], \
 		pos->multiline = 0;
 		travel_to_last(lstcursor, pos);
 		ft_putchar('\n');
+	}
+	if (CTRL_R)
+	{
+		t_node *new;
+
+		new = NULL;
+		dpush(&new, ' ');
+		search_result = prompt_search(*input, pos);
+		while (search_result && search_result[i])
+			insert(new, search_result[i++]);
+		while (*input)
+			ddel(input, *input);
+		*input = new;
+		lstcursor = new;
+		print_prompt();
+		dprintlist(*input, 0);
+		ft_putstr(tgetstr("le", NULL));
 	}
 	return (lstcursor);
 }

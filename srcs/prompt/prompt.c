@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mbellaic <mbellaic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/12 17:13:21 by aleduc            #+#    #+#             */
-/*   Updated: 2019/05/09 06:29:39 by aleduc           ###   ########.fr       */
+/*   Updated: 2019/05/27 13:24:28 by mbellaic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,10 @@ void			init_prompt(t_pos *pos)
 {
 	pos->history = NULL;
 	dpush(&pos->history, 'X');
-	pos->clipboard = NULL;
-	pos->historycount = 0;
 	pos->historysum = 0;
+	pos->historycount = 0;
+	file_to_history(pos);
+	pos->clipboard = NULL;
 	pos->nblines = 0;
 	pos->currentline = 0;
 	pos->selection = 0;

@@ -77,6 +77,9 @@ SRCS_NAMES = main.c \
 			 editiontools.c \
 			 editline.c \
 			 history.c \
+			 history_file.c \
+			 history_expand.c \
+			 history_search.c \
 			 prompt.c \
 			 keyhook.c \
 			 morekeyhook.c \

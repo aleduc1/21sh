@@ -6,7 +6,7 @@
 /*   By: mbellaic <mbellaic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/08 02:17:27 by mbellaic          #+#    #+#             */
-/*   Updated: 2019/05/08 02:27:46 by mbellaic         ###   ########.fr       */
+/*   Updated: 2019/05/27 16:48:51 by mbellaic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,15 @@
 # include "libft.h"
 # include "get_next_line.h"
 
+# define PRINTABLE (buffer[0] >= 32 && buffer[0] < 127)
+
 # define ALT_X (buffer[0] == -30 && buffer[1] == -119 && buffer[2] == -120)
 # define ALT_C (buffer[0] == -61 && buffer[1] == -89)
 # define ALT_V (buffer[0] == -30 && buffer[1] == -120 && buffer[2] == -102)
 
-# define PRINTABLE (buffer[0] >= 32 && buffer[0] < 127)
 # define CTRL_D (buffer[0] == 4 && buffer[1] == 0)
 # define CTRL_C (buffer[0] == 3 && buffer[1] == 0)
+# define CTRL_R (buffer[0] == 18 && buffer[1] == 0)
 
 # define DELETE (buffer[0] == 27 && buffer[2] == '3')
 # define BACKSPACE (buffer[0] == 127 && buffer[1] == 0)
@@ -164,6 +166,10 @@ t_node				*history_to_lst(t_node *lstcursor, char *historyline, \
 											t_node **input, t_pos *pos);
 t_node				*history_downcase(t_node *lstcursor, t_node **input, \
 															t_pos *pos);
+void				history_file(t_node *history);
+void				file_to_history(t_pos *pos);
+char				*prompt_search(t_node *input, t_pos *pos);
+char				*search_to_str(t_node *input);
 
 t_node				*selectmode(t_node **input, t_node *lstcursor, \
 										char buffer[], t_pos *pos);
