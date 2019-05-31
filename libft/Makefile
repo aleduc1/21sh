@@ -35,7 +35,7 @@ CC = gcc
 ifeq ($(DEBUG), yes)
 	CFLAGS = -Wall -Wextra -Werror -g3 -fsanitize=address
 else
-	CFLAGS = -Wall -Wextra
+	CFLAGS = -Wall -Wextra -g3
 endif
 CPPFLAGS = -I $(INCDIR)
 

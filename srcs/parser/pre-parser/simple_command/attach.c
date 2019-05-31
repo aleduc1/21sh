@@ -6,7 +6,7 @@
 /*   By: aleduc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/04 16:04:00 by aleduc            #+#    #+#             */
-/*   Updated: 2019/05/07 20:46:33 by aleduc           ###   ########.fr       */
+/*   Updated: 2019/05/31 19:17:50 by aleduc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ t_lex	*detaching(t_lex **start, t_lex **end)
 ** Create a redir_token and a redir_node, and attach it where need be
 */
 
-void	attach_redir_node(t_redir **redir_info, t_lex **before_start, t_lex **after_end, t_lex **command_node)
+void	attach_redir_node(t_redir **redir_info, t_lex **before_start)
 {
 	t_token	*tok;
 	t_lex	*redir_node;
@@ -81,12 +81,5 @@ void	attach_redir_node(t_redir **redir_info, t_lex **before_start, t_lex **after
 	redir_node = new_redir_node(&tok, redir_info);
 	if (*before_start)
 		dllinsafter(before_start, &redir_node);
-	else
-		(*command_node) = redir_node;
-	if ((*after_end))
-	{
-		redir_node->next = (*after_end);
-		(*after_end)->prev = redir_node;
-	}
 	clean_inside_token(&tok);
 }

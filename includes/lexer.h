@@ -6,7 +6,7 @@
 /*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/04 17:15:13 by aleduc            #+#    #+#             */
-/*   Updated: 2019/05/15 15:59:34 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/31 19:21:23 by aleduc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,7 @@ int		type_to_end_on(t_type type);
 void	detach(t_lex **start, t_lex **end);
 void	attach(t_lex **head, t_lex **node, t_lex **end);
 t_lex	*detaching(t_lex **start, t_lex **end);
-void	attach_redir_node(t_redir **redir_info, t_lex **before_start, t_lex **after_end, t_lex **command_node);
+void	attach_redir_node(t_redir **redir_info, t_lex **before_start);
 
 int		handle_redir(t_lex **lex);
 int		cycle_redirect(t_lex **command_node);

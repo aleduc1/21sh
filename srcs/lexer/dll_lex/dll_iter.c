@@ -6,7 +6,7 @@
 /*   By: aleduc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/07 18:45:15 by aleduc            #+#    #+#             */
-/*   Updated: 2019/05/07 18:45:22 by aleduc           ###   ########.fr       */
+/*   Updated: 2019/05/31 16:35:46 by aleduc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void	dllprinthead(t_lex **head)
 	ptr = *head;
 	while (ptr)
 	{
+		ft_putnbr(ptr->token->type);
 		ft_putendl(ptr->token->data);
 		if (ptr->token->type == CMD)
 		{

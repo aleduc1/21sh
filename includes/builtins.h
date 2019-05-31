@@ -6,11 +6,7 @@
 /*   By: apruvost <apruvost@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/08 16:01:05 by sbelondr          #+#    #+#             */
-/*<<<<<<< HEAD
-/*   Updated: 2019/05/31 04:59:06 by apruvost         ###   ########.fr       */
-=======
-/*   Updated: 2019/05/31 07:09:11 by apruvost         ###   ########.fr       */
-/*>>>>>>> feat_builtin
+/*   Updated: 2019/05/31 16:13:48 by aleduc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +15,7 @@
 
 #include "env.h"
 #include <sys/param.h>
-
+/*
 typedef struct		s_cd
 {
 	int		arg__;
@@ -28,16 +24,16 @@ typedef struct		s_cd
 	char	*directory;
 	char	*curpath;
 }					t_cd;
-
+*/
 int					bt_exit(char **av);
 int					bt_echo(char **av, t_redirection *r);
 
 
-int					bt_cd(char **av);
-int					cd_testcdpath(char *path, char *directory, char **test);
-int					cd_testpath(char *path, char *directory, char **test);
-int					cd_getnextpath(char *path);
-int					cd_canonical(t_cd *cd);
+//int					bt_cd(char **av);
+//int					cd_testcdpath(char *path, char *directory, char **test);
+//int					cd_testpath(char *path, char *directory, char **test);
+//int					cd_getnextpath(char *path);
+/*int					cd_canonical(t_cd *cd);
 int					cd_canonical_a(t_cd *cd);
 int					cd_canonical_getdot(t_cd *cd, size_t *a, size_t *b);
 int					cd_canonical_b(t_cd *cd);
@@ -53,5 +49,5 @@ int					cd_getopt(char ac, char **av, t_cd *cd);
 
 int					ft_getopt(int ac, char *const *av, const char *optstr);
 void				ft_getopt_reset(void);
-
+*/
 #	endif

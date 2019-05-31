@@ -6,7 +6,7 @@
 /*   By: mbellaic <mbellaic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/12 17:21:29 by aleduc            #+#    #+#             */
-/*   Updated: 2019/05/09 06:36:56 by aleduc           ###   ########.fr       */
+/*   Updated: 2019/05/31 19:34:55 by aleduc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,13 +74,13 @@ t_lex	*lexer(char *input)
 	reading_input(input, &lex);
 	lex = add_delim(&lex);
 	simple_command(&lex);
-	dllprinthead(&lex);
 	if (handle_redir(&lex))
 	{
 		clean_lex(&lex);
 		ft_error(0);
 		return (NULL);
 	}
+	dllprinthead(&lex);
 	remove_space_token(&lex);
 	return (lex);
 }

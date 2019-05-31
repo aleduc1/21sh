@@ -6,7 +6,7 @@
 /*   By: aleduc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/03 11:00:04 by aleduc            #+#    #+#             */
-/*   Updated: 2019/05/09 07:33:48 by aleduc           ###   ########.fr       */
+/*   Updated: 2019/05/31 19:33:09 by aleduc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,15 @@ int		handle_needed_redir(t_lex **command_node, t_lex **redir_node)
 int		cycle_redirect(t_lex **command_node)
 {
 	t_lex	*ptr;
+	t_token	*tok;
+	t_lex	*node;
 	t_lex	*start;
 
+	tok = create_token("DELIM", DELIM);
+	node = new_node(&tok);
+	(*command_node)->token->command->prev = node;
+	node->next = (*command_node)->token->command;
+	(*command_node)->token->command = node;
 	ptr = (*command_node)->token->command;
 	start = ptr;
 	while (ptr)

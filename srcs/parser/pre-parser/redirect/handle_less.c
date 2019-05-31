@@ -6,7 +6,7 @@
 /*   By: aleduc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/04 19:24:54 by aleduc            #+#    #+#             */
-/*   Updated: 2019/05/31 15:55:27 by aleduc           ###   ########.fr       */
+/*   Updated: 2019/05/31 19:20:24 by aleduc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,12 +37,10 @@ int		handle_less(t_lex **command_node)
 	t_lex	*start;
 	t_lex	*end;
 	t_lex	*before_start;
-	t_lex	*after_end;
 	t_redir	*redir_info;
 
 	start = *command_node;
 	end = NULL;
-	after_end = NULL;
 	redir_info = NULL;
 	while (start && start->token->type != LESS)
 		start = start->next;
@@ -50,12 +48,10 @@ int		handle_less(t_lex **command_node)
 	{
 		if (end_grammar_great(&start, &end, LESS))
 			return (1);
-		if (end->next)
-			after_end = end->next;
 		before_start = detaching(&start, &end);
 		redir_info = redir_struct_less(&start);
 		clean_lex(&start);
-		attach_redir_node(&redir_info, &before_start, &after_end, command_node);
+		attach_redir_node(&redir_info, &before_start);
 	}
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/09 10:50:50 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/05/17 14:41:13 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/31 19:37:47 by aleduc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ int			ft_simple_command(char **argv, t_token *token)
 	int				verif;
 	char			**cpy_argv;
 
+	if (!argv[0])
+		return (-1);
 	cpy_argv = ft_arraydup(argv);
 	parser_var(&cpy_argv);
 	r = fill_redirection(token);

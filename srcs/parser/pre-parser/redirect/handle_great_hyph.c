@@ -6,7 +6,7 @@
 /*   By: aleduc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/05 17:52:16 by aleduc            #+#    #+#             */
-/*   Updated: 2019/05/31 15:59:27 by aleduc           ###   ########.fr       */
+/*   Updated: 2019/05/31 19:19:55 by aleduc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,10 @@ int		handle_great_hyph(t_lex **command_node)
 	t_lex	*start;
 	t_lex	*end;
 	t_lex	*before_start;
-	t_lex	*after_end;
 	t_redir	*redir_info;
 
 	start = *command_node;
 	end = NULL;
-	after_end = NULL;
 	redir_info = NULL;
 	while (start && start->token->type != GREATAMPHYPH)
 		start = start->next;
@@ -51,12 +49,10 @@ int		handle_great_hyph(t_lex **command_node)
 		end = start;
 		if (end->token->type == NUMBER)
 			end = end->next;
-		if (end->next)
-			after_end = end->next;
 		before_start = detaching(&start, &end);
 		redir_info = redir_struct_great_hyph(&start);
 		clean_lex(&start);
-		attach_redir_node(&redir_info, &before_start, &after_end, command_node);
+		attach_redir_node(&redir_info, &before_start);
 	}
 	return (0);
 }
