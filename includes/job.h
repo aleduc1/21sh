@@ -52,6 +52,8 @@ void			free_all_job(void);
 */
 
 int				launch_job(t_job *j, int fg);
+int     		launch_process(t_process *p, pid_t pgid, t_redirection *r, int fg);
+void	        act_job(t_job *j, int fg);
 
 /*
 ** add_job.c

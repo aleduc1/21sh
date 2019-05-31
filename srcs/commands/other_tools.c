@@ -71,12 +71,10 @@ int			is_in_path(char ***command)
 **	return -1 if it's not a builtin
 */
 
-int			is_builtin(t_job *j)
+int			is_builtin_env(t_job *j, char **av)
 {
-	int		verif;
-	char	**av;
+	int	verif;
 
-	av = j->first_process->cmd;
 	if (ft_strequ(av[0], "env"))
 		verif = builtin_env(j->r, av);
 	else if (ft_strequ(av[0], "set"))
@@ -91,7 +89,21 @@ int			is_builtin(t_job *j)
 		verif = ft_unset(av[1]);
 	else if (ft_strchr_exist(av[0], '='))
 		verif = edit_set(av, j->r);
-	else if (ft_strequ(av[0], "echo"))
+	else
+		verif = -1;
+	return (verif);
+}
+
+int			is_builtin(t_job *j)
+{
+	int		verif;
+	char	**av;
+
+	av = j->first_process->cmd;
+	verif = is_builtin_env(j, av);
+	if (verif != -1)
+		return (verif);
+	if (ft_strequ(av[0], "echo"))
 		verif = bt_echo(av, j->r);
 	else if (ft_strequ(av[0], "cd"))
 		verif = (builtin_cd(av) < 0) ? -2 : 0;
@@ -103,6 +115,8 @@ int			is_builtin(t_job *j)
 		verif = bt_fg();
 	else if (ft_strequ(av[0], "bg"))
 		verif = bt_bg();
+	else if (ft_strequ(av[0], "fc"))
+		verif = 1;
 	else
 		verif = -1;
 	return (verif);

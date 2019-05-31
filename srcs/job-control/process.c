@@ -12,7 +12,7 @@
 
 #include "job.h"
 
-static int	launch_process(t_process *p, pid_t pgid, t_redirection *r, int fg)
+int		launch_process(t_process *p, pid_t pgid, t_redirection *r, int fg)
 {
 	pid_t	pid;
 	char	**environ;
@@ -37,7 +37,7 @@ static int	launch_process(t_process *p, pid_t pgid, t_redirection *r, int fg)
 	exit(0);
 }
 
-static void	act_job(t_job *j, int fg)
+void	act_job(t_job *j, int fg)
 {
 	t_shell	*shell;
 
