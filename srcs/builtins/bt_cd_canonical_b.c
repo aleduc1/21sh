@@ -6,7 +6,7 @@
 /*   By: apruvost <apruvost@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/10 18:35:07 by apruvost          #+#    #+#             */
-/*   Updated: 2019/05/08 03:28:39 by apruvost         ###   ########.fr       */
+/*   Updated: 2019/05/31 07:47:27 by apruvost         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ int		cd_canonical_testprev(t_cd *cd, size_t *a)
 		cd->curpath[i] = '\0';
 	if (stat(cd->curpath, &sb) == -1)
 	{
-		dprintf(2, "21sh: cd: Permission denied\n");
 		cd->curpath[i] = '/';
 		return (0);
 	}
@@ -100,7 +99,7 @@ int		cd_canonical_b(t_cd *cd)
 	{
 		if (!cd_canonical_testprev(cd, &a))
 		{
-			dprintf(2, "21sh: cd: Component before \"..\" is not a directory\n");
+			dprintf(2, "21sh: cd: no such file or directory: %s\n", cd->directory);
 			return (1);
 		}
 		len = ft_strlen(cd->curpath);

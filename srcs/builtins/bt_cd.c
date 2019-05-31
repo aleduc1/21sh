@@ -6,7 +6,7 @@
 /*   By: apruvost <apruvost@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/19 17:56:32 by apruvost          #+#    #+#             */
-/*   Updated: 2019/05/23 20:41:27 by apruvost         ###   ########.fr       */
+/*   Updated: 2019/05/31 07:34:32 by apruvost         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@
 ** 10 - cd shall use equ to chdir() function with curpath as path argument
 **      If these action fail for any reason, display error and stop
 **      If not -P option : PWD env var set to curpath before step 9
-**      If -P option : PWD env var set to string that would be output by pwd -P
+**      If -P option : PWD env var set to string that would be output by pwd -P (getcwdir)
 *       If insufficient permission o new directory, or any parent directory, to determine current working directory, value PWD unspecified
 **
 ** If, during above steps, PWD variable is set, change OLD_PWD to value of old working directory (current working directory prior to cd call) 
@@ -83,8 +83,7 @@ int			is_env_empty(char *value)
 static int	cd_stepten(t_cd *cd)					// Step 10
 {
 	struct stat	sb;
-	
-	ft_printf("Test accès %s\n", cd->curpath);
+
 	if (stat(cd->curpath, &sb) == -1)
 	{
 		dprintf(2, "21sh: cd: permission denied\n");
@@ -105,6 +104,8 @@ static int	cd_stepsev(t_cd *cd)
 	char	*bin;
 	char	*binn;
 
+	if (cd->arg_P == 1)
+		return (cd_stepten(cd));
 	if (cd->curpath[0] != '/')
 	{
 		bin = value_line_path("PWD", 0);
@@ -149,22 +150,33 @@ static int	cd_stepfive(t_cd *cd)
 	return (0);
 }
 
-static void	cd_init(char **av, t_cd *cd)
+static int	cd_init(char **av, t_cd *cd)
 {
+	int		i;
+	int		ac;
+
 	cd->arg__ = 0;
+	cd->arg_L = 1;
+	cd->arg_P = 0;
 	cd->curpath = NULL;
-	if (!av[1])
+	ac = 1;
+	while (av[ac])
+		ac++;
+	if (!(i = cd_getopt(ac, av, cd)))
+		return (0);
+	if (!av[i])
 	{
 		cd->directory = NULL;
-		return ;
+		return (1);
 	}
-	if (ft_strequ(av[1], "-"))
+	if (ft_strequ(av[i], "-"))
 	{
 		cd->directory = value_line_path("OLDPWD", 0);
 		cd->arg__ = 1;
-		return ;
+		return (1);
 	}										// V
-	cd->directory = ft_strdup(av[1]);
+	cd->directory = ft_strdup(av[i]);
+	return (1);
 }
 
 
@@ -172,7 +184,8 @@ int			bt_cd(char **av)
 {
 	t_cd	cd;
 
-	cd_init(av, &cd);							// V
+	if (!cd_init(av, &cd))							// V
+		return (1);
 	if (cd.directory == NULL && is_env_empty("HOME"))	// Step 1
 		return (cd_err(&cd));
 	if (cd.directory == NULL)									// Step 2
