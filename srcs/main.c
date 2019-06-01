@@ -59,7 +59,6 @@ void	run(char *input, t_pos *pos)
 	ast = NULL;
 	if ((check_whitespace_input(input)) && (lex = lexer(input)))
 	{
-		ft_putendl("aaa");
 		ft_strdel(&input);
 		if ((ast = ast_parser(lex)) && (solo_tree(ast, pos) < 0))
 			interpreter(ast, pos);
@@ -67,8 +66,7 @@ void	run(char *input, t_pos *pos)
 		clean_ast(ast);
 	}
 	else if (input)
-	{	
-		ft_putendl("aaa");
+	{
 		ft_strdel(&input);
 		clean_lex(&lex);
 		clean_ast(ast);

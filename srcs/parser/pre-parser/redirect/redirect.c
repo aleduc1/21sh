@@ -84,6 +84,7 @@ int		cycle_redirect(t_lex **command_node)
 		else
 			ptr = ptr->next;
 	}
+	clean_inside_token(&tok);
 	return (0);
 }
 
