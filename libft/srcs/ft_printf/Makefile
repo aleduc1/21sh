@@ -1,3 +1,15 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: aleduc <marvin@42.fr>                      +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2019/06/02 17:27:36 by aleduc            #+#    #+#              #
+#    Updated: 2019/06/02 17:28:51 by aleduc           ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
 STR = ft_printf.c \
 	  parser.c \
 	  gest_flag.c \
@@ -32,7 +44,7 @@ NAME = libftprintf.a
 
 OBJ = $(FILE:%.c=$(DIROBJ)/%.o)
 
-FLAGS = -Wall -Wextra -Wextra
+FLAGS = -Wall -Wextra -Werror
 
 all: $(NAME)
 
