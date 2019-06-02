@@ -162,7 +162,7 @@ static int	cd_init(char **av, t_cd *cd)
 	ac = 1;
 	while (av[ac])
 		ac++;
-	if (!(i = cd_getopt(ac, av, cd)))
+	if (!(i = cd_getopt(av, cd)))
 		return (0);
 	if (!av[i])
 	{

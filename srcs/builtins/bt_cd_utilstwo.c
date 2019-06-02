@@ -102,31 +102,24 @@ int		cd_canonical(t_cd *cd)
 	return (1);
 }
 
-int		cd_getopt(char ac, char **av, t_cd *cd)
+int		cd_getopt(char **av, t_cd *cd)
 {
 	int	i;
-	char arg;
+	int	j;
 
-	while ((arg = ft_getopt(ac, av, "LP")) != -1)
+	i = 0;
+	while (av[++i])
 	{
-		if (arg == 'L')
+		j = ft_getopt(av[i], cd);
+		if (j == 3)
 		{
-			cd->arg_L = 1;
-			cd->arg_P = 0;
+			i++;
+			break ;
 		}
-		else if (arg == 'P')
-		{
-			cd->arg_P = 1;
-			cd->arg_L = 0;
-		}
-		else
-		{
-			ft_dprintf(2, "usage: cd [-L|-P] [dir]\n");
-			ft_getopt_reset();
+		else if (j == 2)
+			break ;
+		else if (j == 0)
 			return (0);
-		}
 	}
-	i = g_optind;
-	ft_getopt_reset();
 	return (i);
 }
