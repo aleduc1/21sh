@@ -45,6 +45,8 @@ typedef struct		s_env
 	struct s_env	*next;
 }					t_env;
 
+int					builtin_cd(char **av);
+
 /*
 ** manage_variable.c
 */
