@@ -6,15 +6,11 @@
 /*   By: aleduc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/04 16:04:00 by aleduc            #+#    #+#             */
-/*   Updated: 2019/05/31 19:17:50 by aleduc           ###   ########.fr       */
+/*   Updated: 2019/06/02 17:34:23 by aleduc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
-
-/*
-** Detach the part of the DLL that will go into the token command
-*/
 
 void	detach(t_lex **start, t_lex **end)
 {
@@ -29,10 +25,6 @@ void	detach(t_lex **start, t_lex **end)
 	(*end)->prev = NULL;
 }
 
-/*
-** Link the node's command token to the lexer
-*/
-
 void	attach(t_lex **head, t_lex **node, t_lex **end)
 {
 	t_lex	*ptr;
@@ -44,10 +36,6 @@ void	attach(t_lex **head, t_lex **node, t_lex **end)
 	(*node)->next = *end;
 }
 
-/*
-** Detach a part of the Linked list
-*/
- 
 t_lex	*detaching(t_lex **start, t_lex **end)
 {
 	t_lex	*before_start;
@@ -67,10 +55,6 @@ t_lex	*detaching(t_lex **start, t_lex **end)
 	(*end)->next = NULL;
 	return (before_start);
 }
-
-/*
-** Create a redir_token and a redir_node, and attach it where need be
-*/
 
 void	attach_redir_node(t_redir **redir_info, t_lex **before_start)
 {
