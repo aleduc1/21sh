@@ -34,11 +34,6 @@ void		check_arg(char **str)
 		ft_strdel(&(*str));
 		(*str) = value_line_path("OLDPWD", 0);
 	}
-	// else if (ft_strequ(*str, "--"))
-	// {
-	// 	ft_strdel(&(*str));
-	// 	(*str) = value_line_path("HOME", 0);
-	// }
 }
 
 void		error_cd(int code, char *str)
