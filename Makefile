@@ -44,7 +44,7 @@ VPATH = objs:\
 
 CC = gcc
 ifeq ($(DEBUG), yes)
-	CFLAGS = -Wall -Wextra -g3
+	CFLAGS = -Wall -Wextra -Werror
 else
 	CFLAGS = -Wall -Wextra
 endif
