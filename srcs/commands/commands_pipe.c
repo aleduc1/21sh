@@ -6,7 +6,7 @@
 /*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/09 10:50:50 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/05/19 13:32:59 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/06/02 18:20:30 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,7 @@ int			ft_pipe(char **argv, t_token *token, int end_pipe)
 	t_redirection	*r;
 	char			**cpy_argv;
 
+	ret = 0;
 	cpy_argv = ft_arraydup(argv);
 	parser_var(&cpy_argv);
 	r = fill_redirection(token);

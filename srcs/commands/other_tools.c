@@ -6,7 +6,7 @@
 /*   By: apruvost <apruvost@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/22 17:57:48 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/05/31 16:24:46 by aleduc           ###   ########.fr       */
+/*   Updated: 2019/06/02 18:19:48 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ int			is_builtin(char **argv, t_redirection *r)
 	else if (ft_strequ(argv[0], "set"))
 		verif = builtin_set(r);
 	else if (ft_strequ(argv[0], "setenv"))
-		verif = edit_setenv(argv[1], argv[2]);
+		verif = argv[1] ? edit_setenv(argv[1], argv[2]) : -2;
 	else if (ft_strequ(argv[0], "unsetenv"))
 		verif = ft_unsetenv(argv[1]);
 	else if (ft_strequ(argv[0], "export"))
