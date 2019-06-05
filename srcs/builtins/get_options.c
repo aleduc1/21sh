@@ -6,7 +6,7 @@
 /*   By: apruvost <apruvost@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/28 03:17:29 by apruvost          #+#    #+#             */
-/*   Updated: 2019/05/31 04:31:12 by apruvost         ###   ########.fr       */
+/*   Updated: 2019/06/04 16:35:26 by apruvost         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,10 @@ static int	ft_optgetind(int ac, char *const *av, int nextchar)
 	if (g_optind >= ac)
 		return (-1);
 	if (ft_strequ(av[g_optind], "-") || ft_strequ(av[g_optind], "--"))
+	{
+		if (ft_strequ(av[g_optind], "--"))
 		return (-1);
+	}
 	if (av[g_optind][0] != '-')
 		return (-1);
 	if (av[g_optind][nextchar] == '\0')
