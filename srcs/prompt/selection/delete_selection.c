@@ -6,15 +6,30 @@
 /*   By: mbellaic <mbellaic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/08 00:32:02 by mbellaic          #+#    #+#             */
-/*   Updated: 2019/05/08 00:32:03 by mbellaic         ###   ########.fr       */
+/*   Updated: 2019/06/05 00:18:25 by mbellaic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh21.h"
 
+void		ddel_select(t_node **head, t_node *del)
+{
+	if (*head == NULL || del == NULL)
+		return ;
+	if (*head == del)
+		*head = del->prev;
+	if (del->next != NULL)
+		del->next->prev = del->prev;
+	if (del->prev != NULL)
+		del->prev->next = del->next;
+	free(del);
+	return ;
+}
+
 t_node		*delete_selection_left(t_node **input, t_node *lstcursor,\
 															t_pos *pos)
 {
+	ft_putstr("\033[033m");
 	while (pos->selectcount > 0)
 	{
 		stalk_cursor(pos);
@@ -22,12 +37,12 @@ t_node		*delete_selection_left(t_node **input, t_node *lstcursor,\
 			go_upright(pos);
 		else
 			ft_putstr(tgetstr("le", NULL));
-		ft_putstr(tgetstr("cd", NULL));
+		ft_putstr(tgetstr("dc", NULL));
 		if (lstcursor->next)
-			ddel(input, lstcursor->next);
+			ddel_select(input, lstcursor->next);
 		pos->selectcount--;
 	}
-	if (lstcursor->prev != NULL)
+	if (lstcursor->prev && lstcursor->next)
 		lstcursor = lstcursor->next;
 	pos->selectcount = 0;
 	return (lstcursor);
@@ -36,18 +51,19 @@ t_node		*delete_selection_left(t_node **input, t_node *lstcursor,\
 t_node		*delete_selection_right(t_node **input, t_node *lstcursor,\
 															t_pos *pos)
 {
+	ft_putstr("\033[033m");
 	while (pos->selectcount < 0)
 	{
 		stalk_cursor(pos);
-		ft_putstr(tgetstr("cd", NULL));
+		ft_putstr(tgetstr("dc", NULL));
 		if (pos->column == pos->termsize.ws_col)
 			go_downleft(pos);
 		lstcursor = lstcursor->prev;
-		ddel(input, lstcursor->next);
+		ddel_select(input, lstcursor->next);
 		pos->selectcount++;
 	}
-	if (lstcursor->next != NULL)
-		lstcursor = lstcursor->next;
+	// if (lstcursor->next != NULL)
+	// 	lstcursor = lstcursor->next;
 	pos->selectcount = 0;
 	return (lstcursor);
 }
@@ -55,13 +71,11 @@ t_node		*delete_selection_right(t_node **input, t_node *lstcursor,\
 t_node		*delete_selection(t_node **input, t_node *lstcursor, t_pos *pos)
 {
 	stalk_cursor(pos);
-	ft_putstr(tgetstr("ei", NULL));
 	if (pos->selectcount > 0)
 		lstcursor = delete_selection_left(input, lstcursor, pos);
 	if (pos->selectcount < 0)
 		lstcursor = delete_selection_right(input, lstcursor, pos);
-	ft_putstr(tgetstr("im", NULL));
+	find_tail(lstcursor, pos);
 	pos->selection = 0;
-	lstcursor = find_tail(lstcursor, pos);
 	return (lstcursor);
 }

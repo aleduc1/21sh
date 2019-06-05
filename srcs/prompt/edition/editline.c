@@ -6,7 +6,7 @@
 /*   By: mbellaic <mbellaic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/12 17:18:01 by aleduc            #+#    #+#             */
-/*   Updated: 2019/05/09 06:17:01 by aleduc           ###   ########.fr       */
+/*   Updated: 2019/06/04 22:37:14 by mbellaic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void		redraw(t_pos *pos, t_node *lstcursor)
 		wrapping(pos);
 		cursorcpy = lstcursor->next;
 		savecursor(pos);
-		while (cursorcpy->prev != NULL)
+		while (cursorcpy && cursorcpy->prev != NULL)
 		{
 			ft_putchar(cursorcpy->prev->key);
 			cursorcpy = cursorcpy->prev;

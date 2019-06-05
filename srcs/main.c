@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mbellaic <mbellaic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/12 17:01:09 by aleduc            #+#    #+#             */
-/*   Updated: 2019/05/31 21:15:07 by aleduc           ###   ########.fr       */
+/*   Updated: 2019/06/04 20:10:52 by mbellaic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,9 @@ void	flags(int argc, char **argv)
 	g_print_ast = 0;
 	if (argc >= 2)
 	{
-		if (strcmp(argv[1], "--ast") == 0)
+		if (ft_strcmp(argv[1], "--ast") == 0)
 			g_print_ast = 1;
-		if (strcmp(argv[1], "-a") == 0)
+		if (ft_strcmp(argv[1], "-a") == 0)
 			g_print_ast = 1;
 	}
 	return ;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   morekeyhook.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mbellaic <mbellaic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/12 17:18:42 by aleduc            #+#    #+#             */
-/*   Updated: 2019/06/02 18:57:40 by aleduc           ###   ########.fr       */
+/*   Updated: 2019/06/04 20:13:18 by mbellaic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,11 +47,11 @@ t_node	*backwardjump(t_node *lstcursor, char buffer[], t_pos *pos)
 		while (lstcursor->next && lstcursor->next->key != ' ')
 		{
 			stalk_cursor(pos);
+			lstcursor = lstcursor->next;
 			if (pos->column == 1)
 				go_upright(pos);
 			else
 				ft_putstr(tgetstr("le", NULL));
-			lstcursor = lstcursor->next;
 		}
 	}
 	return (lstcursor);
@@ -63,8 +63,8 @@ t_node	*forwardjump(t_node *lstcursor, char buffer[], t_pos *pos)
 	{
 		while (lstcursor->prev && lstcursor->key != ' ')
 		{
-			lstcursor = lstcursor->prev;
 			stalk_cursor(pos);
+			lstcursor = lstcursor->prev;
 			if (pos->column == pos->termsize.ws_col)
 				go_downleft(pos);
 			else
