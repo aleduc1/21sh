@@ -99,7 +99,7 @@ void				delete_redirection(t_redirection **r);
 */
 
 int					gest_return(int verif);
-int					is_builtin(t_job *j);
+int					is_builtin(t_job *j, t_pos *pos);
 int					is_in_path(char ***command);
 t_env				*get_env(int is_end, t_env *head);
 
@@ -186,7 +186,7 @@ int					file_exist(char *name);
 */
 
 void				display_error_command(t_redirection *r, char **cmd);
-int					ft_simple_command(char **argv, t_token *lex);
+int					ft_simple_command(char **argv, t_token *lex, t_pos *pos);
 int					ft_simple_command_redirection(char **argv,
 		t_redirection *r);
 int					ft_pipe_double(char **argv, t_token *token);

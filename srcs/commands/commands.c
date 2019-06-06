@@ -140,7 +140,7 @@ t_job		*edit_lst_job(char **argv, t_token *t, t_redirection *r)
 	return (j);
 }
 
-int			ft_simple_command(char **argv, t_token *t)
+int			ft_simple_command(char **argv, t_token *t, t_pos *pos)
 {
 	int				verif;
 	t_job			*j;
@@ -149,7 +149,7 @@ int			ft_simple_command(char **argv, t_token *t)
 	verif = 0;
 	j = edit_lst_job(argv, t, NULL);
 	p = j->first_process;
-	if ((verif = is_builtin(j)) == -1)
+	if ((verif = is_builtin(j, pos)) == -1)
 	{
 		if (is_in_path(&p->cmd) == 1)
 			verif = launch_job(j, 1);
@@ -174,7 +174,7 @@ int			ft_simple_command_redirection(char **av, t_redirection *r)
 	j->r = r;
 	j->next = NULL;
 	p = j->first_process;
-	if ((verif = is_builtin(j)) == -1)
+	if ((verif = is_builtin(j, NULL)) == -1)
 	{
 		if (is_in_path(&p->cmd) == 1)
 			verif = launch_job(j, 1);
@@ -202,7 +202,7 @@ int			ft_pipe_double(char **argv, t_token *token)
 	str = value_line_path("?", 0);
 	check = ft_atoi(str);
 	if (check == -1)
-		check = ft_simple_command(argv, token);
+		check = ft_simple_command(argv, token, NULL);
 	ft_strdel(&str);
 	return (check);
 }
@@ -221,7 +221,7 @@ int			ft_ampersand(char **argv, t_token *token)
 	verif = 0;
 	j = edit_lst_job(argv, token, NULL);
 	p = j->first_process;
-	if ((verif = is_builtin(j)) == -1)
+	if ((verif = is_builtin(j, NULL)) == -1)
 	{
 		if (is_in_path(&p->cmd) == 1)
 			verif = launch_job(j, 0);
@@ -246,7 +246,7 @@ int			ft_ampersand_double(char **argv, t_token *token)
 	str = value_line_path("?", 0);
 	check = ft_atoi(str);
 	if (check != -1)
-		check = ft_simple_command(argv, token);
+		check = ft_simple_command(argv, token, NULL);
 	ft_strdel(&str);
 	return (check);
 }

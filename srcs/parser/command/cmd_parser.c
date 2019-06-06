@@ -80,10 +80,7 @@ int			*run_cmd(t_token *cmd_list, t_pos *pos)
 
 	argv = get_argv(cmd_list);
 	files_handler(cmd_list, pos);
-//	if (ft_strequ(argv[0], "exit") == 0)
-//		ft_ampersand(argv, cmd_list);
-//	else
-		ft_simple_command(argv, cmd_list);
+	ft_simple_command(argv, cmd_list, pos);
 	if (argv && *argv)
 		ft_arraydel(&argv);
 	return (0);

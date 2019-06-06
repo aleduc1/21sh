@@ -94,7 +94,7 @@ int			is_builtin_env(t_job *j, char **av)
 	return (verif);
 }
 
-int			is_builtin(t_job *j)
+int			is_builtin(t_job *j, t_pos *pos)
 {
 	int		verif;
 	char	**av;
@@ -116,7 +116,7 @@ int			is_builtin(t_job *j)
 	else if (ft_strequ(av[0], "bg"))
 		verif = bt_bg();
 	else if (ft_strequ(av[0], "fc"))
-		verif = 1;
+		verif = ta_fonction_fc(pos); // -2 si erreur ou 0 si ok
 	else
 		verif = -1;
 	return (verif);
