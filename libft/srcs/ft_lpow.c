@@ -1,42 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   bt_unalias.c                                       :+:      :+:    :+:   */
+/*   ft_lpow.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: apruvost <apruvost@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/06/03 17:00:29 by apruvost          #+#    #+#             */
-/*   Updated: 2019/06/11 14:50:07 by apruvost         ###   ########.fr       */
+/*   Created: 2019/06/10 09:49:37 by apruvost          #+#    #+#             */
+/*   Updated: 2019/06/11 14:58:12 by apruvost         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "builtins.h"
+#include "libft.h"
 
-extern t_ht_alias	*g_alias_table;
-
-int		bt_unalias(char **av)
+long	ft_lpow(long a, long b)
 {
-	t_alias	*alias;
-	int		i;
-	int		ret;
+	long	p;
+	long	i;
 
-	i = 1;
-	ret = 0;
-	if (!av[1])
-	{
-		ft_dprintf(2, "unalias: not enough arguments\n");
+	if (a == 0)
 		return (1);
-	}
-	while (av[i])
+	p = a;
+	i = 0;
+	while (i < b)
 	{
-		if (ht_alias_search(g_alias_table, av[i]) != NULL)
-			ht_alias_delete(g_alias_table, av[i]);
-		else
-		{
-			ft_dprintf(2, "unalias: no such hash table element: %s\n", av[i]);
-			ret = 1;
-		}
+		p *= a;
 		++i;
 	}
-	return (ret);
+	return (p);
 }

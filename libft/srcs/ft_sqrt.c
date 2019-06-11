@@ -1,29 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   alias_utils.c                                      :+:      :+:    :+:   */
+/*   ft_sqrt.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: apruvost <apruvost@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/06/07 15:17:51 by apruvost          #+#    #+#             */
-/*   Updated: 2019/06/10 10:35:49 by apruvost         ###   ########.fr       */
+/*   Created: 2019/06/10 13:56:48 by apruvost          #+#    #+#             */
+/*   Updated: 2019/06/10 14:02:15 by apruvost         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "builtins.h"
+#include "libft.h"
 
-void	alias_del(t_alias *alias)
+int		ft_sqrt(int x)
 {
-	ft_strdel(&(alias->key));
-	ft_strdel(&(alias->value));
-}
+	int	start;
+	int	end;
+	int	ans;
+	int	mid;
 
-t_alias	*alias_new_item(const char *k, const char *v)  // PROTECT MALLOC CAREFUL
-{
-	t_alias	*item;
-	
-	item = (t_alias *)malloc(sizeof(t_alias));
-	item->key = ft_strdup(k);
-	item->value = ft_strdup(v);
-	return (item);
+	if (x < 0)
+		return (0);
+	if (x == 0 || x == 1)
+		return x;
+	start = 1;
+	end = x;
+	while (start <= end)
+	{
+		mid = (start + end) / 2;
+		if (mid * mid == x)
+			return (mid);
+		if (mid * mid < x)
+		{
+			start = mid + 1;
+			ans = mid;
+		}
+		else
+			end = mid - 1;
+	}
+	return (ans);
 }

@@ -6,7 +6,11 @@
 /*   By: apruvost <apruvost@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/22 17:57:48 by sbelondr          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2019/06/02 18:24:02 by sbelondr         ###   ########.fr       */
+=======
+/*   Updated: 2019/06/11 14:57:43 by apruvost         ###   ########.fr       */
+>>>>>>> Test alias builtins
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +98,10 @@ int			is_builtin(char **argv, t_redirection *r)
 		verif = (builtin_cd(argv)) ? -2 : 0;
 	else if (ft_strequ(argv[0], "exit"))
 		verif = bt_exit(argv);
+	else if (ft_strequ(argv[0], "alias"))
+		verif = bt_alias(argv);
+	else if (ft_strequ(argv[0], "unalias"))
+		verif = bt_unalias(argv);
 	else
 		verif = -1;
 	return (verif);
