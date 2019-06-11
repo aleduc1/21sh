@@ -1,29 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   alias_utils.c                                      :+:      :+:    :+:   */
+/*   ft_prime.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: apruvost <apruvost@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/06/07 15:17:51 by apruvost          #+#    #+#             */
-/*   Updated: 2019/06/10 10:35:49 by apruvost         ###   ########.fr       */
+/*   Created: 2019/06/10 14:05:30 by apruvost          #+#    #+#             */
+/*   Updated: 2019/06/10 14:13:11 by apruvost         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "builtins.h"
+#include "libft.h"
 
-void	alias_del(t_alias *alias)
+int		ft_isprime(const int x)
 {
-	ft_strdel(&(alias->key));
-	ft_strdel(&(alias->value));
+	int	i;
+
+	if (x < 2)
+		return (-1);
+	if (x < 4)
+	return (1);
+	if ((x % 2) == 0)
+		return (0);
+	i = 3;
+	while (i <= ft_sqrt(x))
+	{
+		if ((x % i) == 0)
+			return (0);
+		i += 2;
+	}
+	return (1);
 }
 
-t_alias	*alias_new_item(const char *k, const char *v)  // PROTECT MALLOC CAREFUL
+int		ft_nextprime(int x)
 {
-	t_alias	*item;
-	
-	item = (t_alias *)malloc(sizeof(t_alias));
-	item->key = ft_strdup(k);
-	item->value = ft_strdup(v);
-	return (item);
+	while (is_prime(x) != 1)
+		++x;
+	return (x);
 }

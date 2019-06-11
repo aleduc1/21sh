@@ -6,7 +6,7 @@
 /*   By: apruvost <apruvost@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/22 17:57:48 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/05/23 20:07:10 by apruvost         ###   ########.fr       */
+/*   Updated: 2019/06/11 14:57:43 by apruvost         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,10 @@ int			is_builtin(char **argv, t_redirection *r)
 		verif = (bt_cd(argv) < 0) ? -2 : 0;
 	else if (ft_strequ(argv[0], "exit"))
 		verif = bt_exit(argv);
+	else if (ft_strequ(argv[0], "alias"))
+		verif = bt_alias(argv);
+	else if (ft_strequ(argv[0], "unalias"))
+		verif = bt_unalias(argv);
 	else
 		verif = -1;
 	return (verif);

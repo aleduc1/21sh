@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: apruvost <apruvost@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/12 17:01:09 by aleduc            #+#    #+#             */
-/*   Updated: 2019/05/09 06:35:48 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/06/11 14:55:03 by apruvost         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,9 @@
 #include "lexer.h"
 #include "parser.h"
 #include "env.h"
+#include "builtins.h"
+
+t_ht_alias	*g_alias_table = NULL;
 
 int		siginthandler(int signum)
 {
@@ -86,6 +89,7 @@ int		main(int argc, char **argv, char **environ)
 	signal(SIGINT, SIG_IGN);
 	flags(argc, argv);
 	init_prompt(&pos);
+	g_alias_table = ht_alias_new();
 	while (21)
 	{
 		if (argc && argv && environ)

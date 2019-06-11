@@ -6,13 +6,14 @@
 /*   By: apruvost <apruvost@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/08 16:01:05 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/06/07 16:09:26 by apruvost         ###   ########.fr       */
+/*   Updated: 2019/06/11 14:48:43 by apruvost         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #	ifndef BUILTINS_H
 #	define BUILTINS_H
 
+#include "sh21.h"
 #include "env.h"
 #include <sys/param.h>
 
@@ -34,9 +35,14 @@ typedef struct		s_alias
 typedef struct		s_ht_alias
 {
 	int		size;
+	int		base_size;
 	int		count;
 	t_alias	**alias;
 }					t_ht_alias;
+
+# define HT_ALIAS_HASH_ONE 3
+# define HT_ALIAS_HASH_TWO 7
+# define HT_ALIAS_BASE_SIZE 50
 
 
 int					bt_exit(char **av);
@@ -63,5 +69,23 @@ int					cd_getopt(char ac, char **av, t_cd *cd);
 
 int					ft_getopt(int ac, char *const *av, const char *optstr);
 void				ft_getopt_reset(void);
+
+int					bt_alias(char **av);
+int					bt_unalias(char **av);
+
+void				alias_del(t_alias *alias);
+t_alias				*alias_new_item(const char *k, const char *v);
+t_ht_alias			*ht_alias_new(void);
+t_ht_alias			*ht_alias_new_sized(const int base_size);
+void				ht_alias_del(t_ht_alias *ht);
+int					ht_alias_get_hash(const char *s, const int num, const int attempt);
+int					ht_alias_hash(const char *s, const int a, const int m);
+void				ht_alias_insert(t_ht_alias *ht, const char *key, char *val);
+char				*ht_alias_search(t_ht_alias *ht, const char *key);
+void				ht_alias_delete(t_ht_alias *ht, const char *key);
+void				ht_alias_resize(t_ht_alias *ht, const int base_size);
+void				ht_alias_copy(t_ht_alias *ht, t_ht_alias *new_ht);
+void				ht_alias_resize_down(t_ht_alias *ht);
+void				ht_alias_resize_up(t_ht_alias *ht);
 
 #	endif

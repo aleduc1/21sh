@@ -141,7 +141,13 @@ SRCS_NAMES = main.c \
 			 bt_cd_canonical_a.c \
 			 bt_cd_canonical_b.c \
 			 bt_cd_canonical_c.c \
-			 get_options.c
+			 get_options.c \
+			 bt_alias.c \
+			 bt_unalias.c \
+			 alias_utils.c \
+			 ht_alias+utils.c \
+			 ht_alias_moreutils.c \
+			 ht_alias_stillutils.c
 
 
 OBJS_NAMES = $(SRCS_NAMES:.c=.o)
