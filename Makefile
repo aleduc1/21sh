@@ -37,14 +37,15 @@ VPATH = objs:\
 		srcs/commands:\
 		srcs/cleaning:\
 		srcs/interpreter:\
-		srcs/builtins
+		srcs/builtins \
+		srcs/alias
 # ------------------ #
 # Compiler and flags #
 # ------------------ #
 
 CC = gcc
 ifeq ($(DEBUG), yes)
-	CFLAGS = -Wall -Wextra -Werror
+	CFLAGS = -Wall -Wextra -Werror -g3
 else
 	CFLAGS = -Wall -Wextra
 endif
@@ -132,11 +133,6 @@ SRCS_NAMES = main.c \
 			 reading_tools.c \
 			 if_checks.c \
 			 bt_exit.c \
-<<<<<<< HEAD
-			 bt_echo.c\
-		 	 builtin_cd.c\
-			 builtin_cd_verif.c
-=======
 			 bt_echo.c \
 			 bt_cd.c \
 			 bt_cd_utils.c \
@@ -148,10 +144,9 @@ SRCS_NAMES = main.c \
 			 bt_alias.c \
 			 bt_unalias.c \
 			 alias_utils.c \
-			 ht_alias+utils.c \
+			 ht_alias_utils.c \
 			 ht_alias_moreutils.c \
 			 ht_alias_stillutils.c
->>>>>>> Test alias builtins
 
 
 OBJS_NAMES = $(SRCS_NAMES:.c=.o)

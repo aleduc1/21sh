@@ -6,7 +6,7 @@
 /*   By: apruvost <apruvost@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/07 16:10:12 by apruvost          #+#    #+#             */
-/*   Updated: 2019/06/11 14:45:03 by apruvost         ###   ########.fr       */
+/*   Updated: 2019/06/11 16:39:29 by apruvost         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int			ht_alias_hash(const char *s, const int a, const int m)
 
 	hash = 0;
 	len = 0;
-	i - 0;
+	i = 0;
 	len = ft_strlen(s);
 	while (i < len)
 	{
@@ -54,8 +54,8 @@ void		ht_alias_del(t_ht_alias *ht)
 			alias_del(item);
 		++i;
 	}
-	ft_memdel(&(ht->alias));
-	ft_memdel(&ht);
+	ft_memdel((void **)&(ht->alias));
+	ft_memdel((void **)&ht);
 }
 
 t_ht_alias	*ht_alias_new_sized(const int base_size)   // PRETOECT MALLOC CAREFUL
@@ -66,12 +66,12 @@ t_ht_alias	*ht_alias_new_sized(const int base_size)   // PRETOECT MALLOC CAREFUL
 	ht->base_size = base_size;
 	ht->size = ft_nextprime(ht->base_size);
 	ht->count = 0;
-	ht->alias = (t_alias **)malloc(sizeof(t_alias*));
-	ft_alias_table_null(ht->alias, ht->size);
+	ht->alias = (t_alias **)malloc(sizeof(t_alias*) * ht->size);
+	ht_alias_table_null(ht->alias, ht->size);
 	return (ht);
 }
 
 t_ht_alias	*ht_alias_new(void)
 {
-	return (ht_alias_new_size(HT_ALIAS_BASE_SIZE));
+	return (ht_alias_new_sized(HT_ALIAS_BASE_SIZE));
 }

@@ -6,7 +6,7 @@
 /*   By: apruvost <apruvost@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/03 17:00:29 by apruvost          #+#    #+#             */
-/*   Updated: 2019/06/11 14:50:07 by apruvost         ###   ########.fr       */
+/*   Updated: 2019/06/11 15:34:17 by apruvost         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ extern t_ht_alias	*g_alias_table;
 
 int		bt_unalias(char **av)
 {
-	t_alias	*alias;
 	int		i;
 	int		ret;
 

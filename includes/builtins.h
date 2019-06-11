@@ -6,19 +6,7 @@
 /*   By: apruvost <apruvost@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/08 16:01:05 by sbelondr          #+#    #+#             */
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-/*   Updated: 2019/06/02 17:36:03 by sbelondr         ###   ########.fr       */
-=======
-/*   Updated: 2019/05/31 08:47:03 by apruvost         ###   ########.fr       */
->>>>>>> First push alias branch
-=======
-/*   Updated: 2019/06/07 16:09:26 by apruvost         ###   ########.fr       */
->>>>>>> started implementing hashtable alias
-=======
-/*   Updated: 2019/06/11 14:48:43 by apruvost         ###   ########.fr       */
->>>>>>> Test alias builtins
+/*   Updated: 2019/06/11 15:41:02 by apruvost         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +17,6 @@
 #include "env.h"
 #include <sys/param.h>
 
-<<<<<<< HEAD
-=======
 typedef struct		s_cd
 {
 	int		arg__;
@@ -46,9 +32,6 @@ typedef struct		s_alias
 	char	*value;
 }					t_alias;
 
-<<<<<<< HEAD
->>>>>>> First push alias branch
-=======
 typedef struct		s_ht_alias
 {
 	int		size;
@@ -62,12 +45,9 @@ typedef struct		s_ht_alias
 # define HT_ALIAS_BASE_SIZE 50
 
 
->>>>>>> started implementing hashtable alias
 int					bt_exit(char **av);
 int					bt_echo(char **av, t_redirection *r);
 
-<<<<<<< HEAD
-=======
 
 int					bt_cd(char **av);
 int					cd_testcdpath(char *path, char *directory, char **test);
@@ -107,6 +87,6 @@ void				ht_alias_resize(t_ht_alias *ht, const int base_size);
 void				ht_alias_copy(t_ht_alias *ht, t_ht_alias *new_ht);
 void				ht_alias_resize_down(t_ht_alias *ht);
 void				ht_alias_resize_up(t_ht_alias *ht);
+void				ht_alias_table_null(t_alias **alias, int size);
 
->>>>>>> Test alias builtins
 #	endif

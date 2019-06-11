@@ -6,15 +6,15 @@
 /*   By: apruvost <apruvost@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/10 10:11:07 by apruvost          #+#    #+#             */
-/*   Updated: 2019/06/10 14:55:13 by apruvost         ###   ########.fr       */
+/*   Updated: 2019/06/11 16:55:46 by apruvost         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtins.h"
 
-static t_alias	g_ht_deleted = {NULL, NULL};
+t_alias		g_alias_deleted = {NULL, NULL};
 
-void			ht_alias_copy(t_ht_alias *ht, t_ht_alias *new_ht)
+void		ht_alias_copy(t_ht_alias *ht, t_ht_alias *new_ht)
 {
 	int	i;
 	t_alias		*item;
@@ -23,13 +23,13 @@ void			ht_alias_copy(t_ht_alias *ht, t_ht_alias *new_ht)
 	while (i < ht->size)
 	{
 		item = ht->alias[i];
-		if (item != NULL && item != &g_ht_deleted)
+		if (item != NULL && item != &g_alias_deleted)
 			ht_alias_insert(new_ht, item->key, item->value);
 		++i;
 	}
 }
 
-void			ht_alias_resize(t_ht_alias *ht, const int base_size)
+void		ht_alias_resize(t_ht_alias *ht, const int base_size)
 {
 	t_ht_alias	*new_ht;
 	int			tmp_size;
@@ -50,7 +50,7 @@ void			ht_alias_resize(t_ht_alias *ht, const int base_size)
 	ht_alias_del(new_ht);
 }
 
-void			ht_alias_delete(t_ht_alias *ht, const char *key)
+void		ht_alias_delete(t_ht_alias *ht, const char *key)
 {
 	int		index;
 	t_alias	*item;
@@ -65,12 +65,12 @@ void			ht_alias_delete(t_ht_alias *ht, const char *key)
 	i = 1;
 	while (item != NULL)
 	{
-		if (item != &g_ht_deleted)
+		if (item != &g_alias_deleted)
 		{
-			if (ft_strcmp(item->key, key) == 0);
+			if (ft_strcmp(item->key, key) == 0)
 			{
 				alias_del(item);
-				ht->alias[index] = &g_ht_deleted;
+				ht->alias[index] = &g_alias_deleted;
 			}
 		}
 		index = ht_alias_get_hash(key, ht->size, i);
@@ -80,28 +80,28 @@ void			ht_alias_delete(t_ht_alias *ht, const char *key)
 	ht->count--;
 }
 
-char			*ht_alias_search(t_ht_alias *ht, const char *key)
+char		*ht_alias_search(t_ht_alias *ht, const char *key)
 {
 	t_alias	*item;
 	int		index;
 	int		i;
 
-	index = ht_alias_get_hash(item->key, ht->size, 0);
+	index = ht_alias_get_hash(key, ht->size, 0);
 	item = ht->alias[index];
 	i = 1;
 	while (item != NULL)
 	{
-		if (item != &g_ht_deleted)
+		if (item != &g_alias_deleted)
 			if (ft_strcmp(item->key, key) == 0)
 				return (item->value);
-		index = ht_alias_get_hash(item->key, ht->size, i);
+		index = ht_alias_get_hash(key, ht->size, i);
 		item = ht->alias[index];
 		++i;
 	}
 	return (NULL);
 }
 
-void			ht_alias_insert(t_ht_alias *ht, const char *key, char *value)
+void		ht_alias_insert(t_ht_alias *ht, const char *key, char *value)
 {
 	t_alias	*item;
 	int		index;
@@ -116,19 +116,19 @@ void			ht_alias_insert(t_ht_alias *ht, const char *key, char *value)
 	index = ht_alias_get_hash(item->key, ht->size, 0);
 	cur_item = ht->alias[index];
 	i = 1;
-	while (item != NULL)
+	while (cur_item != NULL)
 	{
-		if (item != &g_ht_deleted)
+		if (cur_item != &g_alias_deleted)
 		{
-			if (ft_strcmp(item->key, key) == 0)
+			if (ft_strcmp(cur_item->key, key) == 0)
 			{
 				alias_del(cur_item);
 				ht->alias[index] = item;
 				return ;
 			}
 		}
-		index = ht_alias_get_hash(item->key, ht->size, i);
-		item = ht->alias[index];
+		index = ht_alias_get_hash(key, ht->size, i);
+		cur_item = ht->alias[index];
 		++i;
 	}
 	ht->alias[index] = item;

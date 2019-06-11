@@ -6,13 +6,13 @@
 /*   By: apruvost <apruvost@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/03 17:00:16 by apruvost          #+#    #+#             */
-/*   Updated: 2019/06/11 14:04:11 by apruvost         ###   ########.fr       */
+/*   Updated: 2019/06/11 16:51:20 by apruvost         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtins.h"
 
-static t_alias	g_ht_deleted = {NULL, NULL};
+extern t_alias		g_alias_deleted;
 extern t_ht_alias	*g_alias_table;
 
 static int			bt_alias_show(void)
@@ -25,7 +25,7 @@ static int			bt_alias_show(void)
 	while (i < g_alias_table->size)
 	{
 		if (g_alias_table->alias[i] != NULL
-								&& g_alias_table->alias[i] != &g_ht_deleted)
+								&& g_alias_table->alias[i] != &g_alias_deleted)
 			ft_printf("%s=%s\n", g_alias_table->alias[i]->key,
 								g_alias_table->alias[i]->value);
 		++i;
@@ -47,9 +47,8 @@ static int			bt_showalias(char **av, int i, int ret)
 static void				bt_addalias(char **av, int i)
 {
 	char	*tmp;
-	t_alias *curr;
 
-	tmp = ft_strchr('=', av[i]);
+	tmp = ft_strchr(av[i], '=');
 	*tmp = '\0';
 	ht_alias_insert(g_alias_table, av[i], &(tmp[1]));
 	*tmp = '=';
@@ -66,7 +65,7 @@ int					bt_alias(char **av)
 		ret = bt_alias_show();
 	while (av[i])
 	{
-		if (ft_strchr_exist('=', av[i]))
+		if (ft_strchr_exist(av[i], '='))
 			bt_addalias(av, i);
 		else
 			ret = bt_showalias(av, i, ret);

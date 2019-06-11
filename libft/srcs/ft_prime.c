@@ -6,7 +6,7 @@
 /*   By: apruvost <apruvost@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/10 14:05:30 by apruvost          #+#    #+#             */
-/*   Updated: 2019/06/10 14:13:11 by apruvost         ###   ########.fr       */
+/*   Updated: 2019/06/11 15:24:01 by apruvost         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int		ft_isprime(const int x)
 
 int		ft_nextprime(int x)
 {
-	while (is_prime(x) != 1)
+	while (ft_isprime(x) != 1)
 		++x;
 	return (x);
 }
