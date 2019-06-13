@@ -72,7 +72,6 @@ void		clean_fuck_list(void)
 				last->next = next;
 			else
 				h = NULL;
-			
 			free_job(&(*j));
 		}
 		else

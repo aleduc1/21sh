@@ -32,7 +32,7 @@ static void	copy_value(char *src, char **dst, int start, int end)
 	(*dst) = tmp ? tmp : NULL;
 }
 
-int		ft_chr_index_last(char *str, char c, char d)
+int			ft_chr_index_last(char *str, char c, char d)
 {
 	int		i;
 	int		not_end;

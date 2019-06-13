@@ -20,7 +20,7 @@ int		launch_process(t_process *p, pid_t pgid, t_redirection *r, int fg)
 
 	s = get_shell();
 	dfl_signaux();
-	environ = create_list_env(get_env(0, NULL), 0);
+	environ = create_list_env(get_env(0, NULL), 1);
 	if (s->interactive)
 	{
 		pid = getpid();
@@ -82,67 +82,107 @@ int			launch_job(t_job *j, int fg)
 	return (0);
 }
 
+static int	is_not_end(t_job *j, t_process *p, int in, t_redirection *r)
+{
+	int		fd[2];
+	pid_t	pid;
+	int		verif;
+
+	pipe(fd);
+	if (r->in == STDIN_FILENO)
+		r->in = in;
+	r->fd_pipe = fd[0];
+	pid = fork();
+	if (pid == 0)
+	{
+		dup2(fd[1], STDOUT_FILENO);
+		if (r->out == STDOUT_FILENO)
+			r->out = fd[1];
+		if ((verif = is_builtin(j, NULL)) == -1)
+		{
+			if (is_in_path(&p->cmd) == 1)
+				verif = launch_process(p, j->pgid, j->r, 1);
+			else
+				display_error_command(j->r, p->cmd);
+		}
+		execve("/bin/test", NULL, NULL);
+	}
+	else if (pid < 0)
+		ft_dprintf(j->r->error, "Error fork\n");
+	// else
+	// {
+	// 	p->pid = pid;
+	// 	if (get_shell()->interactive)
+	// 	{
+	// 		if (!(j->pgid))
+	// 			j->pgid = pid;
+	// 		setpgid(pid, j->pgid);
+	// 	}
+	// }
+	if (in != 0)
+		close(in);
+	close(fd[1]);
+	return (fd[0]);
+}
+
+static int	is_end(t_job *j, t_process *p, int in, t_redirection *r)
+{
+	pid_t	pid;
+	int		verif;
+
+	if (r->in == STDIN_FILENO)
+		r->in = in;
+	r->fd_pipe = -1;
+	pid = fork();
+	if (pid == 0)
+	{
+		if ((verif = is_builtin(j, NULL)) == -1)
+		{
+			if (is_in_path(&p->cmd) == 1)
+				verif = launch_process(p, j->pgid, j->r, 1);
+			else
+				display_error_command(j->r, p->cmd);
+		}
+		execve("/bin/test", NULL, NULL);
+	}
+	else if (pid < 0)
+		ft_dprintf(j->r->error, "Error fork\n");
+	else
+	{
+		p->pid = pid;
+		if (get_shell()->interactive)
+		{
+			if (!(j->pgid))
+				j->pgid = pid;
+			setpgid(pid, j->pgid);
+		}
+	}
+	close(in);
+	return (pid);
+}
+
 int			launch_job_pipe(t_job *j, int fg)
 {
-	int			fd[2];
 	t_process	*p;
-	pid_t		pid;
 	int			in;
-	int			verif;
+	int			ret;
 
 	in = 0;
+	ret = 0;
 	p = j->first_process;
-	display_lst_job(j);
+	dfl_signaux();
 	while (p)
 	{
-		dfl_signaux();
 		if (p->next)
-		{
-			ft_printf("cmd = %s\n", p->cmd[0]);
-			pipe(fd);
-			if (j->r->out == STDOUT_FILENO)
-				j->r->out = fd[1];
-			j->r->fd_pipe = fd[0];
-			in = fd[0];
-		}
+			in = is_not_end(j, p, in, j->r);
 		else
 		{
-			j->r->fd_pipe = -1;
+			in = is_end(j, p, in, j->r);
+			act_job(j, fg);
+			gest_return(ret);
 		}
-	//	if (j->r->in == STDIN_FILENO)
-				j->r->in = in;
-		pid = fork();
-		if (pid == 0)
-		{
-			//dup2(j->r->out, STDOUT_FILENO);
-			if ((verif = is_builtin(j, NULL)) == -1)
-			{
-				if (is_in_path(&p->cmd) == 1)
-				{
-					ft_printf("ici %s\n", p->cmd[0]);
-					verif = launch_process(p, j->pgid, j->r, fg);
-				}
-				else
-					display_error_command(j->r, p->cmd);
-			}
-			execve("/bin/test", NULL, NULL);
-		}
-		else
-		{
-			p->pid = pid;
-			if (get_shell()->interactive)
-			{
-				if (!(j->pgid))
-					j->pgid = pid;
-				setpgid(pid, j->pgid);
-			}
-		}
-		ign_signaux();
-		if (in != 0)
-			close(in);
-		close(fd[1]);
 		p = p->next;
 	}
-	act_job(j, fg);
+	ign_signaux();
 	return (0);
 }

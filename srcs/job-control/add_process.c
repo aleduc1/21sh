@@ -50,7 +50,6 @@ void	add_process(char **av, t_token *t)
 		p = p->next;
 	}
 	p->cmd = ft_arraydup(av);
-	//p->process_id = last->process_id;
 	parser_var(&p->cmd);
 	j->r = fill_redirection(t);
 }

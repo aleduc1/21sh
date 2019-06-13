@@ -17,12 +17,17 @@ int		modify_dst(char *src, char **dst)
 	char	*stock;
 	char	*final;
 
-	stock = manage_var(src);
-	final = ft_strjoin(*dst, stock);
+	if (!src || src[0] == 0)
+		final = ft_strdup("$");
+	else
+	{
+		stock = manage_var(src);
+		final = ft_strjoin(*dst, stock);
+		ft_strdel(&stock);
+	}
 	ft_strdel(&(*dst));
 	if (final)
 		(*dst) = final;
-	ft_strdel(&stock);
 	return (0);
 }
 

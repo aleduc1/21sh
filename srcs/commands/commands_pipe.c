@@ -13,58 +13,8 @@
 #include "env.h"
 #include "job.h"
 
-static int	is_not_end(t_job *j, t_process *p, int in)
-{
-	int		fd[2];
-	int		pid;
-
-	pipe(fd);
-	if (j->r->in == STDIN_FILENO)
-		j->r->in = in;
-	j->r->fd_pipe = fd[0];
-	pid = fork();
-	if (pid == 0)
-	{
-		dup2(fd[1], STDOUT_FILENO);
-		if (j->r->out == STDOUT_FILENO)
-			j->r->out = fd[1];
-		if ((pid = is_builtin(j, NULL)) == -1)
-		{
-			if (is_in_path(&p->cmd) == 1)
-				pid = launch_job(j, 1);
-			else
-				display_error_command(j->r, p->cmd);
-		}
-		execve("/bin/test", NULL, NULL);
-	}
-	if (in != 0)
-		close(in);
-	close(fd[1]);
-	return (fd[0]);
-}
-
-static int	is_end(t_job *j, t_process *p, int in)
-{
-	int	verif;
-
-	dfl_signaux();
-	if (j->r->in == STDIN_FILENO)
-		j->r->in = in;
-	j->r->fd_pipe = -1;
-	if ((verif = is_builtin(j, NULL)) == -1)
-	{
-		if (is_in_path(&p->cmd) == 1)
-			verif = launch_job(j, 1);
-		else
-			display_error_command(j->r, p->cmd);
-	}
-	close(in);
-	return (verif);
-}
-
 int			ft_pipe(char **argv, t_token *t, int end_pipe)
 {
-	int		in;
 	t_job	*j;
 
 	if (end_pipe == 0)
@@ -75,6 +25,8 @@ int			ft_pipe(char **argv, t_token *t, int end_pipe)
 	{
 		j = get_end_job();
 		launch_job_pipe(j, 1);
+	//	if (j->first_process->completed == 1 || j->first_process->pid == 0)
+			clean_fuck_list();
 	}
 	return (0);
 }
