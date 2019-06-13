@@ -29,12 +29,20 @@
 #include <unistd.h>
 #include <string.h>
 
+typedef struct		s_redirect
+{
+	int					base;
+	int					new_fd;
+	struct s_redirect	*next;
+}					t_redirect;
+
 typedef struct		s_redirection
 {
-	int		in;
-	int		out;
-	int		error;
-	int		fd_pipe;
+	int			in;
+	int			out;
+	int			error;
+	int			fd_pipe;
+	t_redirect	*redirect;
 }					t_redirection;
 
 typedef struct		s_env
@@ -76,7 +84,7 @@ typedef struct	s_job
 	struct s_job	*next;
 }				t_job;
 
-void	redirection_fd_pipe(t_redirection *r);
+void	redirection_fd(t_redirection *r);
 
 /*
 ** manage_variable.c
@@ -229,6 +237,21 @@ char				*parameter_hash_first(char *parameter);
 char				*parameter_hash_end(char *parameter);
 char				*parameter_percents(char *parameter);
 
+/*
+** list_redirect.c
+*/
 
+int					ft_create_maillon_redirect(t_redirect *r, int base,
+						int new_fd);
+t_redirect			*ft_init_redirect(void);
+int					ft_fd_redirect_exist(t_redirect *r, int base);
+
+/*
+** add_process.c
+*/
+
+t_job	*get_end_job(void);
+void	create_new_job(char **av, t_token *t);
+void	add_process(char **av, t_token *t);
 
 #	endif

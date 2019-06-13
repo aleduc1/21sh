@@ -30,7 +30,7 @@ int		launch_process(t_process *p, pid_t pgid, t_redirection *r, int fg)
 		if (fg)
 			tcsetpgrp(s->term, pgid);
 	}
-	redirection_fd_pipe(r);
+	redirection_fd(r);
 	execve(p->cmd[0], p->cmd, environ);
 	ft_dprintf(r->error, "21sh: command not found: %s\n", p->cmd[0]);
 	execve("/bin/test", NULL, NULL);
@@ -76,6 +76,71 @@ int			launch_job(t_job *j, int fg)
 				setpgid(pid, j->pgid);
 			}
 		}
+		p = p->next;
+	}
+	act_job(j, fg);
+	return (0);
+}
+
+int			launch_job_pipe(t_job *j, int fg)
+{
+	int			fd[2];
+	t_process	*p;
+	pid_t		pid;
+	int			in;
+	int			verif;
+
+	in = 0;
+	p = j->first_process;
+	display_lst_job(j);
+	while (p)
+	{
+		dfl_signaux();
+		if (p->next)
+		{
+			ft_printf("cmd = %s\n", p->cmd[0]);
+			pipe(fd);
+			if (j->r->out == STDOUT_FILENO)
+				j->r->out = fd[1];
+			j->r->fd_pipe = fd[0];
+			in = fd[0];
+		}
+		else
+		{
+			j->r->fd_pipe = -1;
+		}
+	//	if (j->r->in == STDIN_FILENO)
+				j->r->in = in;
+		pid = fork();
+		if (pid == 0)
+		{
+			//dup2(j->r->out, STDOUT_FILENO);
+			if ((verif = is_builtin(j, NULL)) == -1)
+			{
+				if (is_in_path(&p->cmd) == 1)
+				{
+					ft_printf("ici %s\n", p->cmd[0]);
+					verif = launch_process(p, j->pgid, j->r, fg);
+				}
+				else
+					display_error_command(j->r, p->cmd);
+			}
+			execve("/bin/test", NULL, NULL);
+		}
+		else
+		{
+			p->pid = pid;
+			if (get_shell()->interactive)
+			{
+				if (!(j->pgid))
+					j->pgid = pid;
+				setpgid(pid, j->pgid);
+			}
+		}
+		ign_signaux();
+		if (in != 0)
+			close(in);
+		close(fd[1]);
 		p = p->next;
 	}
 	act_job(j, fg);

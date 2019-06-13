@@ -15,56 +15,6 @@
 #include "job.h"
 
 /*
-** split is all the path
-*/
-
-static int	path_of_commands(char ***command, char **split)
-{
-	int		i;
-	char	*str;
-	char	*dst;
-
-	i = -1;
-	if (!split)
-		return (-1);
-	while (split[++i])
-	{
-		dst = ft_strjoin(split[i], "/");
-		str = ft_strjoin(dst, (*command)[0]);
-		if (access(str, F_OK) >= 0 && access(str, X_OK) >= 0)
-		{
-			ft_strdel(&((*command)[0]));
-			(*command)[0] = str;
-			ft_strdel(&dst);
-			return (1);
-		}
-		ft_strdel(&str);
-		ft_strdel(&dst);
-	}
-	return (-1);
-}
-
-int			is_in_path(char ***command)
-{
-	int		result;
-	char	*str;
-	char	**split;
-
-	if ((!(*command)) || (!(*command)[0]))
-		return (-1);
-	if (access((*command)[0], F_OK) >= 0 && access((*command)[0], X_OK) >= 0)
-		return (1);
-	str = value_line_path("PATH", 0);
-	if (!str)
-		return (-1);
-	split = ft_strsplit(str, ':');
-	result = path_of_commands(&(*command), split);
-	ft_strdel(&str);
-	ft_arraydel(&split);
-	return (result);
-}
-
-/*
 ** search if it's a builtin
 **	return 0 if it's a builtin and if it's command work
 **	return -2 if it's a builtin and if it's command not work
@@ -116,7 +66,7 @@ int			is_builtin(t_job *j, t_pos *pos)
 	else if (ft_strequ(av[0], "bg"))
 		verif = bt_bg();
 	else if (ft_strequ(av[0], "fc"))
-		verif = ta_fonction_fc(pos); // -2 si erreur ou 0 si ok
+		verif = 1;//ta_fonction_fc(pos); // -2 si erreur ou 0 si ok
 	else
 		verif = -1;
 	return (verif);

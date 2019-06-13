@@ -39,7 +39,8 @@ VPATH = objs:\
 		srcs/environnement:\
 		srcs/cleaning:\
 		srcs/interpreter:\
-		srcs/builtins
+		srcs/builtins:\
+		srcs/redirection
 # ------------------ #
 # Compiler and flags #
 # ------------------ #
@@ -59,7 +60,7 @@ LFLAGS = -lncurses
 # Different names #
 # --------------- #
 
-NAME = 21sh
+NAME = 42sh
 
 SRCS_NAMES = main.c \
 			 lexer.c \
@@ -147,7 +148,11 @@ SRCS_NAMES = main.c \
 			 signaux.c\
 			 bt_jobs.c\
 			 parameter_expansion.c\
-			 formats_parameter.c
+			 formats_parameter.c\
+			 list_redirect.c\
+			 redirection.c\
+			 path.c\
+			 add_process.c
 
 
 OBJS_NAMES = $(SRCS_NAMES:.c=.o)
