@@ -10,25 +10,12 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "env.h"
+#include "commands.h"
 
 void		sighandler(int signum)
 {
 	(void)signum;
 	ft_putchar('\n');
-}
-
-/*
-** in -> STDIN_FILENO
-** out -> STDOUT_FILENO
-** error -> STDERR_FILLENO
-*/
-
-static void	open_redirection(t_redirection *r)
-{
-	dup2(r->in, STDIN_FILENO);
-	dup2(r->out, STDOUT_FILENO);
-	dup2(r->error, STDERR_FILENO);
 }
 
 int			add_process(char **cmd, int *returns_code, t_redirection *r)
@@ -42,13 +29,13 @@ int			add_process(char **cmd, int *returns_code, t_redirection *r)
 		ft_dprintf(r->error, "21sh: command not found: %s\n", cmd[0]);
 		return (*returns_code);
 	}
-	env = create_list_env(get_env(0, NULL), 0);
+	env = create_list_env(get_env(0, NULL), 1);
 	pid = fork();
 	if (pid == 0)
 	{
 		signal(SIGINT, SIG_DFL);
 		signal(SIGQUIT, SIG_DFL);
-		open_redirection(r);
+		redirection_fd(r);
 		execve(cmd[0], cmd, env);
 		ft_dprintf(r->error, "21sh: command not found\n");
 		execve("/bin/test", NULL, NULL);

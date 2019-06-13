@@ -6,11 +6,11 @@
 /*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/26 16:44:29 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/05/17 14:41:04 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/06/02 19:10:04 by aleduc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/env.h"
+#include "env.h"
 
 /*
 ** F_OK: file exist
@@ -29,7 +29,7 @@ int			file_exist(char *name)
 		close(fd);
 		return (1);
 	}
-	printf("21sh: error create file: %s\n", name);
+	ft_printf("21sh: error create file: %s\n", name);
 	return (-1);
 }
 

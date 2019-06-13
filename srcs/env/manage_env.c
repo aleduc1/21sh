@@ -90,7 +90,7 @@ int			edit_setenv(char *key, char *value)
 		return (-2);
 	if (!value)
 		value = "";
-	verif = edit_set(key, value);
+	verif = add_set_value(key, value);
 	if (verif != -1)
 		verif = edit_export(key);
 	return (verif);

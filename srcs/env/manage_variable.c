@@ -6,7 +6,7 @@
 /*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/07 10:31:02 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/05/15 11:10:56 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/05/27 15:15:38 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,17 @@ int		modify_dst(char *src, char **dst)
 	char	*stock;
 	char	*final;
 
-	stock = manage_var(src);
-	ft_strdel(&src);
-	final = ft_strjoin(*dst, stock);
+	if (!src || src[0] == 0)
+		final = ft_strdup("$");
+	else
+	{
+		stock = manage_var(src);
+		final = ft_strjoin(*dst, stock);
+		ft_strdel(&stock);
+	}
 	ft_strdel(&(*dst));
 	if (final)
 		(*dst) = final;
-	ft_strdel(&stock);
 	return (0);
 }
 
@@ -31,7 +35,10 @@ char	*manage_var(char *str)
 {
 	char	*final;
 
-	final = value_line_path(str, 0);
+	if (ft_strequ(str, "$"))
+		final = ft_itoa(getpid());
+	else
+		final = value_line_path(str, 0);
 	if (!final)
 		final = ft_strdup("");
 	return (final);

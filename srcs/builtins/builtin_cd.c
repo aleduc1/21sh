@@ -53,7 +53,7 @@ static int	launch_cd(char **str)
 	{
 		ft_bzero(buf, BUF_S);
 		getcwd(buf, BUF_S);
-		edit_set("PWD", buf);
+		add_set_value("PWD", buf);
 	}
 	else
 		error_cd(verif, *str);
@@ -80,7 +80,7 @@ int			builtin_cd(char **av)
 	ft_bzero(buf, BUF_S);
 	getcwd(buf, BUF_S - 1);
 	verif = launch_cd(&str);
-	edit_set("OLDPWD", buf);
+	add_set_value("OLDPWD", buf);
 	if (str)
 		ft_strdel(&str);
 	return (verif);

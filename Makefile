@@ -37,14 +37,17 @@ VPATH = objs:\
 		srcs/commands:\
 		srcs/cleaning:\
 		srcs/interpreter:\
-		srcs/builtins
+		srcs/builtins:\
+		srcs/env:\
+		srcs/redirection
+
 # ------------------ #
 # Compiler and flags #
 # ------------------ #
 
 CC = gcc
 ifeq ($(DEBUG), yes)
-	CFLAGS = -Wall -Wextra -Werror
+	CFLAGS = -Wall -Wextra -g3
 else
 	CFLAGS = -Wall -Wextra
 endif
@@ -134,11 +137,17 @@ SRCS_NAMES = main.c \
 			 bt_exit.c \
 			 bt_echo.c\
 		 	 builtin_cd.c\
-			 builtin_cd_verif.c
+			 builtin_cd_verif.c\
+			 list_redirect.c\
+			 redirection.c\
+			 signal.c\
+			 path.c\
+			 parameter_expansion.c\
+			 formats_parameter.c
 
 
 OBJS_NAMES = $(SRCS_NAMES:.c=.o)
-HEADERS_NAMES = sh21.h lexer.h parser.h env.h builtins.h
+HEADERS_NAMES = sh21.h lexer.h parser.h env.h builtins.h commands.h
 LIBS_NAMES = libft.a
 
 OBJ = $(addprefix $(OBJDIR), $(OBJS_NAMES))

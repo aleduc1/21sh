@@ -6,13 +6,13 @@
 /*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/08 03:02:22 by mbellaic          #+#    #+#             */
-/*   Updated: 2019/05/15 15:33:15 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/06/13 06:02:17 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
 #include "sh21.h"
-#include "env.h"
+#include "commands.h"
 
 int			get_argc(t_lex *cursor)
 {

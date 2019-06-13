@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "env.h"
+#include "commands.h"
 
 static int		builtin_env_display(t_redirection *r)
 {
