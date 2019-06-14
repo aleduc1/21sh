@@ -2,7 +2,7 @@
 *.md
 objs/
 libs/
-21sh.dSYM
+.history
 
 
 # Created by https://www.gitignore.io/api/c
