@@ -3,17 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   morekeyhook.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbellaic <mbellaic@student.42.fr>          +#+  +:+       +#+        */
+/*   By: apruvost <apruvost@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/12 17:18:42 by aleduc            #+#    #+#             */
-/*   Updated: 2019/06/04 20:13:18 by mbellaic         ###   ########.fr       */
+/*   Updated: 2019/06/14 16:24:01 by apruvost         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh21.h"
 #include "env.h"
+#include "builtins.h"
 
-t_node	*backwardmod(t_node *lstcursor, t_pos *pos)
+extern t_ht_hash	*g_alias_table;
+extern t_ht_hash	*g_hash_table;
+
+t_node				*backwardmod(t_node *lstcursor, t_pos *pos)
 {
 	if (lstcursor->next && lstcursor->key != ' ' && lstcursor->next->key == ' ')
 	{
@@ -39,7 +43,7 @@ t_node	*backwardmod(t_node *lstcursor, t_pos *pos)
 	return (lstcursor);
 }
 
-t_node	*backwardjump(t_node *lstcursor, char buffer[], t_pos *pos)
+t_node				*backwardjump(t_node *lstcursor, char buffer[], t_pos *pos)
 {
 	if (PG_DOWN)
 	{
@@ -57,7 +61,7 @@ t_node	*backwardjump(t_node *lstcursor, char buffer[], t_pos *pos)
 	return (lstcursor);
 }
 
-t_node	*forwardjump(t_node *lstcursor, char buffer[], t_pos *pos)
+t_node				*forwardjump(t_node *lstcursor, char buffer[], t_pos *pos)
 {
 	if (PG_UP)
 	{
@@ -82,7 +86,7 @@ t_node	*forwardjump(t_node *lstcursor, char buffer[], t_pos *pos)
 	return (lstcursor);
 }
 
-t_node	*home_end(t_node *lstcursor, char buffer[], t_pos *pos)
+t_node				*home_end(t_node *lstcursor, char buffer[], t_pos *pos)
 {
 	if (HOME)
 	{
@@ -111,13 +115,15 @@ t_node	*home_end(t_node *lstcursor, char buffer[], t_pos *pos)
 	return (lstcursor);
 }
 
-t_node	*ctrl_n_friends(t_node *lstcursor, t_node **input, char buffer[], \
-		t_pos *pos)
+t_node			*ctrl_n_friends(t_node *lstcursor, t_node **input, \
+		char buffer[], t_pos *pos)
 {
 	if (CTRL_D && !(*input)->next && pos->multiline != 1)
 	{
 		default_term_mode();
 		get_env(1, NULL);
+		ht_hash_del(g_alias_table);
+		ht_hash_del(g_hash_table);
 		exit(0);
 	}
 	if (CTRL_C)

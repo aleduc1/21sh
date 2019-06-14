@@ -6,7 +6,7 @@
 /*   By: apruvost <apruvost@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/12 17:01:09 by aleduc            #+#    #+#             */
-/*   Updated: 2019/06/11 17:10:51 by apruvost         ###   ########.fr       */
+/*   Updated: 2019/06/14 16:22:58 by apruvost         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,17 @@
 #include "env.h"
 #include "builtins.h"
 
-t_ht_alias	*g_alias_table = NULL;
+t_ht_hash	*g_alias_table = NULL;
+t_ht_hash	*g_hash_table = NULL;
 
-int		siginthandler(int signum)
+int			siginthandler(int signum)
 {
 	(void)signum;
 	ft_printf("signal handler\n");
 	return (0);
 }
 
-void	flags(int argc, char **argv)
+void		flags(int argc, char **argv)
 {
 	g_print_ast = 0;
 	if (argc >= 2)
@@ -38,7 +39,7 @@ void	flags(int argc, char **argv)
 	return ;
 }
 
-int		check_whitespace_input(char *input)
+int			check_whitespace_input(char *input)
 {
 	int		i;
 
@@ -53,7 +54,7 @@ int		check_whitespace_input(char *input)
 	return (0);
 }
 
-void	run(char *input, t_pos *pos)
+void		run(char *input, t_pos *pos)
 {
 	t_lex	*lex;
 	t_ast	*ast;
@@ -77,7 +78,7 @@ void	run(char *input, t_pos *pos)
 	dllprinthead(&lex);
 }
 
-int		main(int argc, char **argv, char **environ)
+int			main(int argc, char **argv, char **environ)
 {
 	t_multi	*multi_input;
 	char	*input;
@@ -90,7 +91,8 @@ int		main(int argc, char **argv, char **environ)
 	signal(SIGINT, SIG_IGN);
 	flags(argc, argv);
 	init_prompt(&pos);
-	g_alias_table = ht_alias_new();
+	g_alias_table = ht_hash_new();
+	g_hash_table = ht_hash_new();
 	while (21)
 	{
 		if (argc && argv && environ)

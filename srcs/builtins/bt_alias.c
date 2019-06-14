@@ -6,14 +6,14 @@
 /*   By: apruvost <apruvost@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/03 17:00:16 by apruvost          #+#    #+#             */
-/*   Updated: 2019/06/11 17:10:17 by apruvost         ###   ########.fr       */
+/*   Updated: 2019/06/14 15:27:10 by apruvost         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtins.h"
 
-extern t_alias		g_alias_deleted;
-extern t_ht_alias	*g_alias_table;
+extern t_hash		g_hash_deleted;
+extern t_ht_hash	*g_alias_table;
 
 static int			bt_alias_show(void)
 {
@@ -24,10 +24,10 @@ static int			bt_alias_show(void)
 	i = 0;
 	while (i < g_alias_table->size)
 	{
-		if (g_alias_table->alias[i] != NULL
-								&& g_alias_table->alias[i] != &g_alias_deleted)
-			ft_printf("%s=%s\n", g_alias_table->alias[i]->key,
-								g_alias_table->alias[i]->value);
+		if (g_alias_table->hash[i] != NULL
+								&& g_alias_table->hash[i] != &g_hash_deleted)
+			ft_printf("%s=%s\n", g_alias_table->hash[i]->key,
+								g_alias_table->hash[i]->value);
 		++i;
 	}
 	return (0);
@@ -37,7 +37,7 @@ static int			bt_showalias(char **av, int i, int ret)
 {
 	char	*val;
 
-	val = ht_alias_search(g_alias_table, av[i]);
+	val = ht_hash_search(g_alias_table, av[i]);
 	if (val == NULL)
 		return (1);
 	ft_printf("%s=%s\n", av[i], val);
@@ -50,7 +50,7 @@ static void				bt_addalias(char **av, int i)
 
 	tmp = ft_strchr(av[i], '=');
 	*tmp = '\0';
-	ht_alias_insert(g_alias_table, av[i], &(tmp[1]));
+	ht_hash_insert(g_alias_table, av[i], &(tmp[1]));
 	*tmp = '=';
 }
 

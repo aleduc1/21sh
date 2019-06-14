@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ht_alias_utils.c                                   :+:      :+:    :+:   */
+/*   ht_hash_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: apruvost <apruvost@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,7 +12,7 @@
 
 #include "builtins.h"
 
-int			ht_alias_hash(const char *s, const int a, const int m)
+int			ht_hash_hash(const char *s, const int a, const int m)
 {
 	long	hash;
 	int		len;
@@ -31,47 +31,47 @@ int			ht_alias_hash(const char *s, const int a, const int m)
 	return ((int)hash);
 }
 
-int			ht_alias_get_hash(const char *s, const int num, const int attempt)
+int			ht_hash_get_hash(const char *s, const int num, const int attempt)
 {
 	int		hash_a;
 	int		hash_b;
 
-	hash_a = ht_alias_hash(s, HT_ALIAS_HASH_ONE, num);
-	hash_b = ht_alias_hash(s, HT_ALIAS_HASH_TWO, num);
+	hash_a = ht_hash_hash(s, HT_HASH_HASH_ONE, num);
+	hash_b = ht_hash_hash(s, HT_HASH_HASH_TWO, num);
 	return ((hash_a + (attempt * (hash_b + 1))) % num);
 }
 
-void		ht_alias_del(t_ht_alias *ht)
+void		ht_hash_del(t_ht_hash *ht)
 {
 	int		i;
-	t_alias	*item;
+	t_hash	*item;
 
 	i = 0;
 	while (i < ht->size)
 	{
-		item = ht->alias[i];
+		item = ht->hash[i];
 		if (item != NULL)
-			alias_del(item);
+			hash_del(item);
 		++i;
 	}
-	ft_memdel((void **)&(ht->alias));
+	ft_memdel((void **)&(ht->hash));
 	ft_memdel((void **)&ht);
 }
 
-t_ht_alias	*ht_alias_new_sized(const int base_size)   // PRETOECT MALLOC CAREFUL
+t_ht_hash	*ht_hash_new_sized(const int base_size)   // PRETOECT MALLOC CAREFUL
 {
-	t_ht_alias	*ht;
+	t_ht_hash	*ht;
 
-	ht = (t_ht_alias *)malloc(sizeof(t_ht_alias));
+	ht = (t_ht_hash *)malloc(sizeof(t_ht_hash));
 	ht->base_size = base_size;
 	ht->size = ft_nextprime(ht->base_size);
 	ht->count = 0;
-	ht->alias = (t_alias **)malloc(sizeof(t_alias*) * ht->size);
-	ht_alias_table_null(ht->alias, ht->size);
+	ht->hash = (t_hash **)malloc(sizeof(t_hash*) * ht->size);
+	ht_hash_table_null(ht->hash, ht->size);
 	return (ht);
 }
 
-t_ht_alias	*ht_alias_new(void)
+t_ht_hash	*ht_hash_new(void)
 {
-	return (ht_alias_new_sized(HT_ALIAS_BASE_SIZE));
+	return (ht_hash_new_sized(HT_HASH_BASE_SIZE));
 }

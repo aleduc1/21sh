@@ -6,14 +6,15 @@
 /*   By: apruvost <apruvost@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/21 13:52:06 by apruvost          #+#    #+#             */
-/*   Updated: 2019/06/11 17:01:47 by apruvost         ###   ########.fr       */
+/*   Updated: 2019/06/14 16:23:18 by apruvost         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "env.h"
 #include "builtins.h"
 
-extern t_ht_alias	*g_alias_table;
+extern t_ht_hash	*g_alias_table;
+extern t_ht_hash	*g_hash_table;
 
 /*
 ** exit [n]
@@ -69,7 +70,8 @@ static void		bt_exit_utils(void)
 {
 		default_term_mode();
 		get_env(1, NULL);
-		ht_alias_del(g_alias_table);
+		ht_hash_del(g_alias_table);
+		ht_hash_del(g_hash_table);
 }
 
 int				bt_exit(char **av)

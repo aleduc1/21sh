@@ -38,7 +38,7 @@ VPATH = objs:\
 		srcs/cleaning:\
 		srcs/interpreter:\
 		srcs/builtins \
-		srcs/alias
+		srcs/hash_table
 # ------------------ #
 # Compiler and flags #
 # ------------------ #
@@ -143,10 +143,10 @@ SRCS_NAMES = main.c \
 			 get_options.c \
 			 bt_alias.c \
 			 bt_unalias.c \
-			 alias_utils.c \
-			 ht_alias_utils.c \
-			 ht_alias_moreutils.c \
-			 ht_alias_stillutils.c
+			 hash_utils.c \
+			 ht_hash_utils.c \
+			 ht_hash_moreutils.c \
+			 ht_hash_stillutils.c
 
 
 OBJS_NAMES = $(SRCS_NAMES:.c=.o)

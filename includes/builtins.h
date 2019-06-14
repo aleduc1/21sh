@@ -6,7 +6,7 @@
 /*   By: apruvost <apruvost@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/08 16:01:05 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/06/11 17:10:48 by apruvost         ###   ########.fr       */
+/*   Updated: 2019/06/14 15:17:28 by apruvost         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,23 +26,23 @@ typedef struct		s_cd
 	char	*curpath;
 }					t_cd;
 
-typedef struct		s_alias
+typedef struct		s_hash
 {
 	char	*key;
 	char	*value;
-}					t_alias;
+}					t_hash;
 
-typedef struct		s_ht_alias
+typedef struct		s_ht_hash
 {
 	int		size;
 	int		base_size;
 	int		count;
-	t_alias	**alias;
-}					t_ht_alias;
+	t_hash	**hash;
+}					t_ht_hash;
 
-# define HT_ALIAS_HASH_ONE 3
-# define HT_ALIAS_HASH_TWO 7
-# define HT_ALIAS_BASE_SIZE 50
+# define HT_HASH_HASH_ONE 3
+# define HT_HASH_HASH_TWO 7
+# define HT_HASH_BASE_SIZE 50
 
 
 int					bt_exit(char **av);
@@ -73,20 +73,20 @@ void				ft_getopt_reset(void);
 int					bt_alias(char **av);
 int					bt_unalias(char **av);
 
-void				alias_del(t_alias *alias);
-t_alias				*alias_new_item(const char *k, const char *v);
-t_ht_alias			*ht_alias_new(void);
-t_ht_alias			*ht_alias_new_sized(const int base_size);
-void				ht_alias_del(t_ht_alias *ht);
-int					ht_alias_get_hash(const char *s, const int num, const int attempt);
-int					ht_alias_hash(const char *s, const int a, const int m);
-void				ht_alias_insert(t_ht_alias *ht, const char *key, char *val);
-char				*ht_alias_search(t_ht_alias *ht, const char *key);
-void				ht_alias_delete(t_ht_alias *ht, const char *key);
-void				ht_alias_resize(t_ht_alias *ht, const int base_size);
-void				ht_alias_copy(t_ht_alias *ht, t_ht_alias *new_ht);
-void				ht_alias_resize_down(t_ht_alias *ht);
-void				ht_alias_resize_up(t_ht_alias *ht);
-void				ht_alias_table_null(t_alias **alias, int size);
+void				hash_del(t_hash *hash);
+t_hash				*hash_new_item(const char *k, const char *v);
+t_ht_hash			*ht_hash_new(void);
+t_ht_hash			*ht_hash_new_sized(const int base_size);
+void				ht_hash_del(t_ht_hash *ht);
+int					ht_hash_get_hash(const char *s, const int num, const int attempt);
+int					ht_hash_hash(const char *s, const int a, const int m);
+void				ht_hash_insert(t_ht_hash *ht, const char *key, char *val);
+char				*ht_hash_search(t_ht_hash *ht, const char *key);
+void				ht_hash_delete(t_ht_hash *ht, const char *key);
+void				ht_hash_resize(t_ht_hash *ht, const int base_size);
+void				ht_hash_copy(t_ht_hash *ht, t_ht_hash *new_ht);
+void				ht_hash_resize_down(t_ht_hash *ht);
+void				ht_hash_resize_up(t_ht_hash *ht);
+void				ht_hash_table_null(t_hash **hash, int size);
 
 #	endif

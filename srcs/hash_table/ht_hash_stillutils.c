@@ -1,31 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   alias_utils.c                                      :+:      :+:    :+:   */
+/*   ht_hash_stillutils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: apruvost <apruvost@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/06/07 15:17:51 by apruvost          #+#    #+#             */
-/*   Updated: 2019/06/11 17:11:12 by apruvost         ###   ########.fr       */
+/*   Created: 2019/06/10 14:48:20 by apruvost          #+#    #+#             */
+/*   Updated: 2019/06/11 17:09:29 by apruvost         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtins.h"
 
-void	alias_del(t_alias *alias)
+void	ht_hash_table_null(t_hash **hash, int size)
 {
-	free(alias->key);
-	alias->key = NULL;
-	free(alias->value);
-	alias->key = NULL;
+	int	i;
+
+	i = 0;
+	while (i < size)
+	{
+		hash[i] = NULL;
+		++i;
+	}
 }
 
-t_alias	*alias_new_item(const char *k, const char *v)  // PROTECT MALLOC CAREFUL
+void	ht_hash_resize_up(t_ht_hash *ht)
 {
-	t_alias	*item;
-	
-	item = (t_alias *)malloc(sizeof(t_alias));
-	item->key = ft_strdup(k);
-	item->value = ft_strdup(v);
-	return (item);
+	int	new_size;
+
+	new_size = ht->base_size * 2;
+	ht_hash_resize(ht, new_size);
+}
+
+void	ht_hash_resize_down(t_ht_hash *ht)
+{
+	int	new_size;
+
+	new_size = ht->base_size / 2;
+	ht_hash_resize(ht, new_size);
 }
