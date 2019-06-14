@@ -6,7 +6,7 @@
 /*   By: apruvost <apruvost@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/22 17:57:48 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/06/11 17:10:40 by apruvost         ###   ########.fr       */
+/*   Updated: 2019/06/14 16:30:10 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 #include "builtins.h"
 
 /*
-** split is all the path
-*/
+ ** split is all the path
+ */
 
 static int	path_of_commands(char ***command, char **split)
 {
@@ -43,19 +43,19 @@ static int	path_of_commands(char ***command, char **split)
 	return (-1);
 }
 
-int			is_in_path(char ***command)
+static int	check_env_path(char ***command)
 {
 	int		result;
 	char	*str;
 	char	**split;
 
-	if ((!(*command)) || (!(*command)[0]))
-		return (-1);
-	if (access((*command)[0], F_OK) >= 0 && access((*command)[0], X_OK) >= 0)
-		return (1);
-	str = value_line_path("PATH", 0);
+	str = value_line_path("PATH", 1);
 	if (!str)
-		return (-1);
+	{
+		str = value_line_path("PATH", 0);
+		if (!str)
+			return (-1);
+	}
 	split = ft_strsplit(str, ':');
 	result = path_of_commands(&(*command), split);
 	ft_strdel(&str);
@@ -63,12 +63,26 @@ int			is_in_path(char ***command)
 	return (result);
 }
 
+int			is_in_path(char ***command)
+{
+	int		result;
+
+	if ((!(*command)) || (!(*command)[0]))
+		return (-1);
+	result = check_env_path(command);
+	if (result != -1)
+		return (result);
+	if (access((*command)[0], F_OK) >= 0 && access((*command)[0], X_OK) >= 0)
+		return (1);
+	return (result);
+}
+
 /*
-** search if it's a builtin
-**	return 0 if it's a builtin and if it's command work
-**	return -2 if it's a builtin and if it's command not work
-**	return -1 if it's not a builtin
-*/
+ ** search if it's a builtin
+ **	return 0 if it's a builtin and if it's command work
+ **	return -2 if it's a builtin and if it's command not work
+ **	return -1 if it's not a builtin
+ */
 
 int			is_builtin(char **argv, t_redirection *r)
 {
@@ -104,9 +118,9 @@ int			is_builtin(char **argv, t_redirection *r)
 }
 
 /*
-** edit the local variable ('?') for know if the last command
-** has worked
-*/
+ ** edit the local variable ('?') for know if the last command
+ ** has worked
+ */
 
 int			gest_return(int verif)
 {
@@ -120,9 +134,9 @@ int			gest_return(int verif)
 }
 
 /*
-** is_end = 1 -> free env
-** f_line is not null -> modify head env by f_line
-*/
+ ** is_end = 1 -> free env
+ ** f_line is not null -> modify head env by f_line
+ */
 
 t_env		*get_env(int is_end, t_env *head)
 {
