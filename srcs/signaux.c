@@ -33,5 +33,5 @@ void	dfl_signaux(void)
 	signal(SIGQUIT, SIG_DFL);
 	signal(SIGTSTP, SIG_DFL);
 	signal(SIGTTIN, SIG_DFL);
-	signal(SIGTTOU, SIG_DFL);
+//	signal(SIGTTOU, SIG_DFL);
 }

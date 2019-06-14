@@ -51,5 +51,5 @@ void	add_process(char **av, t_token *t)
 	}
 	p->cmd = ft_arraydup(av);
 	parser_var(&p->cmd);
-	j->r = fill_redirection(t);
+	p->r = fill_redirection(t);
 }

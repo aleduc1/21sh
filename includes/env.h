@@ -69,6 +69,7 @@ typedef struct	s_process
 	int					completed;
 	int					stopped;
 	int					status;
+	t_redirection		*r;
 	struct s_process	*next;
 }				t_process;
 
@@ -78,7 +79,6 @@ typedef struct	s_job
 	pid_t			pgid;
 	int				notified;
 	struct termios	tmodes;
-	t_redirection	*r;
 	int				len_close;
 	int				*close_fd;
 	struct s_job	*next;

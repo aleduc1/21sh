@@ -133,9 +133,9 @@ t_job		*edit_lst_job(char **argv, t_token *t, t_redirection *r)
 	p->process_id = process_id + 1;
 	parser_var(&p->cmd);
 	if (t)
-		j->r = fill_redirection(t);
+		p->r = fill_redirection(t);
 	else
-		j->r = r;
+		p->r = r;
 	return (j);
 }
 
@@ -153,7 +153,7 @@ int			ft_simple_command(char **argv, t_token *t, t_pos *pos)
 		if (is_in_path(&p->cmd) == 1)
 			verif = launch_job(j, 1);
 		else
-			display_error_command(j->r, p->cmd);
+			display_error_command(p->r, p->cmd);
 	}
 	if (p->completed == 1 || p->pid == 0)
 		clean_fuck_list();
@@ -170,15 +170,15 @@ int			ft_simple_command_redirection(char **av, t_redirection *r)
 	verif = 0;
 	j = init_job();
 	j->first_process->cmd = ft_arraydup(av);
-	j->r = r;
 	j->next = NULL;
 	p = j->first_process;
+	p->r = r;
 	if ((verif = is_builtin(j, NULL)) == -1)
 	{
 		if (is_in_path(&p->cmd) == 1)
 			verif = launch_job(j, 1);
 		else
-			display_error_command(j->r, p->cmd);
+			display_error_command(p->r, p->cmd);
 	}
 	ft_arraydel(&p->cmd);
 	free(p);
@@ -225,7 +225,7 @@ int			ft_ampersand(char **argv, t_token *token)
 		if (is_in_path(&p->cmd) == 1)
 			verif = launch_job(j, 0);
 		else
-			display_error_command(j->r, p->cmd);
+			display_error_command(p->r, p->cmd);
 	}
 	if (p->completed == 1 || p->pid == 0)
 		clean_fuck_list();

@@ -26,9 +26,9 @@ int			is_builtin_env(t_job *j, char **av)
 	int	verif;
 
 	if (ft_strequ(av[0], "env"))
-		verif = builtin_env(j->r, av);
+		verif = builtin_env(j->first_process->r, av);
 	else if (ft_strequ(av[0], "set"))
-		verif = builtin_set(j->r);
+		verif = builtin_set(j->first_process->r);
 	else if (ft_strequ(av[0], "setenv"))
 		verif = edit_setenv(av[1], av[2]);
 	else if (ft_strequ(av[0], "unsetenv"))
@@ -38,7 +38,7 @@ int			is_builtin_env(t_job *j, char **av)
 	else if (ft_strequ(av[0], "unset"))
 		verif = ft_unset(av[1]);
 	else if (ft_strchr_exist(av[0], '='))
-		verif = edit_set(av, j->r);
+		verif = edit_set(av, j->first_process->r);
 	else
 		verif = -1;
 	return (verif);
@@ -54,7 +54,7 @@ int			is_builtin(t_job *j, t_pos *pos)
 	if (verif != -1)
 		return (verif);
 	if (ft_strequ(av[0], "echo"))
-		verif = bt_echo(av, j->r);
+		verif = bt_echo(av, j->first_process->r);
 	else if (ft_strequ(av[0], "cd"))
 		verif = (builtin_cd(av) < 0) ? -2 : 0;
 	else if (ft_strequ(av[0], "exit"))

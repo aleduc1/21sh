@@ -19,11 +19,12 @@ t_process	*init_process(void)
 	if (!(p = (t_process*)malloc(sizeof(t_process) * 1)))
 		return (NULL);
 	p->cmd = NULL;
-	//p->process_id = 0;
+	p->process_id = 0;
 	p->pid = 0;
 	p->completed = 0;
 	p->stopped = 0;
 	p->status = 0;
+	p->r = NULL;
 	p->next = NULL;
 	return (p);
 }
@@ -37,7 +38,6 @@ t_job		*init_job(void)
 	j->first_process = init_process();
 	j->pgid = 0;
 	j->notified = 0;
-	j->r = NULL;
 	j->len_close = 0;
 	j->close_fd = NULL;
 	j->next = NULL;
@@ -68,6 +68,7 @@ void		free_process(t_process **p)
 void		clean_file(t_job *j)
 {
 	int	i;
+	t_process *p;
 
 	if (j->len_close > 0)
 	{
@@ -75,7 +76,12 @@ void		clean_file(t_job *j)
 		while (++i < j->len_close)
 			close(j->close_fd[i]);
 	}
-	delete_redirection(&j->r);
+	p = j->first_process;
+	while (p)
+	{
+		delete_redirection(&p->r);
+		p = p->next;
+	}
 	free(j->close_fd);
 	j->close_fd = NULL;
 }

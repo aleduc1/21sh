@@ -94,6 +94,12 @@ int		bt_jobs(char **av)
 			p = &bt_jobs_p;
 		else if (ft_strequ(*av, "-l"))
 			p = &bt_jobs_l;
+		else
+		{
+			ft_dprintf(2, "42sh: jobs: -q: invalid option\n");
+			ft_dprintf(2, "jobs: usage: jobs [-l | -p] [job_id...]\n");
+			return (-2);
+		}
 	}
 	j = get_first_job(NULL);
 	while (j)

@@ -38,15 +38,15 @@ int		mark_process_status(pid_t pid, int status)
 					if (WIFSTOPPED(status))
 					{
 						p->stopped = 1;
-						ft_dprintf(j->r->error, "\n[%d]%c\tStopped(%d)\t%s\n",
+						ft_dprintf(p->r->error, "\n[%d]%c\tStopped(%d)\t%s\n",
 						j->first_process->process_id, '+', WSTOPSIG(status), j->first_process->cmd[0]);
 					}
 					else
 					{
 						p->completed = 1;
-						//if (WIFSIGNALED(status))
-						//	;//ft_dprintf(j->r->error, "\nProcess end pid = %d %d",
-							//(int)pid, status);
+						if (WIFSIGNALED(status))
+						;//	ft_dprintf(p->r->error, "\nProcess end pid = %d %d",
+						//	(int)pid, status);
 					}
 					return (0);
 				}
@@ -87,7 +87,7 @@ void	wait_for_jobs(t_job *j)
 
 void	job_info(t_job *j, char *status)
 {
-	ft_dprintf(j->r->error, "%s [%d]: %s\n", j->first_process->cmd[0],
+	ft_dprintf(j->first_process->r->error, "%s [%d]: %s\n", j->first_process->cmd[0],
 		(int)j->pgid, status);
 }
 
