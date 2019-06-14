@@ -83,23 +83,24 @@ int			launch_job(t_job *j, int fg)
 	return (0);
 }
 
-static int	is_first_process(t_job *j, t_process *p, int in, t_redirection *r)
+static int	is_first_process(t_job *j, t_process *p, int in)
 {
 	int		fd[2];
 	pid_t	pid;
 	int		verif;
 
 	pipe(fd);
-	if (r->in == STDIN_FILENO)
-		r->in = in;
-	r->fd_pipe = fd[0];
+	if (p->r->in == STDIN_FILENO)
+		p->r->in = in;
+	p->r->fd_pipe = fd[0];
 	pid = fork();
 	if (pid == 0)
 	{
+		if (p->r->out == STDOUT_FILENO)
+			p->r->out = fd[1];
+	// display_redirection(p->r);ft_printf("fd[0] = %d, fd[1] = %d\n", fd[0], fd[1]);
 		dup2(fd[1], STDOUT_FILENO);
-		if (r->out == STDOUT_FILENO)
-			r->out = fd[1];
-		if ((verif = is_builtin(j, NULL)) == -1)
+		if ((verif = is_builtin(j, p, NULL)) == -1)
 		{
 			if (is_in_path(&p->cmd) == 1)
 				verif = launch_process(p, j->pgid, p->r, 1);
@@ -126,23 +127,23 @@ static int	is_first_process(t_job *j, t_process *p, int in, t_redirection *r)
 	return (fd[0]);
 }
 
-static int	is_not_end(t_job *j, t_process *p, int in, t_redirection *r)
+static int	is_not_end(t_job *j, t_process *p, int in)
 {
 	int		fd[2];
 	pid_t	pid;
 	int		verif;
 
 	pipe(fd);
-	if (r->in == STDIN_FILENO)
-		r->in = in;
-	r->fd_pipe = fd[0];
+	if (p->r->in == STDIN_FILENO)
+		p->r->in = in;
+	p->r->fd_pipe = fd[0];
 	pid = fork();
 	if (pid == 0)
 	{
 		dup2(fd[1], STDOUT_FILENO);
-		if (r->out == STDOUT_FILENO)
-			r->out = fd[1];
-		if ((verif = is_builtin(j, NULL)) == -1)
+		if (p->r->out == STDOUT_FILENO)
+			p->r->out = fd[1];
+		if ((verif = is_builtin(j, p, NULL)) == -1)
 		{
 			if (is_in_path(&p->cmd) == 1)
 				verif = launch_process(p, j->pgid, p->r, 1);
@@ -169,18 +170,18 @@ static int	is_not_end(t_job *j, t_process *p, int in, t_redirection *r)
 	return (fd[0]);
 }
 
-static int	is_end(t_job *j, t_process *p, int in, t_redirection *r)
+static int	is_end(t_job *j, t_process *p, int in)
 {
 	pid_t	pid;
 	int		verif;
 
-	if (r->in == STDIN_FILENO)
-		r->in = in;
-	r->fd_pipe = -1;
+	if (p->r->in == STDIN_FILENO)
+		p->r->in = in;
+	p->r->fd_pipe = -1;
 	pid = fork();
 	if (pid == 0)
 	{
-		if ((verif = is_builtin(j, NULL)) == -1)
+		if ((verif = is_builtin(j, p, NULL)) == -1)
 		{
 			if (is_in_path(&p->cmd) == 1)
 				verif = launch_process(p, j->pgid, p->r, 1);
@@ -220,13 +221,13 @@ int			launch_job_pipe(t_job *j, int fg)
 	{
 		if (first)
 		{
-			in = is_first_process(j, p, in, p->r);
+			in = is_first_process(j, p, in);
 			first = 0;
 		}
 		else if (p->next)
-			in = is_not_end(j, p, in, p->r);
+			in = is_not_end(j, p, in);
 		else
-			in = is_end(j, p, in, p->r);
+			in = is_end(j, p, in);
 		p = p->next;
 	}
 	act_job(j, fg);

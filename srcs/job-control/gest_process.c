@@ -44,8 +44,8 @@ int		mark_process_status(pid_t pid, int status)
 					else
 					{
 						p->completed = 1;
-						if (WIFSIGNALED(status))
-						;//	ft_dprintf(p->r->error, "\nProcess end pid = %d %d",
+					//	if (WIFSIGNALED(status))
+						//	ft_dprintf(p->r->error, "\nProcess end pid = %d %d",
 						//	(int)pid, status);
 					}
 					return (0);

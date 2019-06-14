@@ -107,7 +107,7 @@ void				delete_redirection(t_redirection **r);
 */
 
 int					gest_return(int verif);
-int					is_builtin(t_job *j, t_pos *pos);
+int					is_builtin(t_job *j, t_process *p, t_pos *pos);
 int					is_in_path(char ***command);
 t_env				*get_env(int is_end, t_env *head);
 
@@ -253,5 +253,10 @@ int					ft_fd_redirect_exist(t_redirect *r, int base);
 t_job	*get_end_job(void);
 void	create_new_job(char **av, t_token *t);
 void	add_process(char **av, t_token *t);
+
+
+
+///////
+void		display_redirection(t_redirection *r);
 
 #	endif

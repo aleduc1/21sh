@@ -44,23 +44,23 @@ int			is_builtin_env(t_job *j, char **av)
 	return (verif);
 }
 
-int			is_builtin(t_job *j, t_pos *pos)
+int			is_builtin(t_job *j, t_process *p, t_pos *pos)
 {
 	int		verif;
 	char	**av;
 
-	av = j->first_process->cmd;
+	av = p->cmd;
 	verif = is_builtin_env(j, av);
 	if (verif != -1)
 		return (verif);
 	if (ft_strequ(av[0], "echo"))
-		verif = bt_echo(av, j->first_process->r);
+		verif = bt_echo(av, p->r);
 	else if (ft_strequ(av[0], "cd"))
 		verif = (builtin_cd(av) < 0) ? -2 : 0;
 	else if (ft_strequ(av[0], "exit"))
 		verif = bt_exit(j);
 	else if (ft_strequ(av[0], "jobs"))
-		verif = bt_jobs(av);
+		verif = bt_jobs(av, p->r);
 	else if (ft_strequ(av[0], "fg"))
 		verif = bt_fg();
 	else if (ft_strequ(av[0], "bg"))

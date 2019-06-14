@@ -148,7 +148,7 @@ int			ft_simple_command(char **argv, t_token *t, t_pos *pos)
 	verif = 0;
 	j = edit_lst_job(argv, t, NULL);
 	p = j->first_process;
-	if ((verif = is_builtin(j, pos)) == -1)
+	if ((verif = is_builtin(j, p, pos)) == -1)
 	{
 		if (is_in_path(&p->cmd) == 1)
 			verif = launch_job(j, 1);
@@ -173,7 +173,7 @@ int			ft_simple_command_redirection(char **av, t_redirection *r)
 	j->next = NULL;
 	p = j->first_process;
 	p->r = r;
-	if ((verif = is_builtin(j, NULL)) == -1)
+	if ((verif = is_builtin(j, p, NULL)) == -1)
 	{
 		if (is_in_path(&p->cmd) == 1)
 			verif = launch_job(j, 1);
@@ -220,7 +220,7 @@ int			ft_ampersand(char **argv, t_token *token)
 	verif = 0;
 	j = edit_lst_job(argv, token, NULL);
 	p = j->first_process;
-	if ((verif = is_builtin(j, NULL)) == -1)
+	if ((verif = is_builtin(j, p, NULL)) == -1)
 	{
 		if (is_in_path(&p->cmd) == 1)
 			verif = launch_job(j, 0);

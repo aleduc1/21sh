@@ -45,48 +45,50 @@ char		*ft_inter_signal(int sig)
 	return (str);
 }
 
-static void	bt_jobs_p(t_job *j, int is_stopped)
+static void	bt_jobs_p(t_job *j, int is_stopped, t_redirection *r)
 {
 	if (is_stopped)
-		ft_printf("%d\n", j->first_process->pid);
+		ft_dprintf(r->out, "%d\n", j->first_process->pid);
 	else
-		ft_printf("%d\n", j->first_process->pid);
+		ft_dprintf(r->out, "%d\n", j->first_process->pid);
 }
 
-static void	bt_jobs_l(t_job *j, int is_stopped)
+static void	bt_jobs_l(t_job *j, int is_stopped, t_redirection *r)
 {
 	if (is_stopped)
-		ft_printf("[%d]%c\t%d Suspended: %d\t%s\n", j->first_process->process_id,
+		ft_dprintf(r->out, "[%d]%c\t%d Suspended: %d\t%s\n", j->first_process->process_id,
 			'+', j->first_process->pid, WSTOPSIG(j->first_process->status),
 			j->first_process->cmd[0]);
 	else
 	{
-		ft_printf("[%d]%c\t%d: %d\t%s\n", j->first_process->process_id,
+		ft_dprintf(r->out, "[%d]%c\t%d: %d\t%s\n", j->first_process->process_id,
 			'-', j->first_process->pid, WSTOPSIG(j->first_process->status),
 			j->first_process->cmd[0]);
 	}
 }
 
-static void	bt_jobs_s(t_job *j, int is_stopped)
+static void	bt_jobs_s(t_job *j, int is_stopped, t_redirection *r)
 {
 	char	*str;
 
 	str = ft_inter_signal(WSTOPSIG(j->first_process->status));
 	if (is_stopped)
-		ft_printf("[%d]%c\t%s\t%s\n", j->first_process->process_id,
+		ft_dprintf(r->out, "[%d]%c\t%s\t%s\n", j->first_process->process_id,
 			'+', str, j->first_process->cmd[0]);
 	else
-		ft_printf("[%d]%c\t%s\t%s\n", j->first_process->process_id,
+		ft_dprintf(r->out, "[%d]%c\t%s\t%s\n", j->first_process->process_id,
 			'-', str, j->first_process->cmd[0]);
 	ft_strdel(&str);
 }
 
-int		bt_jobs(char **av)
+int		bt_jobs(char **av, t_redirection *r)
 {
 	t_job	*j;
-	void	(*p)(t_job*, int);
+	void	(*p)(t_job*, int, t_redirection*);
+
 
 	update_status();
+	// display_redirection(r);
 	p = &bt_jobs_s;
 	while (*(++av))
 	{
@@ -96,8 +98,8 @@ int		bt_jobs(char **av)
 			p = &bt_jobs_l;
 		else
 		{
-			ft_dprintf(2, "42sh: jobs: -q: invalid option\n");
-			ft_dprintf(2, "jobs: usage: jobs [-l | -p] [job_id...]\n");
+			ft_dprintf(r->error, "42sh: jobs %s: invalid option\n", *av);
+			ft_dprintf(r->error, "jobs: usage: jobs [-l | -p] [job_id...]\n");
 			return (-2);
 		}
 	}
@@ -105,9 +107,9 @@ int		bt_jobs(char **av)
 	while (j)
 	{
 		if (job_is_completed(j))
-			(*p)(j, 0);
+			(*p)(j, 0, r);
 		else if (job_is_stop(j) && (!j->notified))
-			(*p)(j, 1);
+			(*p)(j, 1, r);
 		j = j->next;
 	}
 	return (0);
