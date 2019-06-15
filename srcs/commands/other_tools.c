@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   other_tools.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mbellaic <mbellaic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/22 17:57:48 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/05/28 13:25:10 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/06/06 18:36:38 by mbellaic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,7 @@ int			is_builtin(t_job *j, t_pos *pos)
 	else if (ft_strequ(av[0], "bg"))
 		verif = bt_bg();
 	else if (ft_strequ(av[0], "fc"))
-		verif = ta_fonction_fc(pos); // -2 si erreur ou 0 si ok
+		verif = builtin_fc(av, pos); // -2 si erreur ou 0 si ok
 	else
 		verif = -1;
 	return (verif);

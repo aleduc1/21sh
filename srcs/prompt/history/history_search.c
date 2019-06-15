@@ -6,7 +6,7 @@
 /*   By: mbellaic <mbellaic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/27 12:57:27 by mbellaic          #+#    #+#             */
-/*   Updated: 2019/05/30 17:24:17 by mbellaic         ###   ########.fr       */
+/*   Updated: 2019/06/05 21:11:11 by mbellaic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,15 +65,14 @@ int				search_keyhook(t_node **input, char buffer[], char *current_choice)
 		ft_putstr(tgetstr("dc", NULL));
 		ddel(input, (*input)->next);
 	}
-	if (CTRL_C)
-	
-		ft_strdel(&current_choice);
+	if (CTRL_D)
 		return (-1);
-	}
+	if (CTRL_C)
+		return (-2);
 	return (0);
 }
 
-char			*input_search(t_node **input, char *passed_input, t_pos *pos)
+char			*input_search(t_node **input, char *passed_input, t_pos *pos, int *ret)
 {
 	char		*current_input;
 	char		*current_choice;
@@ -82,25 +81,27 @@ char			*input_search(t_node **input, char *passed_input, t_pos *pos)
 	current_input = NULL;
 	ft_bzero(buffer, 4096);
 	current_choice = search_and_print(passed_input, pos);
-	while (read(STDIN_FILENO, &buffer, 4095) < 4095 && (PRINTABLE || BACKSPACE))
+	while (read(STDIN_FILENO, &buffer, 4095) < 4095 && \
+		  (PRINTABLE || BACKSPACE || CTRL_C || CTRL_D))
 	{
-		if((search_keyhook(input, buffer, current_choice)) == -1)
-			break ;
+		*ret = search_keyhook(input, buffer, current_choice);
 		ft_bzero(buffer, 4096);
 		ft_putstr(tgetstr("cd", NULL));
 		current_input = search_to_str(*input);
 		current_choice = search_and_print(current_input, pos);
 		ft_strdel(&current_input);
+		if (*ret < 0)
+			break;
 	}
 	tputs(tgoto(tgetstr("cm", NULL), 0, pos->row - 1), 1, ft_outc);
 	ft_putstr(tgetstr("cd", NULL));
 	while (*input)
 		ddel(input, *input);
 	free(passed_input);
-	return (current_choice);
+	return (*ret < 0) ? (NULL) : (current_choice);
 }
 
-char			*prompt_search(t_node *prompt_input, t_pos *pos)
+char			*prompt_search(t_node *prompt_input, t_pos *pos, int *ret)
 {
 	char		*passed_input;
 	t_node		*input;
@@ -118,5 +119,5 @@ char			*prompt_search(t_node *prompt_input, t_pos *pos)
 	ft_putstr("\033[35m(reverse-i-search)`\033[0m");
 	ft_putstr(tgetstr("im", NULL));
 	ft_putstr(passed_input);
-	return (input_search(&input, passed_input, pos));
+	return (input_search(&input, passed_input, pos, ret));
 }

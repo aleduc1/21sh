@@ -6,7 +6,7 @@
 /*   By: mbellaic <mbellaic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/08 02:17:27 by mbellaic          #+#    #+#             */
-/*   Updated: 2019/05/27 16:48:51 by mbellaic         ###   ########.fr       */
+/*   Updated: 2019/06/10 22:39:06 by mbellaic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,7 +168,8 @@ t_node				*history_downcase(t_node *lstcursor, t_node **input, \
 															t_pos *pos);
 void				history_file(t_node *history);
 void				file_to_history(t_pos *pos);
-char				*prompt_search(t_node *input, t_pos *pos);
+char				*prompt_search(t_node *input, t_pos *pos, int *ret);
+char				*history_no_double(t_pos *pos);
 char				*search_to_str(t_node *input);
 
 t_node				*selectmode(t_node **input, t_node *lstcursor, \

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mbellaic <mbellaic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/08 16:01:05 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/05/28 10:15:01 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/06/06 18:36:47 by mbellaic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,5 +34,7 @@ int					bt_jobs(char **av);
 int					bt_bg(void);
 int					bt_fg(void);
 int					bt_export(char **value);
+
+int					builtin_fc(char **av, t_pos *pos);
 
 #	endif

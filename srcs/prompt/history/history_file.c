@@ -6,7 +6,7 @@
 /*   By: mbellaic <mbellaic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/27 08:32:42 by mbellaic          #+#    #+#             */
-/*   Updated: 2019/05/27 18:31:24 by mbellaic         ###   ########.fr       */
+/*   Updated: 2019/06/10 22:39:11 by mbellaic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,4 +43,12 @@ void		file_to_history(t_pos *pos)
 		pos->historysum++;
 		ft_strdel(&history_line);
 	}
+}
+
+char		*history_no_double(t_pos *pos)
+{
+	if (pos->history->next)
+		return (pos->history->next->line);
+	else
+		return (NULL);
 }

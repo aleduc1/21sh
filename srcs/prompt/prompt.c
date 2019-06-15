@@ -6,7 +6,7 @@
 /*   By: mbellaic <mbellaic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/12 17:13:21 by aleduc            #+#    #+#             */
-/*   Updated: 2019/05/27 13:24:28 by mbellaic         ###   ########.fr       */
+/*   Updated: 2019/06/10 22:53:27 by mbellaic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,7 @@ char			*prompt(t_multi *multi, t_pos *pos)
 			lstcursor = lstcursor->prev;
 		lstcursor = multi;
 		inputstr = lst_to_str(&multi, inputstr);
-		if (inputstr && pos->stop != 1)
+		if (inputstr && pos->stop != 1 && (ft_strequ(inputstr, history_no_double(pos))) == 0)
 			inserthistory(pos->history, inputstr, pos);
 	}
 	ddellist(multi);

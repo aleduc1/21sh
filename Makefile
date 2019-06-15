@@ -82,6 +82,7 @@ SRCS_NAMES = main.c \
 			 history_file.c \
 			 history_expand.c \
 			 history_search.c \
+			 history_fc.c \
 			 prompt.c \
 			 keyhook.c \
 			 morekeyhook.c \

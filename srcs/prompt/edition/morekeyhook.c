@@ -6,7 +6,7 @@
 /*   By: mbellaic <mbellaic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/12 17:18:42 by aleduc            #+#    #+#             */
-/*   Updated: 2019/05/30 17:12:09 by mbellaic         ###   ########.fr       */
+/*   Updated: 2019/06/05 21:33:19 by mbellaic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,11 +100,9 @@ t_node	*home_end(t_node *lstcursor, char buffer[], t_pos *pos)
 			if (pos->column == pos->termsize.ws_col)
 				go_downleft(pos);
 			else
-			{
 				ft_putstr(tgetstr("nd", NULL));
-				lstcursor = lstcursor->prev;
-				stalk_cursor(pos);
-			}
+			lstcursor = lstcursor->prev;
+			stalk_cursor(pos);
 		}
 	return (lstcursor);
 }
@@ -135,19 +133,27 @@ t_node	*ctrl_n_friends(t_node *lstcursor, t_node **input, char buffer[], \
 	if (CTRL_R)
 	{
 		t_node *new;
+		int		ret;
 
+		ret = 0;
 		new = NULL;
-		dpush(&new, ' ');
-		search_result = prompt_search(*input, pos);
-		while (search_result && search_result[i])
-			insert(new, search_result[i++]);
-		while (*input)
-			ddel(input, *input);
-		*input = new;
-		lstcursor = new;
+		if ((search_result = prompt_search(*input, pos, &ret)) != NULL)
+		{
+			dpush(&new, ' ');
+			while (search_result && search_result[i])
+				insert(new, search_result[i++]);
+			while (*input)
+				ddel(input, *input);
+			*input = new;
+		}
+		if (ret == -1)
+			while ((*input)->next)
+				ddel(input, *input);
+		lstcursor = *input;
 		print_prompt();
 		dprintlist(*input, 0);
 		ft_putstr(tgetstr("le", NULL));
+		ft_putstr(tgetstr("cd", NULL));
 	}
 	return (lstcursor);
 }
