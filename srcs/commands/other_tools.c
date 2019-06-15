@@ -57,7 +57,8 @@ int			gest_return(int verif)
 {
 	char	*value;
 
-	verif = (verif == 256 || verif < 0) ? -1 : 0;
+	if (verif != 127)
+		verif = (verif == 256 || verif < 0) ? -1 : 0;
 	value = ft_itoa(verif);
 	verif = add_set_value("?", value);
 	ft_strdel(&value);

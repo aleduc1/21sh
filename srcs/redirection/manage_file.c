@@ -111,6 +111,8 @@ int			close_file_command(t_lex *lex, t_redirection **r)
 
 int			open_file_command(t_redir *redir, t_pos *pos)
 {
+	// if (redir->filename)
+	// 	ft_printf("filename = %s | %s - %s\n", redir->filename);
 	if (redir->type == GREAT || redir->type == DGREAT || redir->type == LESS)
 		open_file_great(redir);
 	else if (redir->type == DLESS)

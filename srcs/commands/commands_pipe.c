@@ -22,6 +22,7 @@ int			add_pipe_process(char **cmd, t_redirection *r)
 	if (!str)
 	{
 		ft_dprintf(r->error, "21sh: command not found: %s\n", cmd[0]);
+		gest_return(127);
 		return (-1);
 	}
 	pid = fork();
@@ -69,7 +70,7 @@ static int	is_not_end(char **argv, int in, t_redirection *r)
 
 static int	is_end(char **argv, int in, t_redirection *r)
 {
-	pid_t	pid;
+	int	pid;
 
 	sig_handler();
 	if (r->in == STDIN_FILENO)
@@ -98,10 +99,11 @@ int			ft_pipe(char **argv, t_token *token, int end_pipe)
 	else
 	{
 		in = is_end(cpy_argv, in, r);
+		if (in != -1)
+			gest_return(in);
 		in = 0;
 		while (waitpid(in, &ret, 0) != -1)
 			continue ;
-		gest_return(ret);
 	}
 	delete_redirection(&r);
 	ft_arraydel(&cpy_argv);

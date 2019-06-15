@@ -26,7 +26,7 @@ int			add_process(char **cmd, int *returns_code, t_redirection *r)
 
 	if (!(str = is_in_path(cmd[0])))
 	{
-		(*returns_code) = -1;
+		(*returns_code) = 127;
 		ft_dprintf(r->error, "21sh: command not found: %s\n", cmd[0]);
 		return (*returns_code);
 	}
