@@ -29,12 +29,20 @@
 #include <unistd.h>
 #include <string.h>
 
+typedef struct		s_redirect
+{
+	int					base;
+	int					new_fd;
+	struct s_redirect	*next;
+}					t_redirect;
+
 typedef struct		s_redirection
 {
-	int		in;
-	int		out;
-	int		error;
-	int		fd_pipe;
+	int			in;
+	int			out;
+	int			error;
+	int			fd_pipe;
+	t_redirect	*redirect;
 }					t_redirection;
 
 typedef struct		s_env
@@ -61,6 +69,7 @@ typedef struct	s_process
 	int					completed;
 	int					stopped;
 	int					status;
+	t_redirection		*r;
 	struct s_process	*next;
 }				t_process;
 
@@ -70,13 +79,12 @@ typedef struct	s_job
 	pid_t			pgid;
 	int				notified;
 	struct termios	tmodes;
-	t_redirection	*r;
 	int				len_close;
 	int				*close_fd;
 	struct s_job	*next;
 }				t_job;
 
-void	redirection_fd_pipe(t_redirection *r);
+void	redirection_fd(t_redirection *r);
 
 /*
 ** manage_variable.c
@@ -99,7 +107,7 @@ void				delete_redirection(t_redirection **r);
 */
 
 int					gest_return(int verif);
-int					is_builtin(t_job *j, t_pos *pos);
+int					is_builtin(t_job *j, t_process *p, t_pos *pos);
 int					is_in_path(char ***command);
 t_env				*get_env(int is_end, t_env *head);
 
@@ -229,6 +237,26 @@ char				*parameter_hash_first(char *parameter);
 char				*parameter_hash_end(char *parameter);
 char				*parameter_percents(char *parameter);
 
+/*
+** list_redirect.c
+*/
 
+int					ft_create_maillon_redirect(t_redirect *r, int base,
+						int new_fd);
+t_redirect			*ft_init_redirect(void);
+int					ft_fd_redirect_exist(t_redirect *r, int base);
+
+/*
+** add_process.c
+*/
+
+t_job	*get_end_job(void);
+void	create_new_job(char **av, t_token *t);
+void	add_process(char **av, t_token *t);
+
+
+
+///////
+void		display_redirection(t_redirection *r);
 
 #	endif

@@ -15,56 +15,6 @@
 #include "job.h"
 
 /*
-** split is all the path
-*/
-
-static int	path_of_commands(char ***command, char **split)
-{
-	int		i;
-	char	*str;
-	char	*dst;
-
-	i = -1;
-	if (!split)
-		return (-1);
-	while (split[++i])
-	{
-		dst = ft_strjoin(split[i], "/");
-		str = ft_strjoin(dst, (*command)[0]);
-		if (access(str, F_OK) >= 0 && access(str, X_OK) >= 0)
-		{
-			ft_strdel(&((*command)[0]));
-			(*command)[0] = str;
-			ft_strdel(&dst);
-			return (1);
-		}
-		ft_strdel(&str);
-		ft_strdel(&dst);
-	}
-	return (-1);
-}
-
-int			is_in_path(char ***command)
-{
-	int		result;
-	char	*str;
-	char	**split;
-
-	if ((!(*command)) || (!(*command)[0]))
-		return (-1);
-	if (access((*command)[0], F_OK) >= 0 && access((*command)[0], X_OK) >= 0)
-		return (1);
-	str = value_line_path("PATH", 0);
-	if (!str)
-		return (-1);
-	split = ft_strsplit(str, ':');
-	result = path_of_commands(&(*command), split);
-	ft_strdel(&str);
-	ft_arraydel(&split);
-	return (result);
-}
-
-/*
 ** search if it's a builtin
 **	return 0 if it's a builtin and if it's command work
 **	return -2 if it's a builtin and if it's command not work
@@ -76,9 +26,9 @@ int			is_builtin_env(t_job *j, char **av)
 	int	verif;
 
 	if (ft_strequ(av[0], "env"))
-		verif = builtin_env(j->r, av);
+		verif = builtin_env(j->first_process->r, av);
 	else if (ft_strequ(av[0], "set"))
-		verif = builtin_set(j->r);
+		verif = builtin_set(j->first_process->r);
 	else if (ft_strequ(av[0], "setenv"))
 		verif = edit_setenv(av[1], av[2]);
 	else if (ft_strequ(av[0], "unsetenv"))
@@ -88,35 +38,39 @@ int			is_builtin_env(t_job *j, char **av)
 	else if (ft_strequ(av[0], "unset"))
 		verif = ft_unset(av[1]);
 	else if (ft_strchr_exist(av[0], '='))
-		verif = edit_set(av, j->r);
+		verif = edit_set(av, j->first_process->r);
 	else
 		verif = -1;
 	return (verif);
 }
 
-int			is_builtin(t_job *j, t_pos *pos)
+int			is_builtin(t_job *j, t_process *p, t_pos *pos)
 {
 	int		verif;
 	char	**av;
 
-	av = j->first_process->cmd;
+	av = p->cmd;
 	verif = is_builtin_env(j, av);
 	if (verif != -1)
 		return (verif);
 	if (ft_strequ(av[0], "echo"))
-		verif = bt_echo(av, j->r);
+		verif = bt_echo(av, p->r);
 	else if (ft_strequ(av[0], "cd"))
 		verif = (builtin_cd(av) < 0) ? -2 : 0;
 	else if (ft_strequ(av[0], "exit"))
 		verif = bt_exit(j);
 	else if (ft_strequ(av[0], "jobs"))
-		verif = bt_jobs(av);
+		verif = bt_jobs(av, p->r);
 	else if (ft_strequ(av[0], "fg"))
 		verif = bt_fg();
 	else if (ft_strequ(av[0], "bg"))
 		verif = bt_bg();
 	else if (ft_strequ(av[0], "fc"))
+<<<<<<< HEAD
 		verif = builtin_fc(av, pos); // -2 si erreur ou 0 si ok
+=======
+		verif = 1;//ta_fonction_fc(pos); // -2 si erreur ou 0 si ok
+>>>>>>> ae76d9a147d4e3d7321e1b8c854f102f669d52d0
 	else
 		verif = -1;
 	return (verif);

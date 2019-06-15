@@ -29,7 +29,7 @@ void	add_in_fg(t_job *j, int value)
 	{
 		tcsetattr(shell->term, TCSADRAIN, &(j->tmodes));
 		if (kill(-j->pgid, SIGCONT) < 0)
-			ft_dprintf(j->r->error, "42sh: fg: Kill not work!\n");
+			ft_dprintf(j->first_process->r->error, "42sh: fg: Kill not work!\n");
 	}
 	wait_for_jobs(j);
 	tcsetpgrp(shell->term, shell->pgid);
@@ -46,5 +46,5 @@ void	add_in_bg(t_job *j, int value)
 	itoa_pid = ft_itoa(j->first_process->pid);
 	add_set_value("!", itoa_pid);
 	if (value && (kill(-j->pgid, SIGCONT) < 0))
-		ft_dprintf(j->r->error, "42sh: bg: Kill not work!\n");
+		ft_dprintf(j->first_process->r->error, "42sh: bg: Kill not work!\n");
 }

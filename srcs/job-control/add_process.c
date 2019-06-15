@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   commands_pipe.c                                    :+:      :+:    :+:   */
+/*   add_process.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -13,20 +13,43 @@
 #include "env.h"
 #include "job.h"
 
-int			ft_pipe(char **argv, t_token *t, int end_pipe)
+t_job	*get_end_job(void)
 {
 	t_job	*j;
 
-	if (end_pipe == 0)
-		create_new_job(argv, t);
-	if (end_pipe > 0)
-		add_process(argv, t);
-	if (end_pipe == 2)
+	j = get_first_job(NULL);
+	if (!j)
+		return (NULL);
+	while (j->next)
+		j = j->next;
+	return (j);
+}
+
+void	create_new_job(char **av, t_token *t)
+{
+	edit_lst_job(av, t, NULL);
+}
+
+void	add_process(char **av, t_token *t)
+{
+	t_job		*j;
+	t_process	*p;
+	t_process	*last;
+
+	j = get_end_job();
+	p = j->first_process;
+	while (p)
 	{
-		j = get_end_job();
-		launch_job_pipe(j, 1);
-		if (j->first_process->completed == 1 || j->first_process->pid == 0)
-			clean_fuck_list();
+		last = p;
+		if (!p->next)
+		{
+			p->next = init_process();
+			p = p->next;
+			break ;
+		}
+		p = p->next;
 	}
-	return (0);
+	p->cmd = ft_arraydup(av);
+	parser_var(&p->cmd);
+	p->r = fill_redirection(t);
 }

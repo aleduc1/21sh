@@ -52,8 +52,9 @@ void			free_all_job(void);
 */
 
 int				launch_job(t_job *j, int fg);
-int     		launch_process(t_process *p, pid_t pgid, t_redirection *r, int fg);
-void	        act_job(t_job *j, int fg);
+int				launch_process(t_process *p, pid_t pgid, t_redirection *r, int fg);
+void			act_job(t_job *j, int fg);
+int 			launch_job_pipe(t_job *j, int fg);
 
 /*
 ** add_job.c
@@ -75,8 +76,6 @@ void			update_status(void);
 int				mark_process_status(pid_t pid, int status);
 
 void		display_lst_job(t_job *j);
-
-
 
 void		clean_fuck_list(void);
 
