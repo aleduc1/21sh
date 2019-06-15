@@ -6,7 +6,7 @@
 /*   By: mbellaic <mbellaic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/27 12:57:27 by mbellaic          #+#    #+#             */
-/*   Updated: 2019/06/05 21:11:11 by mbellaic         ###   ########.fr       */
+/*   Updated: 2019/06/15 18:35:40 by mbellaic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,13 +65,7 @@ int				search_keyhook(t_node **input, char buffer[], char *current_choice)
 		ft_putstr(tgetstr("dc", NULL));
 		ddel(input, (*input)->next);
 	}
-<<<<<<< HEAD
 	if (CTRL_D)
-=======
-	if (CTRL_C)
-	{
-		ft_strdel(&current_choice);
->>>>>>> ae76d9a147d4e3d7321e1b8c854f102f669d52d0
 		return (-1);
 	if (CTRL_C)
 		return (-2);
