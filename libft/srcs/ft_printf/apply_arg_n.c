@@ -39,8 +39,8 @@ char		*precision_n(char *str, t_printf **lst, int neg)
 
 	if (!(dst = (neg) ? ft_strsub(str, 1, ft_strlen(str)) : ft_strdup(str)))
 		return (NULL);
-	((dst[0] == '0') && ((*lst)->precision == -1 || (*lst)->precision == 0)) ?
-		dst[0] = '\0' : 0;
+	((dst[0] == '0') && ((*lst)->precision == -1 || (*lst)->precision == 0))
+		? dst[0] = '\0' : 0;
 	len[1] = (*lst)->precision - ft_strlen(dst);
 	if (len[1] > 0)
 	{
@@ -70,8 +70,8 @@ void		large_min_n(t_printf **lst, int len_str, int stock[3])
 	if (len > 0)
 	{
 		i = -1;
-		c = ft_strchr_exist((*lst)->options, '0') && stock[1] == 0 &&
-			(*lst)->precision == -2 ? '0' : ' ';
+		c = ft_strchr_exist((*lst)->options, '0') && stock[1] == 0
+			&& (*lst)->precision == -2 ? '0' : ' ';
 		if (!(tmp = (char*)malloc(sizeof(char) * len + 1)))
 			return ;
 		while (++i < len)
@@ -104,13 +104,13 @@ void		apply_arg_n(char *str, t_printf **lst)
 	(stock[1] == 1) ? ft_display(tmp, &(*lst)) : 0;
 	len_str = ft_strlen(tmp);
 	len_str = add_length(&(*lst), neg, stock, len_str);
-	if (stock[1] == 0 && ft_strchr_exist((*lst)->options, '0') &&
-			(*lst)->precision == -2)
+	if (stock[1] == 0 && ft_strchr_exist((*lst)->options, '0')
+			&& (*lst)->precision == -2)
 		options_n(&(*lst), stock, neg, 1);
 	large_min_n(&(*lst), len_str, stock);
-	(stock[1] == 0 && (ft_strchr_exist((*lst)->options, '0') == 0 ||
-		(ft_strchr_exist((*lst)->options, '0') && (*lst)->precision != -2))) ?
-		options_n(&(*lst), stock, neg, 1) : 1;
+	(stock[1] == 0 && (ft_strchr_exist((*lst)->options, '0') == 0
+		|| (ft_strchr_exist((*lst)->options, '0') && (*lst)->precision != -2)))
+		? options_n(&(*lst), stock, neg, 1) : 1;
 	(stock[1] == 0) ? ft_display(tmp, &(*lst)) : 0;
 	ft_strdel(&tmp);
 }

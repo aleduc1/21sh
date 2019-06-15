@@ -43,7 +43,7 @@ int		ft_apply_dquote(char ***value, int index)
 		ft_strdel(&((*value)[index - 1]));
 		(*value)[index - 1] = final;
 		ft_arraydelline(&(*value), index);
-		index--;
+		--index;
 	}
 	return (index);
 }

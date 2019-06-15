@@ -14,8 +14,7 @@
 
 static int	is_special_parameters(char c)
 {
-	if (c == '#' || c == '?' || c == '-' || c == '$' ||
-		c == '!' || c == '0')
+	if (c == '#' || c == '?' || c == '-' || c == '$' || c == '!' || c == '0')
 		return (1);
 	return (0);
 }
@@ -141,13 +140,34 @@ void		parser_var(char ***value)
 			break ;
 		if ((*value)[index][0] == '\'')
 			ft_remove_quote(&((*value)[index]));
-		else if (ft_strchr_exist((*value)[index], '$') ||
-				(*value)[index][0] == '~')
+		else if (ft_strchr_exist((*value)[index], '$')
+				|| (*value)[index][0] == '~')
 		{
 			tmp = search_var((*value)[index]);
 			ft_strdel(&((*value)[index]));
-			(*value)[index] = tmp ? ft_strdup(tmp) : NULL;
-			ft_strdel(&tmp);
+			(*value)[index] = tmp ? tmp : NULL;
+		}
+	}
+}
+
+void		parser_var_simple(char **value)
+{
+	char	*tmp;
+	int		index;
+
+	index = -1;
+	if (*value)
+	{
+		if ((*value)[0] == '"')
+			ft_remove_quote(value);
+		if ((*value)[0] == '\'')
+			ft_remove_quote(value);
+		else if (ft_strchr_exist(*value, '$')
+				|| (*value)[0] == '~')
+		{
+			tmp = search_var(*value);
+			ft_strdel(value);
+			(*value) = tmp ? tmp : NULL;
 		}
 	}
 }

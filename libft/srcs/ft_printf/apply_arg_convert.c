@@ -25,8 +25,8 @@ void		large_min_convert(t_printf **lst, int len_str, int stock[3])
 		i = -1;
 		if (!(tmp = (char*)malloc(sizeof(char) * len + 1)))
 			return ;
-		c = ft_strchr_exist((*lst)->options, '0') && (*lst)->precision == -2 &&
-			stock[1] == 0 ? '0' : ' ';
+		c = ft_strchr_exist((*lst)->options, '0') && (*lst)->precision == -2
+			&& stock[1] == 0 ? '0' : ' ';
 		while (++i < len)
 			tmp[i] = c;
 		tmp[i] = '\0';
@@ -77,12 +77,12 @@ void		apply_arg_convert(char *str, t_printf **lst)
 	(stock[1] == 1) ? apply_hash(&(*lst)) : 0;
 	(stock[1] == 1) ? ft_display(tmp, &(*lst)) : 0;
 	len_str = ft_strlen(tmp);
-	(stock[1] == 0 && ft_strchr_exist((*lst)->options, '0') &&
-	(*lst)->precision == -2) ? apply_hash(&(*lst)) : 0;
+	(stock[1] == 0 && ft_strchr_exist((*lst)->options, '0')
+	&& (*lst)->precision == -2) ? apply_hash(&(*lst)) : 0;
 	large_min_convert(&(*lst), len_str, stock);
-	(stock[1] == 0 && (ft_strchr_exist((*lst)->options, '0') == 0 ||
-		(ft_strchr_exist((*lst)->options, '0') && (*lst)->precision != -2))) ?
-		apply_hash(&(*lst)) : 0;
+	(stock[1] == 0 && (ft_strchr_exist((*lst)->options, '0') == 0
+		|| (ft_strchr_exist((*lst)->options, '0') && (*lst)->precision != -2)))
+		? apply_hash(&(*lst)) : 0;
 	(stock[1] == 0) ? ft_display(tmp, &(*lst)) : 0;
 	ft_strdel(&tmp);
 }

@@ -21,8 +21,8 @@ void	ft_large_min(char (*dst)[BUF_S], t_printf *lst, int stock[3])
 	i = -1;
 	c = (ft_strchr_exist(lst->options, '0') && lst->precision < 0) ? '0' : ' ';
 	if (ft_strcmp(*dst, "0\0") == 0 && ft_strchr_exist(lst->options, '0') == 0
-			&& (lst->large_min == 0 || (lst->precision == -1 ||
-					lst->precision == 0)))
+			&& (lst->large_min == 0 || (lst->precision == -1
+				|| lst->precision == 0)))
 		ft_bzero(&(*dst), BUF_S);
 	if (stock[2] > 0)
 	{

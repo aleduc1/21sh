@@ -65,16 +65,16 @@ void	affiche_option(t_printf *lst, int neg, int stock[3], int place)
 
 void	affiche_hash(t_printf **lst, int stock[3], int place)
 {
-	if (ft_strchr_exist((*lst)->options, '#') && ((*lst)->precision == -1 ||
-				(*lst)->precision == 0))
+	if (ft_strchr_exist((*lst)->options, '#') && ((*lst)->precision == -1
+			|| (*lst)->precision == 0))
 	{
 		if (place == 0 && stock[1] == 1)
 			ft_putchar('.');
-		else if (place == 1 && stock[1] == 0 &&
-				ft_strchr_exist((*lst)->options, '0') == 0)
+		else if (place == 1 && stock[1] == 0
+				&& ft_strchr_exist((*lst)->options, '0') == 0)
 			ft_putchar('.');
-		else if (place == 2 && stock[1] == 0 &&
-				ft_strchr_exist((*lst)->options, '0'))
+		else if (place == 2 && stock[1] == 0
+				&& ft_strchr_exist((*lst)->options, '0'))
 			ft_putchar('.');
 	}
 }
