@@ -46,8 +46,8 @@ int			free_maillon_env(char *key, int env)
 	test = 0;
 	while (my_env->next)
 	{
-		if (ft_strequ(my_env->key, key) && (env == 0 ||
-					(env == 1 && my_env->see_env == 1)))
+		if (ft_strequ(my_env->key, key) && (env == 0
+			|| (env == 1 && my_env->see_env == 1)))
 		{
 			verif = free_that(my_env, last);
 			break ;

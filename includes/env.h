@@ -85,7 +85,7 @@ t_env				*get_env(int is_end, t_env *head);
 */
 
 void				parser_var(char ***value);
-void        		parser_var_simple(char **value);
+void				parser_var_simple(char **value);
 char				*search_var(char *src);
 
 /*

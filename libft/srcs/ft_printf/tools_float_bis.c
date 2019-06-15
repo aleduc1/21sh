@@ -71,8 +71,8 @@ int		len_float(t_printf **lst, int stock[3], int neg)
 		(*lst)->len += 1;
 	if (neg || stock[0] || ft_strchr_exist((*lst)->options, ' '))
 		len += 1;
-	if (ft_strchr_exist((*lst)->options, '#') && ((*lst)->precision == -1 ||
-				(*lst)->precision == 0))
+	if (ft_strchr_exist((*lst)->options, '#') && ((*lst)->precision == -1
+			|| (*lst)->precision == 0))
 		len += 1;
 	return (len);
 }

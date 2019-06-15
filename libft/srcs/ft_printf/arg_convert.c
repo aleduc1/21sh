@@ -46,8 +46,9 @@ void		convert_to(t_printf **lst, int base)
 				str[i] = ft_tolower(str[i]);
 	}
 	index_hash = ft_chr_index((*lst)->options, '#');
-	if ((ft_strcmp(str, "0") == 0 || ft_strcmp(str, "") == 0) &&
-			index_hash > -1 && ft_strchr_exist((*lst)->conversion, 'p') == 0)
+	if ((ft_strcmp(str, "0") == 0 || ft_strcmp(str, "") == 0)
+		&& index_hash > -1
+		&& ft_strchr_exist((*lst)->conversion, 'p') == 0)
 		(*lst)->options[index_hash] = 'N';
 	apply_arg_convert(str, &(*lst));
 }
