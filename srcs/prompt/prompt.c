@@ -100,6 +100,7 @@ char			*check_prompt(char *inputstr, t_multi **multi)
 		if ((get_next_line(STDIN_FILENO, &inputstr) != -1)\
 			&& !ft_strequ(inputstr, ""))
 			return (inputstr);
+		ft_strdel(&inputstr);
 	}
 	return (NULL);
 }

@@ -6,7 +6,7 @@
 /*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/09 10:50:50 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/06/02 18:20:30 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/06/13 22:29:20 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int			verif_close(int fd)
 {
 	if (fd == STDIN_FILENO || fd == STDOUT_FILENO || fd == STDERR_FILENO ||
-		(fd > -1 && fd < 3))
+			(fd > -1 && fd < 3))
 		return (0);
 	return (1);
 }
@@ -61,19 +61,19 @@ static void	standard_redirection(t_redirection *r)
 	if (r->fd_pipe >= 0)
 		close(r->fd_pipe);
 	if (r->in != STDIN_FILENO &&
-		ft_fd_redirect_exist(r->redirect, STDIN_FILENO) == 0)
+			ft_fd_redirect_exist(r->redirect, STDIN_FILENO) == 0)
 	{
 		dup2(r->in, STDIN_FILENO);
 		close(r->in);
 	}
 	if (r->out != STDOUT_FILENO &&
-		ft_fd_redirect_exist(r->redirect, STDOUT_FILENO) == 0)
+			ft_fd_redirect_exist(r->redirect, STDOUT_FILENO) == 0)
 	{
 		dup2(r->out, STDOUT_FILENO);
 		close(r->out);
 	}
 	if (r->error != STDERR_FILENO &&
-		ft_fd_redirect_exist(r->redirect, STDERR_FILENO) == 0)
+			ft_fd_redirect_exist(r->redirect, STDERR_FILENO) == 0)
 	{
 		dup2(r->error, STDERR_FILENO);
 		close(r->error);

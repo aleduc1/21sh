@@ -16,7 +16,7 @@
 ** split is all the path
 */
 
-static int	path_of_commands(char ***command, char **split)
+static char	*path_of_commands(char *command, char **split)
 {
 	int		i;
 	char	*str;
@@ -24,27 +24,25 @@ static int	path_of_commands(char ***command, char **split)
 
 	i = -1;
 	if (!split)
-		return (-1);
+		return (NULL);
 	while (split[++i])
 	{
 		dst = ft_strjoin(split[i], "/");
-		str = ft_strjoin(dst, (*command)[0]);
+		str = ft_strjoin(dst, command);
 		if (access(str, F_OK) >= 0 && access(str, X_OK) >= 0)
 		{
-			ft_strdel(&((*command)[0]));
-			(*command)[0] = str;
 			ft_strdel(&dst);
-			return (1);
+			return (str);
 		}
 		ft_strdel(&str);
 		ft_strdel(&dst);
 	}
-	return (-1);
+	return (NULL);
 }
 
-static int	check_env_path(char ***command)
+static char	*check_env_path(char *command)
 {
-	int		result;
+	char	*result;
 	char	*str;
 	char	**split;
 
@@ -53,25 +51,26 @@ static int	check_env_path(char ***command)
 	{
 		str = value_line_path("PATH", 0);
 		if (!str)
-			return (-1);
+			return (NULL);
 	}
 	split = ft_strsplit(str, ':');
-	result = path_of_commands(&(*command), split);
+	result = path_of_commands(command, split);
 	ft_strdel(&str);
 	ft_arraydel(&split);
 	return (result);
 }
 
-int			is_in_path(char ***command)
+char		*is_in_path(char *command)
 {
-	int		result;
+	char	*result;
 
-	if ((!(*command)) || (!(*command)[0]))
-		return (-1);
+	result = NULL;
+	if (!command)
+		return (NULL);
 	result = check_env_path(command);
-	if (result != -1)
+	if (result)
 		return (result);
-	if (access((*command)[0], F_OK) >= 0 && access((*command)[0], X_OK) >= 0)
-		return (1);
+	if (access(command, F_OK) >= 0 && access(command, X_OK) >= 0)
+		result = ft_strdup(command);
 	return (result);
 }

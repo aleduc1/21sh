@@ -22,8 +22,9 @@ int			add_process(char **cmd, int *returns_code, t_redirection *r)
 {
 	char	**env;
 	int		pid;
+	char	*str;
 
-	if (is_in_path(&cmd) != 1)
+	if (!(str = is_in_path(cmd[0])))
 	{
 		(*returns_code) = -1;
 		ft_dprintf(r->error, "21sh: command not found: %s\n", cmd[0]);
@@ -36,12 +37,13 @@ int			add_process(char **cmd, int *returns_code, t_redirection *r)
 		signal(SIGINT, SIG_DFL);
 		signal(SIGQUIT, SIG_DFL);
 		redirection_fd(r);
-		execve(cmd[0], cmd, env);
+		execve(str, cmd, env);
 		ft_dprintf(r->error, "21sh: command not found\n");
 		execve("/bin/test", NULL, NULL);
 		exit(pid);
 	}
 	ft_arraydel(&env);
+	ft_strdel(&str);
 	return (pid);
 }
 

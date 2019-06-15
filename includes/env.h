@@ -77,7 +77,7 @@ void				delete_redirection(t_redirection **r);
 
 int					gest_return(int verif);
 int					is_builtin(char **argv, t_redirection *r);
-int					is_in_path(char ***command);
+char				*is_in_path(char *command);
 t_env				*get_env(int is_end, t_env *head);
 
 /*

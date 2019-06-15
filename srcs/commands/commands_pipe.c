@@ -16,8 +16,10 @@ int			add_pipe_process(char **cmd, t_redirection *r)
 {
 	pid_t	pid;
 	char	**environ;
+	char	*str;
 
-	if (is_in_path(&cmd) != 1)
+	str = is_in_path(cmd[0]);
+	if (!str)
 	{
 		ft_dprintf(r->error, "21sh: command not found: %s\n", cmd[0]);
 		return (-1);
@@ -28,12 +30,13 @@ int			add_pipe_process(char **cmd, t_redirection *r)
 	{
 		sig_dfl();
 		redirection_fd(r);
-		execve(cmd[0], cmd, environ);
+		execve(str, cmd, environ);
 		ft_dprintf(r->error, "21sh: command not found: %s\n", cmd[0]);
 		execve("/bin/test", NULL, NULL);
 		exit(0);
 	}
 	ft_arraydel(&environ);
+	ft_strdel(&str);
 	return (pid);
 }
 
