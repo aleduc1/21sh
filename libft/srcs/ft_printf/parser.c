@@ -51,8 +51,8 @@ void	other_options(t_printf **lst)
 		if (ft_isdigit(recup_char(&(*lst), 1)))
 		{
 			(*lst)->precision = ft_atoi((*lst)->format + (*lst)->index);
-			while ((*lst)->precision != 0 &&
-					(*lst)->format[(*lst)->index] == '0')
+			while ((*lst)->precision != 0
+				&& (*lst)->format[(*lst)->index] == '0')
 				(*lst)->index++;
 			(*lst)->index += ft_numlen((*lst)->precision);
 		}

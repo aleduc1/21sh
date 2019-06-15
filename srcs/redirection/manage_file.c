@@ -90,9 +90,9 @@ int			close_file_command(t_lex *lex, t_redirection **r)
 	head = lex;
 	while (lex)
 	{
-		if (lex->token->type == REDIR && lex->redir &&
-				lex->redir->dest_fd &&
-				ft_atoi(lex->redir->dest_fd) != -1)
+		if (lex->token->type == REDIR && lex->redir
+			&& lex->redir->dest_fd
+			&& ft_atoi(lex->redir->dest_fd) != -1)
 			if (lex->redir->filename || lex->redir->close == 1)
 				close(ft_atoi(lex->redir->dest_fd));
 		lex = lex->next;
@@ -108,16 +108,14 @@ int			close_file_command(t_lex *lex, t_redirection **r)
 ** DLESS -> <<
 ** GREAT -> >
 ** DGREAT -> >>
-** AMPLESS -> <&
-** LESSAMPPHYPH &<
 ** AMPGREAT -> &>
-** GREATAMPHYPH >&
+** GREATAMPHYPH -> >&
+** AMPLESS -> <&
+** LESSAMPPHYPH -> &<
 */
 
 int			open_file_command(t_redir *redir, t_pos *pos)
 {
-	// if (redir->filename)
-	// 	ft_printf("filename = %s | %s - %s\n", redir->filename);
 	if (redir->type == GREAT || redir->type == DGREAT || redir->type == LESS
 		|| redir->type == AMPGREAT || redir->type == AMPLESS
 		|| redir->type == LESSAMPHYPH || redir->type == GREATAMPHYPH)
