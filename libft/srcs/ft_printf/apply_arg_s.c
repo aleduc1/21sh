@@ -38,8 +38,8 @@ void		large_min_s(t_printf **lst, int len_str)
 		i = -1;
 		if (!(tmp = (char*)malloc(sizeof(char) * len + 1)))
 			return ;
-		c = ft_strchr_exist((*lst)->options, '0') &&
-			ft_strchr_exist((*lst)->options, '-') == 0 ? '0' : ' ';
+		c = ft_strchr_exist((*lst)->options, '0')
+			&& ft_strchr_exist((*lst)->options, '-') == 0 ? '0' : ' ';
 		while (++i < len)
 			tmp[i] = c;
 		tmp[i] = '\0';

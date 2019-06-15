@@ -48,7 +48,8 @@ static int	open_file_great(t_redir *redir)
 	ft_strdel(&redir->dest_fd);
 	if (redir->type == DGREAT)
 		redir->dest_fd = ft_itoa(get_end_line(redir->filename));
-	else if (redir->type == GREAT || redir->type == DLESS)
+	else if (redir->type == GREAT || redir->type == DLESS
+		|| redir->type == AMPGREAT || redir->type == GREATAMPHYPH)
 		redir->dest_fd = ft_itoa(open(redir->filename, O_RDWR | O_TRUNC));
 	else
 		redir->dest_fd = ft_itoa(open(redir->filename, O_RDWR));
@@ -107,12 +108,19 @@ int			close_file_command(t_lex *lex, t_redirection **r)
 ** DLESS -> <<
 ** GREAT -> >
 ** DGREAT -> >>
+** AMPLESS -> <&
+** LESSAMPPHYPH &<
+** AMPGREAT -> &>
+** GREATAMPHYPH >&
 */
 
 int			open_file_command(t_redir *redir, t_pos *pos)
 {
-	printf("type = %d, filename = %s src = %s, %s \n", redir->type, redir->filename, redir->src_fd[0], redir->src_fd[1]);
-	if (redir->type == GREAT || redir->type == DGREAT || redir->type == LESS)
+	// if (redir->filename)
+	// 	ft_printf("filename = %s | %s - %s\n", redir->filename);
+	if (redir->type == GREAT || redir->type == DGREAT || redir->type == LESS
+		|| redir->type == AMPGREAT || redir->type == AMPLESS
+		|| redir->type == LESSAMPHYPH || redir->type == GREATAMPHYPH)
 		open_file_great(redir);
 	else if (redir->type == DLESS)
 		open_file_dless(redir, pos);

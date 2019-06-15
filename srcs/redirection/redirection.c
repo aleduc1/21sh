@@ -29,31 +29,19 @@ int			verif_close(int fd)
 static void	redir_in(t_redirection *r)
 {
 	if (r->in != STDIN_FILENO)
-	{
 		dup2(r->in, STDIN_FILENO);
-		if (verif_close(r->in))
-			close(r->in);
-	}
 }
 
 static void	redir_out(t_redirection *r)
 {
 	if (r->out != STDOUT_FILENO)
-	{
 		dup2(r->out, STDOUT_FILENO);
-		if (verif_close(r->out))
-			close(r->out);
-	}
 }
 
 static void	redir_error(t_redirection *r)
 {
 	if (r->error != STDERR_FILENO)
-	{
 		dup2(r->error, STDERR_FILENO);
-		if (verif_close(r->error))
-			close(r->error);
-	}
 }
 
 static void	standard_redirection(t_redirection *r)
@@ -78,6 +66,12 @@ static void	standard_redirection(t_redirection *r)
 		dup2(r->error, STDERR_FILENO);
 		close(r->error);
 	}
+	if (verif_close(r->in) && ft_fd_redirect_exist(r->redirect, STDIN_FILENO))
+		close(r->in);
+	if (verif_close(r->out) && ft_fd_redirect_exist(r->redirect, STDOUT_FILENO))
+		close(r->out);
+	if (verif_close(r->error) && ft_fd_redirect_exist(r->redirect, STDERR_FILENO))
+		close(r->error);
 }
 
 void		display_redirection(t_redirection *r)
@@ -96,7 +90,6 @@ void		redirection_fd(t_redirection *r)
 	t_redirect	*lst;
 
 	lst = r->redirect;
-	//display_redirection(r);
 	while (lst)
 	{
 		if (lst->base != -1)
