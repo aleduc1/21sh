@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mbellaic <mbellaic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/12 17:13:21 by aleduc            #+#    #+#             */
-/*   Updated: 2019/05/09 06:29:39 by aleduc           ###   ########.fr       */
+/*   Updated: 2019/06/15 18:45:37 by mbellaic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ t_node			*read_input(t_node **input, t_pos *pos)
 
 char			*check_prompt(char *inputstr, t_multi **multi)
 {
-	if (getenv("TERM") != NULL)
+	if (tgetent(NULL, getenv("TERM")) > 0)
 	{
 		raw_term_mode();
 		print_prompt();
@@ -97,7 +97,7 @@ char			*check_prompt(char *inputstr, t_multi **multi)
 	else
 	{
 		ft_putstr("\n\033[31m[DUMB_MODE] &> \033[0m");
-		if ((get_next_line(STDIN_FILENO, &inputstr) != -1)\
+		if ((get_next_line(STDIN_FILENO, &inputstr) != -1) \
 			&& !ft_strequ(inputstr, ""))
 			return (inputstr);
 		ft_strdel(&inputstr);

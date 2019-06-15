@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mbellaic <mbellaic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/22 13:33:53 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/05/19 13:39:30 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/06/15 19:03:25 by mbellaic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ t_env				*get_env(int is_end, t_env *head);
 */
 
 void				parser_var(char ***value);
+void        		parser_var_simple(char **value);
 char				*search_var(char *src);
 
 /*

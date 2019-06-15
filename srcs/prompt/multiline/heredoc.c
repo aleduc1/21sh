@@ -3,17 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mbellaic <mbellaic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/12 17:01:09 by aleduc            #+#    #+#             */
-/*   Updated: 2019/05/15 16:31:34 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/06/15 19:16:33 by mbellaic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh21.h"
+#include "env.h"
 
-void		init_heredoc(t_pos *pos)
+void		init_heredoc(t_pos *pos, char *heredoc)
 {
+	parser_var_simple(&heredoc);
 	pos->multiline = 1;
 	pos->nblines = 0;
 	pos->currentline = 0;
@@ -61,6 +63,7 @@ int			check_heredoc(t_node *input, char *heredoc)
 
 	lstcursor = input;
 	temp = heredoc_string(lstcursor);
+	parser_var_simple(&temp);
 	if (ft_strcmp(heredoc, temp) == 0)
 	{
 		free(temp);
@@ -96,10 +99,10 @@ char		*heredoc(char *heredoc, t_pos *pos)
 	multi_push(&multi);
 	multi->input = NULL;
 	dpush(&multi->input, ' ');
-	init_heredoc(pos);
+	init_heredoc(pos, heredoc);
 	while (((input_heredoc(lstcursor, &multi, pos, heredoc)) < 0) \
 			&& pos->stop != 1)
-		init_heredoc(pos);
+		init_heredoc(pos, heredoc);
 	input = lst_to_str(&multi, input);
 	ddellist(multi);
 	if (pos->stop == 1)
