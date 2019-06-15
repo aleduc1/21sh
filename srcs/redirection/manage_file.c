@@ -6,7 +6,7 @@
 /*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/26 16:44:29 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/06/02 19:10:04 by aleduc           ###   ########.fr       */
+/*   Updated: 2019/06/15 16:36:04 by aleduc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,8 +111,7 @@ int			close_file_command(t_lex *lex, t_redirection **r)
 
 int			open_file_command(t_redir *redir, t_pos *pos)
 {
-	// if (redir->filename)
-	// 	ft_printf("filename = %s | %s - %s\n", redir->filename);
+	printf("type = %d, filename = %s src = %s, %s \n", redir->type, redir->filename, redir->src_fd[0], redir->src_fd[1]);
 	if (redir->type == GREAT || redir->type == DGREAT || redir->type == LESS)
 		open_file_great(redir);
 	else if (redir->type == DLESS)

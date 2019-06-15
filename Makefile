@@ -175,7 +175,7 @@ ECHO = "[`expr $C  '*' 100 / $T`%]"
 # Rules #
 # ----- #
 
-all : libs $(NAME)
+all : $(LIBS) $(NAME)
 
 ifeq ($(DEBUG), yes)
 	@$(PRINT) "Debug mode : on\n"
@@ -187,7 +187,7 @@ $(NAME) : $(LIBS) $(OBJS_NAMES)
 	@$(CC) -o $@ $(OBJ) $(LDFLAGS) $(LDLIBS) $(LFLAGS) $(CFLAGS) $(CPPFLAGS)
 	@$(PRINT) $(REMOVE)"Executable built\n"
 
-libs :
+$(LIBS) :
 	@$(MAKE) -j3 -C $(LIBDIR)
 
 %.o : %.c $(HEADER)
