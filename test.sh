@@ -6,15 +6,28 @@ NO='\033[0m'
 
 name=$1
 
+
+printf "Verif si le shell est posix: "
+test_shell="/tmp/test_shell"
+set > $test_shell
+shell_bash=`cat $test_shell | grep bash`
+shell_posix=`cat $test_shell | grep posix`
+if [ -z "$shell_bash" -a -z "$shell_posix" ]; then
+	printf "\n${CRE}Le shell n'est pas posix voulez-vous continuer [Y/n]? $NO"
+	read inputuser
+	if [ "$inputuser" == "n" ]; then exit; fi
+fi
+printf "${CGR}Ok$NO\n\n"
+
 if [ -z $name ]; then
-	printf "./test.sh [executable name]"
+	printf "Lancer avec le nom de l'excutable\n"
+	printf "./test.sh [executable name]\n"
 	exit
 fi
 if [ ! -x $name ]; then
-	printf "File $name not found"
+	printf "Le fichier $name n'est pas executable\n"
 	exit
 fi
-clear
 
 printf "=============================\n"
 printf "|           DEBUT           |\n"
@@ -24,7 +37,6 @@ if [ -z "$2" -a "$2" != "1" ]; then
 	dossier="/tmp/test"
 	rm -rf $dossier
 	mkdir -p $dossier
-	# printf "Utilisez la commande suivante pour check les leaks:\n"
 	printf "Utilisez valgrind [y/N]? "
 	read inputuser
 	if [ "$inputuser" == "y" ]; then
@@ -35,6 +47,7 @@ else
 	dossier="/tmp/test"
 fi
 n=0
+error=0
 clear
 # printf "valgrind --leak-check=full --log-file=\"$dossier/valgrind.log\" bash --posix\n\n"
 
@@ -63,6 +76,7 @@ ft_test_basic()
 		printf "ls: ${CRE}No$NO\n"
 		printf "$first\n"
 		printf "$sec\n"
+		error=$((error+1))
 		printf "\nQuitter [y/N]? "
 		read inputuser
 		if [ "$inputuser" == "y" ]; then printf "Log file: $dossier/$n \n"; exit; fi
@@ -86,6 +100,7 @@ ft_test_basic()
 		printf "Command error: ${CRE}No$NO\n\n"
 		printf "$first\n"
 		printf "$sec\n"
+		error=$((error+1))
 		printf "\nQuitter [y/N]? "
 		read inputuser
 		if [ "$inputuser" == "y" ]; then printf "Log file: $dossier/$n \n"; exit; fi
@@ -108,6 +123,7 @@ ft_test_basic()
 		printf "ls -z: ${CRE}No$NO\n"
 		printf "$first\n"
 		printf "$sec\n"
+		error=$((error+1))
 		printf "\nQuitter [y/N]? "
 		read inputuser
 		if [ "$inputuser" == "y" ]; then printf "Log file: $dossier/$n \n"; exit; fi
@@ -130,6 +146,7 @@ ft_test_basic()
 		printf "/bin/ls: ${CRE}No$NO\n"
 		printf "$first\n"
 		printf "$sec\n"
+		error=$((error+1))
 		printf "\nQuitter [y/N]? "
 		read inputuser
 		if [ "$inputuser" == "y" ]; then printf "Log file: $dossier/$n \n"; exit; fi
@@ -152,6 +169,7 @@ ft_test_basic()
 		printf "ls -la: ${CRE}No$NO\n"
 		printf "$first\n"
 		printf "$sec\n"
+		error=$((error+1))
 		printf "\nQuitter [y/N]? "
 		read inputuser
 		if [ "$inputuser" == "y" ]; then printf "Log file: $dossier/$n \n"; exit; fi
@@ -174,6 +192,7 @@ ft_test_basic()
 		printf "ls -l                -a                -f: ${CRE}No$NO\n"
 		printf "$first\n"
 		printf "$sec\n"
+		error=$((error+1))
 		printf "\nQuitter [y/N]? "
 		read inputuser
 		if [ "$inputuser" == "y" ]; then printf "Log file: $dossier/$n \n"; exit; fi
@@ -204,6 +223,7 @@ ft_test_builtin()
 		printf "Test cd: ${CRE}No$NO\n"
 		printf "$first\n"
 		printf "$sec\n"
+		error=$((error+1))
 		printf "\nQuitter [y/N]? "
 		read inputuser
 		if [ "$inputuser" == "y" ]; then printf "Log file: $dossier/$n \n"; exit; fi
@@ -227,6 +247,7 @@ ft_test_builtin()
 		printf "Test cd ~: ${CRE}No$NO\n"
 		printf "$first\n"
 		printf "$sec\n"
+		error=$((error+1))
 		printf "\nQuitter [y/N]? "
 		read inputuser
 		if [ "$inputuser" == "y" ]; then printf "Log file: $dossier/$n \n"; exit; fi
@@ -250,6 +271,7 @@ ft_test_builtin()
 		printf "Test cd -: ${CRE}No$NO\n"
 		printf "$first\n"
 		printf "$sec\n"
+		error=$((error+1))
 		printf "\nQuitter [y/N]? "
 		read inputuser
 		if [ "$inputuser" == "y" ]; then printf "Log file: $dossier/$n \n"; exit; fi
@@ -278,6 +300,7 @@ ft_test_builtin()
 		printf "Test printf: ${CRE}No$NO\n"
 		printf "$first\n"
 		printf "$sec\n"
+		error=$((error+1))
 		printf "\nQuitter [y/N]? "
 		read inputuser
 		if [ "$inputuser" == "y" ]; then printf "Log file: $dossier/$n \n"; exit; fi
@@ -308,6 +331,7 @@ ft_test_redirection()
 	else
 		printf "Test >: ${CRE}No$NO\n"
 		printf "$first\n"
+		error=$((error+1))
 		printf "\nQuitter [y/N]? "
 		read inputuser
 		if [ "$inputuser" == "y" ]; then printf "Log file: $dossier/$n \n"; exit; fi
@@ -326,6 +350,7 @@ ft_test_redirection()
 	else
 		printf "Test >>: ${CRE}No$NO\n"
 		printf "$first\n"
+		error=$((error+1))
 		printf "\nQuitter [y/N]? "
 		read inputuser
 		if [ "$inputuser" == "y" ]; then printf "Log file: $dossier/$n \n"; exit; fi
@@ -348,6 +373,7 @@ ft_test_redirection()
 		printf :"Test <: ${CRE}No$NO\n"
 		printf "$first\n"
 		printf "$sec\n"
+		error=$((error+1))
 		printf "\nQuitter [y/N]? "
 		read inputuser
 		if [ "$inputuser" == "y" ]; then printf "Log file: $dossier/$n \n"; exit; fi
@@ -355,8 +381,29 @@ ft_test_redirection()
 	n=$((n+1))
 	printf "\n"
 
-
-	printf "Test heredoc: $CRE A faire$NO\n\n"
+	printf "***** Heredoc *****\n"
+	printf "${CGR}Ecrire ce texte pour tester l'heredoc:${NO}\n"
+	printf "Roses are red\nViolets are blue\nAll my base are belong to you\nAnd so are you\nEOF\n\n"
+	./$name "cat -e << EOF > $dossier/${n}a"
+	printf "Roses are red$\nViolets are blue$\nAll my base are belong to you$\nAnd so are you$\n" > $dossier/${n}b
+	if [ -f $dossier/${n}a ]; then
+		first=`diff $dossier/${n}a $dossier/${n}b`
+	else
+		first=""
+	fi
+	if [ -f $dossier/${n}a -a -z "$first" -a -z "$sec" ]; then
+		printf "Test Heredoc: ${CGR}Ok$NO\n"
+	else
+		printf "Test Heredoc: ${CRE}No$NO\n"
+		printf "$first\n"
+		printf "$sec\n"
+		error=$((error+1))
+		printf "\nQuitter [y/N]? "
+		read inputuser
+		if [ "$inputuser" == "y" ]; then printf "Log file: $dossier/$n \n"; exit; fi
+	fi
+	n=$((n+1))
+	printf "\n"
 
 	# cat -e << EOF
 	# Roses are red
@@ -385,6 +432,7 @@ ft_test_redirection()
 	else
 		printf "Test &>: ${CRE}No$NO\n"
 		printf "$first\n"
+		error=$((error+1))
 		printf "\nQuitter [y/N]? "
 		read inputuser
 		if [ "$inputuser" == "y" ]; then printf "Log file: $dossier/$n \n"; exit; fi
@@ -408,6 +456,7 @@ ft_test_redirection()
 		printf "\n"
 		cat $dossier/${n}b
 		#printf "$first\n"
+		error=$((error+1))
 		printf "\nQuitter [y/N]? "
 		read inputuser
 		if [ "$inputuser" == "y" ]; then printf "Log file: $dossier/$n \n"; exit; fi
@@ -431,6 +480,7 @@ ft_test_redirection()
 		printf "Test 2>&-: ${CRE}No$NO\n"
 		printf "$first\n"
 		printf "$sec\n"
+		error=$((error+1))
 		printf "\nQuitter [y/N]? "
 		read inputuser
 		if [ "$inputuser" == "y" ]; then printf "Log file: $dossier/$n \n"; exit; fi
@@ -451,6 +501,7 @@ ft_test_redirection()
 	else
 		printf "ls -la: ${CRE}No$NO\n"
 		printf "$first\n"
+		error=$((error+1))
 		printf "\nQuitter [y/N]? "
 		read inputuser
 		if [ "$inputuser" == "y" ]; then printf "Log file: $dossier/$n \n"; exit; fi
@@ -484,6 +535,7 @@ ft_test_multiple_command()
 		printf "Test multiple command: ${CRE}No$NO\n"
 		printf "$first\n"
 		printf "$sec\n"
+		error=$((error+1))
 		printf "\nQuitter [y/N]? "
 		read inputuser
 		if [ "$inputuser" == "y" ]; then printf "Log file: $dossier/$n \n"; exit; fi
@@ -513,6 +565,7 @@ ft_test_pipe()
 		printf "Test simple pipe: ${CRE}No$NO\n"
 		printf "$first\n"
 		printf "$sec\n"
+		error=$((error+1))
 		printf "\nQuitter [y/N]? "
 		read inputuser
 		if [ "$inputuser" == "y" ]; then printf "Log file: $dossier/$n \n"; exit; fi
@@ -535,6 +588,7 @@ ft_test_pipe()
 		printf "Test multiple pipe: ${CRE}No$NO\n"
 		printf "$first\n"
 		printf "$sec\n"
+		error=$((error+1))
 		printf "\nQuitter [y/N]? "
 		read inputuser
 		if [ "$inputuser" == "y" ]; then printf "Log file: $dossier/$n \n"; exit; fi
@@ -563,6 +617,7 @@ ft_test_pipe()
 		printf "Test more complicate multiple pipe: ${CRE}No$NO\n"
 		printf "$first\n"
 		printf "$sec\n"
+		error=$((error+1))
 		printf "\nQuitter [y/N]? "
 		read inputuser
 		if [ "$inputuser" == "y" ]; then printf "Log file: $dossier/$n \n"; exit; fi
@@ -585,6 +640,7 @@ ft_test_pipe()
 		printf "Test base64 /dev/urandom | head -c 1000 | wc -c: ${CRE}No$NO\n"
 		printf "$first\n"
 		printf "$sec\n"
+		error=$((error+1))
 		printf "\nQuitter [y/N]? "
 		read inputuser
 		if [ "$inputuser" == "y" ]; then printf "Log file: $dossier/$n \n"; exit; fi
@@ -623,6 +679,7 @@ ft_env()
 		printf "Test env vide ls: ${CRE}No$NO\n"
 		printf "$first\n"
 		printf "$sec\n"
+		error=$((error+1))
 		printf "\nQuitter [y/N]? "
 		read inputuser
 		if [ "$inputuser" == "y" ]; then printf "Log file: $dossier/$n \n"; exit; fi
@@ -644,6 +701,7 @@ ft_env()
 		printf "Test env vide /bin/ls: ${CRE}No$NO\n"
 		printf "$first\n"
 		printf "$sec\n"
+		error=$((error+1))
 		printf "\nQuitter [y/N]? "
 		read inputuser
 		if [ "$inputuser" == "y" ]; then printf "Log file: $dossier/$n \n"; exit; fi
@@ -667,6 +725,7 @@ ft_env()
 		printf "Test env vide ls | wc: ${CRE}No$NO\n"
 		printf "$first\n"
 		printf "$sec\n"
+		error=$((error+1))
 		printf "\nQuitter [y/N]? "
 		read inputuser
 		if [ "$inputuser" == "y" ]; then printf "Log file: $dossier/$n \n"; exit; fi
@@ -688,6 +747,7 @@ ft_env()
 		printf "Test env vide /bin/ls | /usr/bin/wc: ${CRE}No$NO\n"
 		printf "$first\n"
 		printf "$sec\n"
+		error=$((error+1))
 		printf "\nQuitter [y/N]? "
 		read inputuser
 		if [ "$inputuser" == "y" ]; then printf "Log file: $dossier/$n \n"; exit; fi
@@ -699,6 +759,7 @@ ft_env()
 	if [ -f $dossier/${n}ae -a -s "$dossier/${n}ae" ]; then
 		printf "Test setenv: ${CRE}No$NO\n"
 		cat $dossier/${n}ae
+		error=$((error+1))
 		printf "\nQuitter [y/N]? "
 		read inputuser
 		if [ "$inputuser" == "y" ]; then printf "Log file: $dossier/$n \n"; exit; fi
@@ -712,6 +773,7 @@ ft_env()
 	if [ -f $dossier/${n}ae -a -s "$dossier/${n}ae" ]; then
 		printf "Test setenv: ${CRE}No$NO\n"
 		cat $dossier/${n}ae
+		error=$((error+1))
 		printf "\nQuitter [y/N]? "
 		read inputuser
 		if [ "$inputuser" == "y" ]; then printf "Log file: $dossier/$n \n"; exit; fi
@@ -725,6 +787,7 @@ ft_env()
 	if [ -f $dossier/${n}ae -a -s "$dossier/${n}ae" ]; then
 		printf "Test setenv: ${CRE}No$NO\n"
 		cat $dossier/${n}ae
+		error=$((error+1))
 		printf "\nQuitter [y/N]? "
 		read inputuser
 		if [ "$inputuser" == "y" ]; then printf "Log file: $dossier/$n \n"; exit; fi
@@ -734,6 +797,7 @@ ft_env()
 		else
 			printf "Test setenv: ${CRE}No$NO\n"
 			cat $dossier/${n}ae
+			error=$((error+1))
 			printf "\nQuitter [y/N]? "
 			read inputuser
 			if [ "$inputuser" == "y" ]; then printf "Log file: $dossier/$n \n"; exit; fi
@@ -752,6 +816,7 @@ ft_env()
 	if [ -f $dossier/${n}ae -a -s "$dossier/${n}ae" ]; then
 		printf "Test add key setenv: ${CRE}No$NO\n"
 		cat $dossier/${n}ae
+		error=$((error+1))
 		printf "\nQuitter [y/N]? "
 		read inputuser
 		if [ "$inputuser" == "y" ]; then printf "Log file: $dossier/$n \n"; exit; fi
@@ -761,6 +826,7 @@ ft_env()
 		else
 			printf "Test add key setenv: ${CRE}No$NO\n"
 			echo "$first"
+			error=$((error+1))
 			printf "\nQuitter [y/N]? "
 			read inputuser
 			if [ "$inputuser" == "y" ]; then printf "Log file: $dossier/$n \n"; exit; fi
@@ -779,6 +845,7 @@ ft_env()
 	if [ -f $dossier/${n}ae -a -s "$dossier/${n}ae" ]; then
 		printf "Test add key and remove: ${CRE}No$NO\n"
 		cat $dossier/${n}ae
+		error=$((error+1))
 		printf "\nQuitter [y/N]? "
 		read inputuser
 		if [ "$inputuser" == "y" ]; then printf "Log file: $dossier/$n \n"; exit; fi
@@ -791,6 +858,7 @@ ft_env()
 			cat $dossier/${n}ae
 			cat $dossier/${n}b
 			cat $dossier/${n}be
+			error=$((error+1))
 			printf "\nQuitter [y/N]? "
 			read inputuser
 			if [ "$inputuser" == "y" ]; then printf "Log file: $dossier/$n \n"; exit; fi
@@ -822,6 +890,7 @@ ft_path()
 		printf "Test PATH set with setenv: ${CRE}No$NO\n"
 		printf "$first\n"
 		printf "$sec\n"
+		error=$((error+1))
 		printf "\nQuitter [y/N]? "
 		read inputuser
 		if [ "$inputuser" == "y" ]; then printf "Log file: $dossier/$n \n"; exit; fi
@@ -862,3 +931,5 @@ if [ "$inputuser" == "y" ]; then
 	printf "\n\nAuthor:\n"
 	cat author
 fi
+
+printf "${CRE}Error: $error$NO\n"
