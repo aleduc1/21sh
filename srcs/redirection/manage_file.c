@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   manage_file.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mbellaic <mbellaic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/26 16:44:29 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/06/15 16:36:04 by aleduc           ###   ########.fr       */
+/*   Updated: 2019/06/15 19:38:03 by mbellaic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ static int	open_file_dless(t_redir *redir, t_pos *pos)
 		return (-1);
 	name = ft_strdup("/tmp/.21sh0");
 	redir->filename = name;
-	str = heredoc(redir->heredoc, pos);
+	str = heredoc(ft_strdup(redir->heredoc), pos);
 	if (!str)
 		return (-1);
 	ft_remove_last_chr(&str);

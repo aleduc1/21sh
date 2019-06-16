@@ -6,16 +6,15 @@
 /*   By: mbellaic <mbellaic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/12 17:01:09 by aleduc            #+#    #+#             */
-/*   Updated: 2019/06/15 19:22:27 by mbellaic         ###   ########.fr       */
+/*   Updated: 2019/06/15 19:48:46 by mbellaic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh21.h"
 #include "env.h"
 
-void		init_heredoc(t_pos *pos, char *heredoc)
+void		init_heredoc(t_pos *pos)
 {
-	parser_var_simple(&heredoc);
 	pos->multiline = 1;
 	pos->nblines = 0;
 	pos->currentline = 0;
@@ -99,10 +98,11 @@ char		*heredoc(char *heredoc, t_pos *pos)
 	multi_push(&multi);
 	multi->input = NULL;
 	dpush(&multi->input, ' ');
-	init_heredoc(pos, heredoc);
+	init_heredoc(pos);
+	parser_var_simple(&heredoc);
 	while (((input_heredoc(lstcursor, &multi, pos, heredoc)) < 0) \
 			&& pos->stop != 1)
-		init_heredoc(pos, heredoc);
+		init_heredoc(pos);
 	input = lst_to_str(&multi, input);
 	ddellist(multi);
 	if (pos->stop == 1)
@@ -110,6 +110,7 @@ char		*heredoc(char *heredoc, t_pos *pos)
 		pos->stop = 0;
 		ft_strdel(&input);
 	}
+	pos->multiline = 0;
 	default_term_mode();
 	return (input);
 }
