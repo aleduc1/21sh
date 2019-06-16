@@ -14,6 +14,7 @@
 #include "lexer.h"
 #include "parser.h"
 #include "env.h"
+#include "builtins.h"
 
 int		siginthandler(int signum)
 {
@@ -74,6 +75,22 @@ void	run(char *input, t_pos *pos)
 	dllprinthead(&lex);
 }
 
+void	exec_script(char **av, t_pos pos)
+{
+	char	*input;
+	int		i;
+
+	i = 0;
+	while (av[++i])
+	{
+		input = ft_strdup(av[i]);
+		run(input, &pos);
+	}
+	default_term_mode();
+	get_env(1, NULL);
+	exit(0);
+}
+
 int		main(int argc, char **argv, char **environ)
 {
 	t_multi	*multi_input;
@@ -82,11 +99,13 @@ int		main(int argc, char **argv, char **environ)
 
 	input = NULL;
 	multi_input = NULL;
-	welcome();
+	(argc == 1) ? welcome() : 0;
 	signal(SIGQUIT, SIG_IGN);
 	signal(SIGINT, SIG_IGN);
 	flags(argc, argv);
 	init_prompt(&pos);
+	if (argc > 1)
+		exec_script(argv, pos);
 	while (21)
 	{
 		if (argc && argv && environ)

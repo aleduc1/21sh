@@ -68,6 +68,17 @@ static void	standard_redirection(t_redirection *r)
 	}
 }
 
+void		display_redirection(t_redirection *r)
+{
+	ft_printf("r->in = %d, r->out = %d, r->error = %d, r->fd_pipe = %d\n",
+	r->in, r->out, r->error, r->fd_pipe);
+	while (r->redirect)
+	{
+		ft_printf("%d - %d\n", r->redirect->base, r->redirect->new_fd);
+		r->redirect = r->redirect->next;
+	}
+}
+
 void		redirection_fd(t_redirection *r)
 {
 	t_redirect	*lst;
