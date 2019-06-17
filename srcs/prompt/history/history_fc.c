@@ -202,9 +202,10 @@ int fc_lr_basic(t_fc *fc, t_node *lstcursor, int count, int i)
 	while (lstcursor && i <= 15)
 	{
 		if (!FC_N)
-			ft_dprintf(1, "%d	%s\n", count - i++, lstcursor->line);
+			ft_dprintf(1, "%d	%s\n", count - i, lstcursor->line);
 		else
 			ft_dprintf(1, "%s\n", lstcursor->line);
+		i++;
 		lstcursor = lstcursor->next;
 	}
 	return (1);
@@ -221,12 +222,13 @@ int fc_l_basic(t_fc *fc, t_node *lstcursor, int count, int i)
 		if (!FC_N)
 		{
 			if (count <= 15)
-				ft_dprintf(1, "%d	%s\n", count - (i--) - 1, lstcursor->line);
+				ft_dprintf(1, "%d	%s\n", count - (i) - 1, lstcursor->line);
 			else
-				ft_dprintf(1, "%d	%s\n", count - (i--), lstcursor->line);
+				ft_dprintf(1, "%d	%s\n", count - (i), lstcursor->line);
 		}
 		else
 			ft_dprintf(1, "%s\n", lstcursor->line);
+		i--;
 		lstcursor = lstcursor->prev;
 	}
 	return (1);
@@ -329,7 +331,7 @@ int	fc_l_first(t_fc *fc, t_node *lstcursor, int count, int i)
 	return (1);
 }
 
-int fc_first_index(t_node *lstcursor, int count, int *fc_index, char *fc_first_last)
+int fc_get_index(t_node *lstcursor, int count, int *fc_index, char *fc_first_last)
 {
 	int ret;
 	int i;
@@ -356,13 +358,64 @@ int fc_first_index(t_node *lstcursor, int count, int *fc_index, char *fc_first_l
 	return (1);
 }
 
+int fc_print_first_last(t_fc *fc, t_node *lstcursor, int i)
+{
+	i = 0;
+	while (lstcursor->next)
+		lstcursor = lstcursor->next;
+	while (lstcursor->prev && lstcursor->prev->prev && ++i < fc->first_index)
+		lstcursor = lstcursor->prev;
+	while (lstcursor->prev && lstcursor->prev->prev && i <= fc->last_index)
+	{
+		if (!FC_N)
+			ft_dprintf(1, "%d	%s\n", i, lstcursor->line);
+		else
+			ft_dprintf(1, "%s\n", lstcursor->line);
+		i++;
+		lstcursor = lstcursor->prev;
+	}
+	return (1);
+}
+
+int fc_print_last_first(t_fc *fc, t_node *lstcursor, int i)
+{
+	i = 0;
+	while (lstcursor->next)
+		lstcursor = lstcursor->next;
+	while (lstcursor->prev && ++i < fc->first_index)
+		lstcursor = lstcursor->prev;
+	while (lstcursor && i >= fc->last_index)
+	{
+		if (!FC_N)
+			ft_dprintf(1, "%d	%s\n", i, lstcursor->line);
+		else
+			ft_dprintf(1, "%s\n", lstcursor->line);
+		i--;
+		lstcursor = lstcursor->next;
+	}
+	return (1);
+}
+
 int fc_l_first_last(t_fc *fc, t_node *lstcursor, int count, int i)
 {
-	if (fc_first_index(lstcursor, count, &fc->first_index, fc->first) == -1)
+	if (fc_get_index(lstcursor, count, &fc->first_index, fc->first) == -1)
 		return (fc_usage(-1, fc, 2));
-	if (fc_first_index(lstcursor, count, &fc->last_index, fc->last) == -1)
+	if (fc_get_index(lstcursor, count, &fc->last_index, fc->last) == -1)
 		return (fc_usage(-1, fc, 2));
-	fc_debug(fc);
+	if (fc->first_index <= fc->last_index && !FC_R)
+		return (fc_print_first_last(fc, lstcursor, i));
+	if (fc->first_index >= fc->last_index && !FC_R)
+		return (fc_print_last_first(fc, lstcursor->next, i));
+	if (fc->first_index <= fc->last_index && FC_R)
+	{
+		ft_swap(&fc->first_index, &fc->last_index);
+		return (fc_print_last_first(fc, lstcursor, i));
+	}
+	if (fc->first_index >= fc->last_index && FC_R)
+	{
+		ft_swap(&fc->first_index, &fc->last_index);
+		return (fc_print_first_last(fc, lstcursor, i));
+	}
 	return (1);
 }
 
@@ -374,7 +427,6 @@ int fc_l(t_fc *fc, t_pos *pos)
 
 	lstcursor = pos->history->next;
 	count = fc_count(pos->history);
-	ft_dprintf(1, "count = %d\n", count);
 	i = -1;
 	if (!fc->first)
 		fc_l_basic(fc, lstcursor, count, i);
@@ -410,7 +462,6 @@ int builtin_fc(char **av, t_pos *pos)
 	init_fc(&fc);
 	if (fc_flags(av, &fc) == -1)
 		return (-2);
-	//fc_debug(&fc);
 	if (fc_exec(&fc, pos) == -1)
 		return (-2);
 	return 1;
