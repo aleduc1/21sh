@@ -12,14 +12,6 @@
 
 #include "env.h"
 
-int			verif_close(int fd)
-{
-	if (fd == STDIN_FILENO || fd == STDOUT_FILENO || fd == STDERR_FILENO
-		|| (fd > -1 && fd < 3))
-		return (0);
-	return (1);
-}
-
 /*
 ** in -> STDIN_FILENO
 ** out -> STDOUT_FILENO
@@ -68,18 +60,6 @@ static void	standard_redirection(t_redirection *r)
 	}
 }
 
-void		display_redirection(t_redirection *r)
-{
-	ft_printf("r->in = %d, r->out = %d, r->error = %d, \
-	r->fd_pipe = %d\n",
-	r->in, r->out, r->error, r->fd_pipe);
-	while (r->redirect)
-	{
-		ft_printf("%d - %d\n", r->redirect->base, r->redirect->new_fd);
-		r->redirect = r->redirect->next;
-	}
-}
-
 void		redirection_fd(t_redirection *r)
 {
 	t_redirect	*lst;
@@ -103,6 +83,7 @@ void		redirection_fd(t_redirection *r)
 		close(r->in);
 	if (verif_close(r->out) && ft_fd_redirect_exist(r->redirect, STDOUT_FILENO))
 		close(r->out);
-	if (verif_close(r->error) && ft_fd_redirect_exist(r->redirect, STDERR_FILENO))
+	if (verif_close(r->error)
+		&& ft_fd_redirect_exist(r->redirect, STDERR_FILENO))
 		close(r->error);
 }

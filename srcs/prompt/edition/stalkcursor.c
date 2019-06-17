@@ -54,8 +54,8 @@ void			stalk_cursor(t_pos *pos)
 	ioctl(STDOUT_FILENO, TIOCGWINSZ, &pos->termsize);
 	write(0, "\x1B[6n", 5);
 	answerlen = 0;
-	while (answerlen < 16 - 1 &&
-			read(STDIN_FILENO, answer + answerlen, 1) == 1)
+	while (answerlen < 16 - 1
+		&& read(STDIN_FILENO, answer + answerlen, 1) == 1)
 	{
 		if (answer[answerlen++] == 'R')
 			break ;

@@ -67,7 +67,13 @@ int					modify_dst(char *tmp, char **dst);
 
 t_redirection		*init_redirection(void);
 t_redirection		*fill_redirection(t_token *t);
+
+/*
+** delete_redirection.c
+*/
+
 void				delete_redirection(t_redirection **r);
+int					verif_close(int fd);
 
 /*
 ** other_tools.c
@@ -85,6 +91,12 @@ t_env				*get_env(int is_end, t_env *head);
 void				parser_var(char ***value);
 void				parser_var_simple(char **value);
 char				*search_var(char *src);
+
+/*
+** apply_parser_var.c
+*/
+
+int					apply_rules(char *src, char **dst, int index);
 
 /*
 ** manage_env.c
@@ -185,13 +197,18 @@ void				sig_ign(void);
 ** formats_parameter.c
 */
 
+char				*parameter_hash_first(char *parameter);
+char				*parameter_hash_end(char *value);
+char				*parameter_percents(char *value);
+
+/*
+** formats_parameter_bis.c
+*/
+
 char				*parameter_moins(char *parameter, char *word);
 char				*parameter_equals(char *parameter, char *word);
 char				*parameter_interrogation(char *parameter, char *word);
 char				*parameter_plus(char *parameter, char *word);
-char				*parameter_hash_first(char *parameter);
-char				*parameter_hash_end(char *value);
-char				*parameter_percents(char *value);
 
 /*
 ** parameter_expansion.c

@@ -27,11 +27,11 @@ VPATH = objs:\
 		srcs/prompt/others:\
 		srcs/prompt/selection:\
 		srcs/parser:\
-		srcs/parser/pre-parser:\
-		srcs/parser/pre-parser/simple_command:\
-		srcs/parser/pre-parser/remove_space:\
-		srcs/parser/pre-parser/redirect:\
-		srcs/parser/pre-parser/redirect/grammar:\
+		srcs/parser/pre_parser:\
+		srcs/parser/pre_parser/simple_command:\
+		srcs/parser/pre_parser/remove_space:\
+		srcs/parser/pre_parser/redirect:\
+		srcs/parser/pre_parser/redirect/grammar:\
 		srcs/parser/ast:\
 		srcs/parser/command:\
 		srcs/commands:\
@@ -47,7 +47,7 @@ VPATH = objs:\
 
 CC = gcc
 ifeq ($(DEBUG), yes)
-	CFLAGS = -Wall -Wextra -g3
+	CFLAGS = -Wall -Wextra -Werror
 else
 	CFLAGS = -Wall -Wextra
 endif
@@ -125,6 +125,7 @@ SRCS_NAMES = main.c \
 			 manage_quote.c\
 			 other_tools.c\
 			 parser_var.c\
+			 apply_parser_var.c\
 			 tools_env.c \
 			 add_quote.c\
 			 remove_space_token.c \
@@ -143,7 +144,9 @@ SRCS_NAMES = main.c \
 			 signal.c\
 			 path.c\
 			 parameter_expansion.c\
-			 formats_parameter.c
+			 formats_parameter.c\
+			 formats_parameter_bis.c\
+			 delete_redirection.c
 
 
 OBJS_NAMES = $(SRCS_NAMES:.c=.o)

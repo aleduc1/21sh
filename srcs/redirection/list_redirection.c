@@ -36,6 +36,28 @@ t_redirection	*init_redirection(void)
 	return (r);
 }
 
+static void		ft_apply_one_redirection(t_redirection *r, int num_src,
+					int num_dest)
+{
+	if (num_dest == -1)
+		num_dest = send_dev_null();
+	if (num_src == STDIN_FILENO)
+	{
+		r->in = num_dest;
+		ft_create_maillon_redirect(r->redirect, STDIN_FILENO, num_dest);
+	}
+	else if (num_src == STDOUT_FILENO)
+	{
+		r->out = num_dest;
+		ft_create_maillon_redirect(r->redirect, STDOUT_FILENO, num_dest);
+	}
+	else if (num_src == STDERR_FILENO)
+	{
+		r->error = num_dest;
+		ft_create_maillon_redirect(r->redirect, STDERR_FILENO, num_dest);
+	}
+}
+
 static void		ft_apply_redirection(t_lex *h, t_redirection *r)
 {
 	int	num_src;
@@ -47,23 +69,7 @@ static void		ft_apply_redirection(t_lex *h, t_redirection *r)
 	{
 		num_src = ft_atoi(h->redir->src_fd[i]);
 		num_dest = h->redir->dest_fd ? ft_atoi(h->redir->dest_fd) : -1;
-		if (num_dest == -1)
-			num_dest = send_dev_null();
-		if (num_src == STDIN_FILENO)
-		{
-			r->in = num_dest;
-			ft_create_maillon_redirect(r->redirect, STDIN_FILENO, num_dest);
-		}
-		else if (num_src == STDOUT_FILENO)
-		{
-			r->out = num_dest;
-			ft_create_maillon_redirect(r->redirect, STDOUT_FILENO, num_dest);
-		}
-		else if (num_src == STDERR_FILENO)
-		{
-			r->error = num_dest;
-			ft_create_maillon_redirect(r->redirect, STDERR_FILENO, num_dest);
-		}
+		ft_apply_one_redirection(r, num_src, num_dest);
 	}
 }
 
@@ -81,21 +87,4 @@ t_redirection	*fill_redirection(t_token *t)
 		h = h->next;
 	}
 	return (r);
-}
-
-void			delete_redirection(t_redirection **r)
-{
-	t_redirect	*next;
-
-	next = NULL;
-	while ((*r)->redirect)
-	{
-		next = ((*r)->redirect->next) ? (*r)->redirect->next : NULL;
-		free((*r)->redirect);
-		(*r)->redirect = NULL;
-		if (next)
-			(*r)->redirect = next;
-	}
-	free(*r);
-	(*r) = NULL;
 }
