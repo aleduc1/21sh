@@ -12,6 +12,26 @@
 
 #include "commands.h"
 
+int			check_is_exec(char *src, t_redirection *r)
+{
+	char	*str;
+
+	if (ft_strequ(src, "env") || ft_strequ(src, "set")
+		|| ft_strequ(src, "setenv") || ft_strequ(src, "unsetenv")
+		|| ft_strequ(src, "export") || ft_strequ(src, "unset")
+		|| ft_strequ(src, "exit") || ft_strequ(src, "editset")
+		|| ft_strequ(src, "echo") || ft_strequ(src, "cd"))
+		return (1);
+	str = is_in_path(src);
+	if (str)
+	{
+		ft_strdel(&str);
+		return (1);
+	}
+	ft_dprintf(r->error, "21sh: command not found: %s\n", src);
+	return (0);
+}
+
 int			add_pipe_process(char **cmd, t_redirection *r)
 {
 	pid_t	pid;
@@ -48,6 +68,8 @@ static int	is_not_end(char **argv, int in, t_redirection *r)
 
 	sig_handler();
 	pipe(fd);
+	if (check_is_exec(argv[0], r) == 0)
+		return (-1);
 	if (r->in == STDIN_FILENO)
 		r->in = in;
 	r->fd_pipe = fd[0];
@@ -73,6 +95,8 @@ static int	is_end(char **argv, int in, t_redirection *r)
 	int	pid;
 
 	sig_handler();
+	if (check_is_exec(argv[0], r) == 0)
+		return (-1);
 	if (r->in == STDIN_FILENO)
 		r->in = in;
 	r->fd_pipe = -1;

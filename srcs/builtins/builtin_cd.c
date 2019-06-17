@@ -35,7 +35,7 @@ static int	check_return(char *arguments, int verif)
 	return (verif);
 }
 
-static int	launch_cd(char **str)
+static int	launch_cd(char **str, t_redirection *r)
 {
 	char	buf[BUF_S];
 	int		verif;
@@ -43,7 +43,7 @@ static int	launch_cd(char **str)
 	ft_bzero(buf, BUF_S);
 	if (!(*str))
 		return (-1);
-	check_arg(&(*str));
+	check_arg(&(*str), r);
 	if (!(*str))
 		return (-1);
 	verif = chdir(*str);
@@ -60,7 +60,7 @@ static int	launch_cd(char **str)
 	return (verif);
 }
 
-int			builtin_cd(char **av)
+int			builtin_cd(char **av, t_redirection *r)
 {
 	char	buf[BUF_S];
 	int		len;
@@ -79,7 +79,7 @@ int			builtin_cd(char **av)
 		str = ft_strdup(av[1]);
 	ft_bzero(buf, BUF_S);
 	getcwd(buf, BUF_S - 1);
-	verif = launch_cd(&str);
+	verif = launch_cd(&str, r);
 	add_set_value("OLDPWD", buf);
 	if (str)
 		ft_strdel(&str);

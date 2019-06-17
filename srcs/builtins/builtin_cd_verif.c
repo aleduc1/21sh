@@ -27,12 +27,13 @@ int			ft_lastchr(const char *s, int c)
 	return (cnt);
 }
 
-void		check_arg(char **str)
+void		check_arg(char **str, t_redirection *r)
 {
 	if (ft_strequ(*str, "-"))
 	{
 		ft_strdel(&(*str));
 		(*str) = value_line_path("OLDPWD", 0);
+		ft_dprintf(r->out, "%s\n", *str);
 	}
 }
 

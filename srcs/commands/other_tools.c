@@ -40,7 +40,7 @@ int			is_builtin(char **argv, t_redirection *r)
 	else if (ft_strequ(argv[0], "echo"))
 		verif = bt_echo(argv, r);
 	else if (ft_strequ(argv[0], "cd"))
-		verif = (builtin_cd(argv)) ? -2 : 0;
+		verif = (builtin_cd(argv, r)) ? -2 : 0;
 	else if (ft_strequ(argv[0], "exit"))
 		verif = bt_exit(argv);
 	else

@@ -53,8 +53,6 @@ typedef struct		s_env
 	struct s_env	*next;
 }					t_env;
 
-int					builtin_cd(char **av);
-
 /*
 ** manage_variable.c
 */
@@ -125,14 +123,14 @@ int					builtin_env(t_redirection *r, char **argv);
 ** builtin_cd.c
 */
 
-int					builtin_cd(char **arguments);
+int					builtin_cd(char **arguments, t_redirection *r);
 
 /*
 ** builtin_cd_verif.c
 */
 
 int					ft_lastchr(const char *s, int c);
-void				check_arg(char **str);
+void				check_arg(char **str, t_redirection *r);
 void				error_cd(int code, char *str);
 
 /*
