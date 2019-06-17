@@ -16,6 +16,19 @@
 ** simple command
 */
 
+int			check_last_command(void)
+{
+	char	*str;
+	int		check;
+
+	str = value_line_path("?", 0);
+	check = ft_atoi(str);
+	ft_strdel(&str);
+	if (check < 0)
+		return (-1);
+	return (0);
+}
+
 int			ft_simple_command(char **argv, t_token *token)
 {
 	t_redirection	*r;
@@ -26,6 +39,11 @@ int			ft_simple_command(char **argv, t_token *token)
 		return (-1);
 	cpy_argv = ft_arraydup(argv);
 	parser_var(&cpy_argv);
+	if (check_last_command() == -1)
+	{
+		ft_arraydel(&cpy_argv);
+		return (-1);
+	}
 	r = fill_redirection(token);
 	if ((verif = is_builtin(cpy_argv, r)) == -1)
 		verif = exec_fork(cpy_argv, r);

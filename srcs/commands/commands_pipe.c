@@ -117,6 +117,11 @@ int			ft_pipe(char **argv, t_token *token, int end_pipe)
 	ret = 0;
 	cpy_argv = ft_arraydup(argv);
 	parser_var(&cpy_argv);
+	if (check_last_command() == -1)
+	{
+		ft_arraydel(&cpy_argv);
+		return (-1);
+	}
 	r = fill_redirection(token);
 	if (end_pipe == 0)
 		in = is_not_end(cpy_argv, in, r);

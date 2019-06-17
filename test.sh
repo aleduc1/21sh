@@ -492,10 +492,6 @@ ft_test_builtin()
 	n=$((n+1))
 	printf "\n"
 
-
-
-	exit
-
 	printf "${CRE}Test type\n$NO"
 
 }
@@ -1641,9 +1637,9 @@ ft_test_variable()
 		printf "$first\n"
 		printf "$sec\n"
 		error=$((error+1))
-		# printf "\nQuitter [y/N]? "
-		# read inputuser
-		# if [ "$inputuser" == "y" ]; then printf "Log file: $dossier/$n \n"; exit; fi
+		printf "\nQuitter [y/N]? "
+		read inputuser
+		if [ "$inputuser" == "y" ]; then printf "Log file: $dossier/$n \n"; exit; fi
 	fi
 	n=$((n+1))
 	printf "\n"
@@ -1664,9 +1660,9 @@ ft_test_variable()
 		printf "$first\n"
 		printf "$sec\n"
 		error=$((error+1))
-		# printf "\nQuitter [y/N]? "
-		# read inputuser
-		# if [ "$inputuser" == "y" ]; then printf "Log file: $dossier/$n \n"; exit; fi
+		printf "\nQuitter [y/N]? "
+		read inputuser
+		if [ "$inputuser" == "y" ]; then printf "Log file: $dossier/$n \n"; exit; fi
 	fi
 	n=$((n+1))
 	printf "\n"
@@ -1674,7 +1670,7 @@ ft_test_variable()
 	test_name="Test var \${:-}"
 	./$name "echo \${:-}" > $dossier/${n}a  2> $dossier/${n}ae
 	touch $dossier/${n}b
-	echo "21sh: \${:-salut}: bad substitution" > $dossier/${n}be
+	echo "21sh: \${:-}: bad substitution" > $dossier/${n}be
 	if [ -f $dossier/${n}a ]; then
 		first=`diff $dossier/${n}a $dossier/${n}b`
 	else
@@ -1688,9 +1684,9 @@ ft_test_variable()
 		printf "$first\n"
 		printf "$sec\n"
 		error=$((error+1))
-		# printf "\nQuitter [y/N]? "
-		# read inputuser
-		# if [ "$inputuser" == "y" ]; then printf "Log file: $dossier/$n \n"; exit; fi
+		printf "\nQuitter [y/N]? "
+		read inputuser
+		if [ "$inputuser" == "y" ]; then printf "Log file: $dossier/$n \n"; exit; fi
 	fi
 	n=$((n+1))
 	printf "\n"
@@ -1712,9 +1708,9 @@ ft_test_variable()
 		printf "$first\n"
 		printf "$sec\n"
 		error=$((error+1))
-		# printf "\nQuitter [y/N]? "
-		# read inputuser
-		# if [ "$inputuser" == "y" ]; then printf "Log file: $dossier/$n \n"; exit; fi
+		printf "\nQuitter [y/N]? "
+		read inputuser
+		if [ "$inputuser" == "y" ]; then printf "Log file: $dossier/$n \n"; exit; fi
 	fi
 	n=$((n+1))
 	printf "\n"
@@ -1736,9 +1732,9 @@ ft_test_variable()
 		printf "$first\n"
 		printf "$sec\n"
 		error=$((error+1))
-		# printf "\nQuitter [y/N]? "
-		# read inputuser
-		# if [ "$inputuser" == "y" ]; then printf "Log file: $dossier/$n \n"; exit; fi
+		printf "\nQuitter [y/N]? "
+		read inputuser
+		if [ "$inputuser" == "y" ]; then printf "Log file: $dossier/$n \n"; exit; fi
 	fi
 	n=$((n+1))
 	printf "\n"
@@ -1806,9 +1802,9 @@ ft_test_variable()
 		printf "$first\n"
 		printf "$sec\n"
 		error=$((error+1))
-		# printf "\nQuitter [y/N]? "
-		# read inputuser
-		# if [ "$inputuser" == "y" ]; then printf "Log file: $dossier/$n \n"; exit; fi
+		printf "\nQuitter [y/N]? "
+		read inputuser
+		if [ "$inputuser" == "y" ]; then printf "Log file: $dossier/$n \n"; exit; fi
 	fi
 	n=$((n+1))
 	printf "\n"
@@ -1830,9 +1826,9 @@ ft_test_variable()
 		printf "$first\n"
 		printf "$sec\n"
 		error=$((error+1))
-		# printf "\nQuitter [y/N]? "
-		# read inputuser
-		# if [ "$inputuser" == "y" ]; then printf "Log file: $dossier/$n \n"; exit; fi
+		printf "\nQuitter [y/N]? "
+		read inputuser
+		if [ "$inputuser" == "y" ]; then printf "Log file: $dossier/$n \n"; exit; fi
 	fi
 	n=$((n+1))
 	printf "\n"
@@ -1862,7 +1858,8 @@ ft_test_variable()
 
 	test_name="Test var \${TEARME:?salut}"
 	./$name "echo \${TEARME:?salut}" > $dossier/${n}a  2> $dossier/${n}ae
-	echo "21sh: TEARME: salut" > $dossier/${n}b 2> $dossier/${n}be
+	touch > $dossier/${n}b
+	echo "21sh: TEARME: salut" > $dossier/${n}be
 	if [ -f $dossier/${n}a ]; then
 		first=`diff $dossier/${n}a $dossier/${n}b`
 	else
@@ -1887,7 +1884,8 @@ ft_test_variable()
 
 	test_name="Test var \${TEARME:?}"
 	./$name "echo \${TEARME:?}" > $dossier/${n}a  2> $dossier/${n}ae
-	echo "21sh: TEARME: parameter null or not set" > $dossier/${n}b 2> $dossier/${n}be
+	touch $dossier/${n}b
+	echo "21sh: TEARME: parameter null or not set" > $dossier/${n}be
 	if [ -f $dossier/${n}a ]; then
 		first=`diff $dossier/${n}a $dossier/${n}b`
 	else
@@ -1926,9 +1924,9 @@ ft_test_variable()
 		printf "$first\n"
 		printf "$sec\n"
 		error=$((error+1))
-		# printf "\nQuitter [y/N]? "
-		# read inputuser
-		# if [ "$inputuser" == "y" ]; then printf "Log file: $dossier/$n \n"; exit; fi
+		printf "\nQuitter [y/N]? "
+		read inputuser
+		if [ "$inputuser" == "y" ]; then printf "Log file: $dossier/$n \n"; exit; fi
 	fi
 	n=$((n+1))
 	printf "\n"
@@ -1950,9 +1948,9 @@ ft_test_variable()
 		printf "$first\n"
 		printf "$sec\n"
 		error=$((error+1))
-		# printf "\nQuitter [y/N]? "
-		# read inputuser
-		# if [ "$inputuser" == "y" ]; then printf "Log file: $dossier/$n \n"; exit; fi
+		printf "\nQuitter [y/N]? "
+		read inputuser
+		if [ "$inputuser" == "y" ]; then printf "Log file: $dossier/$n \n"; exit; fi
 	fi
 	n=$((n+1))
 	printf "\n"

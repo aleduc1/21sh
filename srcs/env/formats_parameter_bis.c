@@ -12,6 +12,10 @@
 
 #include "env.h"
 
+// int		verif_substitution(char *parameter, char *word)
+// {
+	
+
 /*
 ** return parameter si existe sinon word
 */
@@ -62,6 +66,7 @@ char	*parameter_interrogation(char *parameter, char *word)
 	if (!src)
 	{
 		ft_dprintf(2, "21sh: %s: %s\n", parameter, error);
+		gest_return(-1);
 		src = NULL;
 	}
 	ft_strdel(&error);

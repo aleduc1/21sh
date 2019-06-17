@@ -80,9 +80,11 @@ int		bt_exit(char **av)
 			get_env(1, NULL);
 			exit(ft_atoi(av[1]));
 		}
+		ft_dprintf(2, "exit\n");
 		ft_dprintf(2, "21sh: exit: too many arguments\n");
 		return (1);
 	}
+	ft_dprintf(2, "exit\n");
 	ft_dprintf(2, "21sh: exit: %s: numeric argument required\n", av[1]);
 	default_term_mode();
 	get_env(1, NULL);

@@ -59,6 +59,7 @@ void		parser_var(char ***value)
 	int		index;
 
 	index = -1;
+	gest_return(0);
 	while ((*value)[++index])
 	{
 		if ((*value)[index][0] == '"')

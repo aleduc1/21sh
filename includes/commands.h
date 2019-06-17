@@ -33,6 +33,7 @@ int					ft_simple_command(char **argv, t_token *lex);
 int					ft_pipe_double(char **argv, t_token *token);
 int					ft_ampersand(char **argv, t_token *token, int num_process);
 int					ft_ampersand_double(char **argv, t_token *token);
+int					check_last_command(void);
 
 /*
 ** commands_pipe.c

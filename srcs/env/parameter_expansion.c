@@ -75,10 +75,14 @@ void			parameter_expansion(char *tmp, char **dst)
 	char	*key;
 	int		i;
 
-	if (!tmp)
+	if ((!tmp) || ft_strequ(tmp, ""))
+	{
+		ft_dprintf(STDERR_FILENO, "21sh: ${}: bad substitution\n");
+		gest_return(-1);
 		return ;
+	}
 	i = ft_chr_index(tmp, ':');
-	if (i < 2)
+	if (i < 0)
 	{
 		if (is_other_expansion(tmp, dst) == 0)
 			modify_dst(tmp, dst);
@@ -87,6 +91,12 @@ void			parameter_expansion(char *tmp, char **dst)
 	{
 		key = ft_strsub(tmp, 0, i);
 		ft_strdel(&(*dst));
+		if ((!key) || ft_strequ(key, ""))
+		{
+			ft_dprintf(STDERR_FILENO, "21sh: ${%s}: bad substitution\n", tmp);
+			gest_return(-1);
+			return ;
+		}
 		(*dst) = gest_expansion(key, tmp + i + 1);
 		ft_strdel(&key);
 	}
