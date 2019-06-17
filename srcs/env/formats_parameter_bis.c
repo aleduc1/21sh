@@ -52,13 +52,19 @@ char	*parameter_equals(char *parameter, char *word)
 char	*parameter_interrogation(char *parameter, char *word)
 {
 	char	*src;
+	char	*error;
 
 	src = value_line_path(parameter, 0);
+	if (!word || ft_strequ(word, ""))
+		error = ft_strdup("parameter null or not set");
+	else
+		error = ft_strdup(word);
 	if (!src)
 	{
-		ft_dprintf(2, "42sh: %s: %s\n", parameter, word);
+		ft_dprintf(2, "21sh: %s: %s\n", parameter, error);
 		src = NULL;
 	}
+	ft_strdel(&error);
 	return (src);
 }
 
