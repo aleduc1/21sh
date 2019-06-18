@@ -70,7 +70,7 @@ void	compare_types(t_tab_type **tab_of_type, t_token **token, char *word)
 	while ((*tab_of_type)[i].type != NUL)
 	{
 		if (!(ft_strcmp(word, (*tab_of_type)[i].str)))
-			*token = create_token((*tab_of_type)[i].str, \
+			*token = create_token((*tab_of_type)[i].str,
 					(*tab_of_type)[i].type);
 		i++;
 	}

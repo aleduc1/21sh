@@ -70,6 +70,12 @@ int				is_other_expansion(char *tmp, char **dst)
 	return (1);
 }
 
+static void		display_error_expansion(char *src)
+{
+	ft_dprintf(STDERR_FILENO, "21sh: ${%s}: bad substitution\n", src);
+	gest_return(-1);
+}
+
 void			parameter_expansion(char *tmp, char **dst)
 {
 	char	*key;
@@ -77,12 +83,10 @@ void			parameter_expansion(char *tmp, char **dst)
 
 	if ((!tmp) || ft_strequ(tmp, ""))
 	{
-		ft_dprintf(STDERR_FILENO, "21sh: ${}: bad substitution\n");
-		gest_return(-1);
+		display_error_expansion("");
 		return ;
 	}
-	i = ft_chr_index(tmp, ':');
-	if (i < 0)
+	if ((i = ft_chr_index(tmp, ':')) < 0)
 	{
 		if (is_other_expansion(tmp, dst) == 0)
 			modify_dst(tmp, dst);
@@ -93,8 +97,7 @@ void			parameter_expansion(char *tmp, char **dst)
 		ft_strdel(&(*dst));
 		if ((!key) || ft_strequ(key, ""))
 		{
-			ft_dprintf(STDERR_FILENO, "21sh: ${%s}: bad substitution\n", tmp);
-			gest_return(-1);
+			display_error_expansion(tmp);
 			return ;
 		}
 		(*dst) = gest_expansion(key, tmp + i + 1);

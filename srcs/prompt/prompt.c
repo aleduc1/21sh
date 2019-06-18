@@ -35,7 +35,7 @@ void			init_prompt(t_pos *pos)
 	pos->stop = 0;
 }
 
-int				check_integrity(t_node *input, t_multi **multi, t_pos *pos,\
+int				check_integrity(t_node *input, t_multi **multi, t_pos *pos,
 													t_integrity *count)
 {
 	t_node		*cursor;
@@ -97,7 +97,7 @@ char			*check_prompt(char *inputstr, t_multi **multi)
 	else
 	{
 		ft_putstr("\n\033[31m[DUMB_MODE] &> \033[0m");
-		if ((get_next_line(STDIN_FILENO, &inputstr) != -1) \
+		if ((get_next_line(STDIN_FILENO, &inputstr) != -1)
 			&& !ft_strequ(inputstr, ""))
 			return (inputstr);
 		ft_strdel(&inputstr);
@@ -119,7 +119,7 @@ char			*prompt(t_multi *multi, t_pos *pos)
 	if (multi->input)
 	{
 		ft_bzero(&count, sizeof(t_integrity));
-		while (check_integrity(lstcursor->input, &multi, pos, &count) < 0 \
+		while (check_integrity(lstcursor->input, &multi, pos, &count) < 0
 				&& pos->stop != 1)
 			lstcursor = lstcursor->prev;
 		lstcursor = multi;

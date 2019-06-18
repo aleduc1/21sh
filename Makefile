@@ -146,7 +146,8 @@ SRCS_NAMES = main.c \
 			 parameter_expansion.c\
 			 formats_parameter.c\
 			 formats_parameter_bis.c\
-			 delete_redirection.c
+			 delete_redirection.c\
+			 check_last.c
 
 
 OBJS_NAMES = $(SRCS_NAMES:.c=.o)

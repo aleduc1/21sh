@@ -216,4 +216,11 @@ char				*parameter_plus(char *parameter, char *word);
 
 void				parameter_expansion(char *tmp, char **dst);
 
+/*
+** check_last.c
+*/
+
+int					check_last_command(void);
+int					check_is_exec(char *src, t_redirection *r);
+
 #	endif

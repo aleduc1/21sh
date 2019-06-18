@@ -12,26 +12,6 @@
 
 #include "commands.h"
 
-int			check_is_exec(char *src, t_redirection *r)
-{
-	char	*str;
-
-	if (ft_strequ(src, "env") || ft_strequ(src, "set")
-		|| ft_strequ(src, "setenv") || ft_strequ(src, "unsetenv")
-		|| ft_strequ(src, "export") || ft_strequ(src, "unset")
-		|| ft_strequ(src, "exit") || ft_strequ(src, "editset")
-		|| ft_strequ(src, "echo") || ft_strequ(src, "cd"))
-		return (1);
-	str = is_in_path(src);
-	if (str)
-	{
-		ft_strdel(&str);
-		return (1);
-	}
-	ft_dprintf(r->error, "21sh: command not found: %s\n", src);
-	return (0);
-}
-
 int			add_pipe_process(char **cmd, t_redirection *r)
 {
 	pid_t	pid;
@@ -107,14 +87,26 @@ static int	is_end(char **argv, int in, t_redirection *r)
 	return (pid);
 }
 
-int			ft_pipe(char **argv, t_token *token, int end_pipe)
+static int	prepare_is_end(char **cpy_argv, int in, t_redirection *r)
 {
-	int				ret;
-	static int		in;
-	t_redirection	*r;
-	char			**cpy_argv;
+	int	ret;
 
 	ret = 0;
+	in = is_end(cpy_argv, in, r);
+	if (in != -1)
+		gest_return(in);
+	in = 0;
+	while (waitpid(in, &ret, 0) != -1)
+		continue ;
+	return (in);
+}
+
+int			ft_pipe(char **argv, t_token *token, int end_pipe)
+{
+	t_redirection	*r;
+	static int		in;
+	char			**cpy_argv;
+
 	cpy_argv = ft_arraydup(argv);
 	parser_var(&cpy_argv);
 	if (check_last_command() == -1)
@@ -126,14 +118,7 @@ int			ft_pipe(char **argv, t_token *token, int end_pipe)
 	if (end_pipe == 0)
 		in = is_not_end(cpy_argv, in, r);
 	else
-	{
-		in = is_end(cpy_argv, in, r);
-		if (in != -1)
-			gest_return(in);
-		in = 0;
-		while (waitpid(in, &ret, 0) != -1)
-			continue ;
-	}
+		in = prepare_is_end(cpy_argv, in, r);
 	delete_redirection(&r);
 	ft_arraydel(&cpy_argv);
 	return (0);

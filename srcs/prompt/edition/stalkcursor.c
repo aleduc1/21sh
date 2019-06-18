@@ -88,6 +88,6 @@ void			savecursor(t_pos *pos)
 
 void			cursorback(t_pos *pos)
 {
-	tputs(tgoto(tgetstr("cm", NULL), pos->savecolumn - 1, pos->saverow - 1),\
+	tputs(tgoto(tgetstr("cm", NULL), pos->savecolumn - 1, pos->saverow - 1),
 																1, ft_outc);
 }

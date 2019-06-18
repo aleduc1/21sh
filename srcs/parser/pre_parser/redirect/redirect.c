@@ -19,8 +19,8 @@ void	ft_default(t_redir **redir_info)
 
 	ptr = *redir_info;
 	t = ptr->type;
-	if (t == GREAT || t == LESSAMP || t == DGREAT || t == GREATAMPHYPH \
-			|| t == LESSAMPHYPH)
+	if (t == GREAT || t == LESSAMP || t == DGREAT || t == GREATAMPHYPH
+		|| t == LESSAMPHYPH)
 		ptr->src_fd[0] = ft_strdup("1");
 	else if (t == GREATAMP || t == AMPGREAT || t == AMPLESS)
 	{

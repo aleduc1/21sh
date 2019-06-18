@@ -26,7 +26,7 @@ void		ddel_select(t_node **head, t_node *del)
 	return ;
 }
 
-t_node		*delete_selection_left(t_node **input, t_node *lstcursor,\
+t_node		*delete_selection_left(t_node **input, t_node *lstcursor,
 															t_pos *pos)
 {
 	ft_putstr("\033[033m");
@@ -48,7 +48,7 @@ t_node		*delete_selection_left(t_node **input, t_node *lstcursor,\
 	return (lstcursor);
 }
 
-t_node		*delete_selection_right(t_node **input, t_node *lstcursor,\
+t_node		*delete_selection_right(t_node **input, t_node *lstcursor,
 															t_pos *pos)
 {
 	ft_putstr("\033[033m");
@@ -62,8 +62,6 @@ t_node		*delete_selection_right(t_node **input, t_node *lstcursor,\
 		ddel_select(input, lstcursor->next);
 		pos->selectcount++;
 	}
-	// if (lstcursor->next != NULL)
-	// 	lstcursor = lstcursor->next;
 	pos->selectcount = 0;
 	return (lstcursor);
 }

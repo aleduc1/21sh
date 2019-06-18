@@ -50,8 +50,6 @@
 
 # define ENTER (buffer[0] == 10 && buffer[1] == 0)
 
-char **g_env;
-
 typedef struct		s_node
 {
 	char			key;

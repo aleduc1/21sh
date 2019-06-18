@@ -12,10 +12,6 @@
 
 #include "env.h"
 
-// int		verif_substitution(char *parameter, char *word)
-// {
-	
-
 /*
 ** return parameter si existe sinon word
 */

@@ -57,11 +57,6 @@
 ** non-zero value in "$?") but even this not done historicaly in all shells
 */
 
-/*
-** Remplacer tous les g_status par la variable $? des variables locales ou la
-** valeur de retour du shell
-*/
-
 int		bt_exit(char **av)
 {
 	if (av == NULL || av[1] == NULL)
