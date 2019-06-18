@@ -6,7 +6,7 @@
 /*   By: mbellaic <mbellaic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/08 00:32:02 by mbellaic          #+#    #+#             */
-/*   Updated: 2019/06/05 00:18:25 by mbellaic         ###   ########.fr       */
+/*   Updated: 2019/06/18 23:06:20 by mbellaic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ void		ddel_select(t_node **head, t_node *del)
 t_node		*delete_selection_left(t_node **input, t_node *lstcursor,
 															t_pos *pos)
 {
-	ft_putstr("\033[033m");
 	while (pos->selectcount > 0)
 	{
 		stalk_cursor(pos);
@@ -51,7 +50,6 @@ t_node		*delete_selection_left(t_node **input, t_node *lstcursor,
 t_node		*delete_selection_right(t_node **input, t_node *lstcursor,
 															t_pos *pos)
 {
-	ft_putstr("\033[033m");
 	while (pos->selectcount < 0)
 	{
 		stalk_cursor(pos);
