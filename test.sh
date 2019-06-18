@@ -568,6 +568,32 @@ ft_test_redirection()
 	n=$((n+1))
 	printf "\n"
 
+	test_name="Test cd /tmp; echo abc 10>&-; echo def 11>&-; echo ghi 10>fd_above_limit; cat -e fd_above_limit; rm -f fd_above_limit"
+	./$name "cd /tmp; echo abc 10>&-; echo def 11>&-; echo ghi 10>fd_above_limit; cat -e fd_above_limit; rm -f fd_above_limit" > $dossier/${n}a 2> $dossier/${n}ae
+	echo "abc" > $dossier/${n}b
+	echo "def" >> $dossier/${n}b
+	echo "ghi" >> $dossier/${n}b
+	touch $dossier/${n}be
+	if [ -f $dossier/${n}a ]; then
+		first=`diff $dossier/${n}a $dossier/${n}b`
+	else
+		first=""
+	fi
+	sec=`diff $dossier/${n}ae $dossier/${n}be`
+	if [ -f $dossier/${n}a -a -z "$first" -a -z "$sec" ]; then
+		printf "$test_name: ${CGR}Ok$NO\n"
+	else
+		printf :"$test_name: ${CRE}No$NO\n"
+		printf "$first\n"
+		printf "$sec\n"
+		error=$((error+1))
+		printf "\nQuitter [y/N]? "
+		read inputuser
+		if [ "$inputuser" == "y" ]; then printf "Log file: $dossier/$n \n"; exit; fi
+	fi
+	n=$((n+1))
+	printf "\n"
+
 
 	printf "\nTester heredoc [y/N]? "
 	read inputuser

@@ -36,6 +36,21 @@ static void	redir_error(t_redirection *r)
 		dup2(r->error, STDERR_FILENO);
 }
 
+// static void	other_redir(int src, int new_fd)
+// {
+// 	if (src != new_fd)
+// 	{
+// 		ft_printf("base = %d, new = %d\n", src, new_fd);
+// 		dup2(src, new_fd);
+// 		if (verif_close(src))
+// 			close(src);
+		
+// 		// dup2(new_fd, src);
+// 		// if (verif_close(new_fd))
+// 		// 	close(new_fd);
+// 	}
+// }
+
 static void	standard_redirection(t_redirection *r)
 {
 	if (r->fd_pipe >= 0)
@@ -71,10 +86,12 @@ void		redirection_fd(t_redirection *r)
 		{
 			if (STDIN_FILENO == lst->base)
 				redir_in(r);
-			if (STDOUT_FILENO == lst->base)
+			else if (STDOUT_FILENO == lst->base)
 				redir_out(r);
-			if (STDERR_FILENO == lst->base)
+			else if (STDERR_FILENO == lst->base)
 				redir_error(r);
+			// else
+			// 	other_redir(lst->base, lst->new_fd);
 		}
 		lst = lst->next;
 	}

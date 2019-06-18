@@ -49,7 +49,7 @@ FLAGS = -Wall -Wextra -Werror
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	@echo "\033[36mft_printf\033[0m Make: \033[32mOk\033[0m"
+#	@echo "\033[36mft_printf\033[0m Make: \033[32mOk\033[0m"
 
 $(DIROBJ)/%.o: %.c
 	@gcc $< $(FLAGS) -c -o $@
