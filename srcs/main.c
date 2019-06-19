@@ -6,7 +6,7 @@
 /*   By: mbellaic <mbellaic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/12 17:01:09 by aleduc            #+#    #+#             */
-/*   Updated: 2019/06/04 20:10:52 by mbellaic         ###   ########.fr       */
+/*   Updated: 2019/06/19 18:11:23 by aleduc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,22 +75,6 @@ void	run(char *input, t_pos *pos)
 	dllprinthead(&lex);
 }
 
-void	exec_script(char **av, t_pos pos)
-{
-	char	*input;
-	int		i;
-
-	i = 0;
-	while (av[++i])
-	{
-		input = ft_strdup(av[i]);
-		run(input, &pos);
-	}
-	default_term_mode();
-	get_env(1, NULL);
-	exit(0);
-}
-
 int		main(int argc, char **argv, char **environ)
 {
 	t_multi	*multi_input;
@@ -99,13 +83,11 @@ int		main(int argc, char **argv, char **environ)
 
 	input = NULL;
 	multi_input = NULL;
-	(argc == 1) ? welcome() : 0;
+	welcome();
 	signal(SIGQUIT, SIG_IGN);
 	signal(SIGINT, SIG_IGN);
 	flags(argc, argv);
 	init_prompt(&pos);
-	if (argc > 1)
-		exec_script(argv, pos);
 	while (21)
 	{
 		if (argc && argv && environ)
