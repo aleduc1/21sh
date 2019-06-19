@@ -26,9 +26,10 @@ int			ft_simple_command(char **argv, t_token *token)
 		return (-1);
 	cpy_argv = ft_arraydup(argv);
 	parser_var(&cpy_argv);
-	if (check_last_command() == -1)
+	if (check_last_command() == -5)
 	{
 		ft_arraydel(&cpy_argv);
+		gest_return(1);
 		return (-1);
 	}
 	r = fill_redirection(token);

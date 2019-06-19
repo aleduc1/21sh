@@ -106,7 +106,7 @@ ft_test_basic()
 		if [ "$inputuser" == "y" ]; then printf "Log file: $dossier/$n \n"; exit; fi
 	fi
 	n=$((n+1))
-	printf "\n"
+	# printf "\n"
 
 	# Test command error
 	test_name="Test command erro"
@@ -131,7 +131,7 @@ ft_test_basic()
 		if [ "$inputuser" == "y" ]; then printf "Log file: $dossier/$n \n"; exit; fi
 	fi
 	n=$((n+1))
-	printf "\n"
+	# printf "\n"
 
 	# Test option invalid: ls -z
 	test_name="Test ls -z"
@@ -155,7 +155,7 @@ ft_test_basic()
 		if [ "$inputuser" == "y" ]; then printf "Log file: $dossier/$n \n"; exit; fi
 	fi
 	n=$((n+1))
-	printf "\n"
+	# printf "\n"
 
 	# Test /bin/ls
 	test_name="Test /bin/ls"
@@ -179,7 +179,7 @@ ft_test_basic()
 		if [ "$inputuser" == "y" ]; then printf "Log file: $dossier/$n \n"; exit; fi
 	fi
 	n=$((n+1))
-	printf "\n"
+	# printf "\n"
 
 	# Test ls -la
 	test_name="Test ls -la"
@@ -203,7 +203,7 @@ ft_test_basic()
 		if [ "$inputuser" == "y" ]; then printf "Log file: $dossier/$n \n"; exit; fi
 	fi
 	n=$((n+1))
-	printf "\n"
+	# printf "\n"
 
 	# Test ls -l                -a                -f
 	test_name="Test ls -l                -a                -f"
@@ -227,7 +227,7 @@ ft_test_basic()
 		if [ "$inputuser" == "y" ]; then printf "Log file: $dossier/$n \n"; exit; fi
 	fi
 	n=$((n+1))
-	printf "\n"
+	# printf "\n"
 }
 
 ft_test_builtin()
@@ -259,7 +259,7 @@ ft_test_builtin()
 		if [ "$inputuser" == "y" ]; then printf "Log file: $dossier/$n \n"; exit; fi
 	fi
 	n=$((n+1))
-	printf "\n"
+	# printf "\n"
 
 	test_name="Test cd libft"
 	./$name "cd libft" "pwd" > $dossier/${n}a 2> $dossier/${n}ae
@@ -283,7 +283,7 @@ ft_test_builtin()
 		if [ "$inputuser" == "y" ]; then printf "Log file: $dossier/$n \n"; exit; fi
 	fi
 	n=$((n+1))
-	printf "\n"
+	# printf "\n"
 
 	# Test cd ~
 	test_name="Test cd ~"
@@ -308,7 +308,7 @@ ft_test_builtin()
 		if [ "$inputuser" == "y" ]; then printf "Log file: $dossier/$n \n"; exit; fi
 	fi
 	n=$((n+1))
-	printf "\n"
+	# printf "\n"
 
 	# Test cd -
 	test_name="Test cd -"
@@ -333,7 +333,7 @@ ft_test_builtin()
 		if [ "$inputuser" == "y" ]; then printf "Log file: $dossier/$n \n"; exit; fi
 	fi
 	n=$((n+1))
-	printf "\n"
+	# printf "\n"
 
 	# A faire permission
 
@@ -363,7 +363,7 @@ ft_test_builtin()
 		if [ "$inputuser" == "y" ]; then printf "Log file: $dossier/$n \n"; exit; fi
 	fi
 	n=$((n+1))
-	printf "\n"
+	# printf "\n"
 
 	test_name="Test exit"
 	./$name "exit" > $dossier/${n}a 2> $dossier/${n}ae
@@ -388,7 +388,7 @@ ft_test_builtin()
 		if [ "$inputuser" == "y" ]; then printf "Log file: $dossier/$n \n"; exit; fi
 	fi
 	n=$((n+1))
-	printf "\n"
+	# printf "\n"
 
 	test_name="Test exit 2"
 	./$name "exit 2" > $dossier/${n}a 2> $dossier/${n}ae
@@ -413,7 +413,7 @@ ft_test_builtin()
 		if [ "$inputuser" == "y" ]; then printf "Log file: $dossier/$n \n"; exit; fi
 	fi
 	n=$((n+1))
-	printf "\n"
+	# printf "\n"
 
 	test_name="Test exit 278"
 	./$name "exit 278" > $dossier/${n}a 2> $dossier/${n}ae
@@ -438,7 +438,7 @@ ft_test_builtin()
 		if [ "$inputuser" == "y" ]; then printf "Log file: $dossier/$n \n"; exit; fi
 	fi
 	n=$((n+1))
-	printf "\n"
+	# printf "\n"
 
 	test_name="Test exit 34a"
 	./$name "exit 34a" > $dossier/${n}a 2> $dossier/${n}ae
@@ -464,7 +464,7 @@ ft_test_builtin()
 		if [ "$inputuser" == "y" ]; then printf "Log file: $dossier/$n \n"; exit; fi
 	fi
 	n=$((n+1))
-	printf "\n"
+	# printf "\n"
 
 	test_name="Test exit 34 22"
 	./$name "exit 34 22" > $dossier/${n}a 2> $dossier/${n}ae
@@ -490,7 +490,7 @@ ft_test_builtin()
 		if [ "$inputuser" == "y" ]; then printf "Log file: $dossier/$n \n"; exit; fi
 	fi
 	n=$((n+1))
-	printf "\n"
+	# printf "\n"
 
 	printf "${CRE}Test type\n$NO"
 
@@ -542,7 +542,7 @@ ft_test_redirection()
 		if [ "$inputuser" == "y" ]; then printf "Log file: $dossier/$n \n"; exit; fi
 	fi
 	n=$((n+1))
-	printf "\n"
+	# printf "\n"
 
 	# Test <
 	test_name="Test <"
@@ -566,7 +566,7 @@ ft_test_redirection()
 		if [ "$inputuser" == "y" ]; then printf "Log file: $dossier/$n \n"; exit; fi
 	fi
 	n=$((n+1))
-	printf "\n"
+	# printf "\n"
 
 	test_name="Test cd /tmp; echo abc 10>&-; echo def 11>&-; echo ghi 10>fd_above_limit; cat -e fd_above_limit; rm -f fd_above_limit"
 	./$name "cd /tmp; echo abc 10>&-; echo def 11>&-; echo ghi 10>fd_above_limit; cat -e fd_above_limit; rm -f fd_above_limit" > $dossier/${n}a 2> $dossier/${n}ae
@@ -592,7 +592,7 @@ ft_test_redirection()
 		if [ "$inputuser" == "y" ]; then printf "Log file: $dossier/$n \n"; exit; fi
 	fi
 	n=$((n+1))
-	printf "\n"
+	# printf "\n"
 
 
 	printf "\nTester heredoc [y/N]? "
@@ -627,7 +627,7 @@ ft_test_redirection()
 		fi
 		n=$((n+1))
 	fi
-	printf "\n"
+	# printf "\n"
 
 	# Test &>
 	test_name="Test &>"
@@ -649,7 +649,7 @@ ft_test_redirection()
 		if [ "$inputuser" == "y" ]; then printf "Log file: $dossier/$n \n"; exit; fi
 	fi
 	n=$((n+1))
-	printf "\n"
+	# printf "\n"
 
 	# Test >&
 	test_name="Test >&"
@@ -665,7 +665,7 @@ ft_test_redirection()
 	else
 		printf "$test_name: ${CRE}No$NO\n"
 		cat $dossier/${n}a
-		printf "\n"
+		# printf "\n"
 		cat $dossier/${n}b
 		#printf "$first\n"
 		error=$((error+1))
@@ -674,7 +674,7 @@ ft_test_redirection()
 		if [ "$inputuser" == "y" ]; then printf "Log file: $dossier/$n \n"; exit; fi
 	fi
 	n=$((n+1))
-	printf "\n"
+	# printf "\n"
 
 	# Test 2>&-
 	test_name="Test 2>&-"
@@ -699,7 +699,7 @@ ft_test_redirection()
 		if [ "$inputuser" == "y" ]; then printf "Log file: $dossier/$n \n"; exit; fi
 	fi
 	n=$((n+1))
-	printf "\n"
+	# printf "\n"
 
 	# Test 2>&1
 	test_name="Test 2>&1"
@@ -721,7 +721,7 @@ ft_test_redirection()
 		if [ "$inputuser" == "y" ]; then printf "Log file: $dossier/$n \n"; exit; fi
 	fi
 	n=$((n+1))
-	printf "\n"
+	# printf "\n"
 
 
 	printf "${CRE}<& et &< peut etre a gerer$NO\n"
@@ -759,7 +759,7 @@ ft_test_multiple_command()
 		if [ "$inputuser" == "y" ]; then printf "Log file: $dossier/$n \n"; exit; fi
 	fi
 	n=$((n+1))
-	printf "\n"
+	# printf "\n"
 }
 
 ft_test_pipe()
@@ -790,7 +790,7 @@ ft_test_pipe()
 		if [ "$inputuser" == "y" ]; then printf "Log file: $dossier/$n \n"; exit; fi
 	fi
 	n=$((n+1))
-	printf "\n"
+	# printf "\n"
 
 	# Test multiple pipe
 	test_name="Test multiple pipe"
@@ -814,7 +814,7 @@ ft_test_pipe()
 		if [ "$inputuser" == "y" ]; then printf "Log file: $dossier/$n \n"; exit; fi
 	fi
 	n=$((n+1))
-	printf "\n"
+	# printf "\n"
 
 	test_name="Test more complicate multiple pipe"
 	rm -rf test
@@ -844,7 +844,7 @@ ft_test_pipe()
 		if [ "$inputuser" == "y" ]; then printf "Log file: $dossier/$n \n"; exit; fi
 	fi
 	n=$((n+1))
-	printf "\n"
+	# printf "\n"
 
 	# Test base64 /dev/urandom | head -c 1000 | wc -c
 	test_name="Test base64 /dev/urandom | head -c 1000 | wc -c"
@@ -868,7 +868,7 @@ ft_test_pipe()
 		if [ "$inputuser" == "y" ]; then printf "Log file: $dossier/$n \n"; exit; fi
 	fi
 	n=$((n+1))
-	printf "\n"
+	# printf "\n"
 }
 
 # cd /tmp; sort << EOF 
@@ -908,7 +908,7 @@ ft_env()
 		if [ "$inputuser" == "y" ]; then printf "Log file: $dossier/$n \n"; exit; fi
 	fi
 	n=$((n+1))
-	printf "\n"
+	# printf "\n"
 
 	test_name="Test env vide /bin/ls"
 	env -i ./$name "/bin/ls" > $dossier/${n}a  2> $dossier/${n}ae
@@ -931,7 +931,7 @@ ft_env()
 		if [ "$inputuser" == "y" ]; then printf "Log file: $dossier/$n \n"; exit; fi
 	fi
 	n=$((n+1))
-	printf "\n"
+	# printf "\n"
 
 	test_name="Test env vide ls | wc"
 	env -i ./$name "ls | wc" > $dossier/${n}a  2> $dossier/${n}ae
@@ -956,7 +956,7 @@ ft_env()
 		if [ "$inputuser" == "y" ]; then printf "Log file: $dossier/$n \n"; exit; fi
 	fi
 	n=$((n+1))
-	printf "\n"
+	# printf "\n"
 
 	test_name="Test env vide /bin/ls | /usr/bin/wc"
 	env -i ./$name "/bin/ls | /usr/bin/wc" > $dossier/${n}a  2> $dossier/${n}ae
@@ -979,7 +979,7 @@ ft_env()
 		if [ "$inputuser" == "y" ]; then printf "Log file: $dossier/$n \n"; exit; fi
 	fi
 	n=$((n+1))
-	printf "\n"
+	# printf "\n"
 
 	test_name="Test setenv sans argument"
 	./$name "setenv" > $dossier/${n}a 2> $dossier/${n}ae
@@ -994,7 +994,7 @@ ft_env()
 		printf "$test_name: ${CGR}Ok$NO\n"
 	fi
 	n=$((n+1))
-	printf "\n"
+	# printf "\n"
 
 	test_name="Test unsetenv sans argument"
 	./$name "unsetenv" > $dossier/${n}a  2> $dossier/${n}ae
@@ -1009,7 +1009,7 @@ ft_env()
 		printf "$test_name: ${CGR}Ok$NO\n"
 	fi
 	n=$((n+1))
-	printf "\n"
+	# printf "\n"
 
 	test_name="Test env"
 	./$name "env" > $dossier/${n}a  2> $dossier/${n}ae
@@ -1033,7 +1033,7 @@ ft_env()
 		fi
 	fi
 	n=$((n+1))
-	printf "\n"
+	# printf "\n"
 
 	test_name="Test env vide"
 	env -i ./$name "env" > $dossier/${n}a  2> $dossier/${n}ae
@@ -1059,7 +1059,7 @@ ft_env()
 		fi
 	fi
 	n=$((n+1))
-	printf "\n"
+	# printf "\n"
 
 	test_name="Test setenv add key"
 	env -i ./$name "setenv toto tata" "env"> $dossier/${n}a  2> $dossier/${n}ae
@@ -1089,7 +1089,7 @@ ft_env()
 		fi
 	fi
 	n=$((n+1))
-	printf "\n"
+	# printf "\n"
 
 	test_name="Test setenv add key and remove with unsetenv"
 	env -i ./$name "setenv toto tata" "unsetenv toto" "env"> $dossier/${n}a  2> $dossier/${n}ae
@@ -1122,7 +1122,7 @@ ft_env()
 		fi
 	fi
 	n=$((n+1))
-	printf "\n"
+	# printf "\n"
 
 	test_name="Test binaire env"
 	./$name "setenv ok gg" "env"> $dossier/${n}a 2> $dossier/${n}ae
@@ -1145,7 +1145,7 @@ ft_env()
 		if [ "$inputuser" == "y" ]; then printf "Log file: $dossier/$n \n"; exit; fi
 	fi
 	n=$((n+1))
-	printf "\n"
+	# printf "\n"
 
 }
 
@@ -1177,7 +1177,7 @@ ft_path()
 		if [ "$inputuser" == "y" ]; then printf "Log file: $dossier/$n \n"; exit; fi
 	fi
 	n=$((n+1))
-	printf "\n"
+	# printf "\n"
 }
 
 ft_test_variable()
@@ -1207,7 +1207,7 @@ ft_test_variable()
 		if [ "$inputuser" == "y" ]; then printf "Log file: $dossier/$n \n"; exit; fi
 	fi
 	n=$((n+1))
-	printf "\n"
+	# printf "\n"
 
 	test_name="Test var \$TERM\$TERM"
 	./$name "echo \$TERM\$TERM" > $dossier/${n}a  2> $dossier/${n}ae
@@ -1230,7 +1230,7 @@ ft_test_variable()
 		if [ "$inputuser" == "y" ]; then printf "Log file: $dossier/$n \n"; exit; fi
 	fi
 	n=$((n+1))
-	printf "\n"
+	# printf "\n"
 
 	test_name="Test \$TERM/\$TERM"
 	./$name "echo \$TERM/\$TERM" > $dossier/${n}a  2> $dossier/${n}ae
@@ -1253,7 +1253,7 @@ ft_test_variable()
 		if [ "$inputuser" == "y" ]; then printf "Log file: $dossier/$n \n"; exit; fi
 	fi
 	n=$((n+1))
-	printf "\n"
+	# printf "\n"
 
 	test_name="Test \$TERM@\$TERM"
 	./$name "echo \$TERM@\$TERM" > $dossier/${n}a  2> $dossier/${n}ae
@@ -1276,7 +1276,7 @@ ft_test_variable()
 		if [ "$inputuser" == "y" ]; then printf "Log file: $dossier/$n \n"; exit; fi
 	fi
 	n=$((n+1))
-	printf "\n"
+	# printf "\n"
 
 	test_name="Test var \${TERM}"
 	./$name "echo \${TERM}" > $dossier/${n}a  2> $dossier/${n}ae
@@ -1299,7 +1299,7 @@ ft_test_variable()
 		if [ "$inputuser" == "y" ]; then printf "Log file: $dossier/$n \n"; exit; fi
 	fi
 	n=$((n+1))
-	printf "\n"
+	# printf "\n"
 
 	test_name="Test var \${TERM#xt}"
 	./$name "echo \${TERM#xt}" > $dossier/${n}a  2> $dossier/${n}ae
@@ -1322,7 +1322,7 @@ ft_test_variable()
 		if [ "$inputuser" == "y" ]; then printf "Log file: $dossier/$n \n"; exit; fi
 	fi
 	n=$((n+1))
-	printf "\n"
+	# printf "\n"
 
 	test_name="Test var \${TERM#\$TERM}"
 	./$name "echo \${TERM#\$TERM}" > $dossier/${n}a  2> $dossier/${n}ae
@@ -1345,7 +1345,7 @@ ft_test_variable()
 		if [ "$inputuser" == "y" ]; then printf "Log file: $dossier/$n \n"; exit; fi
 	fi
 	n=$((n+1))
-	printf "\n"
+	# printf "\n"
 
 	test_name="Test var \${TERM#nimp}"
 	./$name "echo \${TERM#nimp}" > $dossier/${n}a  2> $dossier/${n}ae
@@ -1368,7 +1368,7 @@ ft_test_variable()
 		if [ "$inputuser" == "y" ]; then printf "Log file: $dossier/$n \n"; exit; fi
 	fi
 	n=$((n+1))
-	printf "\n"
+	# printf "\n"
 
 	test_name="Test var \${TERM#}"
 	./$name "echo \${TERM#}" > $dossier/${n}a  2> $dossier/${n}ae
@@ -1391,7 +1391,7 @@ ft_test_variable()
 		if [ "$inputuser" == "y" ]; then printf "Log file: $dossier/$n \n"; exit; fi
 	fi
 	n=$((n+1))
-	printf "\n"
+	# printf "\n"
 
 	test_name="Test var \${TERM%%color}"
 	./$name "echo \${TERM%color}" > $dossier/${n}a  2> $dossier/${n}ae
@@ -1414,7 +1414,7 @@ ft_test_variable()
 		if [ "$inputuser" == "y" ]; then printf "Log file: $dossier/$n \n"; exit; fi
 	fi
 	n=$((n+1))
-	printf "\n"
+	# printf "\n"
 
 	test_name="Test var \${TERM%%\$TERM}"
 	./$name "echo \${TERM%\$TERM}" > $dossier/${n}a  2> $dossier/${n}ae
@@ -1437,7 +1437,7 @@ ft_test_variable()
 		if [ "$inputuser" == "y" ]; then printf "Log file: $dossier/$n \n"; exit; fi
 	fi
 	n=$((n+1))
-	printf "\n"
+	# printf "\n"
 
 	test_name="Test var \${TERM%%nimp}"
 	./$name "echo \${TERM%nimp}" > $dossier/${n}a  2> $dossier/${n}ae
@@ -1460,7 +1460,7 @@ ft_test_variable()
 		if [ "$inputuser" == "y" ]; then printf "Log file: $dossier/$n \n"; exit; fi
 	fi
 	n=$((n+1))
-	printf "\n"
+	# printf "\n"
 
 	test_name="Test var \${TERM%%}"
 	./$name "echo \${TERM%}" > $dossier/${n}a  2> $dossier/${n}ae
@@ -1483,7 +1483,7 @@ ft_test_variable()
 		if [ "$inputuser" == "y" ]; then printf "Log file: $dossier/$n \n"; exit; fi
 	fi
 	n=$((n+1))
-	printf "\n"
+	# printf "\n"
 
 	test_name="Test var \${TERM%%xterm}"
 	./$name "echo \${TERM%xterm}" > $dossier/${n}a  2> $dossier/${n}ae
@@ -1506,7 +1506,7 @@ ft_test_variable()
 		if [ "$inputuser" == "y" ]; then printf "Log file: $dossier/$n \n"; exit; fi
 	fi
 	n=$((n+1))
-	printf "\n"
+	# printf "\n"
 
 	test_name="Test var \${TERM#\${TERM%%\$TERM}}"
 	./$name "echo \${TERM#\${TERM%\$TERM}}" > $dossier/${n}a  2> $dossier/${n}ae
@@ -1529,7 +1529,7 @@ ft_test_variable()
 		if [ "$inputuser" == "y" ]; then printf "Log file: $dossier/$n \n"; exit; fi
 	fi
 	n=$((n+1))
-	printf "\n"
+	# printf "\n"
 
 	test_name="Test var \${#TERM}"
 	./$name "echo \${#TERM}" > $dossier/${n}a  2> $dossier/${n}ae
@@ -1552,7 +1552,7 @@ ft_test_variable()
 		if [ "$inputuser" == "y" ]; then printf "Log file: $dossier/$n \n"; exit; fi
 	fi
 	n=$((n+1))
-	printf "\n"
+	# printf "\n"
 
 	test_name="Test var \${#notexist}"
 	./$name "echo \${#notexist}" > $dossier/${n}a  2> $dossier/${n}ae
@@ -1575,7 +1575,7 @@ ft_test_variable()
 		if [ "$inputuser" == "y" ]; then printf "Log file: $dossier/$n \n"; exit; fi
 	fi
 	n=$((n+1))
-	printf "\n"
+	# printf "\n"
 
 	test_name="Test var \${#}"
 	./$name "echo \${#}" > $dossier/${n}a  2> $dossier/${n}ae
@@ -1598,7 +1598,7 @@ ft_test_variable()
 		if [ "$inputuser" == "y" ]; then printf "Log file: $dossier/$n \n"; exit; fi
 	fi
 	n=$((n+1))
-	printf "\n"
+	# printf "\n"
 
 	test_name="Test var \${TERM:-salut}"
 	./$name "echo \${TERM:-salut}" > $dossier/${n}a  2> $dossier/${n}ae
@@ -1621,7 +1621,7 @@ ft_test_variable()
 		if [ "$inputuser" == "y" ]; then printf "Log file: $dossier/$n \n"; exit; fi
 	fi
 	n=$((n+1))
-	printf "\n"
+	# printf "\n"
 
 	test_name="Test var \${TEddRM:-salut}"
 	./$name "echo \${TEddRM:-salut}" > $dossier/${n}a  2> $dossier/${n}ae
@@ -1644,7 +1644,7 @@ ft_test_variable()
 		if [ "$inputuser" == "y" ]; then printf "Log file: $dossier/$n \n"; exit; fi
 	fi
 	n=$((n+1))
-	printf "\n"
+	# printf "\n"
 
 	test_name="Test var \${:-salut}"
 	./$name "echo \${:-salut}" > $dossier/${n}a  2> $dossier/${n}ae
@@ -1668,7 +1668,7 @@ ft_test_variable()
 		if [ "$inputuser" == "y" ]; then printf "Log file: $dossier/$n \n"; exit; fi
 	fi
 	n=$((n+1))
-	printf "\n"
+	# printf "\n"
 
 	test_name="Test var \${TEddRM:-}"
 	./$name "echo \${TEddRM:-}" > $dossier/${n}a  2> $dossier/${n}ae
@@ -1691,7 +1691,7 @@ ft_test_variable()
 		if [ "$inputuser" == "y" ]; then printf "Log file: $dossier/$n \n"; exit; fi
 	fi
 	n=$((n+1))
-	printf "\n"
+	# printf "\n"
 
 	test_name="Test var \${:-}"
 	./$name "echo \${:-}" > $dossier/${n}a  2> $dossier/${n}ae
@@ -1715,7 +1715,7 @@ ft_test_variable()
 		if [ "$inputuser" == "y" ]; then printf "Log file: $dossier/$n \n"; exit; fi
 	fi
 	n=$((n+1))
-	printf "\n"
+	# printf "\n"
 
 	test_name="Test var \${:=}"
 	./$name "echo \${:=}" > $dossier/${n}a  2> $dossier/${n}ae
@@ -1739,7 +1739,7 @@ ft_test_variable()
 		if [ "$inputuser" == "y" ]; then printf "Log file: $dossier/$n \n"; exit; fi
 	fi
 	n=$((n+1))
-	printf "\n"
+	# printf "\n"
 
 	test_name="Test var \${:=coucou}"
 	./$name "echo \${:=coucou}" > $dossier/${n}a  2> $dossier/${n}ae
@@ -1763,7 +1763,7 @@ ft_test_variable()
 		if [ "$inputuser" == "y" ]; then printf "Log file: $dossier/$n \n"; exit; fi
 	fi
 	n=$((n+1))
-	printf "\n"
+	# printf "\n"
 
 	test_name="Test var \${TERM:=salut}"
 	./$name "echo \${TERM:=salut}" > $dossier/${n}a  2> $dossier/${n}ae
@@ -1786,7 +1786,7 @@ ft_test_variable()
 		if [ "$inputuser" == "y" ]; then printf "Log file: $dossier/$n \n"; exit; fi
 	fi
 	n=$((n+1))
-	printf "\n"
+	# printf "\n"
 
 	test_name="Test var \${TEARM:=salut}"
 	./$name "echo \${TEARM:=salut}" > $dossier/${n}a  2> $dossier/${n}ae
@@ -1809,7 +1809,7 @@ ft_test_variable()
 		if [ "$inputuser" == "y" ]; then printf "Log file: $dossier/$n \n"; exit; fi
 	fi
 	n=$((n+1))
-	printf "\n"
+	# printf "\n"
 
 	test_name="Test var \${:?}"
 	./$name "echo \${:?}" > $dossier/${n}a  2> $dossier/${n}ae
@@ -1833,7 +1833,7 @@ ft_test_variable()
 		if [ "$inputuser" == "y" ]; then printf "Log file: $dossier/$n \n"; exit; fi
 	fi
 	n=$((n+1))
-	printf "\n"
+	# printf "\n"
 
 	test_name="Test var \${:?coucou}"
 	./$name "echo \${:?coucou}" > $dossier/${n}a  2> $dossier/${n}ae
@@ -1857,7 +1857,7 @@ ft_test_variable()
 		if [ "$inputuser" == "y" ]; then printf "Log file: $dossier/$n \n"; exit; fi
 	fi
 	n=$((n+1))
-	printf "\n"
+	# printf "\n"
 
 	test_name="Test var \${TERM:?salut}"
 	./$name "echo \${TERM:?salut}" > $dossier/${n}a  2> $dossier/${n}ae
@@ -1880,11 +1880,11 @@ ft_test_variable()
 		if [ "$inputuser" == "y" ]; then printf "Log file: $dossier/$n \n"; exit; fi
 	fi
 	n=$((n+1))
-	printf "\n"
+	# printf "\n"
 
 	test_name="Test var \${TEARME:?salut}"
 	./$name "echo \${TEARME:?salut}" > $dossier/${n}a  2> $dossier/${n}ae
-	touch > $dossier/${n}b
+	touch $dossier/${n}b
 	echo "21sh: TEARME: salut" > $dossier/${n}be
 	if [ -f $dossier/${n}a ]; then
 		first=`diff $dossier/${n}a $dossier/${n}b`
@@ -1904,7 +1904,7 @@ ft_test_variable()
 		if [ "$inputuser" == "y" ]; then printf "Log file: $dossier/$n \n"; exit; fi
 	fi
 	n=$((n+1))
-	printf "\n"
+	# printf "\n"
 
 	unset $TEARME
 
@@ -1930,7 +1930,7 @@ ft_test_variable()
 		if [ "$inputuser" == "y" ]; then printf "Log file: $dossier/$n \n"; exit; fi
 	fi
 	n=$((n+1))
-	printf "\n"
+	# printf "\n"
 
 
 	test_name="Test var \${:+}"
@@ -1955,7 +1955,7 @@ ft_test_variable()
 		if [ "$inputuser" == "y" ]; then printf "Log file: $dossier/$n \n"; exit; fi
 	fi
 	n=$((n+1))
-	printf "\n"
+	# printf "\n"
 
 	test_name="Test var \${:+coucou}"
 	./$name "echo \${:+coucou}" > $dossier/${n}a  2> $dossier/${n}ae
@@ -1979,7 +1979,7 @@ ft_test_variable()
 		if [ "$inputuser" == "y" ]; then printf "Log file: $dossier/$n \n"; exit; fi
 	fi
 	n=$((n+1))
-	printf "\n"
+	# printf "\n"
 
 	export SALUT=dd
 
@@ -2004,7 +2004,7 @@ ft_test_variable()
 		if [ "$inputuser" == "y" ]; then printf "Log file: $dossier/$n \n"; exit; fi
 	fi
 	n=$((n+1))
-	printf "\n"
+	# printf "\n"
 
 	test_name="Test var \${TEARME:+salut}"
 	./$name "echo \${TEARME:+salut}" > $dossier/${n}a  2> $dossier/${n}ae
@@ -2027,7 +2027,7 @@ ft_test_variable()
 		if [ "$inputuser" == "y" ]; then printf "Log file: $dossier/$n \n"; exit; fi
 	fi
 	n=$((n+1))
-	printf "\n"
+	# printf "\n"
 
 	unset $TEARME
 	FFG=
@@ -2054,7 +2054,7 @@ ft_test_variable()
 		if [ "$inputuser" == "y" ]; then printf "Log file: $dossier/$n \n"; exit; fi
 	fi
 	n=$((n+1))
-	printf "\n"
+	# printf "\n"
 
 	test_name="Test var \$#"
 	./$name "echo \$#" > $dossier/${n}a  2> $dossier/${n}ae
@@ -2077,7 +2077,7 @@ ft_test_variable()
 		if [ "$inputuser" == "y" ]; then printf "Log file: $dossier/$n \n"; exit; fi
 	fi
 	n=$((n+1))
-	printf "\n"
+	# printf "\n"
 
 	test_name="Test var \$?"
 	./$name "echo \$?" > $dossier/${n}a  2> $dossier/${n}ae
@@ -2101,7 +2101,7 @@ ft_test_variable()
 		if [ "$inputuser" == "y" ]; then printf "Log file: $dossier/$n \n"; exit; fi
 	fi
 	n=$((n+1))
-	printf "\n"
+	# printf "\n"
 
 	test_name="Test var \$-"
 	./$name "echo \$-" > $dossier/${n}a  2> $dossier/${n}ae
@@ -2125,7 +2125,7 @@ ft_test_variable()
 		if [ "$inputuser" == "y" ]; then printf "Log file: $dossier/$n \n"; exit; fi
 	fi
 	n=$((n+1))
-	printf "\n"
+	# printf "\n"
 
 	test_name="Test var \$$"
 	./$name "echo \$$" > $dossier/${n}a  2> $dossier/${n}ae
@@ -2143,7 +2143,7 @@ ft_test_variable()
 		if [ "$inputuser" == "y" ]; then printf "Log file: $dossier/$n \n"; exit; fi
 	fi
 	n=$((n+1))
-	printf "\n"
+	# printf "\n"
 
 	test_name="Test var \$0"
 	./$name "echo \$0" > $dossier/${n}a  2> $dossier/${n}ae
@@ -2167,7 +2167,7 @@ ft_test_variable()
 		if [ "$inputuser" == "y" ]; then printf "Log file: $dossier/$n \n"; exit; fi
 	fi
 	n=$((n+1))
-	printf "\n"
+	# printf "\n"
 
 	test_name="Test var \$~"
 	./$name "echo \$~" > $dossier/${n}a  2> $dossier/${n}ae
@@ -2191,7 +2191,107 @@ ft_test_variable()
 		if [ "$inputuser" == "y" ]; then printf "Log file: $dossier/$n \n"; exit; fi
 	fi
 	n=$((n+1))
-	printf "\n"
+	# printf "\n"
+}
+
+ft_test_return_value()
+{
+	printf "\n\n========================\n"
+	printf "Test valeur de retour\n"
+	printf "========================\n"
+
+	test_name="Test ls ; echo \$?"
+	./$name "ls" "echo \$?"> $dossier/${n}a  2> $dossier/${n}ae
+	ls > $dossier/${n}b 2> $dossier/${n}be
+	echo $? >> $dossier/${n}b
+	if [ -f $dossier/${n}a ]; then
+		first=`diff $dossier/${n}a $dossier/${n}b`
+	else
+		first=""
+	fi
+	sec=`diff $dossier/${n}ae $dossier/${n}be`
+	if [ -f $dossier/${n}a -a -z "$first" -a -z "$sec" ]; then
+		printf "$test_name: ${CGR}Ok$NO\n"
+	else
+		printf "$test_name: ${CRE}No$NO\n"
+		cat $dossier/${n}a
+		printf "$sec\n"
+		error=$((error+1))
+		printf "\nQuitter [y/N]? "
+		read inputuser
+		if [ "$inputuser" == "y" ]; then printf "Log file: $dossier/$n \n"; exit; fi
+	fi
+	n=$((n+1))
+
+	test_name="Test ls -z ; echo \$?"
+	./$name "ls -z" "echo \$?"> $dossier/${n}a 2> $dossier/${n}ae
+	ls -z > $dossier/${n}b 2> $dossier/${n}be
+	echo $? >> $dossier/${n}b
+	if [ -f $dossier/${n}a ]; then
+		first=`diff $dossier/${n}a $dossier/${n}b`
+	else
+		first=""
+	fi
+	sec=`diff $dossier/${n}ae $dossier/${n}be`
+	if [ -f $dossier/${n}a -a -z "$first" -a -z "$sec" ]; then
+		printf "$test_name: ${CGR}Ok$NO\n"
+	else
+		printf "$test_name: ${CRE}No$NO\n"
+		cat $dossier/${n}a
+		printf "$sec\n"
+		error=$((error+1))
+		printf "\nQuitter [y/N]? "
+		read inputuser
+		if [ "$inputuser" == "y" ]; then printf "Log file: $dossier/$n \n"; exit; fi
+	fi
+	n=$((n+1))
+
+	test_name="Test command not found ; echo \$?"
+	./$name "nimp" "echo \$?"> $dossier/${n}a 2> $dossier/${n}ae
+	echo "127" > $dossier/${n}b
+	echo "21sh: command not found: nimp" > $dossier/${n}be
+	if [ -f $dossier/${n}a ]; then
+		first=`diff $dossier/${n}a $dossier/${n}b`
+	else
+		first=""
+	fi
+	sec=`diff $dossier/${n}ae $dossier/${n}be`
+	if [ -f $dossier/${n}a -a -z "$first" -a -z "$sec" ]; then
+		printf "$test_name: ${CGR}Ok$NO\n"
+	else
+		printf "$test_name: ${CRE}No$NO\n"
+		cat $dossier/${n}a
+		printf "$sec\n"
+		error=$((error+1))
+		printf "\nQuitter [y/N]? "
+		read inputuser
+		if [ "$inputuser" == "y" ]; then printf "Log file: $dossier/$n \n"; exit; fi
+	fi
+	n=$((n+1))
+
+	test_name="echo \${} ; echo \$?"
+	./$name "echo \${}" "echo \$?"> $dossier/${n}a 2> $dossier/${n}ae
+	echo "1" > $dossier/${n}b
+	echo "21sh: \${}: bad substitution" > $dossier/${n}be
+	if [ -f $dossier/${n}a ]; then
+		first=`diff $dossier/${n}a $dossier/${n}b`
+	else
+		first=""
+	fi
+	sec=`diff $dossier/${n}ae $dossier/${n}be`
+	if [ -f $dossier/${n}a -a -z "$first" -a -z "$sec" ]; then
+		printf "$test_name: ${CGR}Ok$NO\n"
+	else
+		printf "$test_name: ${CRE}No$NO\n"
+		cat $dossier/${n}a
+		printf "$sec\n"
+		error=$((error+1))
+		printf "\nQuitter [y/N]? "
+		read inputuser
+		if [ "$inputuser" == "y" ]; then printf "Log file: $dossier/$n \n"; exit; fi
+	fi
+	n=$((n+1))
+
 }
 
 ft_test_signaux()
@@ -2214,17 +2314,18 @@ printf "=============================\n"
 printf "|           DEBUT           |\n"
 printf "=============================\n"
 
-ft_test_basic
-ft_test_builtin
-ft_test_redirection
-ft_test_multiple_command
-ft_test_pipe
-ft_env
-ft_path
-ft_test_signaux
-ft_test_variable
+# ft_test_basic
+# ft_test_builtin
+# ft_test_redirection
+# ft_test_multiple_command
+# ft_test_pipe
+# ft_env
+# ft_path
+# ft_test_signaux
+ft_test_return_value
+# ft_test_variable
 
-
+printf "\n\n"
 if [ -f $dossier/valgrind.log ]; then
 	printf "Check leaks:\n"
 	cat /tmp/test/valgrind.log | grep -A 5 "LEAK"

@@ -20,9 +20,7 @@ int	check_last_command(void)
 	str = value_line_path("?", 0);
 	check = ft_atoi(str);
 	ft_strdel(&str);
-	if (check < 0)
-		return (-1);
-	return (0);
+	return (check);
 }
 
 int	check_is_exec(char *src, t_redirection *r)

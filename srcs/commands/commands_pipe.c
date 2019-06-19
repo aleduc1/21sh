@@ -112,6 +112,7 @@ int			ft_pipe(char **argv, t_token *token, int end_pipe)
 	if (check_last_command() == -1)
 	{
 		ft_arraydel(&cpy_argv);
+		gest_return(1);
 		return (-1);
 	}
 	r = fill_redirection(token);
