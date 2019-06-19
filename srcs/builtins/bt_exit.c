@@ -6,7 +6,7 @@
 /*   By: apruvost <apruvost@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/21 13:52:06 by apruvost          #+#    #+#             */
-/*   Updated: 2019/06/14 16:23:18 by apruvost         ###   ########.fr       */
+/*   Updated: 2019/06/19 17:10:55 by apruvost         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,7 @@ int				bt_exit(char **av)
 		ft_dprintf(2, "21sh: exit: too many arguments\n");
 		return (1);
 	}
+	ft_dprintf(2, "exit\n");
 	ft_dprintf(2, "21sh: exit: %s: numeric argument required\n", av[1]);
 	bt_exit_utils();
 	exit(255);
