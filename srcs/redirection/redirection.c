@@ -36,6 +36,11 @@ static void	redir_error(t_redirection *r)
 		dup2(r->error, STDERR_FILENO);
 }
 
+/*
+** dup2(src, new_fd);
+** if (verif_close(src))
+**	close(src);
+*/
 
 static void	other_redir(int src, int new_fd)
 {
@@ -48,7 +53,6 @@ static void	other_redir(int src, int new_fd)
 			close(new_fd);
 	}
 }
-
 
 static void	standard_redirection(t_redirection *r)
 {
