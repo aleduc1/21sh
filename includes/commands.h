@@ -24,6 +24,7 @@ int					add_process(char *(*cmd), int *returns_code,
 int					exec_fork(char **cmd, t_redirection *r);
 void				sighandler(int signum);
 int					ft_simple_command_env(char **argv, t_redirection *r);
+int					gest_error_path(char *cmd, t_redirection *r);
 
 /*
 ** commands.c

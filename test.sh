@@ -792,6 +792,31 @@ ft_test_pipe()
 	n=$((n+1))
 	# printf "\n"
 
+	# Test pipe error
+	test_name="Test pipe error"
+	./$name "/dev/null | wc" > $dossier/${n}a  2> $dossier/${n}ae
+	echo "       0       0       0" > $dossier/${n}b
+	echo "21sh: /dev/null: Permission denied" > $dossier/${n}be
+	if [ -f $dossier/${n}a ]; then
+		first=`diff $dossier/${n}a $dossier/${n}b`
+	else
+		first=""
+	fi
+	sec=`diff $dossier/${n}ae $dossier/${n}be`
+	if [ -f $dossier/${n}a -a -z "$first" -a -z "$sec" ]; then
+		printf "$test_name: ${CGR}Ok$NO\n"
+	else
+		printf "$test_name: ${CRE}No$NO\n"
+		printf "$first\n"
+		printf "$sec\n"
+		error=$((error+1))
+		printf "\nQuitter [y/N]? "
+		read inputuser
+		if [ "$inputuser" == "y" ]; then printf "Log file: $dossier/$n \n"; exit; fi
+	fi
+	n=$((n+1))
+	# printf "\n"
+
 	# Test multiple pipe
 	test_name="Test multiple pipe"
 	./$name "ls -r | sort | cat -e" > $dossier/${n}a  2> $dossier/${n}ae
@@ -1186,7 +1211,7 @@ ft_test_variable()
 	printf "Test variable\n"
 	printf "========================\n"
 
-	test_name="Test var"
+	test_name="Test var \$TERM"
 	./$name "echo \$TERM" > $dossier/${n}a  2> $dossier/${n}ae
 	echo $TERM > $dossier/${n}b  2> $dossier/${n}be
 	if [ -f $dossier/${n}a ]; then
@@ -1232,7 +1257,7 @@ ft_test_variable()
 	n=$((n+1))
 	# printf "\n"
 
-	test_name="Test \$TERM/\$TERM"
+	test_name="Test var \$TERM/\$TERM"
 	./$name "echo \$TERM/\$TERM" > $dossier/${n}a  2> $dossier/${n}ae
 	echo $TERM/$TERM > $dossier/${n}b  2> $dossier/${n}be
 	if [ -f $dossier/${n}a ]; then
@@ -1255,7 +1280,7 @@ ft_test_variable()
 	n=$((n+1))
 	# printf "\n"
 
-	test_name="Test \$TERM@\$TERM"
+	test_name="Test var \$TERM@\$TERM"
 	./$name "echo \$TERM@\$TERM" > $dossier/${n}a  2> $dossier/${n}ae
 	echo $TERM@$TERM > $dossier/${n}b  2> $dossier/${n}be
 	if [ -f $dossier${n}a ]; then
@@ -2269,10 +2294,127 @@ ft_test_return_value()
 	fi
 	n=$((n+1))
 
-	test_name="echo \${} ; echo \$?"
+	test_name="Test echo \${} ; echo \$?"
 	./$name "echo \${}" "echo \$?"> $dossier/${n}a 2> $dossier/${n}ae
 	echo "1" > $dossier/${n}b
 	echo "21sh: \${}: bad substitution" > $dossier/${n}be
+	if [ -f $dossier/${n}a ]; then
+		first=`diff $dossier/${n}a $dossier/${n}b`
+	else
+		first=""
+	fi
+	sec=`diff $dossier/${n}ae $dossier/${n}be`
+	if [ -f $dossier/${n}a -a -z "$first" -a -z "$sec" ]; then
+		printf "$test_name: ${CGR}Ok$NO\n"
+	else
+		printf "$test_name: ${CRE}No$NO\n"
+		cat $dossier/${n}a
+		printf "$sec\n"
+		error=$((error+1))
+		printf "\nQuitter [y/N]? "
+		read inputuser
+		if [ "$inputuser" == "y" ]; then printf "Log file: $dossier/$n \n"; exit; fi
+	fi
+	n=$((n+1))
+
+	test_name="Test /dev/null ; echo \$?"
+	./$name "/dev/null" "echo \$?"> $dossier/${n}a 2> $dossier/${n}ae
+	echo "126" > $dossier/${n}b
+	echo "21sh: /dev/null: Permission denied" > $dossier/${n}be
+	if [ -f $dossier/${n}a ]; then
+		first=`diff $dossier/${n}a $dossier/${n}b`
+	else
+		first=""
+	fi
+	sec=`diff $dossier/${n}ae $dossier/${n}be`
+	if [ -f $dossier/${n}a -a -z "$first" -a -z "$sec" ]; then
+		printf "$test_name: ${CGR}Ok$NO\n"
+	else
+		printf "$test_name: ${CRE}No$NO\n"
+		cat $dossier/${n}a
+		printf "$sec\n"
+		error=$((error+1))
+		printf "\nQuitter [y/N]? "
+		read inputuser
+		if [ "$inputuser" == "y" ]; then printf "Log file: $dossier/$n \n"; exit; fi
+	fi
+	n=$((n+1))
+
+	test_name="Test /dev/null | wc ; echo \$?"
+	./$name "/dev/null | wc" "echo \$?"> $dossier/${n}a 2> $dossier/${n}ae
+	echo "       0       0       0" > $dossier/${n}b
+	echo "0" >> $dossier/${n}b
+	echo "21sh: /dev/null: Permission denied" > $dossier/${n}be
+	if [ -f $dossier/${n}a ]; then
+		first=`diff $dossier/${n}a $dossier/${n}b`
+	else
+		first=""
+	fi
+	sec=`diff $dossier/${n}ae $dossier/${n}be`
+	if [ -f $dossier/${n}a -a -z "$first" -a -z "$sec" ]; then
+		printf "$test_name: ${CGR}Ok$NO\n"
+	else
+		printf "$test_name: ${CRE}No$NO\n"
+		cat $dossier/${n}a
+		printf "$sec\n"
+		error=$((error+1))
+		printf "\nQuitter [y/N]? "
+		read inputuser
+		if [ "$inputuser" == "y" ]; then printf "Log file: $dossier/$n \n"; exit; fi
+	fi
+	n=$((n+1))
+
+	test_name="Test ls | /dev/null ; echo \$?"
+	./$name "ls | /dev/null" "echo \$?"> $dossier/${n}a 2> $dossier/${n}ae
+	echo "126" > $dossier/${n}b
+	echo "21sh: /dev/null: Permission denied" > $dossier/${n}be
+	if [ -f $dossier/${n}a ]; then
+		first=`diff $dossier/${n}a $dossier/${n}b`
+	else
+		first=""
+	fi
+	sec=`diff $dossier/${n}ae $dossier/${n}be`
+	if [ -f $dossier/${n}a -a -z "$first" -a -z "$sec" ]; then
+		printf "$test_name: ${CGR}Ok$NO\n"
+	else
+		printf "$test_name: ${CRE}No$NO\n"
+		cat $dossier/${n}a
+		printf "$sec\n"
+		error=$((error+1))
+		printf "\nQuitter [y/N]? "
+		read inputuser
+		if [ "$inputuser" == "y" ]; then printf "Log file: $dossier/$n \n"; exit; fi
+	fi
+	n=$((n+1))
+
+	test_name="Test ls | nimp ; echo \$?"
+	./$name "ls | nimp" "echo \$?"> $dossier/${n}a 2> $dossier/${n}ae
+	echo "127" > $dossier/${n}b
+	echo "21sh: command not found: nimp" > $dossier/${n}be
+	if [ -f $dossier/${n}a ]; then
+		first=`diff $dossier/${n}a $dossier/${n}b`
+	else
+		first=""
+	fi
+	sec=`diff $dossier/${n}ae $dossier/${n}be`
+	if [ -f $dossier/${n}a -a -z "$first" -a -z "$sec" ]; then
+		printf "$test_name: ${CGR}Ok$NO\n"
+	else
+		printf "$test_name: ${CRE}No$NO\n"
+		cat $dossier/${n}a
+		printf "$sec\n"
+		error=$((error+1))
+		printf "\nQuitter [y/N]? "
+		read inputuser
+		if [ "$inputuser" == "y" ]; then printf "Log file: $dossier/$n \n"; exit; fi
+	fi
+	n=$((n+1))
+
+	test_name="Test nimp | wc ; echo \$?"
+	./$name "nimp | wc" "echo \$?"> $dossier/${n}a 2> $dossier/${n}ae
+	echo "       0       0       0" > $dossier/${n}b
+	echo "0" >> $dossier/${n}b
+	echo "21sh: command not found: nimp" > $dossier/${n}be
 	if [ -f $dossier/${n}a ]; then
 		first=`diff $dossier/${n}a $dossier/${n}b`
 	else
@@ -2300,7 +2442,7 @@ ft_test_signaux()
 	printf "Test Signaux\n"
 	printf "========================\n"
 
-	printf "$CRE A faire\n\n$NO"
+	printf "$CRE A faire\n$NO"
 
 }
 
@@ -2314,22 +2456,18 @@ printf "=============================\n"
 printf "|           DEBUT           |\n"
 printf "=============================\n"
 
-# ft_test_basic
-# ft_test_builtin
-# ft_test_redirection
-# ft_test_multiple_command
-# ft_test_pipe
-# ft_env
-# ft_path
-# ft_test_signaux
+ft_test_basic
+ft_test_builtin
+ft_test_redirection
+ft_test_multiple_command
+ft_test_pipe
+ft_env
+ft_path
+ft_test_signaux
 ft_test_return_value
-# ft_test_variable
+ft_test_variable
 
-printf "\n\n"
-if [ -f $dossier/valgrind.log ]; then
-	printf "Check leaks:\n"
-	cat /tmp/test/valgrind.log | grep -A 5 "LEAK"
-fi
+printf "\n"
 
 printf "\nTester la norme [y/N]? "
 read inputuser
@@ -2338,6 +2476,11 @@ if [ "$inputuser" == "y" ]; then
 	printf "\n\nAuthor:\n"
 	cat -e author
 fi
-printf "\n\n"
+printf "\n"
+
+if [ -f $dossier/valgrind.log ]; then
+	echo "Log valgrind: $dossier/valgrind.log"
+fi
+printf "\n"
 
 printf "${CRE}Error: $error$NO\n"

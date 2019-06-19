@@ -36,20 +36,21 @@ static void	redir_error(t_redirection *r)
 		dup2(r->error, STDERR_FILENO);
 }
 
-// static void	other_redir(int src, int new_fd)
-// {
-// 	if (src != new_fd)
-// 	{
-// 		ft_printf("base = %d, new = %d\n", src, new_fd);
-// 		dup2(src, new_fd);
-// 		if (verif_close(src))
-// 			close(src);
-		
-// 		// dup2(new_fd, src);
-// 		// if (verif_close(new_fd))
-// 		// 	close(new_fd);
-// 	}
-// }
+/*
+** static void	other_redir(int src, int new_fd)
+** {
+** 	if (src != new_fd)
+** 	{
+** 		ft_printf("base = %d, new = %d\n", src, new_fd);
+** 		dup2(src, new_fd);
+** 		if (verif_close(src))
+** 			close(src);		
+** 		// dup2(new_fd, src);
+** 		// if (verif_close(new_fd))
+** 		// 	close(new_fd);
+** 	}
+** }
+*/
 
 static void	standard_redirection(t_redirection *r)
 {

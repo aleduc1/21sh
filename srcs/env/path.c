@@ -16,6 +16,15 @@
 ** split is all the path
 */
 
+static void	check_exec_path(char **str)
+{
+	if (access(*str, X_OK) >= 0)
+		return ;
+	gest_return(-6);
+	ft_strdel(str);
+	return ;
+}
+
 static char	*path_of_commands(char *command, char **split)
 {
 	int		i;
@@ -29,9 +38,10 @@ static char	*path_of_commands(char *command, char **split)
 	{
 		dst = ft_strjoin(split[i], "/");
 		str = ft_strjoin(dst, command);
-		if (access(str, F_OK) >= 0 && access(str, X_OK) >= 0)
+		if (access(str, F_OK) >= 0)
 		{
 			ft_strdel(&dst);
+			check_exec_path(&str);
 			return (str);
 		}
 		ft_strdel(&str);
@@ -70,7 +80,11 @@ char		*is_in_path(char *command)
 	result = check_env_path(command);
 	if (result)
 		return (result);
-	if (access(command, F_OK) >= 0 && access(command, X_OK) >= 0)
+	if (access(command, F_OK) >= 0)
+	{
 		result = ft_strdup(command);
+		check_exec_path(&result);
+		return (result);
+	}
 	return (result);
 }

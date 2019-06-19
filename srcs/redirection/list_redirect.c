@@ -39,9 +39,6 @@ int			ft_create_maillon_redirect(t_redirect *r, int base, int new_fd)
 		r = ft_init_redirect();
 	if (r)
 	{
-		// if (base == 1 && new_fd == 2)
-		// 	base = 0;
-		// ft_printf("2: base = %d, new = %d\n", base, new_fd);
 		r->base = base;
 		r->new_fd = new_fd;
 		if (last)

@@ -34,11 +34,11 @@ int	check_is_exec(char *src, t_redirection *r)
 		|| ft_strequ(src, "echo") || ft_strequ(src, "cd"))
 		return (1);
 	str = is_in_path(src);
-	if (str)
+	if (!str)
 	{
-		ft_strdel(&str);
-		return (1);
+		gest_return(gest_error_path(src, r));
+		return (0);
 	}
-	ft_dprintf(r->error, "21sh: command not found: %s\n", src);
-	return (0);
+	ft_strdel(&str);
+	return (1);
 }

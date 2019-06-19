@@ -21,8 +21,7 @@ int			add_pipe_process(char **cmd, t_redirection *r)
 	str = is_in_path(cmd[0]);
 	if (!str)
 	{
-		ft_dprintf(r->error, "21sh: command not found: %s\n", cmd[0]);
-		gest_return(127);
+		gest_return(gest_error_path(cmd[0], r));
 		return (-1);
 	}
 	pid = fork();
@@ -41,6 +40,17 @@ int			add_pipe_process(char **cmd, t_redirection *r)
 	return (pid);
 }
 
+static int	exec_is_not_end(char **argv, int fd[2], t_redirection *r, int pid)
+{
+	dup2(fd[1], STDOUT_FILENO);
+	if (r->out == STDOUT_FILENO)
+		r->out = fd[1];
+	if ((pid = is_builtin(argv, r)) == -1)
+		pid = add_pipe_process(argv, r);
+	execve("/bin/test", NULL, NULL);
+	return (pid);
+}
+
 static int	is_not_end(char **argv, int in, t_redirection *r)
 {
 	int		fd[2];
@@ -48,21 +58,20 @@ static int	is_not_end(char **argv, int in, t_redirection *r)
 
 	sig_handler();
 	pipe(fd);
-	if (check_is_exec(argv[0], r) == 0)
-		return (-1);
 	if (r->in == STDIN_FILENO)
 		r->in = in;
 	r->fd_pipe = fd[0];
+	if (check_is_exec(argv[0], r) == 0)
+	{
+		sig_ign();
+		if (in != 0)
+			close(in);
+		close(fd[1]);
+		return (fd[0]);
+	}
 	pid = fork();
 	if (pid == 0)
-	{
-		dup2(fd[1], STDOUT_FILENO);
-		if (r->out == STDOUT_FILENO)
-			r->out = fd[1];
-		if ((pid = is_builtin(argv, r)) == -1)
-			pid = add_pipe_process(argv, r);
-		execve("/bin/test", NULL, NULL);
-	}
+		pid = exec_is_not_end(argv, fd, r, pid);
 	sig_ign();
 	if (in != 0)
 		close(in);
@@ -75,11 +84,11 @@ static int	is_end(char **argv, int in, t_redirection *r)
 	int	pid;
 
 	sig_handler();
-	if (check_is_exec(argv[0], r) == 0)
-		return (-1);
 	if (r->in == STDIN_FILENO)
 		r->in = in;
 	r->fd_pipe = -1;
+	if (check_is_exec(argv[0], r) == 0)
+		return (-1);
 	if ((pid = is_builtin(argv, r)) == -1)
 		pid = add_pipe_process(argv, r);
 	sig_ign();
@@ -93,11 +102,13 @@ static int	prepare_is_end(char **cpy_argv, int in, t_redirection *r)
 
 	ret = 0;
 	in = is_end(cpy_argv, in, r);
-	if (in != -1)
-		gest_return(in);
-	in = 0;
 	while (waitpid(in, &ret, 0) != -1)
 		continue ;
+	if (in != -1 && (!(ret == 2 && check_last_command() == 0)))
+		gest_return(ret);
+	else if (ret == 2 && check_last_command() == 0)
+		gest_return(130);
+	in = 0;
 	return (in);
 }
 

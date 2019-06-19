@@ -116,14 +116,6 @@ int			close_file_command(t_lex *lex, t_redirection **r)
 
 int			open_file_command(t_redir *redir, t_pos *pos)
 {
-	// ft_printf("%s, %s\n", redir->src_fd[0], redir->src_fd[1], redir->dest_fd);
-	// ft_printf("filename = %s\n", redir->filename);
-	// if (ft_strequ(redir->src_fd[0], "0"))
-	// {
-	// 	ft_strdel(&redir->src_fd[0]);
-	// 	redir->src_fd[0] = ft_strdup("9");
-	// }
-	
 	if (redir->type == GREAT || redir->type == DGREAT || redir->type == LESS
 		|| redir->type == AMPGREAT || redir->type == AMPLESS
 		|| redir->type == LESSAMP || redir->type == GREATAMP)

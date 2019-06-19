@@ -73,7 +73,6 @@ static void		ft_apply_redirection(t_lex *h, t_redirection *r)
 	{
 		num_src = ft_atoi(h->redir->src_fd[i]);
 		num_dest = h->redir->dest_fd ? ft_atoi(h->redir->dest_fd) : -1;
-	//	ft_printf("1: num_src = %d, num_dest = %d\n", num_src, num_dest);
 		ft_apply_one_redirection(r, num_src, num_dest);
 	}
 }

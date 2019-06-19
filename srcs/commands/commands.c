@@ -36,7 +36,8 @@ int			ft_simple_command(char **argv, t_token *token)
 	if ((verif = is_builtin(cpy_argv, r)) == -1)
 		verif = exec_fork(cpy_argv, r);
 	close_file_command(token->command, &r);
-	gest_return(verif);
+	if (!(verif == 2 && check_last_command() == 130))
+		gest_return(verif);
 	ft_arraydel(&cpy_argv);
 	return (verif);
 }

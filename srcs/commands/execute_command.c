@@ -15,7 +15,19 @@
 void		sighandler(int signum)
 {
 	(void)signum;
+	gest_return(130);
 	ft_putchar('\n');
+}
+
+int			gest_error_path(char *cmd, t_redirection *r)
+{
+	if (check_last_command() == -6)
+	{
+		ft_dprintf(r->error, "21sh: %s: Permission denied\n", cmd);
+		return (126);
+	}
+	ft_dprintf(r->error, "21sh: command not found: %s\n", cmd);
+	return (127);
 }
 
 int			add_process(char **cmd, int *returns_code, t_redirection *r)
@@ -26,8 +38,7 @@ int			add_process(char **cmd, int *returns_code, t_redirection *r)
 
 	if (!(str = is_in_path(cmd[0])))
 	{
-		(*returns_code) = 127;
-		ft_dprintf(r->error, "21sh: command not found: %s\n", cmd[0]);
+		(*returns_code) = gest_error_path(cmd[0], r);
 		return (*returns_code);
 	}
 	env = create_list_env(get_env(0, NULL), 1);
