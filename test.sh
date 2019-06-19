@@ -228,6 +228,30 @@ ft_test_basic()
 	fi
 	n=$((n+1))
 	# printf "\n"
+
+	# Test touch riri;rm riri; cat riri 2>&-
+	test_name="Test touch riri;rm riri; cat riri 2>&-"
+	./$name "touch riri;rm riri; cat riri 2>&-" > $dossier/${n}a 2> $dossier/${n}ae
+	touch $dossier/${n}b
+	touch $dossier/${n}ae
+	if [ -f $dossier/${n}a ]; then
+		first=`diff $dossier/${n}a $dossier/${n}b`
+	else
+		first=""
+	fi
+	sec=`diff $dossier/${n}ae $dossier/${n}be`
+	if [ -f $dossier/${n}a -a -z "$first" -a -z "$sec" ]; then
+		printf "$test_name: ${CGR}Ok$NO\n"
+	else
+		printf "$test_name: ${CRE}No$NO\n"
+		printf "$first\n"
+		printf "$sec\n"
+		error=$((error+1))
+		printf "\nQuitter [y/N]? "
+		read inputuser
+		if [ "$inputuser" == "y" ]; then printf "Log file: $dossier/$n \n"; exit; fi
+	fi
+	n=$((n+1))
 }
 
 ft_test_builtin()
@@ -724,7 +748,7 @@ ft_test_redirection()
 	# printf "\n"
 
 
-	printf "${CRE}<& et &< peut etre a gerer$NO\n"
+	printf "${CRE}<& a gerer et &< n'existe pas$NO\n"
 }
 
 ft_test_multiple_command()
@@ -2436,6 +2460,22 @@ ft_test_return_value()
 
 }
 
+ft_test_parser()
+{
+	printf "\n\n========================\n"
+	printf "Test Parser\n"
+	printf "========================\n"
+
+
+	# ls |||||||||||| wc
+	# ls || wc
+	# ls | | wc
+	# >>
+	# <<
+	printf "$CRE A faire\n$NO"
+
+}
+
 ft_test_signaux()
 {
 	printf "\n\n========================\n"
@@ -2464,6 +2504,7 @@ ft_test_pipe
 ft_env
 ft_path
 ft_test_signaux
+ft_test_parser
 ft_test_return_value
 ft_test_variable
 
