@@ -189,6 +189,7 @@ int					ft_fd_redirect_exist(t_redirect *r, int base);
 ** signal.c
 */
 
+void				sighandler(int signum);
 void				sig_handler(void);
 void				sig_dfl(void);
 void				sig_ign(void);

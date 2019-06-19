@@ -12,13 +12,6 @@
 
 #include "commands.h"
 
-void		sighandler(int signum)
-{
-	(void)signum;
-	gest_return(130);
-	ft_putchar('\n');
-}
-
 int			gest_error_path(char *cmd, t_redirection *r)
 {
 	if (check_last_command() == -6)
@@ -54,6 +47,34 @@ int			add_process(char **cmd, int *returns_code, t_redirection *r)
 		exit(pid);
 	}
 	ft_arraydel(&env);
+	ft_strdel(&str);
+	return (pid);
+}
+
+int			add_pipe_process(char **cmd, t_redirection *r)
+{
+	pid_t	pid;
+	char	**environ;
+	char	*str;
+
+	str = is_in_path(cmd[0]);
+	if (!str)
+	{
+		gest_return(gest_error_path(cmd[0], r));
+		return (-1);
+	}
+	pid = fork();
+	environ = create_list_env(get_env(0, NULL), 0);
+	if (pid == 0)
+	{
+		sig_dfl();
+		redirection_fd(r);
+		execve(str, cmd, environ);
+		ft_dprintf(r->error, "21sh: command not found: %s\n", cmd[0]);
+		execve("/bin/test", NULL, NULL);
+		exit(0);
+	}
+	ft_arraydel(&environ);
 	ft_strdel(&str);
 	return (pid);
 }

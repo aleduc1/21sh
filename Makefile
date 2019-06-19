@@ -141,6 +141,7 @@ SRCS_NAMES = main.c \
 			 builtin_cd_verif.c\
 			 list_redirect.c\
 			 redirection.c\
+			 redirection_bis.c\
 			 signal.c\
 			 path.c\
 			 parameter_expansion.c\

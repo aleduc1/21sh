@@ -11,48 +11,7 @@
 /* ************************************************************************** */
 
 #include "env.h"
-
-/*
-** in -> STDIN_FILENO
-** out -> STDOUT_FILENO
-** error -> STDERR_FILLENO
-*/
-
-static void	redir_in(t_redirection *r)
-{
-	if (r->in != STDIN_FILENO)
-		dup2(r->in, STDIN_FILENO);
-}
-
-static void	redir_out(t_redirection *r)
-{
-	if (r->out != STDOUT_FILENO)
-		dup2(r->out, STDOUT_FILENO);
-}
-
-static void	redir_error(t_redirection *r)
-{
-	if (r->error != STDERR_FILENO)
-		dup2(r->error, STDERR_FILENO);
-}
-
-/*
-** dup2(src, new_fd);
-** if (verif_close(src))
-**	close(src);
-*/
-
-static void	other_redir(int src, int new_fd)
-{
-	if (new_fd == -1)
-		return ;
-	if (src != new_fd)
-	{
-		dup2(new_fd, src);
-		if (verif_close(new_fd))
-			close(new_fd);
-	}
-}
+#include "commands.h"
 
 static void	standard_redirection(t_redirection *r)
 {

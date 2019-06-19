@@ -22,9 +22,9 @@
 int					add_process(char *(*cmd), int *returns_code,
 		t_redirection *r);
 int					exec_fork(char **cmd, t_redirection *r);
-void				sighandler(int signum);
 int					ft_simple_command_env(char **argv, t_redirection *r);
 int					gest_error_path(char *cmd, t_redirection *r);
+int					add_pipe_process(char **cmd, t_redirection *r);
 
 /*
 ** commands.c
@@ -48,5 +48,14 @@ int					add_pipe_process(char **cmd, t_redirection *r);
 */
 
 void				redirection_fd(t_redirection *r);
+
+/*
+** redirection_bis.c
+*/
+
+void				redir_in(t_redirection *r);
+void				redir_out(t_redirection *r);
+void				redir_error(t_redirection *r);
+void				other_redir(int src, int new_fd);
 
 #	endif

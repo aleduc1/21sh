@@ -2510,12 +2510,21 @@ ft_test_variable
 
 printf "\n"
 
+printf "\n\nAuthor:\n"
+cat -e author
+
+# Utilisation du code suivant pour la norme:
+# https://github.com/FranckRJ/funktionsprufer-generika
 printf "\nTester la norme [y/N]? "
 read inputuser
 if [ "$inputuser" == "y" ]; then 
-	norminette srcs includes libft/srcs libft/includes
-	printf "\n\nAuthor:\n"
-	cat -e author
+	stkNorme="$(norminette srcs includes libft/srcs libft/includes)"
+	stkParseNorme="$(echo "$stkNorme" | grep -v "^Warning: Not a valid file" | grep -B1 -v "^Norme: " | grep -v "^--$" | grep -v "^$")"
+	if [ -z "$stkParseNorme" ]; then
+		echo "Norme: ${CGR}Ok$NO"
+	else
+		printf "$stkParseNorme"
+	fi
 fi
 printf "\n"
 

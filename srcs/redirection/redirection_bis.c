@@ -6,33 +6,50 @@
 /*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/09 10:50:50 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/06/02 18:20:30 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/06/13 22:29:20 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "commands.h"
+#include "env.h"
 
-void	sighandler(int signum)
+/*
+** in -> STDIN_FILENO
+** out -> STDOUT_FILENO
+** error -> STDERR_FILLENO
+*/
+
+void	redir_in(t_redirection *r)
 {
-	(void)signum;
-	gest_return(130);
-	ft_putchar('\n');
+	if (r->in != STDIN_FILENO)
+		dup2(r->in, STDIN_FILENO);
 }
 
-void	sig_handler(void)
+void	redir_out(t_redirection *r)
 {
-	signal(SIGINT, sighandler);
-	signal(SIGQUIT, sighandler);
+	if (r->out != STDOUT_FILENO)
+		dup2(r->out, STDOUT_FILENO);
 }
 
-void	sig_dfl(void)
+void	redir_error(t_redirection *r)
 {
-	signal(SIGINT, SIG_DFL);
-	signal(SIGQUIT, SIG_DFL);
+	if (r->error != STDERR_FILENO)
+		dup2(r->error, STDERR_FILENO);
 }
 
-void	sig_ign(void)
+/*
+** dup2(src, new_fd);
+** if (verif_close(src))
+**	close(src);
+*/
+
+void	other_redir(int src, int new_fd)
 {
-	signal(SIGINT, SIG_IGN);
-	signal(SIGQUIT, SIG_IGN);
+	if (new_fd == -1)
+		return ;
+	if (src != new_fd)
+	{
+		dup2(new_fd, src);
+		if (verif_close(new_fd))
+			close(new_fd);
+	}
 }
