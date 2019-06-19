@@ -39,7 +39,8 @@ VPATH = objs:\
 		srcs/interpreter:\
 		srcs/builtins:\
 		srcs/env:\
-		srcs/redirection
+		srcs/redirection\
+		srcs/hash_table
 
 # ------------------ #
 # Compiler and flags #
@@ -137,8 +138,6 @@ SRCS_NAMES = main.c \
 			 if_checks.c \
 			 bt_exit.c \
 			 bt_echo.c\
-		 	 builtin_cd.c\
-			 builtin_cd_verif.c\
 			 list_redirect.c\
 			 redirection.c\
 			 signal.c\
@@ -147,8 +146,22 @@ SRCS_NAMES = main.c \
 			 formats_parameter.c\
 			 formats_parameter_bis.c\
 			 delete_redirection.c\
-			 check_last.c
-
+			 check_last.c\
+			 bt_cd.c\
+			 bt_cd_utils.c\
+			 bt_cd_utilstwo.c\
+			 bt_cd_canonical_a.c\
+			 bt_cd_canonical_b.c\
+			 bt_cd_canonical_c.c\
+			 get_options.c\
+			 bt_alias.c\
+			 bt_unalias.c\
+			 hash_utils.c\
+			 ht_hash_utils.c\
+			 ht_hash_moreutils.c\
+			 ht_hash_stillutils.c\
+			 ht_hash_show.c\
+			 bt_hash.c
 
 OBJS_NAMES = $(SRCS_NAMES:.c=.o)
 HEADERS_NAMES = sh21.h lexer.h parser.h env.h builtins.h commands.h

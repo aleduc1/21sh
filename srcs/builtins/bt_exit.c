@@ -3,14 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   bt_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: apruvost <apruvost@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/21 13:52:06 by apruvost          #+#    #+#             */
-/*   Updated: 2019/05/16 15:28:39 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/06/19 17:10:55 by apruvost         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "env.h"
+#include "builtins.h"
+
+extern t_ht_hash	*g_alias_table;
+extern t_ht_hash	*g_hash_table;
 
 /*
 ** exit [n]
@@ -57,13 +61,25 @@
 ** non-zero value in "$?") but even this not done historicaly in all shells
 */
 
-int		bt_exit(char **av)
+/*
+** Remplacer tous les g_status par la variable $? des variables locales ou la
+** valeur de retour du shell
+*/
+
+static void		bt_exit_utils(void)
+{
+		default_term_mode();
+		get_env(1, NULL);
+		ht_hash_del(g_alias_table);
+		ht_hash_del(g_hash_table);
+}
+
+int				bt_exit(char **av)
 {
 	if (av == NULL || av[1] == NULL)
 	{
 		ft_dprintf(2, "exit\n");
-		default_term_mode();
-		get_env(1, NULL);
+		bt_exit_utils();
 		exit(0);
 	}
 	if (ft_isstrnum(av[1]))
@@ -71,17 +87,14 @@ int		bt_exit(char **av)
 		if (av[2] == NULL)
 		{
 			ft_dprintf(2, "exit\n");
-			default_term_mode();
-			get_env(1, NULL);
+			bt_exit_utils();
 			exit(ft_atoi(av[1]));
 		}
-		ft_dprintf(2, "exit\n");
 		ft_dprintf(2, "21sh: exit: too many arguments\n");
 		return (1);
 	}
 	ft_dprintf(2, "exit\n");
 	ft_dprintf(2, "21sh: exit: %s: numeric argument required\n", av[1]);
-	default_term_mode();
-	get_env(1, NULL);
+	bt_exit_utils();
 	exit(255);
 }

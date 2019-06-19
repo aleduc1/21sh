@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   other_tools.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbellaic <mbellaic@student.42.fr>          +#+  +:+       +#+        */
+/*   By: apruvost <apruvost@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/22 17:57:48 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/06/15 19:02:52 by mbellaic         ###   ########.fr       */
+/*   Updated: 2019/06/19 21:50:42 by apruvost         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,15 @@ int			is_builtin(char **argv, t_redirection *r)
 	else if (ft_strequ(argv[0], "echo"))
 		verif = bt_echo(argv, r);
 	else if (ft_strequ(argv[0], "cd"))
-		verif = (builtin_cd(argv, r)) ? -2 : 0;
+		verif = (bt_cd(argv)) ? -2 : 0;
 	else if (ft_strequ(argv[0], "exit"))
 		verif = bt_exit(argv);
+	else if (ft_strequ(argv[0], "alias"))
+		verif = bt_alias(argv);
+	else if (ft_strequ(argv[0], "unalias"))
+		verif = bt_unalias(argv);
+	else if (ft_strequ(argv[0], "hash"))
+		verif = bt_hash(argv);
 	else
 		verif = -1;
 	return (verif);
