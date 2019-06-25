@@ -161,7 +161,8 @@ SRCS_NAMES = main.c \
 			 ht_hash_moreutils.c\
 			 ht_hash_stillutils.c\
 			 ht_hash_show.c\
-			 bt_hash.c
+			 bt_hash.c\
+			 bt_type.c
 
 OBJS_NAMES = $(SRCS_NAMES:.c=.o)
 HEADERS_NAMES = sh21.h lexer.h parser.h env.h builtins.h commands.h

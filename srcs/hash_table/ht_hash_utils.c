@@ -56,7 +56,6 @@ void		ht_hash_del(t_ht_hash *ht)
 	}
 	ft_memdel((void **)&(ht->hash));
 	ft_memdel((void **)&ht);
-	ft_printf("cesup\n");
 }
 
 t_ht_hash	*ht_hash_new_sized(const int base_size)   // PRETOECT MALLOC CAREFUL

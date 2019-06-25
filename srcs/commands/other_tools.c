@@ -6,7 +6,7 @@
 /*   By: apruvost <apruvost@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/22 17:57:48 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/06/19 21:50:42 by apruvost         ###   ########.fr       */
+/*   Updated: 2019/06/25 17:57:07 by apruvost         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ int			is_builtin(char **argv, t_redirection *r)
 		verif = bt_unalias(argv);
 	else if (ft_strequ(argv[0], "hash"))
 		verif = bt_hash(argv);
+	else if (ft_strequ(argv[0], "type"))
+		verif = bt_type(argv);
 	else
 		verif = -1;
 	return (verif);

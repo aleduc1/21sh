@@ -12,10 +12,10 @@
 
 #include "builtins.h"
 
-void				ht_hash_reset(t_ht_hash *ht)
+void				ht_hash_reset(t_ht_hash **ht)
 {
-	ht_hash_del(ht);
-	ht = ht_hash_new();
+	ht_hash_del(*ht);
+	*ht = ht_hash_new();
 }
 
 void				ht_hash_table_null(t_hash **hash, int size)

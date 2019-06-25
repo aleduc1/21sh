@@ -6,7 +6,7 @@
 /*   By: apruvost <apruvost@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/19 21:19:19 by apruvost          #+#    #+#             */
-/*   Updated: 2019/06/19 22:21:29 by apruvost         ###   ########.fr       */
+/*   Updated: 2019/06/25 17:33:18 by apruvost         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,16 @@ static void					ht_tree_del(t_hash_tree *tree)
 	free(tree);
 }
 
-static void					ht_tree_show(t_hash_tree *tree)
+static void					ht_tree_show(t_hash_tree *tree, int quote)
 {
 	if (tree == NULL)
 		return ;
-	ht_tree_show(tree->left);
-	ft_printf("%s=%s\n", tree->hash->key, tree->hash->value);
-	ht_tree_show(tree->right);
+	ht_tree_show(tree->left, quote);
+	if (quote == 1)
+		ft_printf("%s='%s'\n", tree->hash->key, tree->hash->value);
+	else
+		ft_printf("%s=%s\n", tree->hash->key, tree->hash->value);
+	ht_tree_show(tree->right, quote);
 }
 
 static t_hash_tree			*tree_create(t_hash *hash)
@@ -75,7 +78,7 @@ static t_hash_tree			*ht_tree_add(t_hash *hash, t_hash_tree *tree)
 	}
 }
 
-void				ht_hash_show(t_ht_hash *ht)
+void				ht_hash_show(t_ht_hash *ht, int quote)
 {
 	t_hash_tree	*tree;
 	int			i;
@@ -88,7 +91,7 @@ void				ht_hash_show(t_ht_hash *ht)
 			tree = ht_tree_add(ht->hash[i], tree);
 		++i;
 	}
-	ht_tree_show(tree);
+	ht_tree_show(tree, quote);
 	ht_tree_del(tree);
 	tree = NULL;
 }

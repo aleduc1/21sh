@@ -6,7 +6,7 @@
 /*   By: apruvost <apruvost@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/08 16:01:05 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/06/19 22:37:58 by apruvost         ###   ########.fr       */
+/*   Updated: 2019/06/25 17:55:59 by apruvost         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,9 +96,11 @@ void				ht_hash_copy(t_ht_hash *ht, t_ht_hash *new_ht);
 void				ht_hash_resize_down(t_ht_hash *ht);
 void				ht_hash_resize_up(t_ht_hash *ht);
 void				ht_hash_table_null(t_hash **hash, int size);
-void				ht_hash_show(t_ht_hash *ht);
-void				ht_hash_reset(t_ht_hash *ht);
+void				ht_hash_show(t_ht_hash *ht, int quote);
+void				ht_hash_reset(t_ht_hash **ht);
 
 int					bt_hash(char **av);
+
+int					bt_type(char **av);
 
 #	endif
