@@ -15,6 +15,13 @@
 
 #include "env.h"
 
+typedef struct		s_process
+{
+	char				**av;
+	t_redirection		*r;
+	struct s_process	*next;
+}					t_process;
+
 /*
 ** execute_command.c
 */
@@ -41,7 +48,21 @@ int					check_last_command(void);
 */
 
 int					ft_pipe(char **argv, t_token *lex, int end_pipe);
-int					add_pipe_process(char **cmd, t_redirection *r);
+int					exec_pipe(t_process *p, int in, int out);
+
+/*
+** action_pipe.c
+*/
+
+void				act_p_prepare(t_process *p);
+
+/*
+** list_process.c
+*/
+
+t_process			*init_process(void);
+void				delete_process(t_process **p);
+void				add_process_s(t_process *p, char **av, t_redirection *r);
 
 /*
 ** redirection.c

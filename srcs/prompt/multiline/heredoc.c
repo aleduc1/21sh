@@ -109,5 +109,6 @@ char		*heredoc(char *heredoc, t_pos *pos)
 	(pos->stop == 1) ? pos->stop = 0 : 0;
 	pos->multiline = 0;
 	default_term_mode();
+	ft_strdel(&heredoc);
 	return (input);
 }

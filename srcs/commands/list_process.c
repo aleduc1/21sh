@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   redirection.c                                      :+:      :+:    :+:   */
+/*   list_process.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,28 +12,46 @@
 
 #include "commands.h"
 
-void	sighandler(int signum)
+t_process	*init_process(void)
 {
-	(void)signum;
-	gest_return(130);
-	ft_putchar('\n');
+	t_process	*p;
+
+	if (!(p = (t_process*)malloc(sizeof(t_process) * 1)))
+		return (NULL);
+	p->av = NULL;
+	p->r = NULL;
+	p->next = NULL;
+	return (p);
 }
 
-void	sig_handler(void)
+void		delete_process(t_process **p)
 {
-	signal(SIGINT, sighandler);
-	signal(SIGQUIT, sighandler);
+	t_process	*next;
+
+	while (*p)
+	{
+		next = ((*p)->next) ? (*p)->next : NULL;
+		ft_arraydel(&((*p)->av));
+		delete_redirection(&((*p)->r));
+		free(*p);
+		(*p) = NULL;
+		(*p) = next;
+	}
 }
 
-void	sig_dfl(void)
+void		add_process_s(t_process *p, char **av, t_redirection *r)
 {
-	signal(SIGINT, SIG_DFL);
-	signal(SIGQUIT, SIG_DFL);
-	signal(SIGPIPE, SIG_DFL);
-}
-
-void	sig_ign(void)
-{
-	signal(SIGINT, SIG_IGN);
-	signal(SIGQUIT, SIG_IGN);
+	if (!p)
+		return ;
+	while (p->av)
+	{
+		if (!p->next)
+			p->next = init_process();
+		p = p->next;
+	}
+	if (p)
+	{
+		p->av = ft_arraydup(av);
+		p->r = r;
+	}
 }

@@ -39,11 +39,19 @@ void	scolon_case(t_ast *node, t_pos *pos)
 
 void	spipe_case(t_ast *node, t_pos *pos)
 {
+	static int state;
+
 	if (node->token->type == SPIPE)
 	{
-		run_pipe(node->l->token, pos, 0);
+		if (state == 0)
+			run_pipe(node->l->token, pos, state++);
+		else
+			run_pipe(node->l->token, pos, 1);
 		if (node->r->token->type == CMD)
-			run_pipe(node->r->token, pos, 1);
+		{
+			run_pipe(node->r->token, pos, 2);
+			state = 0;
+		}
 	}
 }
 

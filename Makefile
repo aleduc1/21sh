@@ -1,3 +1,15 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: sbelondr <marvin@42.fr>                    +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2019/06/29 19:34:38 by sbelondr          #+#    #+#              #
+#    Updated: 2019/06/29 19:35:51 by sbelondr         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
 # ---------- #
 # Debug mode #
 # ---------- #
@@ -148,7 +160,9 @@ SRCS_NAMES = main.c \
 			 formats_parameter.c\
 			 formats_parameter_bis.c\
 			 delete_redirection.c\
-			 check_last.c
+			 check_last.c\
+			 action_pipe.c\
+			 list_process.c
 
 
 OBJS_NAMES = $(SRCS_NAMES:.c=.o)
