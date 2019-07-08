@@ -6,7 +6,7 @@
 /*   By: aleduc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/03 11:00:04 by aleduc            #+#    #+#             */
-/*   Updated: 2019/06/19 18:10:09 by aleduc           ###   ########.fr       */
+/*   Updated: 2019/07/08 08:36:07 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,26 +58,20 @@ int		handle_needed_redir(t_lex **command_node, t_lex **redir_node)
 	return (ret);
 }
 
-int		cycle_redirect(t_lex **command_node)
+int		manage_cycle_redirect(t_lex *ptr, t_token *tok)
 {
-	t_lex	*ptr;
-	t_token	*tok;
-	t_lex	*node;
 	t_lex	*start;
 
-	tok = create_token("DELIM", DELIM);
-	node = new_node(&tok);
-	(*command_node)->token->command->prev = node;
-	node->next = (*command_node)->token->command;
-	(*command_node)->token->command = node;
-	ptr = (*command_node)->token->command;
 	start = ptr;
 	while (ptr)
 	{
 		if (is_a_redirect(ptr->token->type))
 		{
 			if (handle_needed_redir(&start, &ptr))
+			{
+				clean_inside_token(&tok);
 				return (1);
+			}
 			ptr = start;
 		}
 		else
@@ -85,6 +79,21 @@ int		cycle_redirect(t_lex **command_node)
 	}
 	clean_inside_token(&tok);
 	return (0);
+}
+
+int		cycle_redirect(t_lex **command_node)
+{
+	t_lex	*ptr;
+	t_token	*tok;
+	t_lex	*node;
+
+	tok = create_token("DELIM", DELIM);
+	node = new_node(&tok);
+	(*command_node)->token->command->prev = node;
+	node->next = (*command_node)->token->command;
+	(*command_node)->token->command = node;
+	ptr = (*command_node)->token->command;
+	return (manage_cycle_redirect(ptr, tok));
 }
 
 int		handle_redir(t_lex **lex)

@@ -63,7 +63,7 @@ ft_valgrind()
 		printf "Utilisez valgrind [y/N]? "
 		read inputuser
 		if [ "$inputuser" == "y" ]; then
-			valgrind --log-file="$dossier/valgrind.log" ./test.sh $name 1 2> $dossier/valgrind_warning.log
+			valgrind --leak-check=full --track-fds=yes --log-file="$dossier/valgrind.log" ./test.sh $name 1 2> $dossier/valgrind_warning.log
 			exit
 		fi
 	fi

@@ -99,8 +99,6 @@ int		main(int argc, char **argv, char **environ)
 	multi_input = NULL;
 	(argc == 1) ? welcome() : 0;
 	sig_ign();
-	// signal(SIGQUIT, SIG_IGN);
-	// signal(SIGINT, SIG_IGN);
 	flags(argc, argv);
 	init_prompt(&pos);
 	if (argc > 1)

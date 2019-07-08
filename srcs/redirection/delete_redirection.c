@@ -6,7 +6,7 @@
 /*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/06 23:23:34 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/05/17 14:02:50 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/07/08 07:59:03 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,9 @@ void	delete_redirection(t_redirection **r)
 	while ((*r)->redirect)
 	{
 		next = ((*r)->redirect->next) ? (*r)->redirect->next : NULL;
+		if ((*r)->redirect->new_fd != -1
+				&& verif_close((*r)->redirect->new_fd))
+			close((*r)->redirect->new_fd);
 		free((*r)->redirect);
 		(*r)->redirect = NULL;
 		if (next)

@@ -23,7 +23,10 @@ int			ft_simple_command(char **argv, t_token *token)
 	char			**cpy_argv;
 
 	if (!argv[0])
+	{
+		close_file_command(token->command, NULL);
 		return (-1);
+	}
 	cpy_argv = ft_arraydup(argv);
 	parser_var(&cpy_argv);
 	if (check_last_command() == -5)

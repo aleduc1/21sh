@@ -6,7 +6,7 @@
 #    By: sbelondr <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/29 19:34:49 by sbelondr          #+#    #+#              #
-#    Updated: 2019/06/29 19:35:40 by sbelondr         ###   ########.fr        #
+#    Updated: 2019/07/08 07:49:49 by sbelondr         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,7 +45,7 @@ VPATH = .:\
 
 CC = gcc
 ifeq ($(DEBUG), yes)
-	CFLAGS = -Wall -Wextra -Werror
+	CFLAGS = -Wall -Wextra -g3
 else
 	CFLAGS = -Wall -Wextra
 endif

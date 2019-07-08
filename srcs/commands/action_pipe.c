@@ -6,7 +6,7 @@
 /*   By: sbelondr <sbelondr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/09 10:50:50 by sbelondr          #+#    #+#             */
-/*   Updated: 2019/06/02 18:20:30 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/07/08 07:47:24 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,10 @@ static void	is_not_end(t_process *p, int stock[2], int fd[2])
 	if (pid == 0)
 	{
 		dup_pipe(fd, stock);
-		pid = exec_pipe(p, stock[0], fd[1]);
+		if (is_builtin(p->av, p->r) == -1)
+			pid = exec_pipe(p, stock[0], fd[1]);
+		execve("/bin/test", NULL, NULL);
+		exit(0);
 	}
 	else if (pid > 0)
 	{
@@ -62,12 +65,16 @@ static void	is_end(t_process *p, int stock[2], int fd[2])
 	ret = 0;
 	pid = fork();
 	if (pid == 0)
-		exec_pipe(p, stock[0], STDOUT_FILENO);
+	{
+		if (is_builtin(p->av, p->r) == -1)
+			exec_pipe(p, stock[0], STDOUT_FILENO);
+		execve("/bin/test", NULL, NULL);
+		exit(0);
+	}
 	else if (pid > 0)
 	{
 		waitpid(pid, &status, 0);
-		if (fd[0] > 2)
-			close(fd[0]);
+		(fd[0] > 2) ? close(fd[0]) : 0;
 		while ((pid = wait(&status)) > 0)
 			;
 	}
