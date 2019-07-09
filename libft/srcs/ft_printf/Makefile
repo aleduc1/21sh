@@ -6,7 +6,7 @@
 #    By: aleduc <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/02 17:27:36 by aleduc            #+#    #+#              #
-#    Updated: 2019/07/08 07:50:07 by sbelondr         ###   ########.fr        #
+#    Updated: 2019/07/09 12:38:44 by sbelondr         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,7 +44,7 @@ NAME = libftprintf.a
 
 OBJ = $(FILE:%.c=$(DIROBJ)/%.o)
 
-FLAGS = -Wall -Wextra -g3
+FLAGS = -Wall -Wextra -Werror
 
 all: $(NAME)
 

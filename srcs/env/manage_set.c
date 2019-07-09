@@ -18,11 +18,11 @@ int			add_set_value(char *key, char *value)
 	int		verif;
 
 	verif = 0;
-	if (ft_strchr_exist(key, '='))
-		return (-2);
 	my_env = get_env(0, NULL);
 	if (!value)
 		value = "";
+	if (str_is_alpha(key) == 0 || str_is_alpha(value) == 0)
+		return (-2);
 	while (my_env->next)
 	{
 		if (ft_strequ(my_env->key, key))

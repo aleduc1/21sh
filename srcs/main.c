@@ -6,7 +6,7 @@
 /*   By: mbellaic <mbellaic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/12 17:01:09 by aleduc            #+#    #+#             */
-/*   Updated: 2019/06/22 11:07:26 by sbelondr         ###   ########.fr       */
+/*   Updated: 2019/07/09 12:39:19 by sbelondr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,19 +75,21 @@ void	run(char *input, t_pos *pos)
 	dllprinthead(&lex);
 }
 
-void	script_exec(char **argv, t_pos pos)
-{
-	int		i;
-	char	*src;
-
-	i = -1;
-	while (argv[++i])
-	{
-		src = ft_strdup(argv[i]);
-		run(src, &pos);
-	}
-	exit(0);
-}
+/*
+**void	script_exec(char **argv, t_pos pos)
+**{
+**	int		i;
+**	char	*src;
+**
+**	i = -1;
+**	while (argv[++i])
+**	{
+**		src = ft_strdup(argv[i]);
+**		run(src, &pos);
+**	}
+**	exit(0);
+**}
+*/
 
 int		main(int argc, char **argv, char **environ)
 {
@@ -97,12 +99,12 @@ int		main(int argc, char **argv, char **environ)
 
 	input = NULL;
 	multi_input = NULL;
-	(argc == 1) ? welcome() : 0;
+	if (isatty(STDIN_FILENO) == 0)
+		return (1);
+	welcome();
 	sig_ign();
 	flags(argc, argv);
 	init_prompt(&pos);
-	if (argc > 1)
-		script_exec(argv + 1, pos);
 	while (21)
 	{
 		if (argc && argv && environ)

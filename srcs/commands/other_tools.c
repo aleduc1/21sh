@@ -19,24 +19,60 @@
 ** return -1 if it's not a builtin
 */
 
-int			is_builtin(char **argv, t_redirection *r)
+int			verif_set(char **argv, int nb, t_redirection *r, char *name)
 {
-	int		verif;
+	int	i;
 
+	i = 0;
+	while (argv[i])
+		i++;
+	if (nb == i || (nb == 3 && i == 2))
+		return (1);
+	else if (i > nb)
+		ft_dprintf(r->error, "21sh: %s: Too many arguments.\n", name);
+	else
+	{
+		if (ft_strequ(name, "setenv"))
+			builtin_env_display(r);
+		else
+			ft_dprintf(r->error, "21sh: %s: Too few arguments.\n", name);
+	}
+	return (0);
+}
+
+int			is_builtin_bis(char **argv, t_redirection *r)
+{
+	int	verif;
+
+	verif = 0;
 	if (ft_strequ(argv[0], "env"))
 		verif = builtin_env(r, argv);
 	else if (ft_strequ(argv[0], "set"))
 		verif = builtin_set(r);
 	else if (ft_strequ(argv[0], "setenv"))
-		verif = argv[1] ? edit_setenv(argv[1], argv[2]) : -2;
+		verif = verif_set(argv, 3, r, "setenv")
+			? edit_setenv(argv[1], argv[2]) : -2;
 	else if (ft_strequ(argv[0], "unsetenv"))
-		verif = ft_unsetenv(argv[1]);
+		verif = verif_set(argv, 2, r, "unsetenv")
+			? ft_unsetenv(argv[1]) : 0;
+	else
+		verif = -1;
+	return (verif);
+}
+
+int			is_builtin(char **argv, t_redirection *r)
+{
+	int		verif;
+
+	if ((verif = is_builtin_bis(argv, r)) != -1)
+		;
 	else if (ft_strequ(argv[0], "export"))
-		verif = edit_export(argv[1]);
+		verif = verif_set(argv, 2, r, "export") ? edit_export(argv[1]) : 0;
 	else if (ft_strequ(argv[0], "unset"))
-		verif = ft_unset(argv[1]);
+		verif = verif_set(argv, 2, r, "unset") ? ft_unset(argv[1]) : 0;
 	else if (ft_strequ(argv[0], "editset"))
-		verif = argv[1] ? add_set_value(argv[1], argv[2]) : -2;
+		verif = verif_set(argv, 3, r, "editset")
+			? add_set_value(argv[1], argv[2]) : -2;
 	else if (ft_strequ(argv[0], "echo"))
 		verif = bt_echo(argv, r);
 	else if (ft_strequ(argv[0], "cd"))

@@ -6,7 +6,7 @@
 #    By: sbelondr <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/29 19:34:38 by sbelondr          #+#    #+#              #
-#    Updated: 2019/07/08 07:49:30 by sbelondr         ###   ########.fr        #
+#    Updated: 2019/07/09 12:38:07 by sbelondr         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@
 # Debug mode #
 # ---------- #
 
-DEBUG = yes
+DEBUG = no
 
 # --------- #
 # Directory #
@@ -162,7 +162,9 @@ SRCS_NAMES = main.c \
 			 delete_redirection.c\
 			 check_last.c\
 			 action_pipe.c\
-			 list_process.c
+			 list_process.c\
+			 tools_setenv.c\
+			 test_quote.c
 
 
 OBJS_NAMES = $(SRCS_NAMES:.c=.o)

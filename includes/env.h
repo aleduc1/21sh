@@ -224,4 +224,18 @@ void				parameter_expansion(char *tmp, char **dst);
 int					check_last_command(void);
 int					check_is_exec(char *src, t_redirection *r);
 
+/*
+** tools_setenv.c
+*/
+
+int					str_is_alpha(char *str);
+int					is_correct_setenv(char c);
+void				setenv_error(void);
+
+/*
+** test_quote.c
+*/
+
+int					test_quote(char *name);
+
 #	endif

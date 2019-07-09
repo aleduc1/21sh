@@ -18,5 +18,6 @@
 
 int					bt_exit(char **av);
 int					bt_echo(char **av, t_redirection *r);
+int					builtin_env_display(t_redirection *r);
 
 #	endif

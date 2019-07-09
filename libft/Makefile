@@ -6,7 +6,7 @@
 #    By: sbelondr <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/29 19:34:49 by sbelondr          #+#    #+#              #
-#    Updated: 2019/07/08 07:49:49 by sbelondr         ###   ########.fr        #
+#    Updated: 2019/07/09 12:38:31 by sbelondr         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@
 # Debug mode #
 # ---------- #
 
-DEBUG = yes
+DEBUG = no
 
 # ----- #
 # Shell #
@@ -47,7 +47,7 @@ CC = gcc
 ifeq ($(DEBUG), yes)
 	CFLAGS = -Wall -Wextra -g3
 else
-	CFLAGS = -Wall -Wextra
+	CFLAGS = -Wall -Wextra -Werror
 endif
 CPPFLAGS = -I $(INCDIR)
 
