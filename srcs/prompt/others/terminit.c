@@ -14,14 +14,23 @@
 
 void				welcome(void)
 {
+	int	tm;
+
+	tm = 90000;
 	ft_putstr("\033[2J\033[H");
 	ft_putstr("\033[1;32m\n");
 	ft_putstr("██████╗  ██╗███████╗██╗  ██╗\n");
+	usleep(tm);
 	ft_putstr("╚════██╗███║██╔════╝██║  ██║\n");
+	usleep(tm);
 	ft_putstr(" █████╔╝╚██║███████╗███████║\n");
+	usleep(tm);
 	ft_putstr("██╔═══╝  ██║╚════██║██╔══██║\n");
+	usleep(tm);
 	ft_putstr("███████╗ ██║███████║██║  ██║\n");
+	usleep(tm);
 	ft_putstr("╚══════╝ ╚═╝╚══════╝╚═╝  ╚═╝\n\n");
+	usleep(tm);
 	ft_putstr("\033[0m");
 }
 
